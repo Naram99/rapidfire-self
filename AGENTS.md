@@ -1,212 +1,220 @@
-# Fejlesztési szabályok — React / TypeScript / Express
+# Development Guidelines — React / TypeScript / Express
 
-Kövesd ezeket a szabályokat minden kódírásnál, módosításnál és
-kódellenőrzésnél. A felhasználó kifejezett utasításait és a projekt
-specifikus követelményeit vedd figyelembe.
+Follow these rules when writing, modifying, or reviewing code.
+Respect explicit user instructions and project-specific requirements.
 
-## Projektismeret és skillek
+## Project Context and Skills
 
-- Munka előtt olvasd el az alkalmazandó AGENTS.md fájlokat,
-  a package.json-t és a releváns konfigurációkat.
-- Vizsgáld meg az érintett kódot, a projekt struktúráját és
-  a meglévő megoldásokat, mielőtt új mintát vezetsz be.
-- Tekintsd át az alkalmazandó .agents/skills könyvtárban található
-  skillek nevét és leírását. Ha a projekt más skillkönyvtárat
-  jelöl meg az .agents alatt, azt is vedd figyelembe.
-- A feladathoz illő skillek SKILL.md fájlját olvasd el,
-  és kövesd a releváns hivatkozásaikat.
-- Ne tölts be minden skillt válogatás nélkül.
-- React-fejlesztéshez használd a vercel-react-best-practices
-  skillt, ha telepítve van. A Next.js-specifikus szabályokat
-  kizárólag Next.js projektben alkalmazd.
-- Ha egy szükséges skill hiányzik vagy nem olvasható, jelezd.
-  Ne állítsd, hogy használtál egy skillt, ha nem olvastad el.
+- Before starting, read the applicable AGENTS.md files, package.json,
+  and relevant configuration files.
+- Review the affected code, project structure, and existing patterns
+  before introducing a new approach.
+- Review the names and descriptions of skills in the applicable
+  .agents/skills directories. Include other skill directories under
+  .agents if the project explicitly identifies them.
+- Read the SKILL.md files of relevant skills and follow their applicable
+  references and instructions.
+- Do not load every skill indiscriminately.
+- For React development, use vercel-react-best-practices if installed.
+  Apply Next.js-specific rules only to Next.js projects.
+- Report missing or unreadable required skills.
+  Do not claim to have used a skill you have not read.
 
-## TypeScript és típusbiztonság
+## TypeScript and Type Safety
 
-- Új alkalmazáskódhoz TypeScriptet használj.
-  React-komponensekhez .tsx fájlokat készíts.
-- Meglévő JavaScriptet csak a feladathoz indokolt körben migrálj.
-- Kerüld az any típust és az implicit any-t.
-- Ismeretlen külső adatot unknown típusként kezelj,
-  majd validáld vagy szűkítsd a típusát.
-- Kerüld az indokolatlan type assertion és non-null assertion
-  használatát.
-- Ne rejts el hibákat @ts-ignore vagy @ts-nocheck használatával.
-- Ne lazítsd a TypeScript- vagy lintszabályokat azért,
-  hogy a hibás kód átmenjen az ellenőrzésen.
-- Használd a típusinferencia lehetőségeit; a publikus modulhatárok
-  szerződése legyen egyértelmű.
-- A TypeScript-típus nem futásidejű validáció.
-  A külső bemeneteket futásidőben is ellenőrizd.
+- Use TypeScript for new application code.
+  Use .tsx files for React components.
+- Migrate existing JavaScript only where justified by the current task.
+- Avoid any and implicit any.
+- Treat unknown external data as unknown, then validate or narrow it.
+- Avoid unjustified type assertions and non-null assertions.
+- Do not hide errors with @ts-ignore or @ts-nocheck.
+- Do not weaken TypeScript or lint rules to make incorrect code pass.
+- Use type inference where it improves clarity.
+  Keep public module contracts explicit.
+- TypeScript types do not provide runtime validation.
+  Validate external inputs at runtime.
 
-## Elnevezések, formázás és olvashatóság
+## Consistent Type Declarations
 
-- Használj beszédes, következetes angol azonosítókat.
-  Kövesd a projekt meglévő szóhasználatát.
-- Változók és függvények: camelCase.
-- Komponensek, osztályok és típusok: PascalCase.
-- Hookok: use előtag.
-- Boolean értékeknél használj érthető is/has/can/should
-  elnevezéseket, ahol ez természetes.
-- Kövesd a projekt meglévő fájlelnevezési konvencióit.
-- Kerüld a homályos neveket és az indokolatlan rövidítéseket.
-- Kövesd a meglévő ESLint- és formázási konfigurációt.
-- Ne formázd át a feladathoz nem kapcsolódó fájlokat.
-- Használj egyszerű vezérlési folyamatot és korai visszatéréseket.
-  Kerüld a mély egymásba ágyazást.
-- A komment a döntés okát vagy a nem nyilvánvaló viselkedést
-  magyarázza, ne ismételje meg a kódot.
+- Follow the project's established convention for type and interface.
+  Do not alternate between them arbitrarily for equivalent declarations.
+- If there is no established convention, prefer type aliases for new
+  application types and use them consistently.
+- Use interface when a specific requirement justifies it, such as
+  intentional declaration merging or an extensible public contract.
+  Keep such exceptions deliberate and consistent.
+- Do not rewrite unrelated existing declarations solely to enforce
+  a preferred style.
+- Use utility types such as Pick, Omit, Partial, Required, Readonly,
+  Record, Extract, Exclude, and ReturnType when they express the intended
+  relationship clearly and reduce duplication.
+- Do not use Partial indiscriminately when only specific fields
+  should be optional or editable.
+- Use unions to represent valid alternatives and discriminated unions
+  for states or variants with different required properties.
+- Prefer explicit valid states over collections of optional properties
+  that allow invalid combinations.
+- Use intersections and generics when they improve reuse and accurately
+  express the contract.
+- Avoid overly complex type manipulation when a straightforward
+  declaration is easier to understand.
+- Reuse domain types where their meaning is genuinely shared.
+  Keep API, persistence, and domain types separate when their contracts
+  differ.
 
-## Clean Code és modularitás
+## Naming, Formatting, and Readability
 
-- Minden függvény egy jól meghatározott feladatért feleljen.
-- Minden komponens és modul legyen egyértelmű felelősségű.
-- Ne készíts nagy, monolit fájlokat.
-  Felelősségek alapján bonts, ne önkényes sorszámhatár szerint.
-- Ne aprózd szét a kódot értelmetlenül.
-- Különítsd el a megjelenítést, az üzleti logikát,
-  az adatkezelést és a külső integrációkat.
-- A cserélhető infrastruktúrát indokolt modulhatároknál
-  szűk interfészek vagy adapterek mögé szervezd.
-- Ne szivárogtasd a szolgáltatói SDK-kat a domainlogikába
-  vagy a UI-komponensekbe.
-- Használj explicit függőségátadást, ahol ez segíti
-  a cserélhetőséget és a tesztelést.
-- Kerüld a redundáns kódot. A valóban közös viselkedést emeld ki.
-- Ne készíts túl általános absztrakciót pusztán hasonló
-  kódrészletek miatt.
-- Ne készíts spekulatív funkciókat, használatlan segédfüggvényeket
-  vagy szükségtelen architekturális rétegeket.
-- Kerüld a rejtett mellékhatásokat, körkörös importokat
-  és a megosztott, módosítható globális állapotot.
+- Use descriptive, consistent English identifiers.
+  Follow the project's established terminology.
+- Use camelCase for variables and functions.
+- Use PascalCase for components, classes, and types.
+- Prefix hooks with use.
+- Use clear is/has/can/should names for boolean values where natural.
+- Follow existing file naming conventions.
+- Avoid vague names and unnecessary abbreviations.
+- Follow the existing ESLint and formatting configuration.
+- Do not reformat files unrelated to the task.
+- Prefer straightforward control flow and early returns.
+  Avoid deeply nested logic.
+- Comments should explain reasoning, constraints, or non-obvious behavior,
+  rather than repeat the code.
+
+## Clean Code and Modularity
+
+- Each function should have one clearly defined responsibility.
+- Each component and module should have a cohesive purpose.
+- Avoid large, monolithic files.
+  Split code by responsibility rather than arbitrary line limits.
+- Do not fragment code into unnecessary tiny modules.
+- Separate presentation, business logic, data access,
+  and external integrations.
+- Place replaceable infrastructure behind narrow interfaces or adapters
+  at appropriate module boundaries.
+- Do not leak provider-specific SDKs into domain logic or UI components.
+- Use explicit dependency injection where it improves replaceability
+  and testability.
+- Avoid redundant code. Extract genuinely shared behavior.
+- Do not introduce overly general abstractions merely because code
+  fragments look similar.
+- Do not build speculative features, unused helpers,
+  or unnecessary architectural layers.
+- Avoid hidden side effects, circular imports,
+  and shared mutable global state.
 
 ## React
 
-- Használj funkcionális komponenseket és szabályosan
-  alkalmazott hookokat.
-- A komponensek maradjanak fókuszáltak.
-  Az összetett, újrahasznosítható logikát indokolt esetben
-  emeld ki custom hookba.
-- A render legyen tiszta: ne módosíts propsot vagy state-et,
-  és ne indíts mellékhatásokat renderelés közben.
-- Származtatott értéket lehetőleg render közben számolj.
-  Ne tarts fenn hozzá redundáns state-et és effectet.
-- Az effectek függőségei legyenek helyesek.
-  Gondoskodj a szükséges takarításról.
-- Használj stabil listakulcsokat. Változó sorrendű vagy
-  szerkeszthető listánál ne az index legyen a kulcs.
-- Kezeld a betöltési, hiba-, üres és sikeres állapotokat.
-- Kezeld az aszinkron műveletek versenyhelyzeteit és
-  az elavult eredményeket.
-- Használj szemantikus HTML-t, hozzáférhető vezérlőket,
-  címkéket és megfelelő billentyűzetes működést.
-- Ne használj automatikusan useMemo, useCallback vagy React.memo
-  optimalizálást; legyen konkrét indoka.
-- Kövesd a projekt meglévő adatlekérési és állapotkezelési
-  megoldását.
+- Use functional components and follow the Rules of Hooks.
+- Keep components focused.
+  Extract complex, reusable logic into custom hooks when justified.
+- Keep rendering pure: do not mutate props or state,
+  or initiate side effects during rendering.
+- Calculate derived values during rendering where practical.
+  Avoid redundant state and effects for derived data.
+- Keep effect dependencies correct.
+  Implement cleanup where necessary.
+- Use stable list keys. Do not use array indexes for lists
+  whose order or contents can change.
+- Handle loading, error, empty, and success states.
+- Handle asynchronous race conditions and stale results.
+- Use semantic HTML, accessible controls, labels,
+  and appropriate keyboard interactions.
+- Do not add useMemo, useCallback, or React.memo automatically.
+  Each optimization should have a concrete justification.
+- Follow the project's existing data-fetching
+  and state-management approach.
 
-## Express és API-k
+## Express and APIs
 
-- A route/controller kezelje a HTTP-réteget.
-  Az üzleti logikát és az adatkezelést különítsd el,
-  a feladat méretéhez igazodva.
-- Validáld a params, query és body adatokat a rendszer határán.
-  Használd a meglévő validációs megoldást.
-- Külön kezeld a hitelesítést és a jogosultságellenőrzést.
-- A kliens által küldött user ID vagy szerepkör önmagában
-  nem jogosultságigazolás.
-- Használj konzisztens API-válaszokat, megfelelő HTTP-státuszokat
-  és központi hibakezelést.
-- Az aszinkron hibákat a telepített Express-verziónak megfelelően
-  továbbítsd a hibakezelőhöz.
-- Ne küldj belső stack trace-t vagy titkos adatot a kliensnek.
-- Ne naplózz jelszavakat, tokeneket vagy érzékeny személyes adatokat.
-- Használj paraméterezett adatbázis-lekérdezéseket.
-- Összetartozó adatváltoztatásoknál használj indokolt tranzakciót.
-- Ne blokkolj szinkron I/O-val a kéréskezelésben.
-- Külső hívásoknál gondoskodj megfelelő timeoutról és hibakezelésről.
+- Keep HTTP handling in routes/controllers.
+  Separate business logic and data access in a way appropriate
+  to the task's complexity.
+- Validate params, query, and body data at system boundaries.
+  Use the existing validation approach.
+- Treat authentication and authorization as separate concerns.
+- A user ID or role supplied by the client is not proof of authorization.
+- Use consistent API responses, appropriate HTTP status codes,
+  and centralized error handling.
+- Forward asynchronous errors according to the installed Express version.
+- Do not expose internal stack traces or secrets to clients.
+- Do not log passwords, tokens, or sensitive personal data.
+- Use parameterized database queries.
+- Use transactions where related data changes must succeed or fail together.
+- Avoid blocking synchronous I/O in request handlers.
+- Implement appropriate timeouts and error handling for external calls.
 
-## Függőségek és változtatási kör
+## Dependencies and Scope
 
-- Először a meglévő kódot, függőségeket és platformfunkciókat
-  használd.
-- Új runtime- vagy fejlesztői függőséget kizárólag indokolt esetben,
-  előzetes felhasználói engedéllyel adj hozzá.
-- Engedélykéréskor ismertesd a függőség célját, az alternatívát
-  és a várható hatását.
-- Korábban kifejezetten engedélyezett függőséghez ne kérj
-  ismét engedélyt.
-- Ne módosíts független csomagverziókat.
-  Kövesd a meglévő csomagkezelőt és lockfile-t.
-- A feladatot teljesen oldd meg, de kerüld a hozzá nem kapcsolódó
-  refaktorálást.
-- Őrizd meg a felhasználó meglévő módosításait.
-- Titkokat ne írj a forráskódba vagy verziózott konfigurációba.
-- Konfigurációváltozásnál szükség esetén frissítsd az
-  .env.example fájlt valódi titkok nélkül.
-- A kompatibilitást megszakító változtatást előre jelezd,
-  és készíts hozzá indokolt migrációt vagy dokumentációt.
+- Prefer existing code, dependencies, and platform capabilities first.
+- Add runtime or development dependencies only when justified
+  and explicitly approved by the user in advance.
+- When requesting approval, explain the dependency's purpose,
+  available alternatives, and expected impact.
+- Do not request approval again for a dependency
+  the user has already explicitly authorized.
+- Do not change unrelated package versions.
+  Follow the existing package manager and lockfile.
+- Complete the task fully while avoiding unrelated refactoring.
+- Preserve the user's existing changes.
+- Do not put secrets in source code or version-controlled configuration.
+- Update .env.example when necessary, without including real secrets.
+- Identify breaking changes in advance and provide appropriate migrations
+  or documentation.
 
-## Ellenőrzések és tesztek
+## Checks and Tests
 
-- Minden befejezett kódmódosítási egység után, a munka lezárása
-  előtt futtasd az elérhető és releváns ellenőrzéseket:
-  lint, typecheck, unit/integrációs tesztek, valamint szükség
-  esetén build vagy E2E teszt.
-- A parancsokat a package.json, a dokumentáció és a CI alapján
-  válaszd ki. Ne találj ki nem létező scripteket.
-- Először az érintett területet ellenőrizd, majd futtasd
-  a projekt által előírt további ellenőrzéseket.
-- Frontendet és backendet érintő változtatásnál mindkét
-  érintett csomagot ellenőrizd.
-- Új vagy módosult üzleti viselkedéshez írj érdemi teszteket
-  a meglévő tesztkeretrendszerrel.
-- Hibajavításnál lehetőség szerint adj regressziós tesztet.
-- A tesztek az elvárt viselkedést vizsgálják.
-  Ellenőrizd a releváns hibás bemeneteket és határeseteket.
-- Ne törölj tesztet, ne gyengíts assertiont, és ne kapcsold ki
-  az ellenőrzést pusztán a sikeres eredmény érdekében.
-- Ha egy ellenőrzés nem futtatható, pontosan jelezd az okát
-  és azt, mi maradt ellenőrizetlen.
-- Új tesztfüggőségre is érvényes az előzetes engedélykérés.
+- After each completed unit of code changes, and before finishing,
+  run the available and relevant checks:
+  lint, typecheck, unit/integration tests, and build or E2E tests
+  when necessary.
+- Select commands from package.json, project documentation, and CI.
+  Do not invent scripts that do not exist.
+- Check the affected area first, then run additional checks
+  required by the project.
+- When changes affect both frontend and backend,
+  verify both affected packages.
+- Add meaningful tests for new or changed business behavior
+  using the existing test framework.
+- Add regression tests for bug fixes where practical.
+- Test expected behavior, including relevant invalid inputs
+  and edge cases.
+- Do not delete tests, weaken assertions, or disable checks
+  merely to obtain a passing result.
+- If a check cannot run, explain why and identify
+  what remains unverified.
+- Adding a new testing dependency also requires prior approval.
 
-## Sikertelen ellenőrzések és újrapróbálkozás
+## Failed Checks and Retry Policy
 
-- Az első sikertelen ellenőrzés után keresd meg a hiba okát.
-  Különítsd el a saját változtatásod hibáit a korábban fennálló
-  és a környezeti hibáktól.
-- Javítsd a saját változtatásaidhoz kapcsolódó hibát,
-  majd futtasd újra a sikertelen és a javítással érintett
-  ellenőrzéseket.
-- Az első sikertelen ellenőrzés után legfeljebb három javítási
-  és újrafuttatási kört végezz az adott hibasorozatra.
-  Ez összesen legfeljebb négy ellenőrzési kört jelent.
-- Ne nullázd az újrapróbálkozások számát ugyanazon probléma
-  átnevezésével.
-- Ha a harmadik javítási kör után is fennáll a hiba,
-  állj meg az adott probléma automatikus javításával,
-  és jelezd a felhasználónak.
-- Add meg a sikertelen parancsot, a lényeges hibaüzenetet,
-  a javítási próbálkozásokat és a javasolt következő lépést.
-- Hiányzó hozzáférés, konfiguráció, szolgáltatás vagy szükséges
-  engedély esetén az akadályt azonnal jelezd.
-  Ne ismételj változatlanul biztosan sikertelen parancsot.
-- A korábban fennálló, független hibákat jelezd.
-  Ne javítsd őket észrevétlenül a feladat keretein kívül.
-- Sikertelen ellenőrzés mellett ne állítsd, hogy a munka
-  ellenőrzötten kész.
+- After the first failed check, investigate the cause.
+  Distinguish errors introduced by your changes from pre-existing
+  and environmental failures.
+- Fix errors caused by your changes, then rerun the failed checks
+  and any checks affected by the fix.
+- Perform at most three fix-and-rerun cycles after the initial failure
+  for the same failure sequence.
+  This allows at most four verification rounds in total.
+- Do not reset the retry count by renaming the same problem.
+- If the failure persists after the third fix-and-rerun cycle,
+  stop automatically attempting to fix that problem and inform the user.
+- Report the failed command, relevant error message,
+  attempted fixes, and recommended next step.
+- Report missing access, configuration, services,
+  or required permissions immediately.
+  Do not repeatedly run an unchanged command that is certain to fail.
+- Report unrelated pre-existing failures.
+  Do not silently fix them outside the task's scope.
+- Do not describe work as fully verified while required checks fail.
 
-## Befejezés
+## Completion
 
-- Tekintsd át a végső diffet: nincs-e véletlen módosítás,
-  debugkód, használatlan import vagy kiszivárgó titok.
-- Használat, konfiguráció vagy publikus szerződés változásakor
-  frissítsd a releváns dokumentációt.
-- A végső válaszban röviden ismertesd:
-    - mit változtattál és miért;
-    - milyen ellenőrzéseket futtattál és milyen eredménnyel;
-    - mi maradt ellenőrizetlen, bizonytalan vagy blokkolt.
-- Különböztesd meg a ténylegesen lefuttatott ellenőrzést
-  a puszta kódáttekintéstől.
-- Soha ne állíts tesztsikert futtatás nélkül.
+- Review the final diff for accidental changes, debugging code,
+  unused imports, and exposed secrets.
+- Update relevant documentation when usage, configuration,
+  or public contracts change.
+- In the final response, briefly explain:
+    - what changed and why;
+    - which checks ran and their results;
+    - what remains unverified, uncertain, or blocked.
+- Distinguish executed checks from code inspection.
+- Never claim tests passed without running them.
