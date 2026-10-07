@@ -1,0 +1,12 @@
+node_modules
+dist
+.cache
+.env*
+package-lock.json
+playwright-report
+test-results
+docs/design.md
+docs/auth-adapters.md
+.agents/
+AGENTS.md
+skills-lock.json

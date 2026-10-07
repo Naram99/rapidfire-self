@@ -1,0 +1,47 @@
+{
+  "name": "rapidfire",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.9.0",
+  "engines": {
+    "node": ">=24.19.0 <25",
+    "npm": ">=11.9.0 <12"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "overrides": {
+    "concurrently": {
+      "shell-quote": "1.12.0"
+    }
+  },
+  "scripts": {
+    "env:init": "node scripts/init-local-env.mjs",
+    "db:up": "docker compose up -d --wait --wait-timeout 60 postgres",
+    "db:stop": "docker compose stop postgres",
+    "dev": "concurrently --kill-others --names server,web \"npm run dev --workspace=@rapidfire/server\" \"npm run dev --workspace=@rapidfire/web\"",
+    "typecheck": "npm run typecheck --workspaces && tsc --project tsconfig.tooling.json",
+    "build": "npm run build --workspace=@rapidfire/game-engine && npm run build --workspace=@rapidfire/contracts && npm run build --workspace=@rapidfire/server && npm run build --workspace=@rapidfire/web",
+    "start": "cross-env NODE_ENV=production node --env-file-if-exists=.env apps/server/dist/bootstrap/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:production": "cross-env E2E_PRODUCTION=1 playwright test",
+    "check": "npm run typecheck && npm run build && npm test && npm run test:e2e && npm run test:e2e:production",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.19.1",
+    "concurrently": "9.2.1",
+    "cross-env": "10.1.0",
+    "esbuild": "0.28.2",
+    "prettier": "3.9.9",
+    "typescript": "6.0.3",
+    "vite": "8.3.3",
+    "vitest": "5.0.3"
+  }
+}
