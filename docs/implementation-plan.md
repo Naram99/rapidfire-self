@@ -7,7 +7,7 @@ Kapcsolódó specifikációk:
 - [MVP tervezési dokumentum](design.md)
 - [Authadapterek és meccsvisszatérés](auth-adapters.md)
 
-Ez a dokumentum a megvalósítás sorrendjét és ellenőrzési feltételeit rögzíti. Az M0 környezet és az M1 natív motor elkészült, PR-jeiket a felhasználó mainbe merge-ölte. Ezt követően engedélyezte az M2 backendvezérlő és socket megvalósítását is. Az elkészült M1 részletei a [motor dokumentációjában](game-engine.md), az M2 szerződései és adapterhatárai a [backend dokumentációjában](backend-controller.md) olvashatók. A valódi auth, domainséma, migráció, email és deployment továbbra is későbbi mérföldkő. A környezetkonfigurációt és M0 ellenőrzési eredményeket a [környezeti dokumentum](development-environment.md) rögzíti.
+Ez a dokumentum a megvalósítás sorrendjét és ellenőrzési feltételeit rögzíti. Az M0–M2 változásait a felhasználó mainbe merge-ölte és engedélyezte az M3-at. Az elkészült M1 részletei a [motor dokumentációjában](game-engine.md), az M2 a [backend dokumentációjában](backend-controller.md), az M3 az [auth/mentés dokumentációjában](backend-auth-storage.md) olvasható. A játékfelület és deployment későbbi mérföldkő. A környezetkonfigurációt és M0 eredményeket a [környezeti dokumentum](development-environment.md) rögzíti; a [magyar adatbázis-útmutató](database-guide.md) az M3 használatát mutatja.
 
 ## 1. Elfogadott alapok
 
@@ -108,6 +108,8 @@ Kilépési feltétel:
 - Tesztszemélyekkel a jogosultsági szabályok ellenőrizhetők. Éles felhasználói hitelesítés még nem minősül késznek.
 
 ### M3 — Tartós adatok, auth és email
+
+Megvalósult: generált authséma és közös domainséma, két verziózott migráció, tranzakciós mentés/törlés, HTTP/socket sessionhíd, vendég- és meccscookie, emailküldési sor és cserélhető SMTP-adapter. Valódi SMTP2GO-kézbesítés konfiguráció hiányában külön, még nem ellenőrzött lépés. A normál kijelentkezés a felhasználó új döntése alapján minden authsessiont visszavon minden eszközön. Böngészőoldali megújítási ütemezés az M4 feladata.
 
 Cél: a tényleges PostgreSQL és Better Auth integráció támogatja az elfogadott életciklust.
 

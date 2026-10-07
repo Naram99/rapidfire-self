@@ -25,6 +25,7 @@ export type ControllerHooks = Readonly<{
   ) => void;
   removed: (controller: FlowController) => void;
   started: (controller: FlowController, matchId: string) => void;
+  lobbyReturned: (personIds: readonly string[]) => void;
   online: (personId: string) => boolean;
   fresh: (personId: string) => boolean;
 }>;
@@ -120,6 +121,19 @@ export class FlowController {
       member?.authDeadline &&
       member.authDeadline > this.dependencies.clock.now(),
     );
+  }
+  updatePerson(person: Person): void {
+    const member = this.room?.members.find(
+      (item) => item.person.id === person.id,
+    );
+    if (!this.room || !member || member.person.name === person.name) return;
+    this.room = {
+      ...this.room,
+      members: this.room.members.map((item) =>
+        item === member ? { ...item, person: { ...person } } : item,
+      ),
+    };
+    this.changed();
   }
   join(person: Person): void {
     requireCommand(!this.disposed && this.room !== null, 'ROOM_NOT_FOUND');
@@ -516,6 +530,9 @@ export class FlowController {
           authDeadline: null,
         })),
       };
+      this.hooks.lobbyReturned(
+        this.room.members.map((member) => member.person.id),
+      );
       for (const member of this.room.members) this.reconcile(member.person.id);
       this.changed();
     } else if (this.soloPerson) {

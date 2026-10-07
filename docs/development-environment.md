@@ -2,7 +2,7 @@
 
 Date: 2026-10-07.
 
-This document records the M0 setup evidence. Current M1/M2 behavior and verification are documented in [the engine](game-engine.md) and [the backend controller](backend-controller.md); later implementation does not establish real auth/email/storage integration.
+This document retains the M0 setup evidence. Current M1/M2 behavior is documented in [the engine](game-engine.md) and [the backend controller](backend-controller.md); [M3 auth/storage](backend-auth-storage.md) and the [database guide](database-guide.md) describe the later implementation and service configuration. M0 checks alone did not establish those integrations.
 
 Authorized scope: repository workspace/configuration scaffolding, dependencies, local services and environment verification. The minimal React and Express/Socket.IO entry points make startup and proxy behavior observable. They contain no auth or game features. Domain schemas, migrations, public protocol definitions, game logic, provider integration and deployment remain later tasks.
 

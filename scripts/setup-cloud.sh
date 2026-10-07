@@ -17,5 +17,6 @@ npm ci
 npm run env:init
 docker compose pull postgres
 npm run db:up
+npm run db:migrate
 npm run format:check
 npm run check

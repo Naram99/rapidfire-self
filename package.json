@@ -15,12 +15,20 @@
   "overrides": {
     "concurrently": {
       "shell-quote": "1.12.0"
+    },
+    "@esbuild-kit/core-utils": {
+      "esbuild": "0.28.2"
     }
   },
   "scripts": {
     "env:init": "node scripts/init-local-env.mjs",
     "db:up": "docker compose up -d --wait --wait-timeout 60 postgres",
     "db:stop": "docker compose stop postgres",
+    "db:console": "node scripts/database-console.mjs",
+    "db:backup": "node scripts/database-backup.mjs",
+    "auth:generate": "npm run auth:generate --workspace=@rapidfire/server",
+    "db:generate": "npm run db:generate --workspace=@rapidfire/server",
+    "db:migrate": "npm run db:migrate --workspace=@rapidfire/server",
     "predev": "npm run build:shared",
     "dev": "concurrently --kill-others --names server,web \"npm run dev --workspace=@rapidfire/server\" \"npm run dev --workspace=@rapidfire/web\"",
     "typecheck": "npm run build:shared && npm run typecheck --workspaces && tsc --project tsconfig.tooling.json",
@@ -42,6 +50,7 @@
     "@types/node": "24.19.1",
     "concurrently": "9.2.1",
     "cross-env": "10.1.0",
+    "drizzle-kit": "0.31.11",
     "esbuild": "0.28.2",
     "prettier": "3.9.9",
     "typescript": "6.0.3",

@@ -94,6 +94,7 @@ export class PersistenceQueue {
         }
       })
       .catch(() => this.dependencies.onError('PERSISTENCE_QUEUE_FAILED'));
+    this.dependencies.onPersistenceWork?.(this.tail);
   }
   idle(): Promise<void> {
     return this.tail;

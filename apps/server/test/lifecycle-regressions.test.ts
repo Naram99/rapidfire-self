@@ -9,6 +9,55 @@ import {
 } from './game-helpers.js';
 
 describe('scope, identity and snapshot regressions', () => {
+  it('does not persist a countdown interrupted before the match actually started', async () => {
+    let saved = 0;
+    const h = harness({
+      persistence: {
+        save: async () => {
+          saved++;
+        },
+      },
+    });
+    const user = await h.client('u1');
+    success(
+      await user.send('solo:start', {
+        settings: { rounds: 1, answerTimeMs: 20000 },
+      }),
+    );
+    await h.service.shutdown();
+    await h.service.persistenceIdle();
+    expect(saved).toBe(0);
+    expect(h.errors).toEqual([]);
+  });
+  it('drains pending persistence after a match and its last connection have been disposed', async () => {
+    let release: (() => void) | undefined;
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const h = harness({ persistence: { save: async () => gate } });
+    const user = await h.client('u1');
+    success(
+      await user.send('solo:start', {
+        settings: { rounds: 1, answerTimeMs: 20000 },
+      }),
+    );
+    await h.advance(5000);
+    success(
+      await user.send('match:leave', {
+        matchId: user.latest().match?.id ?? '',
+      }),
+    );
+    await h.service.disconnect(user.id);
+    let finished = false;
+    const drain = h.service.persistenceIdle().then(() => {
+      finished = true;
+    });
+    await h.settle();
+    expect(finished).toBe(false);
+    release?.();
+    await drain;
+    expect(finished).toBe(true);
+  });
   it('does not expose a previous match result to a newly joined lobby member', async () => {
     const h = harness();
     const previous = await h.client('u1');

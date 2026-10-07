@@ -128,6 +128,7 @@ export type PublicMatch = Readonly<{
   participants: readonly Readonly<{
     id: string;
     name: string;
+    identityState: 'registered' | 'guest' | 'deleted_user';
     order: number;
     score: number;
     presence: 'online' | 'offline';
