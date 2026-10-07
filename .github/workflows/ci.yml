@@ -1,0 +1,38 @@
+name: Development environment checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-bookworm@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
+        env:
+          POSTGRES_USER: rapidfire
+          POSTGRES_DB: rapidfire
+          # Ephemeral CI database only.
+          POSTGRES_PASSWORD: ci-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U rapidfire -d rapidfire"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgresql://rapidfire:ci-only@127.0.0.1:5432/rapidfire
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm install --global npm@11.9.0
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run format:check
+      - run: npm run check
