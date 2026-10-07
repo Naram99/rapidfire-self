@@ -2,7 +2,7 @@
 
 Utolsó frissítés: 2026-10-07.
 
-Ez a dokumentum a beszélgetésben elfogadott termék-, adatmodell-, socket- és tranzakciós döntéseket foglalja össze. Nem implementáció, nem SQL-séma és nem TypeScript-típusdefiníció. A felhasználó 2026-10-07-én engedélyezte az M0 munkakörnyezet létrehozását: workspace-konfiguráció, csomagtelepítés, minimális indítható alapváz és környezeti ellenőrzések. Játék-/authfunkciók és domainséma-migrációk még nem készülnek.
+Ez a dokumentum a beszélgetésben elfogadott termék-, adatmodell-, socket- és tranzakciós döntéseket foglalja össze. Nem SQL-séma vagy TypeScript-típusdefiníció. Az engedélyezett M0 környezet, M1 natív motor és M2 backendvezérlő/socket elkészült; részleteik a kapcsolódó megvalósítási dokumentumokban szerepelnek. Valódi auth-, email-, domainséma- és migrációs integráció még nem készült.
 
 ## 1. Státusz és hatókör
 
@@ -41,7 +41,7 @@ Ez a dokumentum a beszélgetésben elfogadott termék-, adatmodell-, socket- és
 - Kérdésforrás, kérdésgenerálás, seed és reprodukálhatósági szerződés.
 - Néhány szélső eset és fizikai adatbázis-validáció; ezeket a 12. fejezet sorolja fel.
 
-Az elfogadott terméktervek nem jelentenek kipróbált játék-/authműködést. A tároló az eredeti dokumentum összeállításakor README-t tartalmazott. Az M0 technikai alapvázának és környezeti ellenőrzéseinek aktuális állapotát a [környezeti dokumentum](development-environment.md) rögzíti; domainfunkciók és migrációk továbbra sem készültek.
+Az elfogadott terméktervek önmagukban nem jelentenek kipróbált működést. Az M0 technikai alap és környezeti ellenőrzések eredményeit a [környezeti dokumentum](development-environment.md), az M1 és M2 tényleges tesztjeit a [motor](game-engine.md) és [backendvezérlő](backend-controller.md) dokumentációja rögzíti. Valódi auth és tartós domainadatok továbbra is későbbi integrációk.
 
 ## 2. Termék és technológiai kiindulás
 
@@ -256,6 +256,7 @@ Az MVP felülete angol. A hibák, megszakítási okok, eredménytípusok és men
 
 ### 6.1. Munkamegosztás és formátumok
 
+- MVP protokollverzió: 1. A handshake pontosan ezt a verziót közli; eltéréskor nincs kapcsolódás, stabil `PROTOCOL_VERSION_UNSUPPORTED` kód és oldalfrissítést kérő kliensüzenet jár.
 - HTTP: auth, profil és tartós előzmények.
 - Socket.IO: szoba- és játékparancsok, aktív állapot és időszinkron.
 - A szerver hitelesített kapcsolatból állapítja meg a személyazonosságot. Payloadban küldött userId nem hitelesítés.
@@ -329,6 +330,8 @@ Régebbi verziót a kliens eldob; azonos verzió ismételt kézbesítése megeng
 
 Újracsatlakozáskor ismételt hitelesítés/részvétel-ellenőrzés és teljes snapshot szükséges. Socket.IO reconnect önmagában nem játékállapot-helyreállítás.
 
+Explicit kilépéskor minden saját eszköz végső `closed` snapshotot kap. Megszűnt szoba és önálló szólómeccs utáni visszatérés ugyanezt a fázist használja külön okkóddal. A `recentResult` a saját korábbi meccs mentési státuszát visszatérés után is követheti; új tag nem kap korábbi meccshez eredményhivatkozást, kilépett tag nem kap következő meccsállapotot.
+
 ### 6.5. Hibakódok
 
 | Kód | Jelentés |
@@ -339,6 +342,7 @@ Régebbi verziót a kliens eldob; azonos verzió ismételt kézbesítése megeng
 | ROOM_FULL | Tízfős korlát. |
 | ROOM_GAME_ACTIVE | Aktív meccs alatt nem lehet új/visszalépő tagként csatlakozni. |
 | ALREADY_IN_ROOM | Másik szobában már tag. |
+| ALREADY_IN_MATCH | Önálló meccsben már részt vesz. |
 | FORBIDDEN | Nincs jogosultság. |
 | STALE_STATE | Korábbi meccs, fázis, várószobai ciklus vagy beállításverzió. |
 | DEADLINE_EXCEEDED | Határidő lejárt. |
@@ -346,6 +350,9 @@ Régebbi verziót a kliens eldob; azonos verzió ismételt kézbesítése megeng
 | PARTICIPANT_LEFT | Explicit kilépett résztvevő. |
 | REQUEST_ID_CONFLICT | Kérésazonosító eltérő tartalommal. |
 | MATCH_INTERRUPTED | Technikailag megszakított meccs. |
+| PROTOCOL_VERSION_UNSUPPORTED | Eltérő socketverzió; oldalfrissítés szükséges. |
+| RATE_LIMITED | Az ismétlésvédelmi cache kapacitása betelt. |
+| SERVER_UNAVAILABLE | A szerver átmenetileg nem tudja végrehajtani a kérést. |
 
 ## 7. Tartós adatmodell
 
@@ -784,6 +791,7 @@ Helyi fejlesztésben a Vite HMR külön belső folyamatot igényelhet. Javaslat:
 - Újracsatlakozáshoz is hiteles bizonyíték kell. Ha lejárt a Better Auth session, szobakód/userId nem elég: külön védett, meccshez kötött visszatérési azonosító vagy új bejelentkezés szükséges. Ennek pontos szerződése még tervezendő.
 - Explicit kilépés/logout, fióktörlés és meccsvég megszünteti a meccshez kötött jogosultságot.
 - A várószobában újraazonosításra váró játékos helyét legfeljebb 60 másodpercig tartjuk fenn, ready = false értékkel. Az authhiány nem offline állapot; külön felületi jelzés szükséges. Lejáratkor eltávolítás, szükség esetén tulajdonosváltás.
+- Offline és authhiány esetén a két 60 másodperces határidő párhuzamosan fut; a korábban lejáró távolít el. Reconnect csak a kapcsolathiányt oldja fel, az újraazonosítási határidőt nem hosszabbítja.
 - Érvényes sessiont meglévő, támogatott frissítési folyamat hosszabbíthat meg; már lejárt sessionből nem hozunk létre önkényesen új hitelesítést.
 - A vendég jogosultsága csak a futó szólómeccshez és annak kiértékeléséhez tartozik; a végeredmény-képernyő végén érvénytelenítjük. A még érvényes session aktív használat mellett újabb 15 percre megújítható. Ez nem hosszabbítja meg a külön meccsvisszatérési cookie fix 30 perces határidejét.
 
@@ -863,13 +871,11 @@ A mérföldköveket, előfeltételeket és ellenőrzési feltételeket külön d
 - Better Auth session 5 perces megújítási célütemének kliensfolyamata. Élettartam 30 perc, nincs 24 órás abszolút maximum; cookieCache kikapcsolva.
 - Mi legyen a profil és érvényes session életciklusa authlétrehozási/profillétrehozási hiba esetén?
 - Milyen folyamat biztosítja a Better Auth és saját adatok koordinált, tényleges törlését?
-- A 60 másodperces újraazonosítási helyfenntartás és az offline türelmi idő összehangolása, különösen megszakadó/újracsatlakozó kliensnél.
 - Lejárt authsession utáni meccsvisszatérés HTTP-kiadási részletei és visszavonásának koordinációja. A meccs kezdetétől fix 30 perces, nem hosszabbított HttpOnly cookie és memóriabeli hashnyilvántartás már elfogadott.
 - A vendégsession saját HTTP-végpontjának konkrét útvonala/metódusa és az aktív használat technikai felismerése; a 15 perces megújítható élettartam, 5 percenkénti HTTP-ellenőrzés és a végeredmény-képernyő végi megszüntetés már elfogadott.
 - Kijelentkezés authsession-hatókörének pontos szabálya több eszköz esetén; a meccsből kilépés mindegyikre érvényes.
 - A nickname szóköz-normalizálása, ürességellenőrzése és Unicode-hosszának pontos értelmezése. A 40 karakteres maximum elfogadott.
-- Az elfogadott időbélyegzés és sorba állítás konkrét fogadási mechanizmusa, órakezelése és technikai ellenőrzése.
-- Protokollverzió-ütközés és megszűnt scope miatti szinkronhibák pontos kezelése.
+- Az M2-ben rögzített fogadási idő, monoton óra, sorba állítás, protokollütközés és lezárt scope frontendoldali kezelése az M4-ben; a backendmegvalósítást és teszteket a [vezérlő dokumentációja](backend-controller.md) rögzíti.
 - Mentési és törlési zárak, tranzakciós izoláció, logstruktúra és leállítási eljárás.
 - PostgreSQL CHECK/FK szabályok és alkalmazásoldali, több rekordot érintő invariánsok pontos felosztása.
 

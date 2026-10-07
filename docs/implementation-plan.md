@@ -7,7 +7,7 @@ Kapcsolódó specifikációk:
 - [MVP tervezési dokumentum](design.md)
 - [Authadapterek és meccsvisszatérés](auth-adapters.md)
 
-Ez a dokumentum megvalósítási sorrendet és ellenőrzési feltételeket tervez. Az M0 környezet létrehozását és konfigurálását a felhasználó 2026-10-07-én engedélyezte, majd az elkészült PR-t mainbe merge-ölte. Ugyanezen a napon engedélyezte az M1 natív játékmotor megvalósítását is. Az M1 belső motor elkészült; részletei a [motor dokumentációjában](game-engine.md) olvashatók. Auth, socketvezérlő, domainséma, migráció és deployment továbbra sem kezdődött. A részletes környezetkonfigurációt és M0 ellenőrzési eredményeket a [környezeti dokumentum](development-environment.md) rögzíti.
+Ez a dokumentum a megvalósítás sorrendjét és ellenőrzési feltételeit rögzíti. Az M0 környezet és az M1 natív motor elkészült, PR-jeiket a felhasználó mainbe merge-ölte. Ezt követően engedélyezte az M2 backendvezérlő és socket megvalósítását is. Az elkészült M1 részletei a [motor dokumentációjában](game-engine.md), az M2 szerződései és adapterhatárai a [backend dokumentációjában](backend-controller.md) olvashatók. A valódi auth, domainséma, migráció, email és deployment továbbra is későbbi mérföldkő. A környezetkonfigurációt és M0 ellenőrzési eredményeket a [környezeti dokumentum](development-environment.md) rögzíti.
 
 ## 1. Elfogadott alapok
 
@@ -42,7 +42,7 @@ Ez a dokumentum megvalósítási sorrendet és ellenőrzési feltételeket terve
 
 Elfogadott mappaegységek: apps/web, apps/server, packages/game-engine, packages/contracts. Az M0-ban a négy workspace konfigurációja és minimális belépési pontjai elkészültek; a domainmodulok belső könyvtárszerkezete későbbi megvalósítási részlet.
 
-A gyökércsomag a workspace-ek közös parancsait és közös fejlesztői eszközeit fogja össze. A frontend és a backend saját csomagjában deklarálja a függőségeit; a közös lockfile nem teszi ezeket minden egység függőségévé. A motor implementációja továbbra sem használ külső könyvtárat. Az M0-ban a package.json fájlok, lockfile és workspace-konfiguráció elkészültek. Az M1-ben a motor működő implementációt kapott; a publikus szerződés továbbra is üres belépési pont.
+A gyökércsomag a workspace-ek közös parancsait és közös fejlesztői eszközeit fogja össze. A frontend és a backend saját csomagjában deklarálja a függőségeit; a közös lockfile nem teszi ezeket minden egység függőségévé. A motor implementációja továbbra sem használ külső könyvtárat. Az M0-ban a package.json fájlok, lockfile és workspace-konfiguráció elkészültek. Az M1-ben a motor működő implementációt kapott; az M2-ben a contracts publikus típusokkal, Zod-validációval és angol üzenetkészletekkel bővült.
 
 ## 3. Mérföldkövek
 
@@ -85,6 +85,8 @@ Kilépési feltétel:
 - Nincs motorból indított I/O, időzítő vagy rejtett véletlenforrás.
 
 ### M2 — Backendvezérlő és socket-szerződés
+
+Megvalósítás: [backendvezérlő, publikus protokoll és adapterportok](backend-controller.md). 32 célzott M2-teszt ellenőrzi a szoba-/szólófolyamatot, versenyhelyzeteket, adatvédelmet és valódi Socket.IO-klienseket. A felhasználó elfogadta a v1 protokollütközés miatti kapcsolódás-elutasítást, a minden eszközre küldött végső `closed` snapshotot és az offline/auth türelmi idők párhuzamos futását a korábbi határidő érvényesítésével. Az alapértelmezett bootstrap még nem azonosít felhasználót; tesztadapterrel igazolt jogosultság nem jelent kész Better Auth-integrációt.
 
 Cél: a motor valós idejű szerverfolyamatban működik, érvényes publikus állapotot küld.
 
@@ -175,15 +177,15 @@ Kilépési feltétel: működő bejelentkezett és vendégfolyamat, valós email
 
 A deployment előkészítése nem azonos az éles publikálással; annak engedélyezését az aktuális felhasználói utasítás alapján kezeljük.
 
-## 4. Mielőtt kód készülne
+## 4. A következő mérföldkő előtt
 
 Első lezárandó csomag:
 
-1. Projektalapok fennmaradó részletei: belső könyvtárszerkezet, npm workspace-konfiguráció és konkrét kompatibilis csomagverziók. Node.js 24 LTS, Express, a négy workspace-mappa, Vitest és Playwright már elfogadott.
+1. Az M3 domainséma és authadapter bekötése a meglévő M2 portokhoz; a Drizzle Kit kompatibilis változatának ellenőrzése és szükség esetén a még nem engedélyezett függőség jóváhagyása. A konkrét Node/npm/csomagverziók és workspace-konfiguráció már az M0-ban rögzültek.
 2. Az elfogadott, mindkét sessiontípusnál 5 percenkénti HTTP-ellenőrzés technikai részletei: aktív használat felismerése, felfüggesztett lapok kezelése és a vendégvégpont konkrét útvonala/metódusa. A Better Auth cookieCache kikapcsolása már elfogadott.
 3. Better Auth törlés/reset koordinációjának támogatott módja; nem maradhat elrejtett atomikussági feltételezés.
 4. A specifikációban fennmaradt implementációs pontok mérföldkőhöz rendelése.
 
 Nem szükséges a seed/generálás, tiebreak, ELO-algoritmus, social login vagy profilkép előrehozása az MVP-hez. Ezek továbbra is külön későbbi tervek.
 
-A teljes implementáció egyetlen nagy változtatás helyett mérföldkövenként készüljön. Az ellenőrzések eredményét a megvalósítás során rögzítjük; ez a dokumentum semmit nem állít már teljesítettnek.
+A teljes implementáció mérföldkövenként készül. Az M0/M1/M2 helyi ellenőrzési eredményeit a kapcsolódó dokumentumok rögzítik; ezek nem igazolják előre az M3–M5 integrációit.
