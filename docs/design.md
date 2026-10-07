@@ -175,6 +175,8 @@ Három külön tulajdonságot kezelünk:
 - Explicit kilépés után az eredmény megmarad, a résztvevőt többé nem várjuk be, nem választ kategóriát és ugyanabba a meccsbe nem térhet vissza.
 - Explicit kilépés után nem keletkeznek további kihagyások vagy kérdéseredmények számára.
 
+Implementációkor elfogadott pontosítás: a kilépés előtt már elfogadott válasz a kérdés lezárásakor még kiértékelődik. A bevárandó lista a kérdés megnyitásakor rögzül, kilépéskor szűkülhet; az idle állapotból visszatérő a következő kérdéstől kerül vissza bele. Ha a lista kilépés miatt üresre szűkül, de marad meccsrésztvevő, a rendes határidő zárja a kérdést.
+
 Aktív meccs alatt új játékos és explicit kilépett résztvevő sem csatlakozhat várakozóként. Az elutasítás kódja `ROOM_GAME_ACTIVE`. A magyarul egyeztetett jelentés: „A szobában aktív játék zajlik, csak várószobába lehet csatlakozni”. Angol MVP-szöveg:
 
 > A game is in progress in this room. You can join once the room returns to the lobby.
@@ -637,7 +639,7 @@ Az azonos origin a cookie/session és böngészős kérések kezelését egyszer
 
 ### 11.2. Modulhatárok és workspace-mappák
 
-A felelősségi felosztás és függőségi irányok az elfogadott architektúra részei. A négy workspace-mappa elfogadott: apps/web, apps/server, packages/game-engine és packages/contracts; konfigurációjuk az M0-ban elkészült. A szerver src alatti bootstrap belépési pont létrejött; a többi belső útvonal az alábbi táblázatban továbbra is javaslat. A motor és a publikus szerződés csak üres belépési pontot tartalmaz.
+A felelősségi felosztás és függőségi irányok az elfogadott architektúra részei. A négy workspace-mappa elfogadott: apps/web, apps/server, packages/game-engine és packages/contracts; konfigurációjuk az M0-ban elkészült. A szerver src alatti bootstrap belépési pont létrejött; a többi szerveroldali belső útvonal az alábbi táblázatban továbbra is javaslat. Az M1 natív motor megvalósult; belső API-ját és integrációs határait a [motor dokumentációja](game-engine.md) írja le. A publikus szerződés továbbra is üres belépési pontot tartalmaz.
 
 | Modul | Hely (belső szerverútvonalaknál javaslat) | Felelősség |
 |---|---|---|

@@ -1,6 +1,6 @@
 # Rapidfire
 
-Self-hosted realtime quiz system. This repository currently contains the M0 development scaffold and the accepted design documents. Authentication, game rules, protocol payloads, database schemas and email delivery are not implemented yet.
+Self-hosted realtime quiz system. This repository contains the M0 development scaffold, the M1 standalone game engine and the accepted design documents. Authentication, socket protocol payloads, database schemas and email delivery are not implemented yet.
 
 ## Requirements
 
@@ -39,7 +39,7 @@ For an existing shell, restart stopped services with `npm run db:up` and `npm ru
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `npm run typecheck`    | Strict TypeScript checks for all four workspaces and test/configuration files.                                                                                            |
 | `npm run build`        | Shared-package declarations, Node server output and production Vite bundle, in dependency order.                                                                          |
-| `npm test`             | Vitest PostgreSQL/Drizzle integration check: parameterized write/read in a temporary-table transaction, then rollback and cleanup. Requires the database.                 |
+| `npm test`             | Native engine tests plus the PostgreSQL/Drizzle integration check. The integration test requires the database.                                                            |
 | `npm run test:e2e`     | Playwright Chromium checks: React rendering, proxied API responses, JSON API 404, Socket.IO polling and WebSocket handshakes. Starts the development servers when needed. |
 | `npm run check`        | Type checking, build, integration test and browser tests.                                                                                                                 |
 | `npm run format:check` | Formatting of scaffold/configuration files.                                                                                                                               |
@@ -63,7 +63,7 @@ One Express/Node process serves the Vite build, HTTP API and Socket.IO on port 3
 | ---------------------- | ------------------------------------------- | -------------------------------------------------------------------------- |
 | `apps/web`             | React/Vite client                           | React, Socket.IO client and public contracts.                              |
 | `apps/server`          | Express/Socket.IO host and later adapters   | Better Auth, Drizzle, PostgreSQL driver, Nodemailer, engine and contracts. |
-| `packages/game-engine` | Native TypeScript engine                    | **Zero runtime dependencies**; currently an empty entry point.             |
+| `packages/game-engine` | Native TypeScript engine                    | **Zero runtime dependencies**; pure transitions, validation and scoring.   |
 | `packages/contracts`   | Public transport types and later validation | Zod; currently an empty entry point.                                       |
 
 One root lockfile records the complete dependency graph. Direct dependency versions are exact; npm validates engine and peer compatibility without `--force` or `--legacy-peer-deps`. The npm cache is stored in ignored `.cache/npm`, avoiding cloud home-directory permissions. Runtime packages are declared in their owning workspace; common developer tools live at the root. The engine has no ambient Node/DOM types and does not import contracts.
@@ -73,6 +73,7 @@ Backend third-party declaration checking and the targeted shell-quote security o
 ## Design and setup evidence
 
 - [Accepted design](docs/design.md)
+- [Game engine API, boundaries and tests](docs/game-engine.md)
 - [Auth adapters and session lifecycle](docs/auth-adapters.md)
 - [Implementation milestones](docs/implementation-plan.md)
 - [Development environment configuration and verification](docs/development-environment.md)
