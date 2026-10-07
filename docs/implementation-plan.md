@@ -7,7 +7,7 @@ Kapcsolódó specifikációk:
 - [MVP tervezési dokumentum](design.md)
 - [Authadapterek és meccsvisszatérés](auth-adapters.md)
 
-Ez a dokumentum megvalósítási sorrendet és ellenőrzési feltételeket tervez. Az M0 környezet létrehozását és konfigurálását a felhasználó 2026-10-07-én engedélyezte; ez magában foglalja az indítható technikai alapvázat, csomagtelepítést és a környezet ellenőrzéseit. Játék-/authfunkciók, domainséma, migráció és deployment továbbra sem kezdődött. A részletes konfigurációt és ellenőrzési eredményeket a [környezeti dokumentum](development-environment.md) rögzíti.
+Ez a dokumentum megvalósítási sorrendet és ellenőrzési feltételeket tervez. Az M0 környezet létrehozását és konfigurálását a felhasználó 2026-10-07-én engedélyezte, majd az elkészült PR-t mainbe merge-ölte. Ugyanezen a napon engedélyezte az M1 natív játékmotor megvalósítását is. Az M1 belső motor elkészült; részletei a [motor dokumentációjában](game-engine.md) olvashatók. Auth, socketvezérlő, domainséma, migráció és deployment továbbra sem kezdődött. A részletes környezetkonfigurációt és M0 ellenőrzési eredményeket a [környezeti dokumentum](development-environment.md) rögzíti.
 
 ## 1. Elfogadott alapok
 
@@ -42,7 +42,7 @@ Ez a dokumentum megvalósítási sorrendet és ellenőrzési feltételeket terve
 
 Elfogadott mappaegységek: apps/web, apps/server, packages/game-engine, packages/contracts. Az M0-ban a négy workspace konfigurációja és minimális belépési pontjai elkészültek; a domainmodulok belső könyvtárszerkezete későbbi megvalósítási részlet.
 
-A gyökércsomag a workspace-ek közös parancsait és közös fejlesztői eszközeit fogja össze. A frontend és a backend saját csomagjában deklarálja a függőségeit; a közös lockfile nem teszi ezeket minden egység függőségévé. A motor implementációja továbbra sem használ külső könyvtárat. Az M0-ban a package.json fájlok, lockfile és workspace-konfiguráció elkészülnek; a motor és a publikus szerződés csak üres belépési pontot kap.
+A gyökércsomag a workspace-ek közös parancsait és közös fejlesztői eszközeit fogja össze. A frontend és a backend saját csomagjában deklarálja a függőségeit; a közös lockfile nem teszi ezeket minden egység függőségévé. A motor implementációja továbbra sem használ külső könyvtárat. Az M0-ban a package.json fájlok, lockfile és workspace-konfiguráció elkészültek. Az M1-ben a motor működő implementációt kapott; a publikus szerződés továbbra is üres belépési pont.
 
 ## 3. Mérföldkövek
 
@@ -63,6 +63,8 @@ Feladatok:
 Kilépési feltétel: minden egység ellenőrizhető/buildelhető; a motornak nulla külső implementációs importja van; a titkok és szerver-only adatok nem jutnak a frontend buildbe. A authtörlés koordinációjának bizonyítatlan feltételezése nem marad rejtett.
 
 ### M1 — Önálló játékmotor
+
+Megvalósítás: [motor API és integrációs határok](game-engine.md). A kilépés előtti elfogadott válasz még kiértékelődik; a bevárandó lista kérdésnyitáskor rögzül, kilépéskor szűkül, az idle-visszatérő a következő kérdéstől kerül bele. Ezeket a felhasználó az implementáció közbeni pontosításkor elfogadta.
 
 Cél: egy teljes meccs lefutása felület, socket és adatbázis nélkül.
 
