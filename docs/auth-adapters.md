@@ -264,7 +264,7 @@ Az auth lejárata és explicit visszavonása külön esemény. Null getSession e
 - Ha nincs érvényes auth, a hely 60 másodpercig megmarad ready = false értékkel és bejelentkezési jelzéssel.
 - Sikeres újraazonosításnak ugyanazt a user.id-t kell igazolnia; másik fiók nem veheti át a fenntartott helyet.
 - Ha azonosítás nincs a határidőig, tagság megszüntetése és szükség esetén tulajdonosváltás/szobatörlés történik.
-- Az újraazonosítási és offline határidő összehangolását még pontosítani kell; reconnect nem indíthat korlátlanul újabb 60 másodperceket.
+- Az újraazonosítási és offline 60 másodperces határidő párhuzamosan fut; a korábban lejáró távolítja el a játékost. Reconnect csak a kapcsolathiányt oldja fel, az authhatáridőt nem hosszabbítja; sikeres újraazonosítás csak az authhiányt szünteti meg.
 
 ### 3.7. Vendégmód
 
