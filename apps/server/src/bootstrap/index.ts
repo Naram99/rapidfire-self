@@ -1,27 +1,31 @@
 import { fileURLToPath } from 'node:url';
-import { GameService } from '../application/game-service.js';
+import { createDatabase } from '../database/client.js';
+import { interruptAbandonedGames } from '../database/persistence.js';
+import { smtpEmailPort } from '../email/smtp.js';
 import { runtimeDependencies } from '../infrastructure/runtime.js';
-import { createGameServer } from './create-server.js';
+import { createApplication } from './application.js';
+import { serverConfig } from './config.js';
 
-const port = Number(process.env.PORT || 3000);
-if (!Number.isInteger(port) || port < 1 || port > 65535) {
-  throw new Error('PORT must be an integer between 1 and 65535');
+const config = serverConfig();
+const { port, host } = config;
+const database = createDatabase(config.databaseUrl);
+try {
+  const recovered = await interruptAbandonedGames(database.db);
+  if (recovered) console.info('ABANDONED_GAMES_INTERRUPTED', recovered);
+} catch {
+  await database.close();
+  throw new Error(
+    'Database initialization failed. Start PostgreSQL and run npm run db:migrate.',
+  );
 }
-const host = process.env.HOST || '127.0.0.1';
-const service = new GameService(runtimeDependencies());
-const publicPort =
-  process.env.NODE_ENV === 'production'
-    ? port
-    : Number(process.env.WEB_PORT || 5173);
-const configuredOrigins = process.env.GAME_ALLOWED_ORIGINS?.trim();
-const allowedOrigins = configuredOrigins
-  ? configuredOrigins.split(',').map((origin) => new URL(origin.trim()).origin)
-  : [`http://127.0.0.1:${publicPort}`, `http://localhost:${publicPort}`];
-const { httpServer, io } = createGameServer({
-  service,
-  allowedOrigins,
-  // M3 supplies the cookie/session adapter; the M2 production default denies all identities.
-  authenticate: async () => null,
+if (!config.smtp) console.warn('SMTP_NOT_CONFIGURED');
+const { httpServer, io, service, email } = createApplication({
+  db: database.db,
+  dependencies: runtimeDependencies(),
+  emailPort: smtpEmailPort(config.smtp),
+  secret: config.secret,
+  publicUrl: config.publicUrl,
+  allowedOrigins: config.allowedOrigins,
   ...(process.env.NODE_ENV === 'production'
     ? { webRoot: fileURLToPath(new URL('../../../web/dist/', import.meta.url)) }
     : {}),
@@ -34,9 +38,12 @@ let shuttingDown = false;
 async function shutdown() {
   if (shuttingDown) return;
   shuttingDown = true;
-  const timeout = setTimeout(() => process.exit(1), 5000);
+  const timeout = setTimeout(() => process.exit(1), 15000);
   timeout.unref();
   await service.shutdown();
+  await service.persistenceIdle();
+  email.close();
+  await database.close();
   io.close(() => {
     clearTimeout(timeout);
     process.exit(0);

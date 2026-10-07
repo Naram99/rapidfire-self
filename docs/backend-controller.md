@@ -2,7 +2,7 @@
 
 Utolsó frissítés: 2026-10-07.
 
-Az M1 natív motort az M2 szoba-/szólóvezérlő és a Socket.IO transport kapcsolja össze. A publikus szerződések, jogosultsági szabályok, többeszközös állapot, reconnect és aszinkron adapterhatárok tesztelhetők. A valódi Better Auth-, cookie-, PostgreSQL- és emailadapter az M3 feladata; a játékfelület az M4-é.
+Az M1 natív motort az M2 szoba-/szólóvezérlő és a Socket.IO transport kapcsolja össze. Ez a dokumentum az M2 alapját rögzíti; a hozzáillesztett valódi Better Auth-, cookie-, PostgreSQL- és emailadapter az [M3 dokumentációjában](backend-auth-storage.md) olvasható. A játékfelület az M4 feladata.
 
 ## Modulok és állapottulajdonos
 

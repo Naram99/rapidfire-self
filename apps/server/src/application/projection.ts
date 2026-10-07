@@ -14,7 +14,11 @@ import { graceDeadline } from './lobby.js';
 import type { RoomState } from './lobby.js';
 import type { Person, Viewer } from './ports.js';
 
-export type Binding = Readonly<{ person: Person; participantId: string }>;
+export type Binding = Readonly<{
+  person: Person;
+  participantId: string;
+  identityState?: 'deleted_user';
+}>;
 export type PersistenceView = Readonly<{
   status: PersistenceStatus;
   revision: number;
@@ -165,6 +169,13 @@ export function projectSnapshot(
         participants: state.participants.map((participant) => ({
           id: participant.id,
           name: participant.name,
+          identityState:
+            bindings.find((b) => b.participantId === participant.id)
+              ?.identityState ??
+            (bindings.find((b) => b.participantId === participant.id)?.person
+              .kind === 'guest'
+              ? 'guest'
+              : 'registered'),
           order: participant.order,
           score: participant.score,
           presence: participant.presence,

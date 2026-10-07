@@ -1,6 +1,7 @@
 import { existsSync } from 'node:fs';
 import { createServer } from 'node:http';
 import express from 'express';
+import type { Router } from 'express';
 import { Server } from 'socket.io';
 import type { GameService } from '../application/game-service.js';
 import { bindGameSocket } from '../transport/socket.js';
@@ -12,6 +13,7 @@ export function createGameServer(
     authenticate: Authenticate;
     allowedOrigins: readonly string[];
     webRoot?: string;
+    api?: Router;
   }>,
 ) {
   const app = express();
@@ -19,6 +21,7 @@ export function createGameServer(
   app.get('/api/health', (_request, response) =>
     response.json({ status: 'ok' }),
   );
+  if (options.api) app.use(options.api);
   app.use('/api', (_request, response) =>
     response.status(404).json({ code: 'NOT_FOUND' }),
   );

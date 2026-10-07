@@ -8,5 +8,5 @@
     "skipLibCheck": true,
     "outDir": "dist"
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "auth.generate.ts", "drizzle.config.ts"]
 }

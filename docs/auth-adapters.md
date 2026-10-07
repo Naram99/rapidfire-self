@@ -4,6 +4,8 @@ Utolsó frissítés: 2026-10-07.
 
 Kapcsolódó dokumentum: [MVP tervezési dokumentum](design.md).
 
+Az M3 megvalósítása, a végleges HTTP-útvonalak és a végrehajtott ellenőrzések a [backend auth- és tárolási dokumentumban](backend-auth-storage.md) találhatók; az alábbi szöveg a korábbi technikai terv.
+
 Ez a dokumentum az elfogadott authéletciklus technikai tervét tartalmazza. Elfogadott: szolgáltatófüggetlen SMTP + Nodemailer emailadapter, az MVP-ben SMTP2GO szolgáltatóval; memóriabeli küldési sor a megadott timeout/újrapróbálási szabályokkal; valamint a meccs kezdetétől számított fix 30 perces HttpOnly meccsvisszatérési cookie, szerveroldali hashnyilvántartással. A külön jelzett végrehajtási és szolgáltatásbeállítási részletek továbbra is nyitottak. Nem alkalmazáskód, nem konfiguráció és nem végrehajtott szolgáltatásbeállítás.
 
 ## 1. Rögzített követelmények

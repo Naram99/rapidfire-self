@@ -12,9 +12,13 @@ export type Person = Readonly<{
   name: string;
   kind: 'user' | 'guest';
 }>;
-export type Access = Readonly<{ person: Person; expiresAt: number }> &
+export type Access = Readonly<{
+  person: Person;
+  expiresAt: number;
+  authEpoch?: number;
+}> &
   (
-    | Readonly<{ type: 'session'; emailVerified: boolean }>
+    | Readonly<{ type: 'session'; emailVerified: boolean; sessionId?: string }>
     | Readonly<{ type: 'match'; matchId: string }>
   );
 export type Clock = Readonly<{ now: () => number }>;
@@ -73,6 +77,10 @@ export type Dependencies = Readonly<{
   onError: (code: string) => void;
   onMatchStarted: (matchId: string, personIds: readonly string[]) => void;
   onGuestFinished: (personId: string) => void;
+  onMatchFinished?: (matchId: string) => void;
+  onParticipantReleased?: (personId: string) => void;
+  onLobbyReturned?: (personIds: readonly string[]) => void;
+  onPersistenceWork?: (completion: Promise<void>) => void;
 }>;
 export type Delivery = (snapshot: Snapshot) => void;
 export type Connection = {

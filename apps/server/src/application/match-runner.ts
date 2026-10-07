@@ -19,7 +19,7 @@ export type RunnerHooks = Readonly<{
 }>;
 export class MatchRunner {
   state: MatchState;
-  readonly bindings: readonly Binding[];
+  bindings: readonly Binding[];
   persistence: PersistenceView;
   private readonly saves: PersistenceQueue;
   private preparation: AbortController | null = null;
@@ -86,6 +86,26 @@ export class MatchRunner {
   persistenceIdle(): Promise<void> {
     return this.saves.idle();
   }
+  anonymize(personId: string): void {
+    const binding = this.bindings.find((item) => item.person.id === personId);
+    if (!binding) return;
+    this.bindings = this.bindings.map((item) =>
+      item === binding
+        ? {
+            ...item,
+            person: { ...item.person, name: '' },
+            identityState: 'deleted_user',
+          }
+        : item,
+    );
+    this.state = {
+      ...this.state,
+      participants: this.state.participants.map((p) =>
+        p.id === binding.participantId ? { ...p, name: '' } : p,
+      ),
+    };
+    this.hooks.changed();
+  }
   private persistenceCompleted(
     revision: number,
     status: PersistenceStatus,
@@ -96,6 +116,7 @@ export class MatchRunner {
   }
   private save(kind: 'start' | 'question' | 'final'): void {
     if (
+      this.state.startedAt === null ||
       this.persistence.status === 'not_saved_guest' ||
       !this.dependencies.persistence
     )
@@ -174,6 +195,11 @@ export class MatchRunner {
         case 'match_completed':
         case 'match_interrupted':
           this.save('final');
+          try {
+            this.dependencies.onMatchFinished?.(this.state.id);
+          } catch {
+            this.dependencies.onError('MATCH_FINISHED_NOTIFICATION_FAILED');
+          }
           break;
         case 'return_requested':
           this.hooks.returned();

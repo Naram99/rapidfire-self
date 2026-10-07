@@ -37,8 +37,19 @@ export class GameService {
   private readonly cache: RequestCache;
   private readonly retiredGuests = new Map<string, number>();
   private readonly knownSessions = new Map<string, number>();
+  private readonly pendingSaves = new Set<Promise<void>>();
+  readonly dependencies: Dependencies;
+  private revocationEpoch = 0;
   private closing = false;
-  constructor(readonly dependencies: Dependencies) {
+  constructor(dependencies: Dependencies) {
+    this.dependencies = {
+      ...dependencies,
+      onPersistenceWork: (completion) => {
+        this.pendingSaves.add(completion);
+        void completion.then(() => this.pendingSaves.delete(completion));
+        dependencies.onPersistenceWork?.(completion);
+      },
+    };
     this.cache = new RequestCache(dependencies.clock);
   }
   async connect(id: string, access: Access, deliver: Delivery): Promise<void> {
@@ -48,6 +59,11 @@ export class GameService {
     );
     requireCommand(
       access.expiresAt > this.dependencies.clock.now(),
+      'AUTH_REQUIRED',
+    );
+    requireCommand(
+      access.authEpoch === undefined ||
+        access.authEpoch === this.revocationEpoch,
       'AUTH_REQUIRED',
     );
     if (access.person.kind === 'user' && access.type === 'session')
@@ -98,6 +114,11 @@ export class GameService {
       : Promise.resolve();
   }
   async refresh(id: string, access: Access): Promise<void> {
+    requireCommand(
+      access.authEpoch === undefined ||
+        access.authEpoch === this.revocationEpoch,
+      'AUTH_REQUIRED',
+    );
     const connection = this.connections.get(id);
     requireCommand(
       connection !== undefined &&
@@ -118,12 +139,14 @@ export class GameService {
     const controller = this.flows.get(access.person.id);
     return controller
       ? controller.run(() => {
+          controller.updatePerson(access.person);
           controller.reconcile(access.person.id);
           this.publish(controller);
         })
       : Promise.resolve();
   }
   revoke(personId: string): Promise<void> {
+    this.revocationEpoch++;
     // Revocation is immediate at ingress, before queued state work or cached replay.
     for (const connection of this.connections.values())
       if (connection.access.person.id === personId) {
@@ -204,6 +227,89 @@ export class GameService {
         controller.queue.idle(),
       ),
     );
+  }
+  matchAccess(personId: string, matchId?: string) {
+    const controller = this.flows.get(personId);
+    const runner = controller?.runner;
+    const binding = runner?.bindings.find((b) => b.person.id === personId);
+    if (
+      !controller ||
+      !runner ||
+      !binding ||
+      runner.state.startedAt === null ||
+      (matchId !== undefined && runner.state.id !== matchId) ||
+      !controller.isPlaying(personId, runner.state.id)
+    )
+      return null;
+    const phase = runner.state.phase.type;
+    if (
+      binding.person.kind === 'user' &&
+      ['finished', 'interrupted', 'returned'].includes(phase)
+    )
+      return null;
+    return {
+      person: binding.person,
+      matchId: runner.state.id,
+      startedAt: runner.state.startedAt,
+      scope: controller.scope,
+    };
+  }
+  async refreshSession(access: Access): Promise<void> {
+    if (access.type !== 'session') return;
+    requireCommand(
+      access.authEpoch === undefined ||
+        access.authEpoch === this.revocationEpoch,
+      'AUTH_REQUIRED',
+    );
+    this.rememberSession(access);
+    await Promise.all(
+      [...this.connections.values()]
+        .filter(
+          (c) =>
+            !c.revoked &&
+            c.access.person.id === access.person.id &&
+            (c.access.type === 'match' ||
+              access.person.kind === 'guest' ||
+              c.access.sessionId === access.sessionId),
+        )
+        .map((c) => this.refresh(c.id, access)),
+    );
+  }
+  sessionIds(personId: string): readonly string[] {
+    return [
+      ...new Set(
+        [...this.connections.values()].flatMap((c) =>
+          !c.revoked &&
+          c.access.person.id === personId &&
+          c.access.type === 'session' &&
+          c.access.sessionId
+            ? [c.access.sessionId]
+            : [],
+        ),
+      ),
+    ];
+  }
+  accessEpoch(): number {
+    return this.revocationEpoch;
+  }
+  async anonymize(personId: string): Promise<void> {
+    const controllers = new Set([
+      ...this.controllers.values(),
+      ...[...this.closedViews.values()].map((view) => view.controller),
+    ]);
+    await Promise.all(
+      [...controllers].map((controller) =>
+        controller.run(() => {
+          controller.updatePerson({ id: personId, name: '', kind: 'user' });
+          controller.runner?.anonymize(personId);
+          controller.lastRunner?.anonymize(personId);
+        }),
+      ),
+    );
+  }
+  async persistenceIdle(): Promise<void> {
+    while (this.pendingSaves.size > 0)
+      await Promise.all([...this.pendingSaves]);
   }
   async shutdown(): Promise<void> {
     this.closing = true;
@@ -397,6 +503,11 @@ export class GameService {
         personId: string,
         reason: ClosureReason,
       ) => {
+        try {
+          this.dependencies.onParticipantReleased?.(personId);
+        } catch {
+          this.dependencies.onError('PARTICIPANT_RELEASE_NOTIFICATION_FAILED');
+        }
         if (this.flows.get(personId) === controller)
           this.flows.delete(personId);
         for (const connection of this.connections.values())
@@ -456,6 +567,22 @@ export class GameService {
           this.dependencies.onMatchStarted(matchId, people);
         } catch {
           this.dependencies.onError('MATCH_STARTED_NOTIFICATION_FAILED');
+        }
+      },
+      lobbyReturned: (personIds: readonly string[]) => {
+        if (!this.dependencies.onLobbyReturned) return;
+        // Hold ready until a fresh database check completes; no I/O holds this queue.
+        for (const personId of personIds) {
+          this.knownSessions.delete(personId);
+          this.dependencies.timers.cancel(`person-session:${personId}`);
+          for (const connection of this.connections.values())
+            if (connection.access.person.id === personId)
+              connection.access = { ...connection.access, expiresAt: 0 };
+        }
+        try {
+          this.dependencies.onLobbyReturned(personIds);
+        } catch {
+          this.dependencies.onError('LOBBY_AUTH_CHECK_FAILED');
         }
       },
       online: (personId: string) =>

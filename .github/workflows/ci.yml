@@ -24,6 +24,8 @@ jobs:
           --health-retries 20
     env:
       DATABASE_URL: postgresql://rapidfire:ci-only@127.0.0.1:5432/rapidfire
+      # Isolated CI only; deployment must provide its own secret.
+      BETTER_AUTH_SECRET: isolated-ci-auth-secret-not-for-deployment-123456789
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -34,5 +36,6 @@ jobs:
       - run: npm install --global npm@11.9.0
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - run: npm run db:migrate
       - run: npm run format:check
       - run: npm run check
