@@ -1,13 +1,13 @@
 # MVP megvalósítási terv
 
-Utolsó frissítés: 2026-10-07.
+Utolsó frissítés: 2026-10-08.
 
 Kapcsolódó specifikációk:
 
 - [MVP tervezési dokumentum](design.md)
 - [Authadapterek és meccsvisszatérés](auth-adapters.md)
 
-Ez a dokumentum a megvalósítás sorrendjét és ellenőrzési feltételeit rögzíti. Az M0–M2 változásait a felhasználó mainbe merge-ölte és engedélyezte az M3-at. Az elkészült M1 részletei a [motor dokumentációjában](game-engine.md), az M2 a [backend dokumentációjában](backend-controller.md), az M3 az [auth/mentés dokumentációjában](backend-auth-storage.md) olvasható. A játékfelület és deployment későbbi mérföldkő. A környezetkonfigurációt és M0 eredményeket a [környezeti dokumentum](development-environment.md) rögzíti; a [magyar adatbázis-útmutató](database-guide.md) az M3 használatát mutatja.
+Ez a dokumentum a megvalósítás sorrendjét és ellenőrzési feltételeit rögzíti. Az M0–M3 változásait a felhasználó mainbe merge-ölte és engedélyezte az M4 frontendjét, saját designskillekkel és CSS-változókkal. Az elkészült M1 részletei a [motor dokumentációjában](game-engine.md), az M2 a [backend dokumentációjában](backend-controller.md), az M3 az [auth/mentés dokumentációjában](backend-auth-storage.md), az M4 a [frontend dokumentációjában](frontend.md) olvasható. A deployment későbbi mérföldkő. A környezetkonfigurációt és M0 eredményeket a [környezeti dokumentum](development-environment.md) rögzíti; a [magyar adatbázis-útmutató](database-guide.md) az M3 használatát mutatja.
 
 ## 1. Elfogadott alapok
 
@@ -34,7 +34,7 @@ Ez a dokumentum a megvalósítás sorrendjét és ellenőrzési feltételeit rö
 | Csomagkezelés            | npm workspaces, egy gyökér-package-lock.json | Elfogadott. Egységenként saját package.json, külön függőséglisták.                                |
 | TypeScript               | strict ellenőrzés                            | Konkrét stabil verzió kompatibilitás alapján rögzítendő.                                          |
 | Backend HTTP             | Express                                      | Elfogadott. Konkrét csomagverzió és Better Auth-integráció ellenőrzendő.                          |
-| Frontend                 | React + Vite                                 | A frontend-router még kiválasztandó.                                                              |
+| Frontend                 | React + Vite                                 | M4: kis History API-router, React külső store-feliratkozással.                                    |
 | Adatbázis                | PostgreSQL                                   | Helyi és éles főverzió legyen azonos; konkrét főverzió még nyitott.                               |
 | Helyi adatbázis          | Docker Compose vagy natív PostgreSQL         | Választás a fejlesztési környezet képességei szerint.                                             |
 | Motor- és szervertesztek | Vitest, vezérelhető idő/sorsolás             | Elfogadott. A motor implementációjában nincs tesztkönyvtár-import.                                |
@@ -142,6 +142,8 @@ Kilépési feltétel:
 
 ### M4 — Teljes frontend és felhasználói folyamat
 
+Megvalósult: mobilra épített világos/sötét felület, helyi fontok, teljes auth/profil/history és solo/lobby/meccsfolyamat, runtime response-validáció, ötperces HTTP-sessionellenőrzés és újracsatlakozás. Hat valódi böngészős M4-folyamat sikeres; részletek és ellenőrzési határok a [frontend dokumentációjában](frontend.md). A mintakérdés-provider változatlan, a frontend a szerver által közölt fordulókorlátot használja.
+
 Cél: angol MVP-felületen végigjátszható vendég és bejelentkezett meccs.
 
 Képernyők/folyamatok:
@@ -181,12 +183,12 @@ A deployment előkészítése nem azonos az éles publikálással; annak engedé
 
 ## 4. A következő mérföldkő előtt
 
-Első lezárandó csomag:
+Az M4 áttekintése után az M5-höz szükséges csomag:
 
-1. Az M3 domainséma és authadapter bekötése a meglévő M2 portokhoz; a Drizzle Kit kompatibilis változatának ellenőrzése és szükség esetén a még nem engedélyezett függőség jóváhagyása. A konkrét Node/npm/csomagverziók és workspace-konfiguráció már az M0-ban rögzültek.
-2. Az elfogadott, mindkét sessiontípusnál 5 percenkénti HTTP-ellenőrzés technikai részletei: aktív használat felismerése, felfüggesztett lapok kezelése és a vendégvégpont konkrét útvonala/metódusa. A Better Auth cookieCache kikapcsolása már elfogadott.
-3. Better Auth törlés/reset koordinációjának támogatott módja; nem maradhat elrejtett atomikussági feltételezés.
-4. A specifikációban fennmaradt implementációs pontok mérföldkőhöz rendelése.
+1. Valódi SMTP2GO-konfiguráció, ellenőrzött feladó és tényleges verification/reset kézbesítési próba. Az emailtesztadapter nem váltja ki ezt.
+2. Hosting és aktuális Node/WebSocket/PostgreSQL/migráció támogatásának ellenőrzése; közös HTTPS-origin és titkos konfiguráció.
+3. Reprezentatív több szobás próba, mért kapacitás, naplózás és provider/DB hibák üzemeltetési ellenőrzése.
+4. Kiadási/CI ellenőrzések a végleges hostingon. Éles publikálás a felhasználó aktuális utasítása alapján történik.
 
 Nem szükséges a seed/generálás, tiebreak, ELO-algoritmus, social login vagy profilkép előrehozása az MVP-hez. Ezek továbbra is külön későbbi tervek.
 

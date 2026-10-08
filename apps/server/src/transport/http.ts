@@ -93,6 +93,24 @@ export function createApiRouter(
         : null,
     );
   });
+  router.get('/api/game-config', (_request, response) => {
+    response.json({
+      maxRounds: Math.min(10, service.dependencies.questions.categories.length),
+    });
+  });
+  router.get('/api/auth/verify-email', (request, response, next) => {
+    // An email-link navigation gets the app's verification screen; API clients
+    // still use Better Auth directly with a JSON request.
+    const token = request.query.token;
+    if (
+      !request.headers.accept?.includes('text/html') ||
+      typeof token !== 'string'
+    ) {
+      next();
+      return;
+    }
+    response.redirect(302, `/verify-email?${new URLSearchParams({ token })}`);
+  });
   router.post('/api/auth/delete-user', json, async (request, response) => {
     const body = deleteAccountSchema.safeParse(payload(request));
     if (!body.success) {
@@ -215,6 +233,7 @@ export function createApiRouter(
       bridge.cookies.serialize('guest', token, guest.expiresAt),
     );
     response.json({
+      guest: { nickname: guest.person.name },
       expiresAt: new Date(guest.expiresAt).toISOString(),
       renewAfterSeconds: 300,
     });

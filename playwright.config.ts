@@ -11,6 +11,12 @@ const baseURL = `http://127.0.0.1:${port}`;
 
 export default defineConfig({
   testDir: './e2e',
+  projects: [
+    { name: 'environment' },
+    // These flows start the real backend and DB, so their source is checked by
+    // the server's existing TypeScript project, including its dependency boundary.
+    { name: 'frontend', testDir: './apps/server/test/browser' },
+  ],
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: 0,

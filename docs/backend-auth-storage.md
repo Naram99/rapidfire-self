@@ -2,7 +2,7 @@
 
 Utolsó frissítés: 2026-10-07.
 
-Az M3 a korábbi backendhez valódi Better Auth / Drizzle / PostgreSQL integrációt, saját HTTP-végpontokat, memóriabeli vendég- és meccsigazolásokat, valamint cserélhető emailadaptert ad. A motor továbbra is natív TypeScript, külső függőség nélkül. A játék- és authfelület az M4 feladata. Az első adatbázis-indításhoz lásd a [magyar útmutatót](database-guide.md).
+Az M3 a korábbi backendhez valódi Better Auth / Drizzle / PostgreSQL integrációt, saját HTTP-végpontokat, memóriabeli vendég- és meccsigazolásokat, valamint cserélhető emailadaptert ad. A motor továbbra is natív TypeScript, külső függőség nélkül. A játék- és authfelület elkészült az [M4-ben](frontend.md). Az első adatbázis-indításhoz lásd a [magyar útmutatót](database-guide.md).
 
 ## Modulok
 
@@ -57,7 +57,7 @@ A HTTP-hibák stabil `code` értéket adnak. A kliens a contracts angol katalóg
 - Visszavonási epoch védi a folyamatot: kijelentkezéssel megelőzött, lassú sessionellenőrzés vagy socket admission nem állíthat vissza régi jogosultságot.
 - Saját cookie-k: HttpOnly, SameSite=Lax, Path=/, domain nélkül; HTTPS esetén Secure és `__Host-` prefix. Helyi HTTP-hoz eltérő, prefix nélküli név.
 
-A memóriabeli credential-/korlátozó nyilvántartás korlátos és lejáró. Újraindítás nem tartja meg a vendéget, szobát vagy meccsigazolást. A böngésző időzített ötperces ellenőrzése és háttérből visszatéréskor végzett ellenőrzése az M4-ben készül.
+A memóriabeli credential-/korlátozó nyilvántartás korlátos és lejáró. Újraindítás nem tartja meg a vendéget, szobát vagy meccsigazolást. A böngésző időzített ötperces ellenőrzése és háttérből visszatéréskor végzett ellenőrzése az [M4-ben](frontend.md) megvalósult.
 
 ## Mentés és törlés
 
