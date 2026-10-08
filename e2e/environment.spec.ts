@@ -5,7 +5,9 @@ test('React and the HTTP API work through the same origin', async ({
   request,
 }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Rapidfire' })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Think fast. Make it count.' }),
+  ).toBeVisible();
   const health = await request.get('/api/health');
   expect(health.ok()).toBe(true);
   expect(await health.json()).toEqual({ status: 'ok' });

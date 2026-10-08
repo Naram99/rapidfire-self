@@ -1,6 +1,6 @@
 # Rapidfire
 
-Self-hosted realtime quiz system. M0–M3 provide the development environment, native game engine, backend/socket controller, PostgreSQL persistence, Better Auth and email adapter. The gameplay/auth frontend is the next milestone; live SMTP2GO delivery requires provider configuration.
+Self-hosted realtime quiz system. M0–M4 provide the development environment, native game engine, backend/socket controller, PostgreSQL persistence, Better Auth, email adapter and a responsive English gameplay/account frontend. Live SMTP2GO delivery requires provider configuration.
 
 ## Requirements
 
@@ -32,7 +32,7 @@ Beginner Hungarian instructions: [PostgreSQL in Docker, schema generation and mi
 npm run dev
 ```
 
-Vite serves the frontend on port 5173 and proxies `/api` and `/socket.io` (including WebSocket upgrades) to Express on port 3000. The browser uses one origin. `/api/health` reports process availability. Startup requires a reachable, migrated database. The browser page remains the application shell; M4 adds the user flows. Socket connections require protocol version 1 and a server-validated Better Auth, guest or match-return cookie.
+Vite serves the frontend on port 5173 and proxies `/api` and `/socket.io` (including WebSocket upgrades) to Express on port 3000. The browser uses one origin. `/api/health` reports process availability. Startup requires a reachable, migrated database. Guest solo play is available immediately; registration needs working verification email. Socket connections require protocol version 1 and a server-validated Better Auth, guest or match-return cookie. [The frontend guide](docs/frontend.md) describes the screens, theme variables and state/session flow. The current sample question set supports three rounds; the UI reads this limit from the server.
 
 For an existing shell, restart stopped services with `npm run db:up` and `npm run dev`; do not assume processes survive a restored cloud environment.
 
@@ -40,18 +40,20 @@ Root `dev`, `test`, `test:watch` and `typecheck` build the shared engine/contrac
 
 ## Verification
 
-| Command                | Checks                                                                                                                                                                    |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run typecheck`    | Strict TypeScript checks for all four workspaces and test/configuration files.                                                                                            |
-| `npm run build`        | Shared-package declarations, Node server output and production Vite bundle, in dependency order.                                                                          |
-| `npm test`             | Engine, public contracts, controller/adapter and real Socket.IO tests, plus PostgreSQL/Drizzle integration. The database check requires PostgreSQL.                       |
-| `npm run test:e2e`     | Playwright Chromium checks: React rendering, proxied API responses, JSON API 404, Socket.IO polling and WebSocket handshakes. Starts the development servers when needed. |
-| `npm run check`        | Type checking, build, integration test and browser tests.                                                                                                                 |
-| `npm run format:check` | Formatting of scaffold/configuration files.                                                                                                                               |
+| Command                | Checks                                                                                                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run typecheck`    | Strict TypeScript checks for all four workspaces and test/configuration files.                                                                                      |
+| `npm run build`        | Shared-package declarations, Node server output and production Vite bundle, in dependency order.                                                                    |
+| `npm test`             | Engine, public contracts, browser state/response validation, controller/adapter and real Socket.IO tests, plus PostgreSQL/Drizzle integration. Requires PostgreSQL. |
+| `npm run test:e2e`     | Playwright Chromium: environment checks and full auth/guest/multiplayer/history/reconnect browser flows. Starts the development servers when needed.                |
+| `npm run check`        | Type checking, build, integration test and browser tests.                                                                                                           |
+| `npm run format:check` | Formatting of scaffold/configuration files.                                                                                                                         |
 
 `npm run test:e2e:production` runs the same browser checks against the compiled frontend and the single production-mode Node process on port 3000. It requires `npm run build` first. `npm run check` includes both development and production-shaped browser checks.
 
-The Vitest suite verifies engine/controller behavior, real Better Auth HTTP/socket sessions and PostgreSQL persistence/deletion transactions. Tests create isolated temporary databases and require local/CI CREATEDB permission. Browser checks cover the shell, same-origin API and guest-cookie socket authentication. Provider delivery and the full gameplay frontend are separate checks.
+The Vitest suite verifies engine/controller behavior, client state/response validation, real Better Auth HTTP/socket sessions and PostgreSQL persistence/deletion transactions. Tests create isolated temporary databases and require local/CI CREATEDB permission. Browser checks cover the same-origin environment and the complete UI with two players, shared answer locking between tabs, session expiry, renewal, offline grace, reset and deletion. The full UI tests inject a captured email port and controlled game time/question provider into a real app/DB; they do not establish provider delivery.
+
+For only the full frontend flows, build first and run `npx playwright test --project=frontend`. Their fixture files live in `apps/server/test/browser` so server dependencies stay in the server TypeScript checking boundary. The dedicated browser config adds DOM types without relaxing application-source checks.
 
 Run the M2 tests independently with:
 
@@ -90,6 +92,7 @@ Backend third-party declaration checking and the shell-quote override are explai
 - [Backend controller, socket protocol and M3 integration ports](docs/backend-controller.md)
 - [Auth adapters and session lifecycle](docs/auth-adapters.md)
 - [Implemented M3 auth, storage and HTTP contracts](docs/backend-auth-storage.md)
+- [M4 responsive frontend, routes and browser checks](docs/frontend.md)
 - [PostgreSQL Docker and migration guide (Hungarian)](docs/database-guide.md)
 - [Implementation milestones](docs/implementation-plan.md)
 - [Development environment configuration and verification](docs/development-environment.md)

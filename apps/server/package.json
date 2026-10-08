@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch --env-file-if-exists=../../.env src/bootstrap/index.ts",
-    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "typecheck": "tsc --project tsconfig.json --noEmit && tsc --project tsconfig.browser.json",
     "build": "tsc --project tsconfig.build.json",
     "auth:generate": "auth generate --config ./auth.generate.ts --adapter drizzle --dialect postgresql --output ./src/database/auth-schema.ts --yes",
     "db:generate": "drizzle-kit generate --config drizzle.config.ts",

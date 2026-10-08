@@ -6,7 +6,7 @@ if (existsSync('.env')) process.loadEnvFile('.env');
 export default defineConfig({
   test: {
     environment: 'node',
-    include: ['packages/**/test/**/*.test.ts', 'apps/server/test/**/*.test.ts'],
+    include: ['packages/**/test/**/*.test.ts', 'apps/**/test/**/*.test.ts'],
     testTimeout: 10000,
   },
 });

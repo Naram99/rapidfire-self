@@ -1,13 +1,14 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { App } from './app';
+import '../index.css';
+import './styles.css';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Missing application root');
 
 createRoot(root).render(
   <StrictMode>
-    <main>
-      <h1>Rapidfire</h1>
-    </main>
+    <App />
   </StrictMode>,
 );
