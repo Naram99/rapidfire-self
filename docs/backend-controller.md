@@ -124,6 +124,6 @@ npm run check
 npm run format:check
 ```
 
-A teljes ellenőrzéshez a README szerinti helyi PostgreSQL szükséges. A böngészős tesztek jelenleg a fejlesztési és production alapvázat, API/proxyt és Engine.IO handshake-et vizsgálják; a játékfolyamatot az M2 szerver- és valódi sockettesztjei ellenőrzik. Better Auth-, SMTP2GO-, domainmigrációs vagy böngészős játékfelület-tesztet ez nem helyettesít.
+A teljes ellenőrzéshez a README szerinti helyi PostgreSQL szükséges. A böngészős tesztek ebben az M2 ellenőrzési rekordban a fejlesztési és production alapvázat, API/proxyt és Engine.IO handshake-et vizsgálják; a játékfolyamatot az M2 szerver- és valódi sockettesztjei ellenőrzik. Better Auth-, valódi emailkézbesítési, domainmigrációs vagy böngészős játékfelület-tesztet ez nem helyettesít. A későbbi integrációkat az M3/M4 dokumentációja tartalmazza.
 
 A felhőkörnyezetben a generált engine/contracts/server/web `dist` könyvtárak eltávolítása után futtatott `npm run check` sikeres: mind a négy workspace és a tooling típusellenőrzése, teljes build, **105 Vitest-teszt** (72 motor + 32 M2 + 1 PostgreSQL), **2 fejlesztési és 2 production Chromium-teszt**. A `npm run format:check` és `git diff --check` is sikeres. Az első teljes futás elavult contracts-deklaráció miatt hibázott; a javított közös build-sorrendet a tiszta generált állapotból induló futás ellenőrizte. Ezek helyi eredmények, nem GitHub CI- vagy deployment-eredmények.

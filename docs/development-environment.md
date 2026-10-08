@@ -4,6 +4,8 @@ Date: 2026-10-07.
 
 This document retains the M0 setup evidence. Current M1/M2 behavior is documented in [the engine](game-engine.md) and [the backend controller](backend-controller.md); [M3 auth/storage](backend-auth-storage.md) and the [database guide](database-guide.md) describe the later implementation and service configuration. M0 checks alone did not establish those integrations.
 
+The email provider changed to Resend on 2026-10-08. The current adapter uses native Node fetch without an SDK; Nodemailer and its types were removed. The historical Nodemailer versions and checks below describe the M0 graph, not the current dependency graph. See [the Resend guide](email-guide.md) for current configuration.
+
 Authorized scope: repository workspace/configuration scaffolding, dependencies, local services and environment verification. The minimal React and Express/Socket.IO entry points make startup and proxy behavior observable. They contain no auth or game features. Domain schemas, migrations, public protocol definitions, game logic, provider integration and deployment remain later tasks.
 
 ## Compatibility decisions
@@ -60,6 +62,6 @@ No game or authentication behavior has been verified. The workflow YAML is confi
 
 - Better Auth supported deletion/reset coordination with application transactions.
 - Auth schema generation and shared Drizzle migrations after the auth configuration is implemented.
-- Actual SMTP2GO access, sender configuration and delivery.
+- Actual Resend access, sender/domain configuration and delivery.
 - Session renewal/background-tab behavior and guest endpoint details.
 - Frontend routing and real protocol/state-machine implementation.

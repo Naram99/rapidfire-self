@@ -139,7 +139,11 @@ A teljes `npm run check` sikeres: strict típusellenőrzés, build, **151 Vitest
 a konfigurált adatbázis/auth titkok nem találhatók, a motor runtime függősége
 továbbra is nulla. A világos/sötét normál linkszöveg és elsődleges gomb
 szövegkontrasztját böngészős 4,5:1 küszöbbel is ellenőrizzük.
-Valódi SMTP2GO-kézbesítés továbbra is hiányzó providerkonfigurációt igényel;
+Valódi Resend-kézbesítés továbbra is hiányzó providerkonfigurációt igényel;
 email-megerősítés nincs kikapcsolva. Más böngészőmotor és fizikai mobilkészülék
 nem volt tesztelve. A kérdésgenerálás/seed, ranglista/ELO-algoritmus, social login
 és deployment későbbi feladat.
+
+Az emailprovider a frontend elkészítése után Resendre változott; a korábbi
+böngészőtesztek emailportot helyettesítenek. A [Resend útmutató](email-guide.md)
+leírja az API-kulcs és saját domain beállítását emailtárhely nélkül.

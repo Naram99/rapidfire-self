@@ -1,6 +1,6 @@
 # M3 — Auth, PostgreSQL és email
 
-Utolsó frissítés: 2026-10-07.
+Utolsó frissítés: 2026-10-08.
 
 Az M3 a korábbi backendhez valódi Better Auth / Drizzle / PostgreSQL integrációt, saját HTTP-végpontokat, memóriabeli vendég- és meccsigazolásokat, valamint cserélhető emailadaptert ad. A motor továbbra is natív TypeScript, külső függőség nélkül. A játék- és authfelület elkészült az [M4-ben](frontend.md). Az első adatbázis-indításhoz lásd a [magyar útmutatót](database-guide.md).
 
@@ -10,7 +10,7 @@ Az M3 a korábbi backendhez valódi Better Auth / Drizzle / PostgreSQL integrác
 | -------------------------- | ---------------------------------------------------------------------------------------- |
 | `auth/`                    | Better Auth opciók, hookok, session/socket híd, opaque cookie-nyilvántartás, korlátozók. |
 | `database/`                | Generált authséma, saját táblák, migráció, mentési és profil/előzmény-adapter.           |
-| `email/`                   | Verziózott angol templates, küldési port, sor, Nodemailer SMTP-adapter.                  |
+| `email/`                   | Verziózott angol templates, küldési port, sor, Resend HTTPS-adapter.                     |
 | `transport/http.ts`        | HTTP-bemenetek, auth/jogosultság, saját végpontok és hibaválaszok.                       |
 | `bootstrap/application.ts` | Összeállítás; szolgáltatók nem kerülnek a motorba vagy socketparancsokba.                |
 
@@ -69,13 +69,15 @@ DB-kapcsolat, statement és query timeout öt másodperc, pool legfeljebb tíz k
 
 ## Email
 
-SMTP2GO az alapértelmezett konfiguráció, Nodemailer mögött szolgáltatófüggetlen porttal. Kötelező TLS, tanúsítvány-ellenőrzés, öt másodperces hálózati/queue timeout. Maximum száz memóriabeli feladat, egy aktív küldés, legfeljebb három próbálkozás, 2/8 másodperces szünetek. Átmeneti SMTP/network hiba ismételhető; 5xx / hibás auth/feladó végleges. Újrapróbálás ugyanazt a linket és Message-ID-t tartja meg; nincs exactly-once kézbesítési ígéret.
+Az MVP emailprovidere a felhasználó 2026-10-08-i döntése alapján Resend. A szolgáltatófüggetlen `EmailPort` mögött natív Node `fetch` alapú HTTPS-adapter működik; konfigurációja `RESEND_API_KEY` és `EMAIL_FROM`, a végpont `https://api.resend.com/emails`. Külön emailtárhely nem szükséges, saját feladóhoz a domain DNS-ellenőrzése kell. A gyakorlati lépések a [Resend útmutatóban](email-guide.md) találhatók.
+
+Öt másodperces hálózati/queue timeout, maximum száz memóriabeli feladat, egy aktív küldés, legfeljebb három próbálkozás, 2/8 másodperces szünetek. Átmeneti hálózati és HTTP szerverhiba ismételhető; hibás hozzáférés/feladó/paraméter végleges. Újrapróbálás ugyanazt a linket és tartalmat tartja meg, a stabil belső üzenetazonosítót Resend `Idempotency-Key` fejlécként használja. Nincs exactly-once postaládakézbesítési ígéret.
 
 Megerősítő link 24 órás, reset 15 perces és egyszer használható. Ismételt reset/verify kérés emailenként és célonként legfeljebb percenként egyszer indulhat, nem létező címre is azonos szabállyal. Az általános IP- és authkorlátozás külön réteg. Fióktörléskor a várakozó email törlődik, az aktív küldés abortot kap; már a providernek átadott emailt ez nem tudja visszahívni. Lejárt linket nem küldünk újra. Token, jelszó, emailcím és link nem szerepel a munkanaplóban.
 
-SMTP-adatok nélkül tesztporttal ellenőrzött az authfolyamat. **Valódi SMTP2GO-kézbesítés és szolgáltatói/domainbeállítás továbbra is hozzáférést igényel, nem ellenőrzött.**
+Szolgáltatói adatok nélkül tesztporttal ellenőrzött az authfolyamat. **Valódi Resend-kézbesítés és szolgáltatói/domainbeállítás továbbra is hozzáférést igényel, nem ellenőrzött.** A felhőkörnyezetben az `api.resend.com` HTTPS-elérése és a biztonságosan megadott backend API-kulcs szükséges. A környezet draftjának mentése önmagában nem igazolja az elérést vagy kézbesítést.
 
-A felhőkörnyezetben a `mail.smtp2go.com:587` nem hitelesített kapcsolati próbája `EAI_AGAIN` DNS-hibával állt meg; SMTP/TLS-kapcsolat és kézbesítés nem igazolt. A környezet konfigurációjához szükséges a szolgáltatói host elérése és a biztonságosan megadott SMTP-változók. A draft mentése önmagában nem igazolja az elérést.
+A korábbi SMTP2GO-adapter M3 ellenőrzési előzmény: a `mail.smtp2go.com:587` nem hitelesített kapcsolati próbája `EAI_AGAIN` DNS-hibával állt meg; SMTP/TLS-kapcsolat és kézbesítés akkor sem volt igazolt. Ez a korábbi szolgáltatóra vonatkozó eredmény, a Resend eléréséről nem ad bizonyítékot.
 
 ## Ellenőrzés
 
@@ -89,5 +91,7 @@ Végrehajtott helyi ellenőrzések 2026-10-07-én:
 - `auth:generate` változatlan authsémát adott; `db:generate` nem talált új változást; `db:migrate` ismételhető. `env:init` ismétlése byte-ra azonos konfigurációt hagyott.
 - `db:console` a táblákat listázta, `db:backup` privát mentést készített; a mentés custom-format jegyzéke olvasható. Visszaállítást nem hajtottunk végre.
 - A PostgreSQL zárolási/időkorlát-teszt elutasított mentés után sikeres új próbálkozást igazol. Lejárt vendégsession mellett érvényes meccsigazolással a logout minden kapcsolatot lezár.
+
+A 2026-10-08-i Resend-átállás ellenőrzése: teljes típusellenőrzés és build, formázásellenőrzés, 186 Vitest-teszt (ebből 35 Resend-adapter/konfiguráció), 9 fejlesztői és 9 production böngészős teszt sikeres; hibamentes függőségi fa és 0 audit-találat. Az éles provider-elérést a jelenlegi proxy blokkolta, API-kulcs és feladó sincs még beállítva. Részletek a [Resend útmutatóban](email-guide.md).
 
 GitHub CI-futás, valódi szolgáltatói kézbesítés és új cloud taskban történő visszaállítás nem része a végrehajtott ellenőrzésnek.

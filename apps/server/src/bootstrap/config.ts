@@ -1,4 +1,4 @@
-import type { SmtpSettings } from '../email/smtp.js';
+import type { ResendSettings } from '../email/resend.js';
 
 export function serverConfig() {
   const databaseUrl = process.env.DATABASE_URL;
@@ -42,26 +42,15 @@ export function serverConfig() {
           `http://localhost:${publicPort}`,
         ]),
       ];
-  const { SMTP_HOST, SMTP_USER, SMTP_PASSWORD, SMTP_FROM } = process.env;
-  let smtp: SmtpSettings | null = null;
-  if (SMTP_USER && SMTP_PASSWORD && SMTP_FROM) {
-    const smtpPort = Number(process.env.SMTP_PORT || 587);
-    if (
-      !Number.isInteger(smtpPort) ||
-      smtpPort < 1 ||
-      smtpPort > 65535 ||
-      /[\r\n]/.test(SMTP_FROM)
-    )
-      throw new Error('Invalid SMTP configuration');
-    smtp = {
-      host: SMTP_HOST || 'mail.smtp2go.com',
-      port: smtpPort,
-      secure: smtpPort === 465,
-      username: SMTP_USER,
-      password: SMTP_PASSWORD,
-      from: SMTP_FROM,
-    };
-  }
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const from = process.env.EMAIL_FROM?.trim();
+  if (
+    (apiKey && /[\s\x00-\x1f\x7f]/.test(apiKey)) ||
+    (from && /[\x00-\x1f\x7f]/.test(from))
+  )
+    throw new Error('Invalid Resend configuration');
+  const resend: ResendSettings | null =
+    apiKey && from ? { apiKey, from } : null;
   return {
     databaseUrl,
     secret,
@@ -69,6 +58,6 @@ export function serverConfig() {
     port,
     host: process.env.HOST || '127.0.0.1',
     allowedOrigins,
-    smtp,
+    resend,
   };
 }
