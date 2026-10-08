@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url';
 import { createDatabase } from '../database/client.js';
 import { interruptAbandonedGames } from '../database/persistence.js';
-import { smtpEmailPort } from '../email/smtp.js';
+import { resendEmailPort } from '../email/resend.js';
 import { runtimeDependencies } from '../infrastructure/runtime.js';
 import { createApplication } from './application.js';
 import { serverConfig } from './config.js';
@@ -18,11 +18,11 @@ try {
     'Database initialization failed. Start PostgreSQL and run npm run db:migrate.',
   );
 }
-if (!config.smtp) console.warn('SMTP_NOT_CONFIGURED');
+if (!config.resend) console.warn('RESEND_NOT_CONFIGURED');
 const { httpServer, io, service, email } = createApplication({
   db: database.db,
   dependencies: runtimeDependencies(),
-  emailPort: smtpEmailPort(config.smtp),
+  emailPort: resendEmailPort(config.resend),
   secret: config.secret,
   publicUrl: config.publicUrl,
   allowedOrigins: config.allowedOrigins,

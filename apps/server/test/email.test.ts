@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { EmailQueue } from '../src/email/queue.js';
 import { renderEmail } from '../src/email/template.js';
-import { smtpEmailPort } from '../src/email/smtp.js';
+import { resendEmailPort } from '../src/email/resend.js';
 import type {
   EmailJob,
   EmailLog,
@@ -178,8 +178,8 @@ describe('replaceable email delivery', () => {
     expect(h.emails.enqueue(job('third'))).toBe(false);
     expect(h.timers.timers.size).toBe(0);
   });
-  it('reports missing SMTP configuration as permanent failure without connecting', async () => {
-    const result = await smtpEmailPort(null).send(
+  it('reports missing Resend configuration as permanent failure without connecting', async () => {
+    const result = await resendEmailPort(null).send(
       renderEmail(job()),
       new AbortController().signal,
     );

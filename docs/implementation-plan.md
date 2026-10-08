@@ -19,7 +19,7 @@ Ez a dokumentum a megvalósítás sorrendjét és ellenőrzési feltételeit rö
 - Élesben ugyanaz a Node-folyamat szolgálja ki a frontend buildet, API-t, authot és Socket.IO-t.
 - Natív TypeScript-játékmotor, külső könyvtárfüggőség és I/O nélkül.
 - Szobánként/önálló meccsenként egy állapottulajdonos és állapotmódosítási sor; külön időzítő- és mentési adapter.
-- PostgreSQL, Drizzle, Better Auth email + jelszó és SMTP2GO + Nodemailer.
+- PostgreSQL, Drizzle, Better Auth email + jelszó és Resend HTTPS emailadapter, külön SDK nélkül.
 - Normál authsession 30 perc, aktív használat mellett 5 perces megújítási célütemmel; vendégsession 15 perc, 5 percenkénti HTTP-ellenőrzéssel újabb 15 percre megújítható, a végeredmény-képernyő végén megszűnik.
 - Better Auth cookieCache az MVP-ben kikapcsolva; a normál sessionellenőrzés szerveroldalon, az adatbázis alapján történik.
 - Elsőként rögzített kérdéskészlettel ellenőrizhető működés; a tényleges kérdésgenerálás és seedalapú újrajátszhatóság későbbi tervezési feladat.
@@ -109,7 +109,7 @@ Kilépési feltétel:
 
 ### M3 — Tartós adatok, auth és email
 
-Megvalósult: generált authséma és közös domainséma, két verziózott migráció, tranzakciós mentés/törlés, HTTP/socket sessionhíd, vendég- és meccscookie, emailküldési sor és cserélhető SMTP-adapter. Valódi SMTP2GO-kézbesítés konfiguráció hiányában külön, még nem ellenőrzött lépés. A normál kijelentkezés a felhasználó új döntése alapján minden authsessiont visszavon minden eszközön. Böngészőoldali megújítási ütemezés az M4 feladata.
+Megvalósult: generált authséma és közös domainséma, két verziózott migráció, tranzakciós mentés/törlés, HTTP/socket sessionhíd, vendég- és meccscookie, emailküldési sor és cserélhető emailadapter. Az eredeti SMTP2GO-adaptert a felhasználó 2026-10-08-i döntése alapján Resend HTTPS-adapter váltja fel. Valódi Resend-kézbesítés konfiguráció hiányában külön, még nem ellenőrzött lépés. A normál kijelentkezés a felhasználó új döntése alapján minden authsessiont visszavon minden eszközön. Böngészőoldali megújítási ütemezés az M4-ben megvalósult.
 
 Cél: a tényleges PostgreSQL és Better Auth integráció támogatja az elfogadott életciklust.
 
@@ -119,7 +119,7 @@ Feladatok:
 - Profil, meccs, résztvevő, kapcsolatok és rövid kérdéseredmények.
 - Tranzakciók, mentési verziók, hiányzó checkpointok pótlása és végső retry.
 - Email/jelszó, email-megerősítés, semleges reset-válasz és jelszóvalidáció.
-- SMTP2GO + Nodemailer adapter és elkülönített emailküldési sor.
+- Resend HTTPS-adapter és elkülönített emailküldési sor, szolgáltatófüggetlen porttal.
 - 30 perces megújítható authsession, 5 perces megújítási célütem; HTTP-kliensfolyamat és háttérben felfüggesztett lapok kezelése. A megújítható 15 perces vendégsession HTTP-folyamatának kialakítása, a meccsvisszatérési cookie fix határidejének megőrzésével.
 - Meccskezdethez kötött fix 30 perces visszatérési cookie, hashnyilvántartás és HTTP-kiadás.
 - Logout/reset/törlés visszavonásai, több eszköz koordinációja.
@@ -129,7 +129,7 @@ Előfeltételek:
 
 - Helyi PostgreSQL rendelkezésre áll.
 - A fióktörlési integráció támogatott megoldása tisztázott.
-- Valódi emailkézbesítéshez SMTP2GO-hozzáférés és megfelelő feladó/domainbeállítás kell. Tesztadapterrel az önálló munka ettől függetlenül folytatható.
+- Valódi emailkézbesítéshez Resend API-kulcs és ellenőrzött küldő domain kell; külön feladópostaláda nem szükséges. Tesztadapterrel az önálló munka ettől függetlenül folytatható.
 
 Kilépési feltétel:
 
@@ -185,7 +185,7 @@ A deployment előkészítése nem azonos az éles publikálással; annak engedé
 
 Az M4 áttekintése után az M5-höz szükséges csomag:
 
-1. Valódi SMTP2GO-konfiguráció, ellenőrzött feladó és tényleges verification/reset kézbesítési próba. Az emailtesztadapter nem váltja ki ezt.
+1. Valódi Resend-konfiguráció, DNS-ben ellenőrzött feladó és tényleges verification/reset kézbesítési próba a [Resend útmutató](email-guide.md) szerint. Az emailtesztadapter nem váltja ki ezt.
 2. Hosting és aktuális Node/WebSocket/PostgreSQL/migráció támogatásának ellenőrzése; közös HTTPS-origin és titkos konfiguráció.
 3. Reprezentatív több szobás próba, mért kapacitás, naplózás és provider/DB hibák üzemeltetési ellenőrzése.
 4. Kiadási/CI ellenőrzések a végleges hostingon. Éles publikálás a felhasználó aktuális utasítása alapján történik.

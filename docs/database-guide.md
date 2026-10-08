@@ -14,7 +14,7 @@ npm run db:migrate
 npm run dev
 ```
 
-Az `env:init` létrehozza a helyi `.env` fájlt véletlen adatbázisjelszóval és authsecrettel. Meglévő konfiguráció esetén csak a hiányzó, üres authsecretet pótolja; a meglévő adatbázisjelszót és SMTP-adatokat megőrzi. A `.env` nem kerül Gitbe. A `db:up` elindítja a PostgreSQL 17 konténert és megvárja, amíg fogad kapcsolatokat. A `db:migrate` létrehozza a verziózott migrációkból a táblákat. A `dev` indítja az alkalmazást.
+Az `env:init` létrehozza a helyi `.env` fájlt véletlen adatbázisjelszóval és authsecrettel. Meglévő konfiguráció esetén csak a hiányzó, üres authsecretet pótolja; a meglévő adatbázisjelszót és emailkonfigurációt megőrzi. A `.env` nem kerül Gitbe. A `db:up` elindítja a PostgreSQL 17 konténert és megvárja, amíg fogad kapcsolatokat. A `db:migrate` létrehozza a verziózott migrációkból a táblákat. A `dev` indítja az alkalmazást.
 
 **Egy frissen lehúzott repónál nem kell újragenerálni a sémát vagy a migrációkat.** A verziózott fájlokat alkalmazd a `db:migrate` paranccsal.
 
@@ -25,7 +25,7 @@ Fejlesztéskor a backend 3000-es, a frontend 5173-as portot használ. A böngés
 | Elem                                      | Szerepe                                                                  |
 | ----------------------------------------- | ------------------------------------------------------------------------ |
 | `compose.yaml`                            | A PostgreSQL konténer, port, healthcheck és adatvolume konfigurációja.   |
-| `.env`                                    | Helyi konfiguráció, adatbázis- és SMTP-hozzáférések.                     |
+| `.env`                                    | Helyi konfiguráció, adatbázis- és emailküldési hozzáférések.             |
 | `apps/server/src/database/auth-schema.ts` | A Better Auth CLI által generált Drizzle-táblák.                         |
 | `apps/server/src/database/schema.ts`      | Saját profil-, meccs-, résztvevő- és eredménytáblák.                     |
 | `apps/server/migrations/*.sql`            | Verziózott, alkalmazandó adatbázismódosítások.                           |
@@ -102,18 +102,15 @@ Ez PostgreSQL custom-format `.dump` mentést ír a Gitből kizárt `backups/` ma
 
 Az auth és a mentés működéséhez a helyi adatbázis és authsecret szükséges. A valódi megerősítő/reset emailhez további `.env` értékek kellenek:
 
-| Változó           | SMTP2GO beállítás                                                                    |
-| ----------------- | ------------------------------------------------------------------------------------ |
-| `SMTP_HOST`       | Alapértelmezés: `mail.smtp2go.com`.                                                  |
-| `SMTP_PORT`       | Alapértelmezés: `587`, kötelező STARTTLS; `465` esetén közvetlen TLS.                |
-| `SMTP_USER`       | A szolgáltatóban létrehozott SMTP-felhasználó.                                       |
-| `SMTP_PASSWORD`   | Az SMTP-felhasználó jelszava.                                                        |
-| `SMTP_FROM`       | SMTP2GO-ban ellenőrzött feladó / domain alapján megengedett cím.                     |
-| `BETTER_AUTH_URL` | A böngészőből elérhető alkalmazás originje; helyben például `http://localhost:5173`. |
+| Változó           | Resend beállítás                                                                          |
+| ----------------- | ----------------------------------------------------------------------------------------- |
+| `RESEND_API_KEY`  | Resendben létrehozott, szerveroldali emailküldési API-kulcs.                              |
+| `EMAIL_FROM`      | Ellenőrzött domainhez tartozó feladó, például `Rapidfire <no-reply@your-domain.example>`. |
+| `BETTER_AUTH_URL` | A böngészőből elérhető alkalmazás originje; helyben például `http://localhost:5173`.      |
 
-Az SMTP-hozzáférések nem az alkalmazásba belépő játékos adatai. Másik SMTP-szolgáltatóhoz a konfigurációt és a feladó ellenőrzését kell átállítani. SMTP-adatok nélkül a szerver `SMTP_NOT_CONFIGURED` jelzéssel elindul, de valódi emailt nem kézbesít. A regisztrációhoz megkövetelt megerősítést ez nem kerüli meg. A tesztek külön emailadapterrel, elkülönített adatbázisokban ellenőrzik a linkek működését.
+Resendhez a saját domain DNS-ellenőrzése szükséges, külön emailtárhely vagy létező `no-reply` postaláda nem. A szolgáltatói kulcs nem az alkalmazásba belépő játékos adata. Az adapter a `https://api.resend.com/emails` végpontot használja, SMTP-hozzáférés nem kell. A korábbi `SMTP_*` változókat a szerver már nem olvassa. A részletes lépések és a tesztfeladó korlátja a [Resend útmutatóban](email-guide.md) találhatók.
 
-Az M3 a backendfolyamatokat tartalmazza. A regisztrációs, reset-, profil- és játékoldalak, valamint a böngésző ötpercenkénti sessionellenőrzése az M4-ben készülnek el.
+Emailkonfiguráció nélkül a szerver `RESEND_NOT_CONFIGURED` jelzéssel elindul, de valódi emailt nem kézbesít. A regisztrációhoz megkövetelt megerősítést ez nem kerüli meg. A tesztek külön emailadapterrel, elkülönített adatbázisokban ellenőrzik a linkek működését. A regisztrációs, reset-, profil- és játékoldalak, valamint a böngésző ötpercenkénti sessionellenőrzése az [M4-ben](frontend.md) elkészültek.
 
 ## Gyakori hibák
 

@@ -1,8 +1,8 @@
 # Rapidfire — MVP tervezési dokumentum
 
-Utolsó frissítés: 2026-10-07.
+Utolsó frissítés: 2026-10-08.
 
-Ez a dokumentum a beszélgetésben elfogadott termék-, adatmodell-, socket- és tranzakciós döntéseket foglalja össze. Nem SQL-séma vagy TypeScript-típusdefiníció. Az engedélyezett M0 környezet, M1 natív motor és M2 backendvezérlő/socket elkészült; részleteik a kapcsolódó megvalósítási dokumentumokban szerepelnek. Valódi auth-, email-, domainséma- és migrációs integráció még nem készült.
+Ez a dokumentum a beszélgetésben elfogadott termék-, adatmodell-, socket- és tranzakciós döntéseket foglalja össze. Nem SQL-séma vagy TypeScript-típusdefiníció. Az M0 környezet, M1 natív motor, M2 backendvezérlő/socket, M3 auth/tárolás és M4 frontend elkészült; részleteik a kapcsolódó megvalósítási dokumentumokban szerepelnek. A felhasználó 2026-10-08-i döntése alapján az emailprovider Resend, a korábbi SMTP2GO választás helyett. Valódi szolgáltatói kézbesítés és deployment továbbra sem ellenőrzött.
 
 ## 1. Státusz és hatókör
 
@@ -29,19 +29,19 @@ Ez a dokumentum a beszélgetésben elfogadott termék-, adatmodell-, socket- és
 - A Better Auth cookieCache az MVP-ben kikapcsolt; normál hitelesítésnél szerveroldali sessionellenőrzés történik.
 - Email-megerősítés nélkül nem lehet bejelentkezni; a vendég egyjátékos mód továbbra is elérhető.
 - Helyreállítási link: 15 perc, egyszer használható. Email-megerősítési link: 24 óra. Újraküldés legfeljebb percenként. Sikeres jelszó-visszaállítás minden korábbi sessiont és meccsjogosultságot visszavon.
-- Szolgáltatófüggetlen SMTP emailadapter Nodemailerrel és ingyenes MVP-szolgáltatóval; memóriabeli küldési sor: 5 másodperces timeout, legfeljebb három próbálkozás, 2/8 másodperces szünetek. HttpOnly cookie-s meccsvisszatérés, szerveroldali hashnyilvántartással, a meccs indulásától számított fix 30 perces érvényességgel, játék közbeni hosszabbítás nélkül.
-- Az MVP emailprovidere SMTP2GO; az SMTP-adapter és konfiguráció megőrzi a könnyű szolgáltatócserét.
+- Szolgáltatófüggetlen emailport és külön provideradapter; memóriabeli küldési sor: 5 másodperces timeout, legfeljebb három próbálkozás, 2/8 másodperces szünetek. HttpOnly cookie-s meccsvisszatérés, szerveroldali hashnyilvántartással, a meccs indulásától számított fix 30 perces érvényességgel, játék közbeni hosszabbítás nélkül.
+- Az MVP emailprovidere Resend, HTTPS API-val és natív Node `fetch` adapterrel; új SDK-függőség nélkül. Saját feladóhoz a domain DNS-ellenőrzése szükséges, külön emailtárhely nem. A port megőrzi a könnyű szolgáltatócserét.
 - Felhasználónként egy játékfolyamat: szobatagság mellett nem indul külön szólómeccs. Ha senkit nem várunk be, a kérdés a rendes határidőig nyitott. Technikai megszakítás után 15 másodperces jelzés, majd várószoba/vendég-kezdőképernyő.
 
 ### Még nem véglegesített részletek
 
 - Az elfogadott négy workspace-mappa belső könyvtárszerkezete, az npm workspace konfigurációja és a modulhatárok implementációs részletei.
-- Authsession-frissítés kliensfolyamata, vendégsession megújításának technikai folyamata, SMTP2GO tényleges bekötése, csomagverziók és deployment-részletek. A normál session 5 perces megújítási célüteme, a vendégsession aktív használat mellett megújítható 15 perces élettartama és a Better Auth cookieCache kikapcsolása már elfogadott.
+- Resend-fiók/domain tényleges bekötése, aktuális csomagfeltételek és deployment-részletek. A normál session 5 perces megújítási célüteme, a vendégsession aktív használat mellett megújítható 15 perces élettartama és a Better Auth cookieCache kikapcsolása elfogadott; a HTTP-kliensfolyamat az M4-ben megvalósult.
 - Better Auth fióktörlésének illesztése a közös törlési folyamathoz.
 - Kérdésforrás, kérdésgenerálás, seed és reprodukálhatósági szerződés.
 - Néhány szélső eset és fizikai adatbázis-validáció; ezeket a 12. fejezet sorolja fel.
 
-Az elfogadott terméktervek önmagukban nem jelentenek kipróbált működést. Az M0 technikai alap és környezeti ellenőrzések eredményeit a [környezeti dokumentum](development-environment.md), az M1 és M2 tényleges tesztjeit a [motor](game-engine.md) és [backendvezérlő](backend-controller.md) dokumentációja rögzíti. Valódi auth és tartós domainadatok továbbra is későbbi integrációk.
+Az elfogadott terméktervek önmagukban nem jelentenek kipróbált működést. Az M0 technikai alap és környezeti ellenőrzések eredményeit a [környezeti dokumentum](development-environment.md), az M1 és M2 tényleges tesztjeit a [motor](game-engine.md) és [backendvezérlő](backend-controller.md), az M3 auth/tárolási és M4 böngészős eredményeit a [backend auth](backend-auth-storage.md) és [frontend](frontend.md) dokumentációja rögzíti. Az emailtesztport nem igazol valódi Resend-kézbesítést.
 
 ## 2. Termék és technológiai kiindulás
 
@@ -818,12 +818,12 @@ A fenti életciklus és az email + jelszó belépés elfogadott. A meccsvisszat�
 - Better Auth alapból biztosítja a linkes email-megerősítési és jelszó-visszaállítási folyamatot. Külön auth-plugin ezekhez nem szükséges.
 - A kiküldést saját emailadapter köti be a sendVerificationEmail és sendResetPassword callbackeken keresztül. Better Auth nem emailkézbesítő szolgáltató.
 - Szükséges egy tranzakciós emailküldő szolgáltatás vagy SMTP-szolgáltatás, annak biztonságosan konfigurált hozzáférése, feladó és éles küldéshez szükséges szolgáltatói/domainbeállítások.
-- Az MVP SMTP2GO szolgáltatót használ SMTP + Nodemailer adapterrel. Host, port, TLS-mód, hozzáférés és feladó konfigurálható; az authcallbackek és sablonok szolgáltatófüggetlenek. A Nodemailer csak a szerverinfrastruktúrába kerül, a játékmotorba nem. Másik SMTP-provider, később HTTPS API-adapter is alkalmazható.
+- Az MVP Resend szolgáltatót használ HTTPS API-adapterrel, a Node natív `fetch` képességére támaszkodva. `RESEND_API_KEY` és `EMAIL_FROM` konfigurálható; az authcallbackek és sablonok szolgáltatófüggetlenek. Saját feladóhoz domain DNS-ellenőrzés kell, külön feladópostaláda nem szükséges. Másik provider ugyanennek az emailportnak új adapterével kapcsolható be.
 - A user.emailVerified authmező a megerősítés forrása; külön, párhuzamos profiljelző nem szükséges.
 - Elfogadott: nem megerősített emaillel nem lehet bejelentkezni; a vendég egyjátékos mód elérhető marad. Ezt Better Auth requireEmailVerification beállításával támogatja. A regisztráció után megerősítést kérő képernyő jelenik meg, nem bejelentkezett játékosként kezeljük a felhasználót.
 - Az email-megerősítési link 24 óráig érvényes.
 - Az authlevelek újraküldése legfeljebb percenként kérhető, további szerveroldali kéréskorlátozással. A felület gombjának korlátozása önmagában nem elegendő.
-- Az SMTP2GO hozzáférése/csomagfeltételei, az általános kéréskorlátozás konkrét dimenziói és az emailkézbesítési hibák részletei még ellenőrizendők. A szolgáltatóválasztás, 15 perces reset-link, 24 órás megerősítési link és percenkénti újraküldés már elfogadott.
+- A Resend-fiók hozzáférése, aktuális csomagfeltételei, domain DNS-beállításai és a valódi emailkézbesítés még ellenőrizendők. A szolgáltatóválasztás, 15 perces reset-link, 24 órás megerősítési link és percenkénti újraküldés elfogadott.
 
 #### Session időtartam — elfogadott
 
@@ -847,7 +847,7 @@ A fenti életciklus és az email + jelszó belépés elfogadott. A meccsvisszat�
 
 A részletes terv külön dokumentumban található: [Authadapterek és meccsvisszatérés](auth-adapters.md).
 
-- Szolgáltatófüggetlen SMTP emailadapter Nodemailerrel, külön memóriabeli küldési sorral. Az MVP-provider SMTP2GO, könnyen cserélhető SMTP-konfigurációval. Az aktuális ingyenes csomagfeltételek és tényleges hozzáférés ellenőrzése még szükséges.
+- Szolgáltatófüggetlen emailport, Resend HTTPS-adapterrel és külön memóriabeli küldési sorral. A korábbi SMTP2GO + Nodemailer döntést a felhasználó Resendre módosította. Az aktuális ingyenes csomagfeltételek, saját domain DNS-ellenőrzése és tényleges hozzáférés ellenőrzése még szükséges; lásd a [Resend útmutatót](email-guide.md).
 - Emailtimeout 5 másodperc; átmeneti hiba esetén legfeljebb három próbálkozás 2/8 másodperces szünetekkel, providerutasítás és tokenlejárat figyelembevételével.
 - Véletlen, átlátszatlan HttpOnly cookie-s meccsvisszatérési azonosító, memóriabeli szerveroldali hashnyilvántartással.
 - HTTP-végpont adja ki érvényes session és aktív meccsrészvétel alapján; Socket.IO kapcsolódás használhatja lejárt normál session mellett.
@@ -855,7 +855,7 @@ A részletes terv külön dokumentumban található: [Authadapterek és meccsvis
 - A cookie meccskezdetkor frissül, csak az adott meccshez használható, és az indulástól számítva fix 30 percig él. Reconnect vagy sessionfrissítés nem hosszabbítja meg; visszatéréskor a meccs létezését és a részvételt is ellenőrizzük.
 - Megszűnt meccs után létező várószobába irányítás lehetséges, érvényes normál auth és tagsági/csatlakozási ellenőrzés mellett. A meccstoken nem ruház át várószobai jogosultságot.
 
-Az SMTP2GO + Nodemailer emailadapter, a memóriabeli küldési sor fenti szabályai és a cookie/hash alapú, meccsindulástól fix 30 perces meccsvisszatérés elfogadott döntések. A külön jelzett végrehajtási részletek még nyitottak. A visszatérési token lejárata önmagában nem lépteti ki a már játékban lévő résztvevőt; későbbi reconnecthez érvényes normál session vagy új bejelentkezés szükséges.
+A Resend emailprovider, a szolgáltatófüggetlen emailport, a memóriabeli küldési sor fenti szabályai és a cookie/hash alapú, meccsindulástól fix 30 perces meccsvisszatérés elfogadott döntések. A tényleges provider-/domainbeállítás még külön feladat. A visszatérési token lejárata önmagában nem lépteti ki a már játékban lévő résztvevőt; későbbi reconnecthez érvényes normál session vagy új bejelentkezés szükséges.
 
 ### 11.10. MVP megvalósítási terv
 
@@ -865,7 +865,7 @@ A mérföldköveket, előfeltételeket és ellenőrzési feltételeket külön d
 
 ### Következő architektúratervezésben
 
-- SMTP2GO aktuális ingyenes csomagfeltételei és hozzáférése, újraküldés/kéréskorlátozás konkrét kulcsai és kézbesítési hibák részletei; a provider, linklejáratok és percenkénti újraküldési korlát már elfogadottak.
+- Resend aktuális ingyenes csomagfeltételei, fiókhozzáférése, domain DNS-ellenőrzése és valódi kézbesítési próba; a provider, linklejáratok és percenkénti újraküldési korlát elfogadottak.
 - Jelszókarakter-kategóriák, hosszmaximum és a szerveroldali komplexitásellenőrzés Better Auth-integrációja.
 - Jelszó-visszaállítás után minden session és meccsjogosultság visszavonásának, valamint az explicit meccskilépésnek a technikai koordinációja; a termékszabály már elfogadott.
 - Better Auth session 5 perces megújítási célütemének kliensfolyamata. Élettartam 30 perc, nincs 24 órás abszolút maximum; cookieCache kikapcsolva.

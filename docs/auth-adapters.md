@@ -1,12 +1,12 @@
 # Authadapterek és meccsvisszatérés — technikai terv
 
-Utolsó frissítés: 2026-10-07.
+Utolsó frissítés: 2026-10-08.
 
 Kapcsolódó dokumentum: [MVP tervezési dokumentum](design.md).
 
 Az M3 megvalósítása, a végleges HTTP-útvonalak és a végrehajtott ellenőrzések a [backend auth- és tárolási dokumentumban](backend-auth-storage.md) találhatók; az alábbi szöveg a korábbi technikai terv.
 
-Ez a dokumentum az elfogadott authéletciklus technikai tervét tartalmazza. Elfogadott: szolgáltatófüggetlen SMTP + Nodemailer emailadapter, az MVP-ben SMTP2GO szolgáltatóval; memóriabeli küldési sor a megadott timeout/újrapróbálási szabályokkal; valamint a meccs kezdetétől számított fix 30 perces HttpOnly meccsvisszatérési cookie, szerveroldali hashnyilvántartással. A külön jelzett végrehajtási és szolgáltatásbeállítási részletek továbbra is nyitottak. Nem alkalmazáskód, nem konfiguráció és nem végrehajtott szolgáltatásbeállítás.
+Ez a dokumentum az elfogadott authéletciklus technikai tervét tartalmazza. Elfogadott: szolgáltatófüggetlen emailport, az MVP-ben Resend HTTPS-adapterrel; memóriabeli küldési sor a megadott timeout/újrapróbálási szabályokkal; valamint a meccs kezdetétől számított fix 30 perces HttpOnly meccsvisszatérési cookie, szerveroldali hashnyilvántartással. A felhasználó 2026-10-08-i Resend-döntése felülírja a korábbi SMTP2GO + Nodemailer szolgáltatóválasztást. Ez technikai terv, nem végrehajtott szolgáltatásbeállítás; a tényleges implementációt és ellenőrzéseit az M3/M4 dokumentációja rögzíti.
 
 ## 1. Rögzített követelmények
 
@@ -28,8 +28,8 @@ Ez a dokumentum az elfogadott authéletciklus technikai tervét tartalmazza. Elf
 - A játékmotor natív TS, külső könyvtár, email- és cookie-kezelés nélkül.
 - A meccsvisszatérési cookie a meccs kezdetekor frissül, csak abba a meccsbe enged vissza, és az indulástól számított fix 30 percig érvényes. Játék közben nem hosszabbítjuk meg. A meglévő meccs és részvétel visszatéréskor mindig ellenőrizendő.
 - Ha a meccs már nincs, létező várószobába irányíthatjuk a klienst a normál hitelesítési és csatlakozási szabályokkal.
-- Az MVP emailküldő ingyenesen használható SMTP-szolgáltatás legyen; Nodemailer a szerveroldali adapter függősége lehet.
-- Az MVP emailprovidere SMTP2GO. A szolgáltató később könnyen cserélhető marad.
+- Az MVP emailküldő ingyenes csomagban használható tranzakciós szolgáltatás legyen; a tényleges keretek a providerfiókban ellenőrizendők.
+- Az MVP emailprovidere Resend. Saját domain DNS-ellenőrzésével külön emailtárhely nélkül használható; a szolgáltató később könnyen cserélhető marad.
 - Egy felhasználónak egy játékfolyamata lehet; szobatagság mellett nem indít külön szólómeccset. Ez a több eszköz jogosultsági koordinációjára is érvényes.
 
 ## 2. Emailküldő adapter
@@ -48,24 +48,21 @@ Nem készül saját auth-token rendszer. A küldési feladat az adott Better Aut
 
 ### 2.2. Szolgáltató és függőségek
 
-Elfogadott MVP-irány: ingyenesen használható tranzakciós SMTP-szolgáltatás, Nodemailer adapterrel. Ez a korábbi HTTPS API-alapú MVP-választást felülírja; a szolgáltatófüggetlen határ és a küldési sor változatlan.
+Elfogadott MVP-irány: Resend tranzakciós emailküldés a szolgáltató HTTPS API-jával. Ez a korábbi SMTP2GO + Nodemailer választást felülírja; a szolgáltatófüggetlen határ és a küldési sor megmarad.
 
-- Kiválasztott MVP-provider: SMTP2GO. Brevo, SendPulse vagy más SMTP-szolgáltató később ugyanahhoz az adapterhez kapcsolható.
-- Az ingyenességet a tranzakciós SMTP-küldésre kell ellenőrizni, nem csak marketinglevélre vagy időben korlátozott próbacsomagra.
-- SMTP-host, port, hozzáférés, feladó és a megfelelő TLS-mód konfigurációból jön; ellenőrzött TLS-kapcsolat szükséges.
-- Nodemailer csak a backend infrastruktúrájának függősége, nem a motoré vagy a frontendé.
-- Későbbi HTTPS API-adapter ugyanahhoz a szolgáltatási határhoz illeszthető, a játék és az authfolyamat módosítása nélkül.
-- Nincs emailes import a motorban vagy a publikus contracts csomagban.
-- Backendkonfiguráció: provider, feladó, alkalmazás publikus alapcíme, szolgáltatói hozzáférés.
-- SMTP2GO-specifikus host, port, TLS-mód, hozzáférés és feladó kizárólag konfiguráció/adapterhatáron jelenik meg. A Better Auth callback, sablonok és küldési sor a szolgáltatófüggetlen emailmodult használják. Másik SMTP-providerre váltás ezek változtatása nélkül lehetséges, a szükséges szolgáltatói/domainbeállítások elvégzése mellett.
-- A hozzáférés biztonságos környezeti konfigurációból jön. A frontend buildbe és Gitbe nem kerül.
-- Éles szolgáltatói/domainbeállítások a kiválasztott szolgáltatónál elvégzendő feladatok; most nincs regisztráció, domainmódosítás vagy küldés.
+- A backend a Node beépített `fetch` API-jával hívja a rögzített `https://api.resend.com/emails` végpontot. Külön Resend SDK vagy SMTP-könyvtár nem szükséges.
+- `RESEND_API_KEY` és `EMAIL_FROM` konfigurációból jön; az API-kulcs csak szerveroldali titkos konfigurációba kerül. Az alkalmazás publikus alapcíme továbbra is `BETTER_AUTH_URL`.
+- Saját feladóhoz a küldő domain DNS-ellenőrzése kell. A feladó neve és címe emailtárhely nélkül is használható; bejövő levél fogadását ez nem biztosítja.
+- Az alapértelmezett Resend tesztfeladó saját fiókcímre szánt próba; tetszőleges játékoscímhez ellenőrzött domain kell.
+- A Better Auth callback, sablonok és küldési sor a szolgáltatófüggetlen emailmodult használják. Másik szolgáltató később ugyanennek a portnak új adapterével kapcsolható, az authfolyamat és a játék módosítása nélkül.
+- Nincs emailes import a motorban vagy a publikus contracts csomagban. A hozzáférés a frontend buildbe és Gitbe nem kerül.
+- A szolgáltatói fiók, domain DNS-ellenőrzése és valódi kézbesítési próba külön bekötési feladatok. Lásd a [Resend útmutatót](email-guide.md).
 
-Aktuális szolgáltatói feltételek: 2026-10-06-án a három hivatalos árazási oldal olvasása a környezet hálózati proxyján 403 Forbidden választ adott. Aktuális ingyenes kvótát, SMTP-hozzáférést vagy domainfeltételt ezért nem állítunk ellenőrzöttként. Az SMTP2GO tervezési választása elfogadott; tényleges bekötés előtt a csomagfeltételeket és a hozzáférést ellenőrizni kell.
+2026-10-08-án a Resend hivatalos OpenAPI-leírása és Node SDK-forrása olvasható volt, a webes dokumentáció elérését a környezet proxyja 403-mal blokkolta. Az aktuális csomagkvóták, a felhasználó providerfiókja és domainbeállításai ezért nem ellenőrzöttek. A korábbi SMTP2GO/Brevo/SendPulse árazási vizsgálat a korábbi szolgáltatóválasztás előzménye, nem a Resend feltételeinek bizonyítéka.
 
-- [Brevo díjcsomagok](https://www.brevo.com/pricing/)
-- [SMTP2GO díjcsomagok](https://www.smtp2go.com/pricing/)
-- [SendPulse SMTP díjcsomagok](https://sendpulse.com/pricing/smtp)
+- [Resend domain DNS-ellenőrzés](https://resend.com/docs/dashboard/domains/introduction)
+- [Resend küldési API](https://resend.com/docs/api-reference/emails/send-email)
+- [Resend OpenAPI](https://github.com/resend/resend-openapi/blob/main/resend.yaml)
 
 ### 2.3. Belső küldési feladat
 
@@ -105,12 +102,12 @@ Az emailküldés külön alkalmazási feladatsor, nem a játék állapotmódosí
 
 - MVP-ben memóriabeli, korlátozott méretű sor; tartós email-outbox tábla és külső queue nem szükséges az első változathoz.
 - Egy providerkérés timeoutja 5 másodperc.
-- Átmeneti hálózati hiba vagy SMTP 4xx átmeneti válasz esetén összesen legfeljebb három próbálkozás. SMTP 5xx jellemzően végleges hiba; a konkrét providerkódot az adapter osztályozza.
-- Próbálkozások közti szünet: 2, majd 8 másodperc. Szolgáltatói várakozási/kvótautasítást figyelembe kell venni; lejárt linket nem küldünk ki. Egy későbbi HTTP-adapterben a 429/Retry-After megfelelője ugyanide illeszkedik.
+- Átmeneti hálózati hiba, HTTP 429 vagy 5xx esetén összesen legfeljebb három próbálkozás. HTTP 409 esetén csak a `concurrent_idempotent_requests` hibakód ismételhető; eltérő tartalommal újrahasznált idempotenciakulcs végleges hiba.
+- Próbálkozások közti szünet: 2, majd 8 másodperc. Lejárt linket nem küldünk ki. A korlátozott MVP-sor nem vezet új, korlátlan szolgáltatói várakozási ciklust.
 - Hibás konfiguráció, érvénytelen szolgáltatói hozzáférés és más végleges hiba esetén nincs változatlan automatikus ismétlés.
 - Minden próbálkozás ugyanazt a linket és jobId-t használja. Új felhasználói kérés másik folyamat, a percenkénti korlát alá tartozik.
-- SMTP-n nincs általános idempotenciakulcs-garancia. Egy stabil Message-ID segítheti a követést, de nem bizonyít deduplikált kézbesítést. Ha egy későbbi HTTP-provider támogat idempotenciakulcsot, a jobId ehhez használható.
-- Bizonytalan kimenetelnél ugyanaz a levél többször is megérkezhet. Nem ígérünk pontosan egyszeri kézbesítést.
+- A stabil belső üzenetazonosító Resend `Idempotency-Key` fejlécként kerül minden próbálkozásba, legfeljebb 256 karakterrel. Az ismételt kérés ugyanazt a tartalmat tartja meg. Az API-idempotencia a provider aktuális szabályaihoz kötött.
+- A provider elfogadása nem jelent postaládakézbesítési garanciát. Nem ígérünk pontosan egyszeri kézbesítést.
 
 A link lejárata a token létrehozásától számít, nem a kézbesítéstől. Providerhibára nem hosszabbítjuk meg önkényesen a reset-token érvényességét.
 
@@ -138,7 +135,7 @@ Tervezett ellenőrzések:
 - Callback a megfelelő sablont, célt és lejáratot adja az adapternek.
 - Létező/nem létező email reset-válasza semleges.
 - Frontend megkerülésével is érvényes a percenkénti korlát.
-- SMTP 4xx/átmeneti hiba után újrapróbálás, végleges hiba után leállás.
+- HTTP 429/5xx, ismételhető 409 és átmeneti hálózati hiba után újrapróbálás, végleges hiba után leállás.
 - Retry ugyanazt a linket használja, lejárt linket nem küld.
 - Fióktörlés után sorban álló levél nem válik új jogosultság forrásává.
 - Provider elfogadását nem nevezzük bizonyított kézbesítésnek.
@@ -336,8 +333,8 @@ Hálózati hiba nem bizonyít kijelentkezést vagy sessionlejáratot. Már lejá
 
 ## 4. Elfogadott technikai döntések és nyitott részletek
 
-1. Szolgáltatófüggetlen emailadapter, külön küldési sorral; SMTP + Nodemailer, az MVP-ben SMTP2GO szolgáltatóval. Másik SMTP-providerre váltás konfigurációval és szolgáltatói beállításokkal lehetséges, az authfolyamat és játékmotor módosítása nélkül.
+1. Szolgáltatófüggetlen emailport, külön küldési sorral; az MVP-ben Resend HTTPS-adapter, natív Node `fetch` használatával. Másik provider adaptere az authfolyamat és játékmotor módosítása nélkül kapcsolható ugyanide.
 2. MVP-ben memóriabeli emailküldési sor: 5 másodperces timeout, legfeljebb három próbálkozás, 2/8 másodperces szünetekkel, providerutasítás és linklejárat figyelembevételével.
 3. Véletlen, HttpOnly cookie-s meccsvisszatérési azonosító, szerveroldali hashnyilvántartással; JWT helyett, HTTP-n kiadva, Socket.IO-n ellenőrizve.
 
-A fenti döntések és az SMTP2GO provider elfogadottak. A visszatérési cookie a meccs kezdetétől számított fix 30 percig érvényes, nem gördülően megújítható. A külön felsorolt végrehajtási részletek és tényleges szolgáltatásbeállítások még nem véglegesek. Implementáció továbbra sem kezdődött.
+A fenti döntések és a Resend provider elfogadottak. A visszatérési cookie a meccs kezdetétől számított fix 30 percig érvényes, nem gördülően megújítható. A korábbi terv megvalósítását az M3/M4 dokumentációja rögzíti; a tényleges Resend-fiók/domain beállítása és kézbesítés ellenőrzése még külön feladat.

@@ -1,6 +1,6 @@
 # Rapidfire
 
-Self-hosted realtime quiz system. M0–M4 provide the development environment, native game engine, backend/socket controller, PostgreSQL persistence, Better Auth, email adapter and a responsive English gameplay/account frontend. Live SMTP2GO delivery requires provider configuration.
+Self-hosted realtime quiz system. M0–M4 provide the development environment, native game engine, backend/socket controller, PostgreSQL persistence, Better Auth, email adapter and a responsive English gameplay/account frontend. Auth email uses Resend's HTTPS API; live delivery requires provider configuration.
 
 ## Requirements
 
@@ -20,7 +20,7 @@ npm run db:migrate
 npm run check
 ```
 
-`env:init` creates an ignored, owner-readable `.env` with random local database credentials and auth secret, preserving existing configuration and filling only a missing auth secret. It automatically selects system Chromium when available. Keep `POSTGRES_PASSWORD` and the password portion of `DATABASE_URL` consistent. Other database ports require updating both `POSTGRES_PORT` and `DATABASE_URL`. Real verification/reset email requires SMTP credentials and a verified sender; tests use a separate email port.
+`env:init` creates an ignored, owner-readable `.env` with random local database credentials and auth secret, preserving existing configuration and filling only a missing auth secret. It automatically selects system Chromium when available. Keep `POSTGRES_PASSWORD` and the password portion of `DATABASE_URL` consistent. Other database ports require updating both `POSTGRES_PORT` and `DATABASE_URL`. Real verification/reset email requires `RESEND_API_KEY`, `EMAIL_FROM` and a verified sending domain; tests use a separate email port. [Resend setup instructions](docs/email-guide.md) explain DNS verification without email hosting.
 
 Beginner Hungarian instructions: [PostgreSQL in Docker, schema generation and migrations](docs/database-guide.md). Apply committed migrations with `db:migrate`; schema generation is for schema changes, not ordinary first setup.
 
@@ -74,12 +74,12 @@ One Express/Node process serves the Vite build, HTTP API and Socket.IO on port 3
 
 ## Workspace boundaries
 
-| Workspace              | Purpose                                              | Dependencies                                                                                           |
-| ---------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `apps/web`             | React/Vite client                                    | React, Socket.IO client and public contracts.                                                          |
-| `apps/server`          | Express/Socket.IO host, controller and adapter ports | Better Auth, Drizzle, PostgreSQL driver, Nodemailer, engine and contracts; Socket.IO client for tests. |
-| `packages/game-engine` | Native TypeScript engine                             | **Zero runtime dependencies**; pure transitions, validation and scoring.                               |
-| `packages/contracts`   | Public transport types and runtime validation        | Zod; command schemas, typed acknowledgements/snapshots and English message catalogs.                   |
+| Workspace              | Purpose                                              | Dependencies                                                                                                        |
+| ---------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `apps/web`             | React/Vite client                                    | React, Socket.IO client and public contracts.                                                                       |
+| `apps/server`          | Express/Socket.IO host, controller and adapter ports | Better Auth, Drizzle, PostgreSQL driver, engine and contracts; native fetch for Resend; Socket.IO client for tests. |
+| `packages/game-engine` | Native TypeScript engine                             | **Zero runtime dependencies**; pure transitions, validation and scoring.                                            |
+| `packages/contracts`   | Public transport types and runtime validation        | Zod; command schemas, typed acknowledgements/snapshots and English message catalogs.                                |
 
 One root lockfile records the complete dependency graph. Direct dependency versions are exact; npm validates engine and peer compatibility without `--force` or `--legacy-peer-deps`. The npm cache is stored in ignored `.cache/npm`, avoiding cloud home-directory permissions. Runtime packages are declared in their owning workspace; common developer tools live at the root. The engine has no ambient Node/DOM types and does not import contracts.
 
@@ -94,5 +94,6 @@ Backend third-party declaration checking and the shell-quote override are explai
 - [Implemented M3 auth, storage and HTTP contracts](docs/backend-auth-storage.md)
 - [M4 responsive frontend, routes and browser checks](docs/frontend.md)
 - [PostgreSQL Docker and migration guide (Hungarian)](docs/database-guide.md)
+- [Resend email setup without email hosting (Hungarian)](docs/email-guide.md)
 - [Implementation milestones](docs/implementation-plan.md)
 - [Development environment configuration and verification](docs/development-environment.md)
