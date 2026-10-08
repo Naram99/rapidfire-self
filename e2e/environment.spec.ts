@@ -115,3 +115,71 @@ test('the browser uses HttpOnly guest cookies for HTTP renewal and authenticated
   );
   expect(connected).toBe(true);
 });
+
+test('a late rejected guest renewal preserves a newer browser session', async ({
+  page,
+  context,
+}) => {
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: 'Start solo' })).toBeEnabled();
+
+  const rejected = Promise.withResolvers<void>();
+  const release = Promise.withResolvers<void>();
+  await page.route('**/api/guest/session/renew', async (route) => {
+    if (route.request().headers()['x-test-delayed-renewal'] !== '1') {
+      await route.continue();
+      return;
+    }
+    const response = await route.fetch();
+    rejected.resolve();
+    await release.promise;
+    await route.fulfill({ response });
+  });
+  const oldRenewal = page.evaluate(async () => {
+    const response = await fetch('/api/guest/session/renew', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Test-Delayed-Renewal': '1',
+      },
+      body: '{}',
+    });
+    return response.status;
+  });
+  try {
+    // The unauthenticated request completes on the server before creation, but
+    // its response reaches the browser only after the new cookie is installed.
+    await rejected.promise;
+    const created = await page.evaluate(async () => {
+      const response = await fetch('/api/guest/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nickname: 'New browser guest' }),
+      });
+      return response.status;
+    });
+    expect(created).toBe(200);
+    const issued = (await context.cookies()).find(
+      (cookie) => cookie.name === 'rapidfire.guest',
+    );
+    expect(issued?.httpOnly).toBe(true);
+    release.resolve();
+    expect(await oldRenewal).toBe(401);
+    const retained = (await context.cookies()).find(
+      (cookie) => cookie.name === 'rapidfire.guest',
+    );
+    expect(retained?.value === issued?.value).toBe(true);
+    const renewed = await page.evaluate(async () => {
+      const response = await fetch('/api/guest/session/renew', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}',
+      });
+      return response.status;
+    });
+    expect(renewed).toBe(200);
+  } finally {
+    release.resolve();
+    await oldRenewal;
+  }
+});
