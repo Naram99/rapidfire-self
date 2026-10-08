@@ -1,0 +1,70 @@
+/* VARIABLES */
+
+:root {
+  --font-title: 'Bebas Neue', sans-serif;
+  --font-page: 'DM Sans', sans-serif;
+  --font-quiz: 'DM Mono', monospace;
+
+  --ember-50: #fff4ed;
+  --ember-100: #ffe0c2;
+  --ember-200: #ffc285;
+  --ember-400: #ff8c2a;
+  --ember-500: #f56800;
+  --ember-600: #c44e00;
+  --ember-700: #7a2f00;
+  --ember-900: #2e1000;
+
+  --blaze-50: #fff1ee;
+  --blaze-100: #ffd3ca;
+  --blaze-200: #ffb09f;
+  --blaze-400: #ff5740;
+  --blaze-500: #e83520;
+  --blaze-600: #b32110;
+  --blaze-700: #6e1308;
+  --blaze-900: #2b0803;
+
+  --spark-50: #fffbea;
+  --spark-100: #fff0a0;
+  --spark-200: #ffe15a;
+  --spark-400: #f5c400;
+  --spark-500: #d4a400;
+  --spark-600: #8f6d00;
+  --spark-700: #4a3700;
+  --spark-900: #1a1200;
+
+  --velocity-50: #f0f6ff;
+  --velocity-100: #c8dffe;
+  --velocity-200: #90beff;
+  --velocity-400: #3a8cff;
+  --velocity-500: #1a6cf0;
+  --velocity-600: #0c4bb5;
+  --velocity-700: #062d73;
+  --velocity-900: #010e2a;
+
+  --ash-50: #f7f5f3;
+  --ash-100: #e4e0db;
+  --ash-200: #c8c2b9;
+  --ash-400: #8e8680;
+  --ash-500: #635d57;
+  --ash-600: #45403b;
+  --ash-700: #2c2824;
+  --ash-900: #141210;
+
+  /* SEMANTICS */
+
+  --primary-bg: light-dark(var(--ember-500), var(--ember-400));
+  --primary-text: light-dark(var(--ember-50), var(--ember-900));
+  --primary-accent: light-dark(var(--ember-600), var(--ember-500));
+
+  --error-bg: light-dark(var(--blaze-100), var(--blaze-700));
+  --error-text: light-dark(var(--blaze-600), var(--blaze-100));
+  --error-accent: light-dark(var(--blaze-400), var(--blaze-400));
+
+  --warning-bg: light-dark(var(--spark-100), var(--spark-700));
+  --warning-text: light-dark(var(--spark-700), var(--spark-200));
+  --warning-accent: light-dark(var(--spark-400), var(--spark-400));
+
+  --success-bg: light-dark(var(--velocity-100), var(--velocity-700));
+  --success-text: light-dark(var(--velocity-700), var(--velocity-100));
+  --success-accent: light-dark(var(--velocity-400), var(--velocity-400));
+}
