@@ -56,6 +56,7 @@ A HTTP-hibák stabil `code` értéket adnak. A kliens a contracts angol katalóg
 - Logout/reset/törlés az összes meccsigazolást és authsessiont visszavonja. Lejárt normál vagy vendégsession, de még érvényes saját meccsigazolás mellett a logout is megszünteti a részvételt; a vendégvégpont regisztrált user igazolását nem fogadja el.
 - Visszavonási epoch védi a folyamatot: kijelentkezéssel megelőzött, lassú sessionellenőrzés vagy socket admission nem állíthat vissza régi jogosultságot.
 - Saját cookie-k: HttpOnly, SameSite=Lax, Path=/, domain nélkül; HTTPS esetén Secure és `__Host-` prefix. Helyi HTTP-hoz eltérő, prefix nélküli név.
+- A hiányzó, hibás, lejárt vagy visszavont vendégsession megújítása `401 AUTH_REQUIRED` választ ad cookie-módosítás nélkül. Egy korábbi kérés későn érkező elutasítása így nem törli a közben létrehozott vendégcookie-t. Az explicit vendégkijelentkezés továbbra is törli a cookie-kat és visszavonja a szerveroldali jogosultságot.
 
 A memóriabeli credential-/korlátozó nyilvántartás korlátos és lejáró. Újraindítás nem tartja meg a vendéget, szobát vagy meccsigazolást. A böngésző időzített ötperces ellenőrzése és háttérből visszatéréskor végzett ellenőrzése az [M4-ben](frontend.md) megvalósult.
 
@@ -93,5 +94,7 @@ Végrehajtott helyi ellenőrzések 2026-10-07-én:
 - A PostgreSQL zárolási/időkorlát-teszt elutasított mentés után sikeres új próbálkozást igazol. Lejárt vendégsession mellett érvényes meccsigazolással a logout minden kapcsolatot lezár.
 
 A 2026-10-08-i Resend-átállás ellenőrzése: teljes típusellenőrzés és build, formázásellenőrzés, 186 Vitest-teszt (ebből 35 Resend-adapter/konfiguráció), 9 fejlesztői és 9 production böngészős teszt sikeres; hibamentes függőségi fa és 0 audit-találat. Az éles provider-elérést a jelenlegi proxy blokkolta, API-kulcs és feladó sincs még beállítva. Részletek a [Resend útmutatóban](email-guide.md).
+
+A vendégmegújítás cookie-törlési versenyhelyzetét késleltetett 401-es válasszal reprodukáltuk: a javítás előtt elveszett a közben kiadott HttpOnly cookie. A javítás után a regresszió és az eredeti socket/megújítás teszt is sikeres. A teljes `CI=1 npm run check` helyben sikeres: típusellenőrzés, build, 191 Vitest-teszt, 10 fejlesztői és 10 production böngészős teszt. A formázásellenőrzés is sikeres. Az új HTTP-regressziók az érvénytelen sessionök elutasítását és az explicit kijelentkezés tényleges visszavonását is igazolják.
 
 GitHub CI-futás, valódi szolgáltatói kézbesítés és új cloud taskban történő visszaállítás nem része a végrehajtott ellenőrzésnek.

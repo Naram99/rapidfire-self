@@ -218,7 +218,7 @@ export function createApiRouter(
     );
     const guest = credentials.renewGuest(token);
     if (!guest || !token) {
-      response.append('Set-Cookie', bridge.cookies.clear('guest'));
+      // A stale rejection can arrive after another request sets a new cookie.
       failure(response, 401, 'AUTH_REQUIRED');
       return;
     }
