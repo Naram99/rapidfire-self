@@ -22,6 +22,11 @@ az még nem véglegesített implementációs szerződés.
   feldolgozása későbbi bővítés.
 - A képességek `damage` mezője az MVP-ben üres objektum (`{}`) marad.
   A sebzésadatok feldolgozása külön, későbbi feladat.
+- A generátor skindarabszáma az alapkinézetet és a chromákat kihagyja;
+  a chromák külön számolandók. A jelölések mindkét lekérdezést támogatják.
+- A cooldown-összehasonlítás a képesség első rangjának alap cooldownját használja,
+  tárgyak és rúnák nélkül. Ehhez a megjelenítési szöveg mellett külön validált
+  numerikus tény szükséges.
 - Az MVP adatnyelve `en_US`; a verziózott készletben külön locale mező készíti
   elő a későbbi nyelveket. A rendszerüzenetek továbbra is fordítható kódok.
 - Egy meccs egyetlen, rögzített adatkészletből kapja az összes forduló kérdését.

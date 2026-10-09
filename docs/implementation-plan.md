@@ -206,7 +206,9 @@ A csatolt `questionTypes.json` és `topics.json` alapján elkészült a
 [kérdés- és kategóriagenerálási terv](question-generation.md). A nehézségenként
 önálló kategóriaváltozatok, a numerikus összehasonlítás és a szöveges felismerés
 leíró katalógusból állíthatók elő. A dokumentum rögzíti az elfogadott műveleti
-szabályokat; a nullaértékek, holtversenyek és opciószámok kezelésére adott
+szabályokat: a skindarabszám alapkinézet és chromák nélkül értendő, a cooldown
+pedig a képesség első rangjának alapértéke tárgyak és rúnák nélkül.
+A nullaértékek, holtversenyek és opciószámok kezelésére adott
 javaslatok még nem véglegesek. A képes családok és a sebzésfeldolgozás továbbra is későbbi feladatok;
 ez a szelet sem változtatja meg a futó mintakérdés-providert.
 

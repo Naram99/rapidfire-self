@@ -40,6 +40,10 @@ Az egyeztetés során elfogadott pontosítások:
   a felület nem vált át egyszeres módra a helyes opciók számából következtetve.
 - A `lessThan` és `moreThan` esetében az eltérés a kérdésben szereplő
   küszöbértékhez mérendő, és a helyes, valamint hibás opciókra is érvényes.
+- A skindarabszám az alapkinézetet és a chromákat kihagyja; a chromák
+  külön metrikákban szerepelnek.
+- A cooldown a képesség első rangjának alapértéke, tárgyak és rúnák nélkül.
+  A megjelenítési név és szöveg `rank 1`-et használ, nem hősszintet.
 
 ## 2. A csatolt katalógus feldolgozása
 
@@ -50,18 +54,18 @@ A kategóriafájlban 18 bejegyzés van: 10 objektummal megadott család és nyol
 írható le; ebből 27 szöveges és négy képes. Ez konfigurációs darabszám,
 nem igazoltan generálható kategóriák száma.
 
-| Család                | Generálási feladat                                      | Nehézségek | Adatfeltétel                                                    |
-| --------------------- | ------------------------------------------------------- | ---------- | --------------------------------------------------------------- |
-| `baseStatsLvl1`       | Hősök alapstatjának összehasonlítása.                   | 4          | Validált stat és mértékegység; manánál erőforrástípus-szűrés.   |
-| `baseStatsPerLevel`   | A forrás statnövekedési paraméterének összehasonlítása. | 4          | A növekedési érték jelentésének és egységének rögzítése.        |
-| `skinNumber`          | Hősönkénti skindarabszám.                               | 4          | Skin/chroma megkülönböztetés és alapkinézet-számítási szabály.  |
-| `chromaNumber`        | Hősönkénti chromadarabszám.                             | 4          | Tényleges, teljes chromarekordok.                               |
-| `chromaPerSkin`       | Skinenkénti chromadarabszám.                            | 4          | Validált szülőskin-kapcsolat és teljes chromafelsorolás.        |
-| `abilityCooldownLvl1` | Képességek alap cooldownjának összehasonlítása.         | 4          | Numerikus cooldown és egyeztetett rang-/szintértelmezés.        |
-| `abilityName`         | Képességnév alapján hős felismerése.                    | easy       | A kérdésbe helyettesített képességnév és egyértelmű tulajdonos. |
-| `passiveName`         | Passzív neve alapján hős felismerése.                   | easy       | A kérdésbe helyettesített passzívnév.                           |
-| `title`               | Hőscím alapján hős felismerése.                         | easy       | A kérdésbe helyettesített cím.                                  |
-| `abilityByIcon`       | Ikon alapján hős felismerése.                           | 4          | Későbbi médiafolyamat; az első generátorban inaktív.            |
+| Család                | Generálási feladat                                       | Nehézségek | Adatfeltétel                                                    |
+| --------------------- | -------------------------------------------------------- | ---------- | --------------------------------------------------------------- |
+| `baseStatsLvl1`       | Hősök alapstatjának összehasonlítása.                    | 4          | Validált stat és mértékegység; manánál erőforrástípus-szűrés.   |
+| `baseStatsPerLevel`   | A forrás statnövekedési paraméterének összehasonlítása.  | 4          | A növekedési érték jelentésének és egységének rögzítése.        |
+| `skinNumber`          | Hősönkénti skindarabszám, alapkinézet és chromák nélkül. | 4          | Validált `is_chroma` és `is_base` jelölés.                      |
+| `chromaNumber`        | Hősönkénti chromadarabszám.                              | 4          | Tényleges, teljes chromarekordok.                               |
+| `chromaPerSkin`       | Skinenkénti chromadarabszám.                             | 4          | Validált szülőskin-kapcsolat és teljes chromafelsorolás.        |
+| `abilityCooldownLvl1` | Képességek első rangjának alap cooldownja.               | 4          | Validált numerikus cooldown, tárgyak és rúnák nélkül.           |
+| `abilityName`         | Képességnév alapján hős felismerése.                     | easy       | A kérdésbe helyettesített képességnév és egyértelmű tulajdonos. |
+| `passiveName`         | Passzív neve alapján hős felismerése.                    | easy       | A kérdésbe helyettesített passzívnév.                           |
+| `title`               | Hőscím alapján hős felismerése.                          | easy       | A kérdésbe helyettesített cím.                                  |
+| `abilityByIcon`       | Ikon alapján hős felismerése.                            | 4          | Későbbi médiafolyamat; az első generátorban inaktív.            |
 
 A nyolc kikapcsolt család: `baseStatsLvlRandom`, `skinType`, `skinModified`,
 `chromaType`, `abilityDamageLvlRandom`, `abilityCooldownLvlRandom`,
@@ -230,8 +234,8 @@ szöveggel. A `baseStatsLvlRandom` ezért továbbra is kikapcsolt.
 
 A [közös skin/chroma-modell](lol-champion-data.md) alapján:
 
-- `skinsCount`: az adott hős nem chroma rekordjai; az alapkinézet beszámítása
-  még felhasználói pontosításra vár. Javaslat: csak `is_base = false` skinek.
+- `skinsCount`: az adott hős `is_chroma = false` és `is_base = false`
+  rekordjainak száma. Az alapkinézet és a chromák nem számítanak bele.
 - `chromasCount`: az adott hős tényleges `is_chroma = true` rekordjainak száma.
 - `chromasCountPerSkin`: az adott skinre mutató chromarekordok száma.
   A kérdés alanyai a szülőskinek, nem a chromák.
@@ -247,10 +251,13 @@ elemet, hogy azonos skinnevek vagy alapkinézetnevek ne okozzanak kétértelműs
 
 ### Képességcooldown
 
-Az `abilityCooldownLvl1` rang-/hősszintértelmezése még felhasználói pontosításra
-vár. Javaslat: a képesség első rangjának alap cooldownja, tárgy- és egyéb
-módosítók nélkül, ultimate-tal együtt; ekkor a név `Ability cooldowns rank 1`.
+Az elfogadott értelmezés a képesség első rangjának alap cooldownja, tárgyak
+és rúnák nélkül. A megjelenítési név `Ability cooldowns rank 1`, a kérdés
+szövege is `at rank 1`-et használ. Ez a Q/W/E/R képességek első rangjára
+vonatkozik, a megfelelően feldolgozható ultimate-okat is beleértve.
 A hős első szintje és az ultimate első rangja nem ugyanaz a fogalom.
+Az eredeti `abilityCooldownLvl1` családkulcs a referenciamintában megmarad;
+a kulcs nem módosítja az elfogadott, rang szerinti jelentést.
 
 Numerikus cooldownkérdéshez validált numerikus mező kell. A `cooldownBurn`
 megjelenítési szövegét nem alakítjuk vakon egyetlen számmá. A forrás numerikus
@@ -425,10 +432,9 @@ megkerülő, szövegbe illesztett kép-URL megoldást.
 
 ## 10. Nyitott döntések és következő lépések
 
-Felhasználói válaszra vár:
-
-1. Az alapkinézet beszámítása a `skinsCount` értékébe.
-2. Képességrang 1 vagy hősszint 1 értelmezés a cooldownkategóriánál.
+A skindarabszám és a cooldown rang-/szintértelmezése elfogadott: az alapkinézet
+nem számít skinnek, a chromák külön szerepelnek; a cooldown a képesség első
+rangjának alapértéke tárgyak és rúnák nélkül.
 
 Még nem elfogadott, ebben a tervben javasolt szabályok:
 
@@ -455,7 +461,8 @@ Tervezett érdemi ellenőrzések: placeholder- és hivatkozási hiba; a határok
 pontosító 10/30%-os esetek; nulla referencia; 12 skinhez tartozó lehetetlen
 5%-os sáv; rendezési holtverseny; második hely helyessége; küszöbös kérdés
 egy, több és minden/egyetlen helyes nélkül; ismeretlen erőforrástípus;
-hiányos chromaforrás; különleges cooldown; öt egyedi kérdés; minden megengedett
+az alapkinézet és chromák kizárása a skindarabszámból; hiányos chromaforrás;
+az első képességrang alap cooldownja és a különleges cooldown; öt egyedi kérdés; minden megengedett
 opciószám; azonos seedből azonos tartalom/sorrend; retry- és adatfrissítés
 közben változatlan kérdések; régi manifest/generátor elérhetetlensége;
 teljes meccs és helyes válaszok publikus kiszivárgásának ellenőrzése.
