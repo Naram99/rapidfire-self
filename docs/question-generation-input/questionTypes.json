@@ -1,0 +1,47 @@
+{
+  "min": {
+    "text": "the least",
+    "multipleCorrect": false
+  },
+  "max": {
+    "text": "the most",
+    "multipleCorrect": false
+  },
+  "min2nd": {
+    "text": "the 2nd least",
+    "multipleCorrect": false
+  },
+  "max2nd": {
+    "text": "the 2nd most",
+    "multipleCorrect": false
+  },
+  "exactMatch": {
+    "text": "exactly {{value}}",
+    "multipleCorrect": false
+  },
+  "lessThan": {
+    "text": "less than {{value}}",
+    "multipleCorrect": true
+  },
+  "moreThan": {
+    "text": "more than {{value}}",
+    "multipleCorrect": true
+  },
+  "multiSelect": {
+    "multipleCorrect": true
+  },
+  "modifiedImage": {
+    "blur": {},
+    "colorless": {
+      "disable": "colorTwist"
+    },
+    "colorTwist": {
+      "disable": "colorless"
+    },
+    "zoom": {},
+    "mirror": {},
+    "rotate": {
+      "allowed": [90, 180, 270]
+    }
+  }
+}

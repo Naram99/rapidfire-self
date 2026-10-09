@@ -6,7 +6,8 @@ Kapcsolódik a [backend kérdésprovideréhez](backend-controller.md), az
 [adatbázis-útmutatóhoz](database-guide.md) és a [megvalósítási tervhez](implementation-plan.md).
 Ez a dokumentum az adatimportot és az adminfrissítést tervezi át; nem migráció
 és nem elkészült importáló. A kérdéssablonok és a seed/generátor részletes
-szerződése a következő, külön tervezési feladat.
+szerződését a [kérdésgenerálási terv](question-generation.md) egyezteti;
+az még nem véglegesített implementációs szerződés.
 
 ## 1. Elfogadott hatókör
 
@@ -21,6 +22,11 @@ szerződése a következő, külön tervezési feladat.
   feldolgozása későbbi bővítés.
 - A képességek `damage` mezője az MVP-ben üres objektum (`{}`) marad.
   A sebzésadatok feldolgozása külön, későbbi feladat.
+- A generátor skindarabszáma az alapkinézetet és a chromákat kihagyja;
+  a chromák külön számolandók. A jelölések mindkét lekérdezést támogatják.
+- A cooldown-összehasonlítás a képesség első rangjának alap cooldownját használja,
+  tárgyak és rúnák nélkül. Ehhez a megjelenítési szöveg mellett külön validált
+  numerikus tény szükséges.
 - Az MVP adatnyelve `en_US`; a verziózott készletben külön locale mező készíti
   elő a későbbi nyelveket. A rendszerüzenetek továbbra is fordítható kódok.
 - Egy meccs egyetlen, rögzített adatkészletből kapja az összes forduló kérdését.
@@ -156,6 +162,14 @@ lekérdezhető; ehhez nem tartunk fenn külön, könnyen elavuló `has_chromas` 
 A képességslotot a forrás ellenőrzött sorrendje adja, nem a névből találgatjuk.
 Ez a forrás alap slotjait jelenti, nem minden átalakuló hős minden formájának
 teljes és bizonyítottan kimerítő képességkészletét.
+
+A [kérdésgenerálási terv](question-generation.md) további, még véglegesítendő
+metrikaigényeket azonosít: a hős erőforrástípusa a mana/energia különválasztásához,
+validált numerikus cooldown a megjelenítési szöveg mellett, valamint a
+chromafelsorolás teljessége. A `cooldownBurn` továbbra is megjelenítési szöveg;
+numerikus összehasonlításhoz az adapter külön ellenőrzött tényt állít elő.
+Ezek séma-/adapterrészleteit implementáció előtt kell hozzáigazítani az
+ellenőrzött forráshoz; hiányzó képességadatból nem lesz számított 0.
 
 ### Kulcsok és indexek
 
