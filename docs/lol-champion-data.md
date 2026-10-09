@@ -8,6 +8,8 @@ Ez a dokumentum az adatimportot és az adminfrissítést tervezi át; nem migrá
 és nem elkészült importáló. A kérdéssablonok és a seed/generátor részletes
 szerződését a [kérdésgenerálási terv](question-generation.md) egyezteti;
 az még nem véglegesített implementációs szerződés.
+Az új hősadatminták [mezőszintű forrásszerződése](lol-source-schema.md)
+rögzíti a ténylegesen megfigyelt JSON-mezőket és a további ellenőrzéseket.
 
 ## 1. Elfogadott hatókör
 
@@ -16,7 +18,7 @@ az még nem véglegesített implementációs szerződés.
   automatikus időközönkénti ellenőrzés vagy induláskori hálózati adatfrissítés.
 - A forrás a csatolt programban is használt Data Dragon.
 - A skinek és chromák közös adathalmazban, egymással egy szinten szerepelnek.
-  A `chroma` boolean azt jelzi, hogy az adott elem chroma-e; a chromarekord
+  A belső `is_chroma` boolean azt jelzi, hogy az adott elem chroma-e; a chromarekord
   tartalmazza a hozzá tartozó skin hivatkozását. Ezt közös táblában, `is_chroma`
   jelöléssel és `parent_skin_id` kapcsolattal őrizzük meg. A színek részletes
   feldolgozása későbbi bővítés.
@@ -63,18 +65,19 @@ URL-ben. Nem oldja fel újra a legfrissebb kiadást minden egyes hősnél.
 A Data Dragon kiadási verziója nem azonos automatikusan a játék minden
 régiójának aktuális kliensverziójával; az admin ezt adatforrás-verzióként látja.
 
-A felhasználó pontosítása szerinti bemeneti modellben a skin és a chroma
-ugyanannak a listának kétféle eleme. A `chroma = true` az elem típusát jelöli,
-és szülőskin-hivatkozás tartozik hozzá. A normalizált `is_chroma` ezt a
-jelentést őrzi meg; nem azt jelenti, hogy egy skinnek vannak-e chromái.
+A skin és a chroma ugyanannak a belső listának kétféle eleme. Az `is_chroma`
+az elem típusát jelöli, és chrománál szülőskin-hivatkozás tartozik hozzá.
 A név és a külső azonosító mindkét elemtípusnál megmarad.
 
-A csatolt TS-típus a booleant `chromas`, a szülőhivatkozást `parentSkin`
-néven tartalmazza; az új pontosítás `chroma` mezőt nevez meg. Az adapter
-tényleges forrásmezőit és jelentésüket élő vagy archivált JSON-mintával kell
-ellenőrizni, mert a helyi típusdeklaráció nem igazolja a külső API szerződését.
-Eltérő jelentésű forrásboolean nem másolható automatikusan `is_chroma`-ba.
-Az elfogadott közös rekordmodellt az adapter határán kell előállítani.
+Az új [Aatrox-minta](lol-source-schema.md) a forrásboolean eltérő jelentését
+mutatja: a Mecha Aatrox skinnél `chromas = true`, a hozzá tartozó Obsidian
+rekordnál `chromas = false` és `parentSkin = 2`. A `chromas` forrásmező
+emiatt nem másolható a normalizált `is_chroma` mezőbe.
+A felhasználó által elfogadott leképezés szerint a `parentSkin` jelenléte
+azonosítja a chromát, a boolean a forrás skinhez tartozó chromaállítását őrzi meg.
+Az Aatrox-minta megadott forrása a [16.20.1-es Data Dragon-hősrészlet](https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Aatrox.json),
+közvetlen válaszként; az MVP-adapter ebből a végpontcsaládból dolgozik.
+Az elfogadott közös rekordmodellt az adapter határán állítjuk elő.
 
 A korábbi `parentSkin` a szülő `num` értékére utal. A normalizáló először
 összegyűjti a rekordokat, majd feloldja a hősön belüli szülőhivatkozásokat:
@@ -104,19 +107,19 @@ tartozik; másik patch hősrekordjai külön sorok. A közös készlet és aktí
 katalógus a már létező `topicId`-hoz kapcsolódik, a LoL-specifikus tartalomtáblák
 külön maradnak. Így egy további játék nem igényel új meccs–adatkészlet kapcsolatot.
 
-| Tábla                | Fő mezők és kapcsolat                                                                                                                                                                                                                                      |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `question_dataset`   | UUID `id`, `topic_id`, `source` (MVP: `ddragon`), Data Dragon `source_version`, `locale`, `normalization_version`, `content_hash`, `status` (`staging`, `ready`, `failed`), `created_at`, `completed_at`, elvárt és importált hősök száma.                 |
-| `question_catalog`   | UUID `id`, `topic_id`, `locale`, `active_dataset_id` FK és `updated_at`. Témánként/locale-onként egyetlen aktív, kész készletre mutat.                                                                                                                     |
-| `lol_import_run`     | UUID `id`, `requested_by_user_id` FK, `locale`, megcélzott verzió, `dataset_id` FK, `status` (`queued`, `running`, `unchanged`, `succeeded`, `failed`, `aborted`), `stage`, feldolgozott/összes hős, időpontok, `error_code`, strukturált hibaparaméterek. |
-| `lol_source_payload` | UUID `id`, `dataset_id` FK, erőforráskulcs, verzióhoz kötött forrásútvonal, SHA-256, teljes eredeti JSON `jsonb` formában. A hőslista és a részletes hősök is megmaradnak.                                                                                 |
-| `lol_champion`       | UUID `id`, `dataset_id` FK, Riot `riot_key` egész, Data Dragon `source_id` szöveg (pl. `Ahri`), `name`, `title`, ikonfájlnév.                                                                                                                              |
-| `lol_skin`           | Közös skin/chroma tábla: UUID `id`, `champion_id` FK, Riot `source_skin_id`, `skin_num` egész, `name`, `is_chroma` boolean, nullable `parent_skin_id` önhivatkozó FK, `is_base` boolean.                                                                   |
-| `lol_champion_stats` | UUID `champion_id` PK/FK, a 20 alap- és növekedési stat külön `numeric` oszlopokban. Egy hőshöz egy stats sor.                                                                                                                                             |
-| `lol_spell`          | UUID `id`, `champion_id` FK, Data Dragon `source_spell_id`, `slot` (`Q`, `W`, `E`, `R`), `name`, ikonfájlnév, `cooldown_display`, `cost_display`, `range_display`, `damage` JSONB (MVP: `{}`), külön nyers effektadat `jsonb`.                             |
-| `lol_passive`        | UUID `champion_id` PK/FK, `name`, ikonfájlnév. Egy hőshöz egy passzív sor.                                                                                                                                                                                 |
-| `lol_champion_tag`   | UUID `id`, `champion_id` FK, `tag` szöveg. A forrás szerepkörei, nem automatikusan kikövetkeztetett lane/pozíció.                                                                                                                                          |
-| `app_admin`          | UUID `user_id` PK/FK a Better Auth `user.id` mezőjére, `granted_at`. A kliens és a profilfrissítés nem írhatja.                                                                                                                                            |
+| Tábla                | Fő mezők és kapcsolat                                                                                                                                                                                                                                                                                     |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `question_dataset`   | UUID `id`, `topic_id`, `source` (MVP: `ddragon`), Data Dragon `source_version`, `locale`, `normalization_version`, `content_hash`, `status` (`staging`, `ready`, `failed`), `created_at`, `completed_at`, elvárt és importált hősök száma.                                                                |
+| `question_catalog`   | UUID `id`, `topic_id`, `locale`, `active_dataset_id` FK és `updated_at`. Témánként/locale-onként egyetlen aktív, kész készletre mutat.                                                                                                                                                                    |
+| `lol_import_run`     | UUID `id`, `requested_by_user_id` FK, `locale`, megcélzott verzió, `dataset_id` FK, `status` (`queued`, `running`, `unchanged`, `succeeded`, `failed`, `aborted`), `stage`, feldolgozott/összes hős, időpontok, `error_code`, strukturált hibaparaméterek.                                                |
+| `lol_source_payload` | UUID `id`, `dataset_id` FK, erőforráskulcs, verzióhoz kötött forrásútvonal, SHA-256, teljes eredeti JSON `jsonb` formában. A hőslista és a részletes hősök is megmaradnak.                                                                                                                                |
+| `lol_champion`       | UUID `id`, `dataset_id` FK, Riot `riot_key` egész, Data Dragon `source_id` szöveg (pl. `Ahri`), `name`, `title`, ikonfájlnév, `resource_name`, normalizált `resource_type`.                                                                                                                               |
+| `lol_skin`           | Közös skin/chroma tábla: UUID `id`, `champion_id` FK, Riot `source_skin_id`, `skin_num` egész, `name`, `is_chroma` boolean, nullable `parent_skin_id` önhivatkozó FK, `is_base` boolean; külön nullable `source_has_chromas` forrásflag.                                                                  |
+| `lol_champion_stats` | UUID `champion_id` PK/FK, a 20 alap- és növekedési stat külön `numeric` oszlopokban. Egy hőshöz egy stats sor.                                                                                                                                                                                            |
+| `lol_spell`          | UUID `id`, `champion_id` FK, Data Dragon `source_spell_id`, `slot` (`Q`, `W`, `E`, `R`), `name`, ikonfájlnév, `max_rank`, `cooldowns_by_rank` JSONB, nullable `cooldown_rank_1` numeric, `cooldown_display`, `cost_display`, `range_display`, `damage` JSONB (MVP: `{}`), külön nyers effektadat `jsonb`. |
+| `lol_passive`        | UUID `champion_id` PK/FK, `name`, ikonfájlnév. Egy hőshöz egy passzív sor.                                                                                                                                                                                                                                |
+| `lol_champion_tag`   | UUID `id`, `champion_id` FK, `tag` szöveg. A forrás szerepkörei, nem automatikusan kikövetkeztetett lane/pozíció.                                                                                                                                                                                         |
+| `app_admin`          | UUID `user_id` PK/FK a Better Auth `user.id` mezőjére, `granted_at`. A kliens és a profilfrissítés nem írhatja.                                                                                                                                                                                           |
 
 Az importnaplóban a kezdeményező felhasználó törlésekor a kapcsolat `SET NULL`,
 az adminjogosultság viszont a userrel együtt törlődik. A LoL-tartalom nem a
@@ -158,18 +161,19 @@ egy külön sorra mutat, nem a skinbe ágyazott objektum. Nem chroma esetén
 `parent_skin_id = NULL`; chroma esetén kötelező, és ugyanannak a hősnek egy
 nem chroma skinrekordjára mutat. Chroma nem lehet alapmegjelenés.
 Az, hogy egy skinhez tartozik-e chroma, a gyerekrekordok létezéséből
-lekérdezhető; ehhez nem tartunk fenn külön, könnyen elavuló `has_chromas` oszlopot.
+lekérdezhető. A külön `source_has_chromas` forrásállítás a nyers boolean
+megőrzése, nem a normalizált gyerekszám helyettesítője. Hiányzó forrásflagnél
+NULL marad; nem tölthető ki a számított darabszám alapján.
 A képességslotot a forrás ellenőrzött sorrendje adja, nem a névből találgatjuk.
 Ez a forrás alap slotjait jelenti, nem minden átalakuló hős minden formájának
 teljes és bizonyítottan kimerítő képességkészletét.
 
-A [kérdésgenerálási terv](question-generation.md) további, még véglegesítendő
-metrikaigényeket azonosít: a hős erőforrástípusa a mana/energia különválasztásához,
-validált numerikus cooldown a megjelenítési szöveg mellett, valamint a
-chromafelsorolás teljessége. A `cooldownBurn` továbbra is megjelenítési szöveg;
-numerikus összehasonlításhoz az adapter külön ellenőrzött tényt állít elő.
-Ezek séma-/adapterrészleteit implementáció előtt kell hozzáigazítani az
-ellenőrzött forráshoz; hiányzó képességadatból nem lesz számított 0.
+A [mezőszintű forrásszerződés](lol-source-schema.md) alapján a `partype`
+megőrzése és besorolása biztosítja a mana/energia különválasztását.
+Az első rang numerikus cooldownja a validált `cooldown` tömb első eleme.
+A `cooldownBurn` továbbra is megjelenítési szöveg. A chromafelsorolás
+teljességét és automatikusan elérhető forrását még ellenőrizni kell;
+hiányzó képességadatból nem lesz számított 0.
 
 ### Kulcsok és indexek
 
@@ -349,8 +353,12 @@ archivált forrásmintával kell ellenőrizni.
 
 ## 9. Forrásellenőrzés és fennmaradó korlátok
 
-A hét csatolt TS-fájl át lett nézve; a fájlok referenciaként szolgáltak, a
-Firebase-program nem lett futtatva. Élő Data Dragon-verziót vagy teljes
+A hét csatolt TS-fájl és az új `champions.json`/`aatrox.json` referenciák
+át lettek nézve; a Firebase-program nem lett futtatva. Az utóbbi két JSON
+offline feldolgozása ellenőrizte a mintabeli mezőket, verzióegyezést,
+kulcsokat, szülőkapcsolatokat és Aatrox első rangjának cooldownjait.
+A részletes eredmény a [forrásszerződésben](lol-source-schema.md) szerepel.
+Élő Data Dragon-verziót vagy teljes
 hősletöltést ebben a felhőkörnyezetben nem sikerült ellenőrizni: a Data Dragon,
 a Riot fejlesztői dokumentáció és a CommunityDragon RAW elérését hálózati
 403 tiltás blokkolta. Ebből nem következtetünk forrásoldali kiesésre.
@@ -359,12 +367,16 @@ A CommunityDragon nyilvános GitHub README-je és assetdokumentációja elérhet
 volt: hős-/skin-JSON és chromaképek rendelkezésre állását dokumentálják, a
 pontos útvonalak és mezők változhatnak. Ez a jövőbeli chroma-/assetadatok
 lehetséges kiegészítő forrása; az MVP-ben nincs ilyen adapter és nincs rá
-futási függőség. Az elfogadott közös skin/chroma-modell külső forráshoz való
-leképezését a tényleges payload ellenőrzése dönti el.
+futási függőség. A kapott Aatrox-mintára elfogadott Data Dragon-leképezés
+használható; külön CommunityDragon-adapter jelenleg nem szükséges a tervhez.
 
-Implementáció előtt a hálózati hozzáféréssel rendelkező környezetben a Data
-Dragon válaszok tényleges mezői, képességslot-sorrendje, stat-/chromaértékei és
-verzióegyezése ellenőrizendők. Ez a terv nem állít sikeres importot, működő
+Implementáció előtt a hálózati hozzáféréssel rendelkező környezetben a
+megadott Data Dragon-végpont élő válasza és a teljes hősdetail-letöltés
+ellenőrizendő. A pontos Aatrox-URL újabb ellenőrzése is a proxy 403-as CONNECT
+tiltásán akadt el; ez nem a Riot endpointjának válasza.
+Egy részletminta nem bizonyítja minden hős különleges
+képességformáját vagy a chromakatalógus teljességét.
+Ez a terv nem állít sikeres importot, működő
 adminpanelt vagy ellenőrzött újrajátszhatóságot.
 
 Hivatkozások:

@@ -6,7 +6,10 @@ Alapok: a felhasználó [questionTypes.json](question-generation-input/questionT
 és [topics.json](question-generation-input/topics.json) mintái, a
 [LoL-adatimport terve](lol-champion-data.md), az elfogadott
 [játékszabályok](design.md) és a meglévő [kérdésprovider](backend-controller.md).
-A két JSON itt tervezési referencia; a futó alkalmazás nem tölti be őket.
+Az új [champions.json](question-generation-input/champions.json) és
+[aatrox.json](question-generation-input/aatrox.json) adatokból külön
+[mezőszintű forrásszerződés](lol-source-schema.md) készült.
+A JSON-ok itt tervezési referenciák; a futó alkalmazás nem tölti be őket.
 Tartalmukat megőrizzük, csak a formázást igazítjuk a repóhoz. Az alábbi javítások
 és kiegészítések a javasolt szerződéshez tartoznak, nem elkészült generátorhoz.
 
@@ -26,7 +29,9 @@ tiltó szabálya ezekre az önálló változatokra vonatkozik. Ugyanaz a család
 másik nehézséggel későbbi fordulóban is választható.
 
 Minden forduló továbbra is pontosan öt kérdésből áll; egyszerre legfeljebb
-négy kategória kínálható fel. Az engedélyezett opciószámok 2, 4 és 6 maradnak.
+négy kategória kínálható fel. Az új generátor alapból négy, nehéz kategóriánál
+hat opciót készít; a pontos nehézség-hozzárendelést lent rögzítjük.
+A meglévő motor a korábbi kétopciós mintakérdéseket továbbra is tudja kezelni.
 Az első generátor szöveges kérdéseket és szöveges válaszopciókat készít.
 A képes kérdéscsaládok megőrzött, későbbi tervek.
 
@@ -44,6 +49,14 @@ Az egyeztetés során elfogadott pontosítások:
   külön metrikákban szerepelnek.
 - A cooldown a képesség első rangjának alapértéke, tárgyak és rúnák nélkül.
   A megjelenítési név és szöveg `rank 1`-et használ, nem hősszintet.
+- A százalékos határok inkluzívak; nulla referenciaértéket kihagyunk.
+  Egyszeres kérdésnél nincs megoldási holtverseny, második helyet kérő
+  típusnál minden opció metrikaértéke különbözik.
+- Easy/medium esetén négy, hard/challenger esetén hat opció szerepel;
+  nincs opciószám-sorsolás.
+- Azonos kategóriacsalád és nehézség alatt ugyanaz a kérdés nem ismétlődik.
+  Más nehézségen új opcióhalmazzal visszatérhet. Az opciók átrendezése
+  önmagában nem új halmaz.
 
 ## 2. A csatolt katalógus feldolgozása
 
@@ -144,7 +157,7 @@ SQL-oszlopnév-interpoláció. Az új metrikát külön olvasó és ellenőrzés
 
 **d(x, c) = |x − c| / |c|**
 
-A javasolt határok inkluzívak. Hiányzó minimum alsó korlát nélkül, hiányzó
+Az elfogadott határok inkluzívak. Hiányzó minimum alsó korlát nélkül, hiányzó
 maximum felső korlát nélkül értendő; a művelet helyességi szabálya ettől még
 kötelező. A minták szerinti sávok átfedhetnek: 30% az easy és medium,
 10% a medium és hard határán is megengedett. Ez nem konfigurációs hiba.
@@ -170,9 +183,9 @@ kérdésben szerepel a célérték és az egység.
 | `max2nd`               | A helyes érték a második legnagyobb; pontosan egy nagyobb érték és a többi kisebb, a sávon belül.                          |
 | Numerikus `exactMatch` | A kérdésben megadott `c` értékkel pontosan egy opció egyezik; a többi eltér és teljesíti a sávot.                          |
 
-Javaslat a holtversenyekre: az egyszeres kérdés megoldásánál nem lehet
-holtverseny. A második helyet kérő típusokhoz minden opció különböző
-metrikaértéket kapjon, így a „második” jelentése egyértelmű. A játékosok
+Az elfogadott holtversenyszabály szerint az egyszeres kérdés megoldásánál
+nem lehet holtverseny. A második helyet kérő típusokhoz minden opció különböző
+metrikaértéket kap, így a „második” jelentése egyértelmű. A játékosok
 rangsorolásának korábban elfogadott 1., 1., 3. szabálya külön szabály;
 nem határozza meg a generált opciók rendezését.
 
@@ -193,7 +206,7 @@ függetlenül mindkét típusnál hamisra értékelné az egyenlőséget.
 
 ### Nulla, kerekítés és kevés jelölt
 
-Javaslat: nulla referencia-/küszöbértékre százalékos sávot nem alkalmazunk.
+Az elfogadott szabály szerint nulla referencia-/küszöbértékre százalékos sávot nem alkalmazunk.
 A generátor másik értéket, metrikát vagy engedélyezett műveletet választ;
 nem oszt nullával, és nem vezet be rejtett nevezőt. A nulla adatként továbbra
 is érvényes lehet, de nem azonos a hiányzó adattal. Abszolút eltérésen alapuló
@@ -240,11 +253,18 @@ A [közös skin/chroma-modell](lol-champion-data.md) alapján:
 - `chromasCountPerSkin`: az adott skinre mutató chromarekordok száma.
   A kérdés alanyai a szülőskinek, nem a chromák.
 
+A [kapott Aatrox-mintában](lol-source-schema.md) a chromát a `parentSkin`
+jelenléte különíti el, a `chromas` boolean a szülőskinnél true is lehet.
+Ez a boolean nem másolható `is_chroma`-ba. A leképezést a felhasználó
+elfogadta, és a mintát a 16.20.1-es, `en_US` Data Dragon-hősrészlet közvetlen
+válaszaként azonosította. A belső számítások és a tervezett forrás így rögzítettek.
+
 A chromadarabszám-kategóriához teljes chromafelsorolás szükséges. Egy booleanból
 nem következtetünk chromadarabszámra. A forráskapacitást importkor ellenőrizzük;
 hiányos felsorolás esetén az érintett kategóriák nem aktiválhatók, az ismeretlen
 darabszám nem lesz 0. Teljes forrásban a ténylegesen nulla chroma validált 0.
-A pontos külső forrásleképezés élő payloadellenőrzésre vár az adatimportterv szerint.
+Az élő payload és a teljes hőslista részleteinek ellenőrzése az adatimportterv
+szerint még szükséges; a környezet hálózati tiltása ezt most nem tette lehetővé.
 
 Skint tartalmazó opcióknál a hős neve és a skin neve együtt azonosítja az
 elemet, hogy azonos skinnevek vagy alapkinézetnevek ne okozzanak kétértelműséget.
@@ -259,8 +279,9 @@ A hős első szintje és az ultimate első rangja nem ugyanaz a fogalom.
 Az eredeti `abilityCooldownLvl1` családkulcs a referenciamintában megmarad;
 a kulcs nem módosítja az elfogadott, rang szerinti jelentést.
 
-Numerikus cooldownkérdéshez validált numerikus mező kell. A `cooldownBurn`
-megjelenítési szövegét nem alakítjuk vakon egyetlen számmá. A forrás numerikus
+Az [Aatrox-minta](lol-source-schema.md) tartalmaz numerikus `cooldown` tömböt:
+a validált első elem a rang 1 alapértéke. A `cooldownBurn` megjelenítési
+szövegét nem alakítjuk vakon egyetlen számmá. A forrás numerikus
 rangsorozatából kinyert értéket az adapter külön ellenőrzi és tárolja; a nullás
 cooldown jelentését és a különleges, többformás képességek használhatóságát is
 ellenőrizni kell. Nem feldolgozott képesség nem kerül ebbe a jelöltlistába.
@@ -305,15 +326,16 @@ Javasolt folyamat:
 4. A kiválasztott kategóriához pontosan öt kérdés készül. Metrika/művelet csak
    az adott nehézség engedélyezett és teljesíthető kombinációiból sorsolható.
    A választás nincs az adatbázis sor-visszaadási sorrendjére bízva.
-5. Javaslat az opciószámra: az érvényes 2/4/6 méretekből seedelt sorsolás;
-   `min2nd`/`max2nd` esetében minimum 4, hogy a második hely önálló kérdés
-   maradjon. A nagyobb méretet el nem bíró kombinációhoz csak a kisebb,
-   megengedett méretek kerülnek a sorsolásba. Ez még nem elfogadott eloszlási szabály.
+5. A nehézségi profilhoz rögzített négy vagy hat opció készül. Nem sorsoljuk
+   az opciószámot, és hat opciót igénylő profilt nem helyettesítünk néggyel.
+   Elégtelen jelöltlista esetén másik teljesíthető metrika/művelet/referencia
+   választandó; teljesen használhatatlan változat nem kerül a kínálatba.
 6. Referencia/küszöb és opcióhalmaz képzése; helyesség a tényleges tényekből
    számítandó újra. Véges próbálkozási keret, ismétlődésellenőrzés és seedelt
    opciókeverés. Nincs korlátlan újrasorsolási ciklus.
 7. A kész csomagot a motor meglévő validátora is ellenőrzi: öt kérdés, egyedi
-   kérdés- és opcióazonosítók, 2/4/6 opció, megfelelő helyes halmaz és mód.
+   kérdés- és opcióazonosítók, megfelelő helyes halmaz és mód. A provider
+   ezen felül ellenőrzi a generátor profiljához tartozó pontos 4/6 opciószámot.
 8. Egy előkészítési retry ugyanazt a logikai csomagot reprodukálja. Az `attempt`
    nem a seed része. Az elfogadott két sikertelen próbálkozás utáni technikai
    megszakítás változatlanul alkalmazható.
@@ -328,11 +350,42 @@ nem írunk át statot és nem kínálunk fel kevesebb mint öt kérdést. A vál
 nem kerül az új meccsek kínálatába. Már elindult meccs technikai hibáját a
 meglévő előkészítési életciklus kezeli, nem a kategóriakatalógus önkényes cseréje.
 
-Javaslat az ismétlődésre: az öt kérdésnek különböző jelentéssel kell bírnia;
-az opciók újrakeverése önmagában nem új kérdés. A szemantikai ujjlenyomat a
-családot, metrikát, műveletet, referenciát/nyomot és az opciók alanyhalmazát
-veszi figyelembe. A meccsen belüli ismétlésellenőrzés a más nehézségen
-újra kiválasztott családra is kiterjedhet; ennek pontos szigorúsága még nyitott.
+### Opciószám és ismétlődés
+
+Az elfogadott nehézség szerinti hozzárendelés:
+
+| Nehézség   | Opciószám |
+| ---------- | --------- |
+| easy       | 4         |
+| medium     | 4         |
+| hard       | 6         |
+| challenger | 6         |
+
+Az ismétlés hatóköre az adott meccs kategóriacsalád–nehézség párja.
+A kérdésazonosságot a metrika, művelet és a kérdésben látható paraméterek
+adják: numerikus `exactMatch` célértéke, küszöbérték vagy felismerési nyom.
+A `min`/`max`/`min2nd`/`max2nd` rejtett helyes statértéke és az opcióhalmaz
+nem tesz új kérdéssé egy változatlan, azonos statra és műveletre kérdező promptot.
+Így ugyanazon nehézség öt kérdése között ez a prompt nem ismétlődik.
+
+Más nehézségen ugyanaz a prompt újra előállhat, ha az alanyok halmaza is
+megváltozik. Legalább egy alany legyen eltérő; teljesen diszjunkt halmaz
+nem szükséges. A puszta újrakeverés nem új halmaz, egy új technikai UUID
+sem ad új alanyt. Az összevetés stabil külső alanykulcsokon alapul.
+
+Például egy adott stat legnagyobb értékét kérő prompt szerepelhet easy
+és medium alatt eltérő hősökkel. A felhasználó második legnagyobb AD-ra
+adott példája az ismétlési szabályt szemlélteti: nem bővíti automatikusan
+az easy/medium eredeti engedélyezett műveletlistáját.
+
+Darabszámkategóriában az easy/medium három művelete (`min`, `max`, `exactMatch`)
+mellett az öt különböző kérdéshez több, különböző célértékű `exactMatch`
+szükséges. A használhatósági ellenőrzés ezt is bizonyítja, különben nem
+aktiválja a változatot. A pontosan öt kérdéses szabály megmarad.
+
+A generálás közbeni tiltóhalmaz csomagonként épül; sikeres csomag után válik
+a meccskontextus részévé. Egy félbeszakadt generálás vagy retry nem fogyaszt
+el tartósan új kérdéseket, a korábbi sikeres csomag újra felhasználható.
 
 A kategóriaváltozatok a meglévő kínálati mechanizmusban külön kategóriák.
 Az egyenlő kategóriánkénti esély miatt a négy nehézséget kínáló család
@@ -436,22 +489,29 @@ A skindarabszám és a cooldown rang-/szintértelmezése elfogadott: az alapkin�
 nem számít skinnek, a chromák külön szerepelnek; a cooldown a képesség első
 rangjának alapértéke tárgyak és rúnák nélkül.
 
-Még nem elfogadott, ebben a tervben javasolt szabályok:
+További elfogadott döntések: inkluzív sávhatárok, nulla referencia kihagyása,
+holtversenymentes megoldások, easy/medium esetén négy és hard/challenger esetén hat opció,
+kategória–nehézség páron belüli kérdésismétlés tiltása. Más nehézségen új
+opcióhalmazzal megengedett az ismétlés.
 
-- Inkluzív sávhatárok; nulla referencia kihagyása; holtversenymentes helyes
-  opció és a második helyet kérő kérdéseknél különböző statértékek.
-- 2/4/6 seedelt opciószám, második helyet kérő típusnál minimum 4.
+A challenger opciószáma is hat. A `parentSkin` jelenléte alapján történő
+chromaazonosítás elfogadott, a `chromas` boolean külön forrásjelzés.
+Az Aatrox-minta megadott forrása a verziózott Data Dragon-végpont közvetlen válasza;
+ezekhez további felhasználói pontosítás nem szükséges.
+
+Még nem elfogadott, ebben a tervben javasolt technikai részletek:
+
 - Küszöbök metrikánkénti képzése/lépésköze és az egyenlő jelöltek kihagyása.
-- Ismétlésellenőrzés szigorúsága a teljes meccsben, sorsolási súlyok és
-  a véges keresési keret pontos értéke.
+- A véges keresési keret pontos értéke és a metrika-/műveletsorsolási súlyok.
 - A PRNG algoritmusa, verziója és a generálási metadata fizikai táblái.
 - `Base stat growth` név és a metrikák pontos egységei.
 
 A továbblépés sorrendje:
 
-1. A fenti termékszabályok véglegesítése és a leíró JSON szerződésének jóváhagyása.
-2. LoL-forráspayload ellenőrzése és az importterv metrikaigényeinek véglegesítése:
-   erőforrástípus, valódi chromarekordok, validált numerikus cooldown.
+1. A leíró JSON szerződésének és a fennmaradó technikai részleteknek a véglegesítése.
+2. A [forrásminták mezőszintű szerződésének](lol-source-schema.md) ellenőrzése
+   élő, teljes hősletöltéssel, különösen a chromafelsorolás teljessége szempontjából.
+   A mintákban az erőforrástípus és a numerikus cooldown szerkezete már ellenőrizhető.
 3. Az adatimport/séma megvalósítása és referenciaminták készítése.
 4. Katalógusfordító és tiszta szöveges generátor, stabil seedtesztvektorokkal.
 5. Meglévő provider/meccsmentés és HTTP rendelkezésreállási szerződés illesztése.
@@ -462,8 +522,10 @@ pontosító 10/30%-os esetek; nulla referencia; 12 skinhez tartozó lehetetlen
 5%-os sáv; rendezési holtverseny; második hely helyessége; küszöbös kérdés
 egy, több és minden/egyetlen helyes nélkül; ismeretlen erőforrástípus;
 az alapkinézet és chromák kizárása a skindarabszámból; hiányos chromaforrás;
-az első képességrang alap cooldownja és a különleges cooldown; öt egyedi kérdés; minden megengedett
-opciószám; azonos seedből azonos tartalom/sorrend; retry- és adatfrissítés
+az első képességrang alap cooldownja és a különleges cooldown; öt egyedi prompt;
+pontos 4/6 opciószám, elégtelen hatopciós jelöltlista; azonos prompt tiltása
+ugyanazon változatban és engedélyezése más nehézségen eltérő alanyhalmazzal;
+pusztán kevert opciók elutasítása; azonos seedből azonos tartalom/sorrend; retry- és adatfrissítés
 közben változatlan kérdések; régi manifest/generátor elérhetetlensége;
 teljes meccs és helyes válaszok publikus kiszivárgásának ellenőrzése.
 

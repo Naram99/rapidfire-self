@@ -208,8 +208,17 @@ A csatolt `questionTypes.json` és `topics.json` alapján elkészült a
 leíró katalógusból állíthatók elő. A dokumentum rögzíti az elfogadott műveleti
 szabályokat: a skindarabszám alapkinézet és chromák nélkül értendő, a cooldown
 pedig a képesség első rangjának alapértéke tárgyak és rúnák nélkül.
-A nullaértékek, holtversenyek és opciószámok kezelésére adott
-javaslatok még nem véglegesek. A képes családok és a sebzésfeldolgozás továbbra is későbbi feladatok;
+A nulla referencia kihagyása, az inkluzív sávhatárok és a holtversenymentes
+megoldások elfogadottak. Az új generátor easy/medium esetén négy,
+hard/challenger esetén hat opcióval dolgozik. Azonos család és nehézség alatt nincs ismétlődő kérdés;
+más nehézségen eltérő opcióhalmazzal visszatérhet ugyanaz a prompt.
+A [mezőszintű forrásszerződés](lol-source-schema.md) feldolgozza a csatolt
+173 hősös listát és az Aatrox-részletet; rögzíti a `partype`, `cooldown[]`
+és `parentSkin`/`chromas` mezőket. A `parentSkin` jelenléte szerinti chromaazonosítás
+elfogadott; a `chromas` boolean külön forrásjelzés marad. Az Aatrox-minta
+a felhasználó szerint a 16.20.1-es, `en_US` Data Dragon-végpont közvetlen válasza.
+A teljes hősdetail-letöltés és a chromafelsorolás teljességének élő ellenőrzése még szükséges.
+A képes családok és a sebzésfeldolgozás továbbra is későbbi feladatok;
 ez a szelet sem változtatja meg a futó mintakérdés-providert.
 
 A teljes implementáció mérföldkövenként készül. Az M0/M1/M2 helyi ellenőrzési eredményeit a kapcsolódó dokumentumok rögzítik; ezek nem igazolják előre az M3–M5 integrációit.
