@@ -24,7 +24,11 @@ describe('asynchronous adapters and intake ordering', () => {
     const guest = await h.client('guest1', 'guest');
     success(
       await guest.send('solo:start', {
-        settings: { rounds: 1, answerTimeMs: 20000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20000,
+        },
       }),
     );
     await h.advance(5000);
@@ -57,7 +61,11 @@ describe('asynchronous adapters and intake ordering', () => {
     });
     const user = await h.client('u1');
     await user.send('solo:start', {
-      settings: { rounds: 1, answerTimeMs: 20000 },
+      settings: {
+        topicId: 'league-of-legends',
+        rounds: 1,
+        answerTimeMs: 20000,
+      },
     });
     await h.advance(5000);
     await choose(user);
@@ -167,7 +175,11 @@ describe('asynchronous adapters and intake ordering', () => {
     const user = await h.client('u1');
     success(
       await user.send('solo:start', {
-        settings: { rounds: 1, answerTimeMs: 20000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20000,
+        },
       }),
     );
     await h.advance(5000);

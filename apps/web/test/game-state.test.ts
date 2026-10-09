@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import type { Snapshot } from '@rapidfire/contracts';
-import { snapshotSchema, ackSchema } from '@rapidfire/contracts';
+import {
+  snapshotSchema,
+  ackSchema,
+  PROTOCOL_VERSION,
+} from '@rapidfire/contracts';
 import {
   acceptsSnapshot,
   applyReceipt,
@@ -9,7 +13,7 @@ import {
 } from '../src/lib/game-state';
 
 const answering: Snapshot = {
-  protocolVersion: 1,
+  protocolVersion: PROTOCOL_VERSION,
   scope: { type: 'match', id: 'match1' },
   stateVersion: 10,
   serverTime: 1000,
@@ -106,7 +110,7 @@ describe('server response validation', () => {
   it('rejects incompatible versions, missing permissions and malformed questions', () => {
     expect(snapshotSchema.safeParse(answering).success).toBe(true);
     expect(
-      snapshotSchema.safeParse({ ...answering, protocolVersion: 2 }).success,
+      snapshotSchema.safeParse({ ...answering, protocolVersion: 1 }).success,
     ).toBe(false);
     expect(
       snapshotSchema.safeParse({ ...answering, permissions: {} }).success,

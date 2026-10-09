@@ -1,3 +1,4 @@
+import { PROTOCOL_VERSION } from '@rapidfire/contracts';
 import { expect, test } from '@playwright/test';
 
 test('React and the HTTP API work through the same origin', async ({
@@ -81,7 +82,7 @@ test('the browser uses HttpOnly guest cookies for HTTP renewal and authenticated
     'rapidfire.guest',
   );
   const connected = await page.evaluate(
-    () =>
+    (protocolVersion) =>
       new Promise<boolean>((resolve, reject) => {
         const url = new URL(
           '/socket.io/?EIO=4&transport=websocket',
@@ -95,7 +96,8 @@ test('the browser uses HttpOnly guest cookies for HTTP renewal and authenticated
         }, 5000);
         socket.onmessage = (event) => {
           const packet = String(event.data);
-          if (packet.startsWith('0')) socket.send('40{"protocolVersion":1}');
+          if (packet.startsWith('0'))
+            socket.send(`40${JSON.stringify({ protocolVersion })}`);
           else if (packet.startsWith('40')) {
             clearTimeout(timeout);
             socket.close();
@@ -112,6 +114,7 @@ test('the browser uses HttpOnly guest cookies for HTTP renewal and authenticated
           reject(new Error('Socket failed'));
         };
       }),
+    PROTOCOL_VERSION,
   );
   expect(connected).toBe(true);
 });

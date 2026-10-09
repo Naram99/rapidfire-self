@@ -356,7 +356,9 @@ export class GameService {
       );
       requireCommand(
         command.payload.settings.rounds <=
-          this.dependencies.questions.categories.length,
+          this.dependencies.questions.categories(
+            command.payload.settings.topicId,
+          ).length,
         'INVALID_PAYLOAD',
       );
       const scope: Scope = {

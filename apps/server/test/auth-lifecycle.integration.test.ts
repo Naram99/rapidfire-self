@@ -17,7 +17,11 @@ describe('real cookie, socket and match lifecycle', () => {
       const created = success(
         await s.client.timeout(2000).emitWithAck('room:create', {
           requestId: 'room',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       );
       if (!('scope' in created.data)) throw new Error('No scope');
@@ -125,13 +129,21 @@ describe('real cookie, socket and match lifecycle', () => {
       expect(
         await s.client.timeout(2000).emitWithAck('room:create', {
           requestId: 'guest-room',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       ).toMatchObject({ ok: false, error: { code: 'AUTH_REQUIRED' } });
       success(
         await s.client.timeout(2000).emitWithAck('solo:start', {
           requestId: 'guest-solo',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       );
       expect((await h.request(jar, '/api/match-access', {})).status).toBe(404);
@@ -196,7 +208,11 @@ describe('real cookie, socket and match lifecycle', () => {
       success(
         await s.client.timeout(2000).emitWithAck('solo:start', {
           requestId: 'solo',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       );
       await h.advance(5000);
@@ -215,7 +231,11 @@ describe('real cookie, socket and match lifecycle', () => {
       expect(
         await returning.client.timeout(2000).emitWithAck('solo:start', {
           requestId: 'new-denied',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       ).toMatchObject({ error: { code: 'AUTH_REQUIRED' } });
       expect((await h.request(jar, '/api/profile')).status).toBe(401);
@@ -263,7 +283,11 @@ describe('real cookie, socket and match lifecycle', () => {
       success(
         await s.client.timeout(2000).emitWithAck('solo:start', {
           requestId: 'solo',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       );
       await h.advance(5000);
@@ -303,7 +327,11 @@ describe('real cookie, socket and match lifecycle', () => {
       success(
         await original.client.timeout(2000).emitWithAck('solo:start', {
           requestId: 'solo',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       );
       await h.advance(5000);
@@ -342,7 +370,11 @@ describe('real cookie, socket and match lifecycle', () => {
       const created = success(
         await first.client.timeout(2000).emitWithAck('room:create', {
           requestId: 'room',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       );
       if (!('scope' in created.data) || !created.data.roomCode)

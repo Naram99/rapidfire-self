@@ -1,5 +1,7 @@
+import { useId } from 'react';
+import { gameTopicSchema } from '@rapidfire/contracts';
 import type { GameSettings } from '@rapidfire/contracts';
-import { t } from '../lib/copy';
+import { t, topicName } from '../lib/copy';
 import { Field } from './ui';
 
 export function Settings({
@@ -13,9 +15,29 @@ export function Settings({
   maxRounds: number;
   disabled?: boolean;
 }) {
+  const topicSelectId = useId();
   return (
     <fieldset className="settings-fields" disabled={disabled}>
       <legend>{t('settings')}</legend>
+      <div className="field settings-topic">
+        <label htmlFor={topicSelectId}>{t('gameTopic')}</label>
+        <select
+          id={topicSelectId}
+          name="topicId"
+          value={value.topicId}
+          required
+          onChange={(event) => {
+            const topic = gameTopicSchema.safeParse(event.target.value);
+            if (topic.success) change({ ...value, topicId: topic.data });
+          }}
+        >
+          {gameTopicSchema.options.map((topicId) => (
+            <option key={topicId} value={topicId}>
+              {topicName(topicId)}
+            </option>
+          ))}
+        </select>
+      </div>
       <Field
         label={t('rounds')}
         name="rounds"

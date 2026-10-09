@@ -5,7 +5,7 @@ import {
 } from '@rapidfire/contracts';
 import type { GameResultResponse, HistoryEntry } from '@rapidfire/contracts';
 import { read } from '../lib/api';
-import { dates, message, numbers, t } from '../lib/copy';
+import { dates, message, numbers, t, topicName } from '../lib/copy';
 import { Link } from '../lib/router';
 import { Button, Notice } from '../components/ui';
 import { QuestionResults, Standings } from '../components/results';
@@ -80,6 +80,12 @@ export function HistoryPage() {
                   </span>
                   <h2>{dates.format(new Date(game.startedAt))}</h2>
                   <p>
+                    {game.topicId ? (
+                      <>
+                        {topicName(game.topicId)}
+                        {' · '}
+                      </>
+                    ) : null}
                     {t('roundSettings', {
                       rounds: game.rounds,
                       seconds: game.answerTimeMs / 1000,
@@ -177,6 +183,12 @@ export function HistoryDetailPage({ id }: { id: string }) {
             {dates.format(new Date(game.game.startedAt))}
           </p>
           <p>
+            {game.game.topicId ? (
+              <>
+                {topicName(game.game.topicId)}
+                {' · '}
+              </>
+            ) : null}
             {t('roundSettings', {
               rounds: game.game.roundCount,
               seconds: game.game.answerTimeMs / 1000,

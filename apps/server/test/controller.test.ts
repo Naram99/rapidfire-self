@@ -17,10 +17,18 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
     const other = await h.client('u1');
     const results = await Promise.all([
       first.send('room:create', {
-        settings: { rounds: 1, answerTimeMs: 20_000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20_000,
+        },
       }),
       other.send('solo:start', {
-        settings: { rounds: 1, answerTimeMs: 20_000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20_000,
+        },
       }),
     ]);
     expect(results.filter((result) => result.ok)).toHaveLength(1);
@@ -44,7 +52,11 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
       await owner.send('room:settings:update', {
         roomId: room.id,
         expectedSettingsVersion: version,
-        settings: { rounds: 1, answerTimeMs: 20_000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20_000,
+        },
       }),
     );
     expect(owner.latest().room?.members[0]?.ready).toBe(true);
@@ -52,7 +64,11 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
       await member.send('room:settings:update', {
         roomId: room.id,
         expectedSettingsVersion: version,
-        settings: { rounds: 1, answerTimeMs: 10_000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 10_000,
+        },
       }),
     ).toMatchObject({ ok: false, error: { code: 'FORBIDDEN' } });
     success(await ready(member));
@@ -61,7 +77,11 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
       await owner.send('room:settings:update', {
         roomId: room.id,
         expectedSettingsVersion: version,
-        settings: { rounds: 2, answerTimeMs: 10_000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 2,
+          answerTimeMs: 10_000,
+        },
       }),
     );
     expect(owner.latest().phase.type).toBe('lobby');
@@ -70,7 +90,11 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
       await owner.send('room:settings:update', {
         roomId: room.id,
         expectedSettingsVersion: version,
-        settings: { rounds: 1, answerTimeMs: 10_000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 10_000,
+        },
       }),
     ).toMatchObject({ error: { code: 'STALE_STATE', resyncRequired: true } });
     await h.advance(5_000);
@@ -152,7 +176,11 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
     const guest = await h.client('g1', 'guest');
     expect(
       await guest.send('room:create', {
-        settings: { rounds: 1, answerTimeMs: 20_000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20_000,
+        },
       }),
     ).toMatchObject({ error: { code: 'AUTH_REQUIRED' } });
     const otherRoom = await createRoom(extra);
@@ -298,7 +326,11 @@ describe('match, projections and multi-device commands', () => {
     const guest = await h.client('g1', 'guest');
     const scope = scopeOf(
       await guest.send('solo:start', {
-        settings: { rounds: 1, answerTimeMs: 20_000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20_000,
+        },
       }),
     );
     await h.advance(5000);
@@ -321,7 +353,11 @@ describe('match, projections and multi-device commands', () => {
     expect(h.guestsFinished).toEqual(['g1']);
     expect(
       await guest.send('solo:start', {
-        settings: { rounds: 1, answerTimeMs: 20000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20000,
+        },
       }),
     ).toMatchObject({ error: { code: 'AUTH_REQUIRED' } });
   });
@@ -342,7 +378,11 @@ describe('session expiry, explicit revocation and cache', () => {
     success(await submit(user));
     expect(
       await user.send('solo:start', {
-        settings: { rounds: 1, answerTimeMs: 20000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20000,
+        },
       }),
     ).toMatchObject({ error: { code: 'AUTH_REQUIRED' } });
     for (let number = 2; number <= 5; number++) {
@@ -412,7 +452,13 @@ describe('session expiry, explicit revocation and cache', () => {
     const h = harness();
     const first = await h.client('u1');
     const second = await h.client('u1');
-    const payload = { settings: { rounds: 1, answerTimeMs: 20000 } };
+    const payload = {
+      settings: {
+        topicId: 'league-of-legends',
+        rounds: 1,
+        answerTimeMs: 20000,
+      },
+    };
     const [a, b] = await Promise.all([
       first.send('room:create', payload, 'shared'),
       second.send('room:create', payload, 'shared'),

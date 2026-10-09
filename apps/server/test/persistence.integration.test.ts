@@ -59,7 +59,11 @@ function checkpoint(
     match: {
       id: randomUUID(),
       mode,
-      settings: { rounds: 1, answerTimeMs: 20000 },
+      settings: {
+        topicId: 'league-of-legends',
+        rounds: 1,
+        answerTimeMs: 20000,
+      },
       startedAt: Date.now() - 1000,
       endedAt: null,
       status: 'in_progress',
@@ -204,6 +208,7 @@ describe('real PostgreSQL domain transactions', () => {
       .where(eq(game.id, start.match.id));
     expect(saved).toMatchObject({
       statusCode: 'completed',
+      topicId: 'league-of-legends',
       persistenceRevision: 5n,
       checkpointQuestionNumber: 1,
     });
@@ -220,6 +225,21 @@ describe('real PostgreSQL domain transactions', () => {
       start.match.id,
     );
     expect(result?.questions).toHaveLength(1);
+    expect(result?.game.topicId).toBe('league-of-legends');
+    const repository = new AccountRepository(database.db);
+    const ownerId = start.match.participants[0]?.personId ?? '';
+    expect((await repository.history(ownerId, 20))[0]?.topicId).toBe(
+      'league-of-legends',
+    );
+    // Old sample matches have no topic; displaying history must preserve that distinction.
+    await database.db
+      .update(game)
+      .set({ topicId: null })
+      .where(eq(game.id, start.match.id));
+    expect((await repository.history(ownerId, 20))[0]?.topicId).toBeNull();
+    expect(
+      (await repository.result(ownerId, start.match.id))?.game.topicId,
+    ).toBeNull();
     expect(JSON.stringify(result)).not.toContain('never-store-this-id');
     expect(
       await new AccountRepository(database.db).result(

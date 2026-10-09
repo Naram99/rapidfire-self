@@ -40,6 +40,13 @@ Better Auth táblák: `user`, `session`, `account`, `verification`. A `user.id` 
 
 A `game` tárolja a beállításokat és a meccs állapotát. A `game_participant` tartalmazza a résztvevő pontját/helyezését; a `user_game` kapcsolja a regisztrált felhasználót a saját résztvevőjéhez és biztosítja az előzmény jogosultságát. A `game_question_result` csak rövid kérdésenkénti összesítést tartalmaz, kérdésszöveget, opciót vagy beküldött opcióazonosítót nem. A vendégmeccsek nem kerülnek ezekbe a táblákba.
 
+Az átfogó témaválasztóhoz új migráció tartozik: `game.topic_id`. A módosítás
+lehúzása után, az alkalmazás indítása előtt futtasd az `npm run db:migrate`
+parancsot; nem kell új migrációt generálnod vagy törölnöd a Docker volume-ot.
+Az új meccsek a témájukat is mentik (`league-of-legends`), a korábbi általános
+mintameccseknél a mező `NULL` marad. A régi eredmények továbbra is elérhetők,
+és nem kapnak utólag League of Legends címkét.
+
 ## Beletekintés az adatbázisba
 
 ```sh

@@ -1,4 +1,9 @@
-import { errorMessage, HTTP_ENGLISH_MESSAGES } from '@rapidfire/contracts';
+import {
+  errorMessage,
+  gameTopicSchema,
+  HTTP_ENGLISH_MESSAGES,
+} from '@rapidfire/contracts';
+import type { GameTopic } from '@rapidfire/contracts';
 import { ApiError } from './api';
 
 export const en = {
@@ -27,6 +32,8 @@ export const en = {
   guestName: 'Your nickname',
   startSolo: 'Start solo game',
   settings: 'Game settings',
+  gameTopic: 'Game topic',
+  leagueOfLegends: 'League of Legends',
   rounds: 'Rounds',
   answerTime: 'Seconds per question',
   questionsPerRound: '5 questions per round',
@@ -248,6 +255,13 @@ export function message(error: unknown): string {
   return errorMessage(error.code);
 }
 export const numbers = new Intl.NumberFormat('en');
+const topicCopy = {
+  'league-of-legends': 'leagueOfLegends',
+} as const satisfies Record<GameTopic, keyof typeof en>;
+export function topicName(topicId: string): string {
+  const topic = gameTopicSchema.safeParse(topicId);
+  return topic.success ? t(topicCopy[topic.data]) : topicId;
+}
 export const dates = new Intl.DateTimeFormat('en', {
   dateStyle: 'medium',
   timeStyle: 'short',

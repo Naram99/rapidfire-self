@@ -62,6 +62,7 @@ export class PostgresPersistence implements PersistencePort {
       const now = new Date();
       const values = {
         id: match.id,
+        topicId: match.settings.topicId,
         mode: match.mode,
         statusCode: match.status,
         startedAt,

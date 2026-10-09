@@ -28,7 +28,7 @@ export class MatchRunner {
   constructor(
     id: string,
     mode: MatchInput['mode'],
-    settings: GameSettings,
+    readonly settings: GameSettings,
     bindings: readonly Binding[],
     private readonly dependencies: Dependencies,
     private readonly hooks: RunnerHooks,
@@ -38,8 +38,11 @@ export class MatchRunner {
       {
         id,
         mode,
-        settings,
-        categories: dependencies.questions.categories,
+        settings: {
+          rounds: settings.rounds,
+          answerTimeMs: settings.answerTimeMs,
+        },
+        categories: dependencies.questions.categories(settings.topicId),
         participants: bindings.map((binding, index) => ({
           id: binding.participantId,
           name: binding.person.name,
@@ -123,7 +126,9 @@ export class MatchRunner {
       return;
     const revision = this.persistence.revision + 1;
     this.persistence = { ...this.persistence, revision };
-    this.saves.submit(checkpoint(this.state, this.bindings, revision, kind));
+    this.saves.submit(
+      checkpoint(this.state, this.bindings, revision, kind, this.settings),
+    );
   }
   private effects(
     effects: readonly import('@rapidfire/game-engine').Effect[],
@@ -160,6 +165,7 @@ export class MatchRunner {
             .then(() =>
               this.dependencies.questions.prepare({
                 ...effect,
+                topicId: this.settings.topicId,
                 signal: abort.signal,
               }),
             )

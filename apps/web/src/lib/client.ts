@@ -2,6 +2,7 @@ import { io } from 'socket.io-client';
 import {
   ackSchema,
   gameConfigResponseSchema,
+  gameTopicSchema,
   guestResponseSchema,
   parseCommand,
   PROTOCOL_VERSION,
@@ -12,6 +13,7 @@ import type {
   Ack,
   CommandName,
   CommandPayload,
+  GameTopic,
   Profile,
   Snapshot,
 } from '@rapidfire/contracts';
@@ -40,7 +42,7 @@ export type ClientState = Readonly<{
   clock: ClockAnchor;
   pending: CommandName | null;
   notice: string | null;
-  maxRounds: number;
+  topics: readonly Readonly<{ id: GameTopic; maxRounds: number }>[];
 }>;
 
 export class GameClient {
@@ -52,7 +54,7 @@ export class GameClient {
     clock: { serverTime: Date.now(), monotonicTime: performance.now() },
     pending: null,
     notice: null,
-    maxRounds: 10,
+    topics: gameTopicSchema.options.map((id) => ({ id, maxRounds: 10 })),
   };
   private readonly listeners = new Set<() => void>();
   private readonly socket: GameSocket = io({
@@ -190,7 +192,7 @@ export class GameClient {
       this.controller.signal,
     )
       .then((config) => {
-        if (epoch === this.epoch) this.update({ maxRounds: config.maxRounds });
+        if (epoch === this.epoch) this.update({ topics: config.topics });
       })
       .catch(() => {
         /* The server also validates settings if configuration cannot be loaded. */

@@ -55,6 +55,8 @@ Questions and options are mounted only when the server opens the question.
 ## Interaction and accessibility
 
 - Real links and native controls support keyboard, touch and password managers.
+- A native "Game topic" select in game settings starts with one option,
+  "League of Legends"; round categories remain a separate in-game choice.
 - Single-choice answer buttons submit immediately on tap or Enter/Space;
   multiple-choice checkboxes retain a separate confirmation.
 - The home title cycles quiz verbs beside a fixed "Fast." with reserved grid

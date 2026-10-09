@@ -16,6 +16,7 @@ export function HomePage({
   state: ClientState;
 }) {
   const [settings, setSettings] = useState<GameSettings>({
+    topicId: 'league-of-legends',
     rounds: 1,
     answerTimeMs: 20000,
   });
@@ -26,6 +27,8 @@ export function HomePage({
   const errorRef = useRef<HTMLDivElement>(null);
   const loading = state.session === 'loading';
   const pending = busy || state.pending !== null;
+  const maxRounds =
+    state.topics.find((topic) => topic.id === settings.topicId)?.maxRounds ?? 0;
   const fail = (error: string) => {
     setError(error);
     requestAnimationFrame(() => errorRef.current?.focus());
@@ -79,8 +82,8 @@ export function HomePage({
             onSubmit={(event) => {
               event.preventDefault();
               const parsed = settingsSchema.safeParse(settings);
-              if (!parsed.success || settings.rounds > state.maxRounds) {
-                fail(t('invalidSettings', { rounds: state.maxRounds }));
+              if (!parsed.success || settings.rounds > maxRounds) {
+                fail(t('invalidSettings', { rounds: maxRounds }));
                 return;
               }
               if (
@@ -116,7 +119,7 @@ export function HomePage({
               <Settings
                 value={settings}
                 change={setSettings}
-                maxRounds={state.maxRounds}
+                maxRounds={maxRounds}
                 disabled={pending}
               />
             </details>
@@ -147,8 +150,8 @@ export function HomePage({
                 disabled={pending}
                 onClick={() => {
                   const parsed = settingsSchema.safeParse(settings);
-                  if (!parsed.success || settings.rounds > state.maxRounds) {
-                    fail(t('invalidSettings', { rounds: state.maxRounds }));
+                  if (!parsed.success || settings.rounds > maxRounds) {
+                    fail(t('invalidSettings', { rounds: maxRounds }));
                     return;
                   }
                   void run(async () => {

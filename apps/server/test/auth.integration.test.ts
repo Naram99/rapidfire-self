@@ -18,7 +18,11 @@ describe('Better Auth over real HTTP and PostgreSQL', () => {
       success(
         await s.client.timeout(2000).emitWithAck('room:create', {
           requestId: 'change-room',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       );
       const wrong = await h.request(jar, '/api/auth/change-password', {
@@ -224,7 +228,11 @@ describe('Better Auth over real HTTP and PostgreSQL', () => {
       success(
         await socket.client.timeout(2000).emitWithAck('room:create', {
           requestId: 'after-refresh',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       );
     } finally {
@@ -244,7 +252,11 @@ describe('Better Auth over real HTTP and PostgreSQL', () => {
       success(
         await first.client.timeout(2000).emitWithAck('room:create', {
           requestId: 'create',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       );
       const response = await h.request(a, '/api/auth/sign-out', {});
@@ -271,7 +283,11 @@ describe('Better Auth over real HTTP and PostgreSQL', () => {
       expect(
         await second.client.timeout(2000).emitWithAck('solo:start', {
           requestId: 'blocked',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       ).toMatchObject({ ok: false, error: { code: 'AUTH_REQUIRED' } });
     } finally {
@@ -291,7 +307,11 @@ describe('Better Auth over real HTTP and PostgreSQL', () => {
       success(
         await first.client.timeout(2000).emitWithAck('room:create', {
           requestId: 'reset-room',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       );
       const known = await h.request(a, '/api/auth/request-password-reset', {

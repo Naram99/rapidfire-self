@@ -144,7 +144,8 @@ fieldset {
 legend {
   padding: 0;
 }
-input {
+input,
+select {
   min-inline-size: 0;
   inline-size: 100%;
   min-block-size: 3rem;
@@ -157,7 +158,8 @@ input {
 input[aria-invalid='true'] {
   border-color: var(--error-text);
 }
-input:disabled {
+input:disabled,
+select:disabled {
   color: var(--muted);
   background: var(--surface-soft);
 }
@@ -347,6 +349,9 @@ details[open] {
 }
 .field > label {
   font-weight: 600;
+}
+.settings-topic {
+  grid-column: 1 / -1;
 }
 .field-hint,
 .field-error {

@@ -23,7 +23,7 @@ A létrehozási nyilvántartás rövid, külön sorral dolgozik. A játékállap
 
 ## Kapcsolódás és hitelesítés
 
-A Socket.IO handshake `auth` mezője pontosan `{ protocolVersion: 1 }`. Más verzió esetén a szerver még az azonosítás előtt elutasítja a kapcsolódást. A `connect_error.data` publikus típusa `ConnectionErrorData`: `code` és `supportedProtocolVersion`. A `PROTOCOL_VERSION_UNSUPPORTED` angol üzenete oldalfrissítést kér. Ismeretlen handshake-mező hibás payload.
+A Socket.IO handshake `auth` mezője pontosan `{ protocolVersion: 2 }`. Más verzió esetén a szerver még az azonosítás előtt elutasítja a kapcsolódást. A `connect_error.data` publikus típusa `ConnectionErrorData`: `code` és `supportedProtocolVersion`. A `PROTOCOL_VERSION_UNSUPPORTED` angol üzenete oldalfrissítést kér. Ismeretlen handshake-mező hibás payload. A 2-es verzióban a játékbeállítás kötelező `topicId` mezőt kapott; az 1-es kliensnek frissítenie kell az oldalt.
 
 A személyazonosságot a szerver `Authenticate(headers, signal)` adaptere állapítja meg. A kliens által küldött user ID, nickname vagy szerepkör nem azonosítás. Az adapter legfeljebb öt másodpercet kap, és megszakítási jelet is fogad. Normál felhasználói sessionhez megerősített email szükséges. Vendég csak önálló szólómeccset indíthat.
 
@@ -100,7 +100,18 @@ Az M3 DB-adapternek kell megvalósítania a tranzakciókat, revision-ellenőrzé
 
 ## Kérdéspéldák és függőségek
 
-A runtime rögzített Science, Geography és Mathematics kategóriákat használ, mindegyikben öt angol, egyszeres választású kérdéssel. Emiatt ezzel a forrással legfeljebb három forduló kérhető. A motor és publikus settings 1–10 fordulót támogat a ténylegesen elérhető kategóriák számáig. Ez integrációs mintaforrás; kérdésgenerálás, seed és újrajátszhatóság nem készült.
+A meccs átfogó témája a `settings.topicId`, jelenleg kizárólag `league-of-legends`.
+Ez különbözik a fordulónként választható `categoryId`-tól. A QuestionProvider
+`categories(topicId)` metódusa adja a témához tartozó fordulókategóriákat, a
+`prepare` pedig a meccshez rögzített `topicId`-t is megkapja. A natív motor csak
+a kiválasztott kategórialistát és a játékszabályok beállításait ismeri.
+
+A runtime rögzített Champions, Summoner's Rift és Items and spells kategóriákat
+használ, mindegyikben öt angol, egyszeres választású LoL-mintakérdéssel.
+Emiatt ezzel a forrással legfeljebb három forduló kérhető. A motor és publikus
+settings 1–10 fordulót támogat a kiválasztott téma elérhető kategóriáinak számáig;
+ezt létrehozáskor és beállításmódosításkor is ellenőrizzük. Ez integrációs
+mintaforrás; kérdésgenerálás, seed és újrajátszhatóság nem készült.
 
 A natív motorhoz nem került dependency vagy Node/DOM ambient típus. A contracts `DOM` deklarációs könyvtára kizárólag a Zod publikus `URL` típusainak fordítói feloldásához került be; nincs böngésző-API használat a modellben. A szerver sockettesztje ugyanazt a már engedélyezett, lockfile-ban lévő `socket.io-client` 4.8.4 verziót deklarálja saját dev dependencyként. Nem frissült csomagverzió és nem került új csomag a feloldott gráfba.
 

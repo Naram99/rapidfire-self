@@ -1,13 +1,16 @@
 import { z } from 'zod';
 
-export const PROTOCOL_VERSION = 1;
+export const PROTOCOL_VERSION = 2;
 export const handshakeSchema = z.strictObject({
   protocolVersion: z.literal(PROTOCOL_VERSION),
 });
 export type Handshake = z.infer<typeof handshakeSchema>;
 const id = z.string().min(1).max(128);
 const request = { requestId: id };
+export const gameTopicSchema = z.enum(['league-of-legends']);
+export type GameTopic = z.infer<typeof gameTopicSchema>;
 export const settingsSchema = z.strictObject({
+  topicId: gameTopicSchema,
   rounds: z.number().int().min(1).max(10),
   answerTimeMs: z.number().int().min(5_000).max(60_000).multipleOf(1_000),
 });

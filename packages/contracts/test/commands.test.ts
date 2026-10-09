@@ -37,10 +37,17 @@ describe('public command schemas', () => {
   );
   it('validates integer settings and rejects extra nested settings', () => {
     for (const settings of [
-      { rounds: 0, answerTimeMs: 20000 },
-      { rounds: 1, answerTimeMs: 5500 },
-      { rounds: 11, answerTimeMs: 20000 },
-      { rounds: 1, answerTimeMs: 20000, cheat: true },
+      { topicId: 'league-of-legends', rounds: 0, answerTimeMs: 20000 },
+      { topicId: 'league-of-legends', rounds: 1, answerTimeMs: 5500 },
+      { topicId: 'league-of-legends', rounds: 11, answerTimeMs: 20000 },
+      {
+        topicId: 'league-of-legends',
+        rounds: 1,
+        answerTimeMs: 20000,
+        cheat: true,
+      },
+      { topicId: 'unsupported-topic', rounds: 1, answerTimeMs: 20000 },
+      { rounds: 1, answerTimeMs: 20000 },
     ])
       expect(
         parseCommand('solo:start', { requestId: 'r', settings }).success,
@@ -48,12 +55,16 @@ describe('public command schemas', () => {
     expect(
       parseCommand('solo:start', {
         requestId: 'r',
-        settings: { rounds: 10, answerTimeMs: 60000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 10,
+          answerTimeMs: 60000,
+        },
       }).success,
     ).toBe(true);
   });
   it('exposes stable protocol version and an English fallback for future codes', () => {
-    expect(PROTOCOL_VERSION).toBe(1);
+    expect(PROTOCOL_VERSION).toBe(2);
     expect(errorMessage('AUTH_REQUIRED')).toBe('Sign in to continue.');
     expect(errorMessage('FUTURE_CODE')).toBe('Something went wrong.');
   });

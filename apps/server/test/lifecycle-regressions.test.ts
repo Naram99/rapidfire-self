@@ -21,7 +21,11 @@ describe('scope, identity and snapshot regressions', () => {
     const user = await h.client('u1');
     success(
       await user.send('solo:start', {
-        settings: { rounds: 1, answerTimeMs: 20000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20000,
+        },
       }),
     );
     await h.service.shutdown();
@@ -38,7 +42,11 @@ describe('scope, identity and snapshot regressions', () => {
     const user = await h.client('u1');
     success(
       await user.send('solo:start', {
-        settings: { rounds: 1, answerTimeMs: 20000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20000,
+        },
       }),
     );
     await h.advance(5000);
@@ -100,7 +108,11 @@ describe('scope, identity and snapshot regressions', () => {
     expect(reconnect.latest().phase.type).toBe('category_selection');
     expect(
       await reconnect.send('solo:start', {
-        settings: { rounds: 1, answerTimeMs: 20000 },
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20000,
+        },
       }),
     ).toMatchObject({ error: { code: 'AUTH_REQUIRED' } });
     await expect(

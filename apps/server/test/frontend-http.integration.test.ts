@@ -8,7 +8,9 @@ describe('frontend HTTP integration boundaries', () => {
     try {
       const jar = new CookieJar();
       const config = await h.request(jar, '/api/game-config');
-      expect(await config.json()).toEqual({ maxRounds: 3 });
+      expect(await config.json()).toEqual({
+        topics: [{ id: 'league-of-legends', maxRounds: 3 }],
+      });
       expect(
         (
           await h.request(jar, '/api/guest/session', {

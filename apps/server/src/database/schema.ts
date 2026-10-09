@@ -48,6 +48,7 @@ export const game = pgTable(
   'game',
   {
     id: uuid('id').primaryKey(),
+    topicId: text('topic_id'),
     mode: text('mode', { enum: ['solo', 'multiplayer'] }).notNull(),
     statusCode: text('status_code', {
       enum: ['in_progress', 'completed', 'interrupted'],

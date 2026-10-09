@@ -1,3 +1,4 @@
+import { PROTOCOL_VERSION } from '@rapidfire/contracts';
 import type {
   ClientEvents,
   ServerEvents,
@@ -125,7 +126,7 @@ export async function authHarness(manual = false) {
   async function socket(jar: CookieJar) {
     const client: Socket<ServerEvents, ClientEvents> = io(url, {
       autoConnect: false,
-      auth: { protocolVersion: 1 },
+      auth: { protocolVersion: PROTOCOL_VERSION },
       extraHeaders: { Cookie: jar.header(), Origin: 'http://test.local' },
       transports: ['websocket'],
       forceNew: true,
