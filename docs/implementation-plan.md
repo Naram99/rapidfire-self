@@ -195,7 +195,10 @@ Nem szükséges a seed/generálás, tiebreak, ELO-algoritmus, social login vagy 
 
 A felhasználó által most kiválasztott következő fejlesztési szelet a LoL-hősadatok
 PostgreSQL-tárolása és kizárólag kézi adminfrissítése, a [külön adatimportterv](lol-champion-data.md)
-szerint. Az MVP chromaadata skinhez kötött van/nincs jelzés. A kérdésgenerálás
+szerint. A skinek és chromák közös rekordhalmazba kerülnek: az `is_chroma`
+jelölés az elem típusát mutatja, a chroma `parent_skin_id` kapcsolata a
+hozzá tartozó skinre mutat. A képességek `damage` mezője egyelőre `{}` marad;
+a sebzésfeldolgozás külön későbbi feladat. A kérdésgenerálás
 ezen az adatalapon tervezhető tovább; a seed-/generátorszerződés még nincs
 véglegesítve. Az adatimportterv dokumentáció, nem elkészült adminpanel vagy migráció.
 

@@ -14,8 +14,13 @@ szerződése a következő, külön tervezési feladat.
 - Az MVP-ben kizárólag kézi, adminfelületről indítható frissítés. Nincs cron,
   automatikus időközönkénti ellenőrzés vagy induláskori hálózati adatfrissítés.
 - A forrás a csatolt programban is használt Data Dragon.
-- A chromáknál az MVP-ben elég a skinhez tartozó `has_chromas` boolean.
-  Egyedi chromanevek, színek és szülőkapcsolatok későbbi bővítések.
+- A skinek és chromák közös adathalmazban, egymással egy szinten szerepelnek.
+  A `chroma` boolean azt jelzi, hogy az adott elem chroma-e; a chromarekord
+  tartalmazza a hozzá tartozó skin hivatkozását. Ezt közös táblában, `is_chroma`
+  jelöléssel és `parent_skin_id` kapcsolattal őrizzük meg. A színek részletes
+  feldolgozása későbbi bővítés.
+- A képességek `damage` mezője az MVP-ben üres objektum (`{}`) marad.
+  A sebzésadatok feldolgozása külön, későbbi feladat.
 - Az MVP adatnyelve `en_US`; a verziózott készletben külön locale mező készíti
   elő a későbbi nyelveket. A rendszerüzenetek továbbra is fordítható kódok.
 - Egy meccs egyetlen, rögzített adatkészletből kapja az összes forduló kérdését.
@@ -52,13 +57,29 @@ URL-ben. Nem oldja fel újra a legfrissebb kiadást minden egyes hősnél.
 A Data Dragon kiadási verziója nem azonos automatikusan a játék minden
 régiójának aktuális kliensverziójával; az admin ezt adatforrás-verzióként látja.
 
-A csatolt adattípus szerint a `skins[].chromas` boolean. Ez nem egyedi
-chroma-lista. A régi `parentSkin`-ág nem garantál chromarekordokat pusztán
-attól, hogy az opcionális mező szerepel a saját TS-típusban. Az új import
-közvetlenül a boolean értéket menti, és nem talál ki chromaneveket.
+A felhasználó pontosítása szerinti bemeneti modellben a skin és a chroma
+ugyanannak a listának kétféle eleme. A `chroma = true` az elem típusát jelöli,
+és szülőskin-hivatkozás tartozik hozzá. A normalizált `is_chroma` ezt a
+jelentést őrzi meg; nem azt jelenti, hogy egy skinnek vannak-e chromái.
+A név és a külső azonosító mindkét elemtípusnál megmarad.
 
-A `spells.damage` a régi átalakításban mindig üres objektum. Nem tekinthető
-sem nulla sebzésnek, sem használható sebzésadatnak. A `cooldownBurn`, `costBurn`
+A csatolt TS-típus a booleant `chromas`, a szülőhivatkozást `parentSkin`
+néven tartalmazza; az új pontosítás `chroma` mezőt nevez meg. Az adapter
+tényleges forrásmezőit és jelentésüket élő vagy archivált JSON-mintával kell
+ellenőrizni, mert a helyi típusdeklaráció nem igazolja a külső API szerződését.
+Eltérő jelentésű forrásboolean nem másolható automatikusan `is_chroma`-ba.
+Az elfogadott közös rekordmodellt az adapter határán kell előállítani.
+
+A korábbi `parentSkin` a szülő `num` értékére utal. A normalizáló először
+összegyűjti a rekordokat, majd feloldja a hősön belüli szülőhivatkozásokat:
+a chroma a szülője előtt is érkezhet. A `parentSkin = 0` érvényes hivatkozás,
+nem hiányzó érték; a régi `if (skin.parentSkin)` igazságérték-vizsgálatot
+nem vesszük át. A chromajelölés és a szülőkapcsolat összhangját külön
+validáljuk, a hiányzó vagy hibás szülőt nem helyettesítjük találgatással.
+
+A `spells.damage` a régi átalakításban mindig üres objektum, és az új modellben
+is `{}` marad az MVP során. Nem tekinthető nulla sebzésnek vagy használható
+sebzésadatnak. A `cooldownBurn`, `costBurn`
 és `rangeBurn` megjelenítési szövegként marad meg: a rangonként eltérő érték,
 speciális költség vagy globális hatótáv nem alakítható általánosan egy számmá.
 Az `effectBurn` és az esetleges további effekt-/változóadat a nyers forrásban
@@ -84,9 +105,9 @@ külön maradnak. Így egy további játék nem igényel új meccs–adatkészle
 | `lol_import_run`     | UUID `id`, `requested_by_user_id` FK, `locale`, megcélzott verzió, `dataset_id` FK, `status` (`queued`, `running`, `unchanged`, `succeeded`, `failed`, `aborted`), `stage`, feldolgozott/összes hős, időpontok, `error_code`, strukturált hibaparaméterek. |
 | `lol_source_payload` | UUID `id`, `dataset_id` FK, erőforráskulcs, verzióhoz kötött forrásútvonal, SHA-256, teljes eredeti JSON `jsonb` formában. A hőslista és a részletes hősök is megmaradnak.                                                                                 |
 | `lol_champion`       | UUID `id`, `dataset_id` FK, Riot `riot_key` egész, Data Dragon `source_id` szöveg (pl. `Ahri`), `name`, `title`, ikonfájlnév.                                                                                                                              |
-| `lol_skin`           | UUID `id`, `champion_id` FK, Riot `source_skin_id`, `skin_num` egész, `name`, `has_chromas` boolean, `is_base` boolean.                                                                                                                                    |
+| `lol_skin`           | Közös skin/chroma tábla: UUID `id`, `champion_id` FK, Riot `source_skin_id`, `skin_num` egész, `name`, `is_chroma` boolean, nullable `parent_skin_id` önhivatkozó FK, `is_base` boolean.                                                                   |
 | `lol_champion_stats` | UUID `champion_id` PK/FK, a 20 alap- és növekedési stat külön `numeric` oszlopokban. Egy hőshöz egy stats sor.                                                                                                                                             |
-| `lol_spell`          | UUID `id`, `champion_id` FK, Data Dragon `source_spell_id`, `slot` (`Q`, `W`, `E`, `R`), `name`, ikonfájlnév, `cooldown_display`, `cost_display`, `range_display`, a rendelkezésre álló effektadat `jsonb`.                                                |
+| `lol_spell`          | UUID `id`, `champion_id` FK, Data Dragon `source_spell_id`, `slot` (`Q`, `W`, `E`, `R`), `name`, ikonfájlnév, `cooldown_display`, `cost_display`, `range_display`, `damage` JSONB (MVP: `{}`), külön nyers effektadat `jsonb`.                             |
 | `lol_passive`        | UUID `champion_id` PK/FK, `name`, ikonfájlnév. Egy hőshöz egy passzív sor.                                                                                                                                                                                 |
 | `lol_champion_tag`   | UUID `id`, `champion_id` FK, `tag` szöveg. A forrás szerepkörei, nem automatikusan kikövetkeztetett lane/pozíció.                                                                                                                                          |
 | `app_admin`          | UUID `user_id` PK/FK a Better Auth `user.id` mezőjére, `granted_at`. A kliens és a profilfrissítés nem írhatja.                                                                                                                                            |
@@ -97,16 +118,16 @@ kezdeményező felhasználó tulajdona, ezért a fióktörlés nem törli az ada
 
 ### Mezők a korábbi denormalizált modellből
 
-| Korábbi gyűjtemény | PostgreSQL-megfelelő                                                           |
-| ------------------ | ------------------------------------------------------------------------------ |
-| `champions`        | `lol_champion`, a külső kulcsok és szövegek megőrzésével.                      |
-| `skins`            | `lol_skin`; a név mellett a korábban eldobott forrásazonosító is megmarad.     |
-| `chromas`          | MVP-ben `lol_skin.has_chromas`; nincs mesterségesen feltöltött chromatábla.    |
-| `stats`            | `lol_champion_stats`, tizedes értékeket megőrző oszlopokkal.                   |
-| `spells`           | `lol_spell`, a négy slot megkülönböztetésével.                                 |
-| `passive`          | `lol_passive`.                                                                 |
-| `tags`             | `lol_champion_tag`; a jelenlétet egy sor jelenti, nem felesleges `true` érték. |
-| `title`            | Egyszer tárolva a `lol_champion.title` mezőben.                                |
+| Korábbi gyűjtemény | PostgreSQL-megfelelő                                                                                              |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `champions`        | `lol_champion`, a külső kulcsok és szövegek megőrzésével.                                                         |
+| `skins`            | `lol_skin` sorok `is_chroma = false` jelöléssel; név és forrásazonosító megmarad.                                 |
+| `chromas`          | Ugyanazon `lol_skin` tábla `is_chroma = true` sorai; név, forrásazonosító és feloldott `parent_skin_id` megmarad. |
+| `stats`            | `lol_champion_stats`, tizedes értékeket megőrző oszlopokkal.                                                      |
+| `spells`           | `lol_spell`, a négy slot megkülönböztetésével.                                                                    |
+| `passive`          | `lol_passive`.                                                                                                    |
+| `tags`             | `lol_champion_tag`; a jelenlétet egy sor jelenti, nem felesleges `true` érték.                                    |
+| `title`            | Egyszer tárolva a `lol_champion.title` mezőben.                                                                   |
 
 A 20 stat: `hp`, `hp_per_level`, `mp`, `mp_per_level`, `move_speed`, `armor`,
 `armor_per_level`, `magic_resist`, `magic_resist_per_level`, `attack_range`,
@@ -120,10 +141,18 @@ forrásadapter és a későbbi kérdéssablon külön ellenőrzi.
 A megjelenítési szöveg, név és numerikus tény normalizált oszlopba kerül;
 a változó szerkezetű forrás-/effektadat JSONB-ben marad. A kérdésgenerátor
 a validált oszlopokból dolgozik, nem a tetszőleges nyers JSON-mezőkből.
-Az üres régi `damage` objektumból nem lesz sebzésoszlop vagy kérdésalap.
+Az üres `damage` objektum külön JSONB mezőben megmarad, de nem kérdésalap.
+A későbbi sebzésfeldolgozás szerződése és számításai külön feladatot kapnak.
 
-A `skin_num = 0` alapmegjelenés külön jelzést kap. Ha a forrás neve `default`,
+Az `is_chroma = false` és `skin_num = 0` alapmegjelenés külön jelzést kap.
+Ha a forrás neve `default`,
 a későbbi megjelenítés a hős nevét használhatja; az eredeti név is megmarad.
+A közös táblában a chroma ugyanúgy saját rekord, mint a skin; kapcsolata
+egy külön sorra mutat, nem a skinbe ágyazott objektum. Nem chroma esetén
+`parent_skin_id = NULL`; chroma esetén kötelező, és ugyanannak a hősnek egy
+nem chroma skinrekordjára mutat. Chroma nem lehet alapmegjelenés.
+Az, hogy egy skinhez tartozik-e chroma, a gyerekrekordok létezéséből
+lekérdezhető; ehhez nem tartunk fenn külön, könnyen elavuló `has_chromas` oszlopot.
 A képességslotot a forrás ellenőrzött sorrendje adja, nem a névből találgatjuk.
 Ez a forrás alap slotjait jelenti, nem minden átalakuló hős minden formájának
 teljes és bizonyítottan kimerítő képességkészletét.
@@ -133,6 +162,13 @@ teljes és bizonyítottan kimerítő képességkészletét.
 - `lol_champion`: egyedi `(dataset_id, riot_key)` és `(dataset_id, source_id)`.
   Ezek egyszerre védenek duplikáció ellen és támogatják a készletenkénti olvasást.
 - `lol_skin`: egyedi `(champion_id, source_skin_id)` és `(champion_id, skin_num)`.
+  Egyedi `(champion_id, id)` kulcs és az erre mutató összetett
+  `(champion_id, parent_skin_id)` FK tiltja a másik hőshöz vagy készlethez
+  tartozó szülőt. A `(champion_id, parent_skin_id)` index támogatja a skinhez
+  tartozó chromák lekérdezését. CHECK szabály köti a szülő NULL/nem NULL
+  állapotát az `is_chroma` jelöléshez, és kizárja az önhivatkozást, illetve
+  a chroma alapmegjelenésként jelölését. A szülő nem chroma típusát az import
+  validálja a publikálás előtt; staging tartalmat csak az importáló írhat.
 - `lol_spell`: egyedi `(champion_id, slot)`; a forrás spell ID-ja külön megmarad.
 - `lol_champion_tag`: egyedi `(champion_id, tag)`, valamint `(tag, champion_id)`
   index a szerepkörből induló kereséshez.
@@ -163,7 +199,9 @@ vagy teljes nyers JSON-t: további indexhez tényleges lekérdezés és mérés 
    Hálózati várakozás közben nincs nyitva hosszú adatbázis-tranzakció.
 6. Teljességi ellenőrzés: minden listabeli hős pontosan egyszer jelen van,
    a numerikus kulcsok összetartoznak, minden kötelező mező és szülőkapcsolat
-   érvényes. Az elvárt hősszám a letöltött listából jön, nincs beégetett darabszám.
+   érvényes. Minden chroma ugyanazon hős és készlet nem chroma skinjére mutat;
+   nincs hiányzó szülő, chroma–chroma lánc vagy ciklus. Az elvárt hősszám a
+   letöltött listából jön, nincs beégetett darabszám.
 7. Stabil külső kulcsok szerint rendezett tartalomból hash és összesítés készül.
    UUID, futásazonosító és letöltési idő nem kerül a tartalomhash-be.
 8. Egy rövid tranzakció zárolja a catalog sorát, a staging készletet `ready`-re
@@ -198,7 +236,8 @@ terv szükséges. Az import nem a meccsvezérlők állapotmódosítási sorában
 
 Javasolt oldal: `/admin/lol-data`, ugyanazon HTTP-originen, a meglévő React
 alkalmazásban. Látható az aktív adatverzió, a locale, az aktiválás időpontja,
-a hősök/skinrekordok száma, az importelőzmény és az aktuális feldolgozás állapota.
+a hősök száma, a skinek és chromák külön darabszáma, az importelőzmény és az
+aktuális feldolgozás állapota.
 
 Javasolt HTTP-felület:
 
@@ -285,7 +324,9 @@ előzetes függőségengedélyezési szabálya szerint; a telepített tranzitív
 Az adminfelület megvalósításakor a repó React- és designskilljei alkalmazandók.
 
 Szükséges tesztek: hősszám teljessége, duplikált/idegen azonosító, decimal stat,
-chroma true/false, passzív és Q/W/E/R mezőtérkép, forrásmező-változás, 429/5xx
+közös skin/chroma-lista és `is_chroma` true/false, szülő előtti chroma,
+`parentSkin = 0`, hiányzó/idegen/chroma szülő, önhivatkozás és ciklus,
+passzív és Q/W/E/R mezőtérkép, változatlanul üres `damage`, forrásmező-változás, 429/5xx
 és timeout, részleges import hibája, sikeres atomi váltás, párhuzamos adminindítás,
 azonos verzió és kézi újraimport, restart utáni megszakított job, admin/nem admin/
 vendég HTTP-jogosultság, több forduló alatt változatlan készlet, régi készletből
@@ -302,8 +343,10 @@ a Riot fejlesztői dokumentáció és a CommunityDragon RAW elérését hálóza
 
 A CommunityDragon nyilvános GitHub README-je és assetdokumentációja elérhető
 volt: hős-/skin-JSON és chromaképek rendelkezésre állását dokumentálják, a
-pontos útvonalak és mezők változhatnak. Ez a jövőbeli egyedi chromák lehetséges
-forrása; az elfogadott MVP-ben nincs ilyen adapter és nincs rá futási függőség.
+pontos útvonalak és mezők változhatnak. Ez a jövőbeli chroma-/assetadatok
+lehetséges kiegészítő forrása; az MVP-ben nincs ilyen adapter és nincs rá
+futási függőség. Az elfogadott közös skin/chroma-modell külső forráshoz való
+leképezését a tényleges payload ellenőrzése dönti el.
 
 Implementáció előtt a hálózati hozzáféréssel rendelkező környezetben a Data
 Dragon válaszok tényleges mezői, képességslot-sorrendje, stat-/chromaértékei és
