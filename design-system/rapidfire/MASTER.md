@@ -34,7 +34,7 @@ round / time            question             participants
 question                answer    answer     score / state
 answer                  answer    answer
 answer                  confirm
-confirm
+confirm (multiple choice only)
 participants
 ```
 
@@ -55,6 +55,11 @@ Questions and options are mounted only when the server opens the question.
 ## Interaction and accessibility
 
 - Real links and native controls support keyboard, touch and password managers.
+- Single-choice answer buttons submit immediately on tap or Enter/Space;
+  multiple-choice checkboxes retain a separate confirmation.
+- The home title cycles quiz verbs beside a fixed "Fast." with reserved grid
+  space, pause/resume controls, focus/visibility pause and a reduced-motion still.
+  The screen-reader heading stays stable; decorative word changes are hidden.
 - Inline field errors, a focused error summary, semantic headings and a skip link.
 - Native confirmation dialogs for leaving a game and deleting an account.
 - A disconnected client retains its view and blocks mutation until recovery.

@@ -6,6 +6,7 @@ import { message, t } from '../lib/copy';
 import { Link, navigate } from '../lib/router';
 import { Settings } from '../components/settings';
 import { Button, Field, Icon, Notice } from '../components/ui';
+import { HomeTitle } from '../components/home-title';
 
 export function HomePage({
   client,
@@ -44,7 +45,7 @@ export function HomePage({
   return (
     <div className="home-layout">
       <section className="home-intro">
-        <h1>{t('homeTitle')}</h1>
+        <HomeTitle />
         <p className="page-intro">{t('homeIntro')}</p>
         <div className="brand-moment" aria-hidden="true">
           <Icon name="flame" />

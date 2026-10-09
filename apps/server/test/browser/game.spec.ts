@@ -7,6 +7,7 @@ import { test, expect } from './game-fixture.js';
 
 test.describe('complete browser game flows', () => {
   test.setTimeout(90000);
+  test.use({ hasTouch: true });
 
   test('a mobile guest completes solo, receives partial scores, and cannot backfill results after registration', async ({
     page,
@@ -30,6 +31,9 @@ test.describe('complete browser game flows', () => {
       page.getByText('Private question 1', { exact: true }),
     ).toHaveCount(0);
     await expect(page.getByLabel('Option a', { exact: true })).toHaveCount(0);
+    await expect(
+      page.getByRole('button', { name: 'Option a', exact: true }),
+    ).toHaveCount(0);
     for (let number = 1; number <= 5; number++) {
       await expect(
         page.getByRole('heading', { name: 'Get ready' }),
@@ -45,9 +49,25 @@ test.describe('complete browser game flows', () => {
         page.getByRole('button', { name: 'Sign out everywhere' }),
       ).toHaveCount(0);
       if (number === 3) await game.advance(20000);
-      else {
+      else if (number === 2) {
         await page.getByLabel('Option a', { exact: true }).check();
+        await expect(page.locator('.evaluation-summary')).toHaveCount(0);
+        await expect(
+          page.getByRole('button', { name: 'Lock in answer' }),
+        ).toBeEnabled();
         await page.getByRole('button', { name: 'Lock in answer' }).click();
+      } else {
+        await expect(
+          page.getByRole('button', { name: 'Lock in answer' }),
+        ).toHaveCount(0);
+        const option = page.getByRole('button', {
+          name: 'Option a',
+          exact: true,
+        });
+        if (number === 4) {
+          await option.focus();
+          await page.keyboard.press('Enter');
+        } else await option.tap();
       }
       await expect(page.locator('.evaluation-summary')).toContainText(
         number === 2
@@ -175,7 +195,7 @@ test.describe('complete browser game flows', () => {
           ).toBeVisible();
           await aliceContext.setOffline(false);
           await expect(
-            alice.getByRole('radio', { name: 'Option a', exact: true }),
+            alice.getByRole('button', { name: 'Option a', exact: true }),
           ).toBeEnabled();
         }
         if (number === 5) {
@@ -202,12 +222,21 @@ test.describe('complete browser game flows', () => {
         await expect(
           mirror.getByText('Answer locked on every device', { exact: true }),
         ).toBeVisible();
-        await expect(
-          mirror.getByLabel('Option a', { exact: true }),
-        ).toBeChecked();
-        await expect(
-          mirror.getByLabel('Option b', { exact: true }),
-        ).toBeDisabled();
+        if (number === 2) {
+          await expect(
+            mirror.getByRole('checkbox', { name: 'Option a', exact: true }),
+          ).toBeChecked();
+          await expect(
+            mirror.getByRole('checkbox', { name: 'Option b', exact: true }),
+          ).toBeDisabled();
+        } else {
+          await expect(
+            mirror.getByRole('button', { name: 'Option a', exact: true }),
+          ).toHaveAttribute('aria-pressed', 'true');
+          await expect(
+            mirror.getByRole('button', { name: 'Option b', exact: true }),
+          ).toBeDisabled();
+        }
         await answer(bob, number === 2 ? ['a', 'b'] : ['a']);
         await expect(alice.locator('.evaluation-summary')).toContainText(
           number === 2 ? '1 of 2 correct' : 'Correct',
@@ -295,6 +324,18 @@ test.describe('complete browser game flows', () => {
 });
 
 async function answer(page: Page, options: readonly string[]) {
+  const single = page.getByRole('button', {
+    name: `Option ${options[0]}`,
+    exact: true,
+  });
+  if (await single.count()) {
+    expect(options).toHaveLength(1);
+    await expect(
+      page.getByRole('button', { name: 'Lock in answer' }),
+    ).toHaveCount(0);
+    await single.click();
+    return;
+  }
   for (const option of options)
     await page.getByLabel(`Option ${option}`, { exact: true }).check();
   await page.getByRole('button', { name: 'Lock in answer' }).click();
