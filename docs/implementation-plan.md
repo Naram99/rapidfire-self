@@ -1,11 +1,12 @@
 # MVP megvalósítási terv
 
-Utolsó frissítés: 2026-10-08.
+Utolsó frissítés: 2026-10-09.
 
 Kapcsolódó specifikációk:
 
 - [MVP tervezési dokumentum](design.md)
 - [Authadapterek és meccsvisszatérés](auth-adapters.md)
+- [LoL hősadatok PostgreSQL-importja és adminfrissítése — tervezet](lol-champion-data.md)
 
 Ez a dokumentum a megvalósítás sorrendjét és ellenőrzési feltételeit rögzíti. Az M0–M3 változásait a felhasználó mainbe merge-ölte és engedélyezte az M4 frontendjét, saját designskillekkel és CSS-változókkal. Az elkészült M1 részletei a [motor dokumentációjában](game-engine.md), az M2 a [backend dokumentációjában](backend-controller.md), az M3 az [auth/mentés dokumentációjában](backend-auth-storage.md), az M4 a [frontend dokumentációjában](frontend.md) olvasható. A deployment későbbi mérföldkő. A környezetkonfigurációt és M0 eredményeket a [környezeti dokumentum](development-environment.md) rögzíti; a [magyar adatbázis-útmutató](database-guide.md) az M3 használatát mutatja.
 
@@ -191,5 +192,14 @@ Az M4 áttekintése után az M5-höz szükséges csomag:
 4. Kiadási/CI ellenőrzések a végleges hostingon. Éles publikálás a felhasználó aktuális utasítása alapján történik.
 
 Nem szükséges a seed/generálás, tiebreak, ELO-algoritmus, social login vagy profilkép előrehozása az MVP-hez. Ezek továbbra is külön későbbi tervek.
+
+A felhasználó által most kiválasztott következő fejlesztési szelet a LoL-hősadatok
+PostgreSQL-tárolása és kizárólag kézi adminfrissítése, a [külön adatimportterv](lol-champion-data.md)
+szerint. A skinek és chromák közös rekordhalmazba kerülnek: az `is_chroma`
+jelölés az elem típusát mutatja, a chroma `parent_skin_id` kapcsolata a
+hozzá tartozó skinre mutat. A képességek `damage` mezője egyelőre `{}` marad;
+a sebzésfeldolgozás külön későbbi feladat. A kérdésgenerálás
+ezen az adatalapon tervezhető tovább; a seed-/generátorszerződés még nincs
+véglegesítve. Az adatimportterv dokumentáció, nem elkészült adminpanel vagy migráció.
 
 A teljes implementáció mérföldkövenként készül. Az M0/M1/M2 helyi ellenőrzési eredményeit a kapcsolódó dokumentumok rögzítik; ezek nem igazolják előre az M3–M5 integrációit.
