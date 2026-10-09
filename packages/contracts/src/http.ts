@@ -79,6 +79,7 @@ export type Profile = Readonly<{
   elo: number;
 }>;
 export type HistoryEntry = Readonly<{
+  topicId: string | null;
   id: string;
   mode: 'solo' | 'multiplayer';
   status: 'in_progress' | 'completed' | 'interrupted';

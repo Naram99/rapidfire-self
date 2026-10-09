@@ -1,4 +1,5 @@
 import { PROTOCOL_VERSION } from '@rapidfire/contracts';
+import type { GameSettings } from '@rapidfire/contracts';
 import type {
   ClosureReason,
   PersistenceStatus,
@@ -137,7 +138,10 @@ export function projectSnapshot(
   state: MatchState | null,
   bindings: readonly Binding[],
   persistence: PersistenceView,
+  settings: GameSettings | null,
 ): Snapshot {
+  if (state && !settings)
+    throw new Error('Projection invariant: match settings missing');
   const member = room?.members.find(
     (item) => item.person.id === viewer.personId,
   );
@@ -160,35 +164,36 @@ export function projectSnapshot(
       answer.participantId === participantId &&
       answer.questionId === questionId,
   );
-  const match: PublicMatch | null = state
-    ? {
-        id: state.id,
-        mode: state.mode,
-        settings: { ...state.settings },
-        persistence: { ...persistence },
-        participants: state.participants.map((participant) => ({
-          id: participant.id,
-          name: participant.name,
-          identityState:
-            bindings.find((b) => b.participantId === participant.id)
-              ?.identityState ??
-            (bindings.find((b) => b.participantId === participant.id)?.person
-              .kind === 'guest'
-              ? 'guest'
-              : 'registered'),
-          order: participant.order,
-          score: participant.score,
-          presence: participant.presence,
-          activity: participant.activity,
-          participation: participant.participation,
-          answered: state.answers.some(
-            (answer) =>
-              answer.participantId === participant.id &&
-              answer.questionId === questionId,
-          ),
-        })),
-      }
-    : null;
+  const match: PublicMatch | null =
+    state && settings
+      ? {
+          id: state.id,
+          mode: state.mode,
+          settings: { ...settings },
+          persistence: { ...persistence },
+          participants: state.participants.map((participant) => ({
+            id: participant.id,
+            name: participant.name,
+            identityState:
+              bindings.find((b) => b.participantId === participant.id)
+                ?.identityState ??
+              (bindings.find((b) => b.participantId === participant.id)?.person
+                .kind === 'guest'
+                ? 'guest'
+                : 'registered'),
+            order: participant.order,
+            score: participant.score,
+            presence: participant.presence,
+            activity: participant.activity,
+            participation: participant.participation,
+            answered: state.answers.some(
+              (answer) =>
+                answer.participantId === participant.id &&
+                answer.questionId === questionId,
+            ),
+          })),
+        }
+      : null;
   const lobby = !state || state.phase.type === 'start_countdown';
   return {
     protocolVersion: PROTOCOL_VERSION,

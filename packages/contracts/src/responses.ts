@@ -1,5 +1,9 @@
 import { z } from 'zod';
-import { PROTOCOL_VERSION, settingsSchema } from './commands.js';
+import {
+  gameTopicSchema,
+  PROTOCOL_VERSION,
+  settingsSchema,
+} from './commands.js';
 import type { Ack, ErrorCode } from './messages.js';
 import type { Snapshot } from './snapshots.js';
 
@@ -252,7 +256,14 @@ export const profileSchema = z.object({
   elo: count,
 });
 export const gameConfigResponseSchema = z.object({
-  maxRounds: z.number().int().min(1).max(10),
+  topics: z
+    .array(
+      z.object({
+        id: gameTopicSchema,
+        maxRounds: z.number().int().min(1).max(10),
+      }),
+    )
+    .min(1),
 });
 export const sessionResponseSchema = z
   .object({
@@ -270,6 +281,7 @@ export const guestResponseSchema = z.object({
   guest: z.object({ nickname: z.string() }).optional(),
 });
 export const historyEntrySchema = z.object({
+  topicId: id.nullable(),
   id: z.uuid(),
   mode: z.enum(['solo', 'multiplayer']),
   status: z.enum(['in_progress', 'completed', 'interrupted']),
@@ -285,6 +297,7 @@ export const historyResponseSchema = z.object({
 });
 export const gameResultResponseSchema = z.object({
   game: z.object({
+    topicId: id.nullable(),
     id: z.uuid(),
     mode: z.enum(['solo', 'multiplayer']),
     statusCode: z.enum(['in_progress', 'completed', 'interrupted']),

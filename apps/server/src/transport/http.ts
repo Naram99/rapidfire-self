@@ -4,6 +4,7 @@ import { fromNodeHeaders, toNodeHandler } from 'better-auth/node';
 import {
   deleteAccountSchema,
   historyQuerySchema,
+  gameTopicSchema,
   nicknameSchema,
   profileUpdateSchema,
 } from '@rapidfire/contracts';
@@ -95,7 +96,13 @@ export function createApiRouter(
   });
   router.get('/api/game-config', (_request, response) => {
     response.json({
-      maxRounds: Math.min(10, service.dependencies.questions.categories.length),
+      topics: gameTopicSchema.options.map((id) => ({
+        id,
+        maxRounds: Math.min(
+          10,
+          service.dependencies.questions.categories(id).length,
+        ),
+      })),
     });
   });
   router.get('/api/auth/verify-email', (request, response, next) => {

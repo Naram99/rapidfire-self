@@ -1,4 +1,9 @@
-import type { Scope, Snapshot } from '@rapidfire/contracts';
+import type {
+  GameSettings,
+  GameTopic,
+  Scope,
+  Snapshot,
+} from '@rapidfire/contracts';
 import type {
   Category,
   MatchState,
@@ -27,12 +32,13 @@ export type TimerPort = Readonly<{
   cancel: (key: string) => void;
 }>;
 export type QuestionProvider = Readonly<{
-  categories: readonly Category[];
+  categories: (topicId: GameTopic) => readonly Category[];
   prepare: (
     request: Readonly<{
       matchId: string;
       roundId: string;
       categoryId: string;
+      topicId: GameTopic;
       attempt: 1 | 2;
       signal: AbortSignal;
     }>,
@@ -41,7 +47,7 @@ export type QuestionProvider = Readonly<{
 export type MatchRecord = Readonly<{
   id: string;
   mode: MatchState['mode'];
-  settings: MatchState['settings'];
+  settings: GameSettings;
   startedAt: number | null;
   endedAt: number | null;
   status: 'in_progress' | 'completed' | 'interrupted';

@@ -24,6 +24,12 @@ Valódi linkek, natív válaszgombok/checkbox mezők, címkék, skip link, láth
 fókusz, hibára fókuszáló összesítő és natív dialog segítik a használatot. A
 hibaszövegeknek fenntartott hely megelőzi a kattintás közbeni gombelmozdulást.
 A jelszómező támogatja a beillesztést, a jelszókezelőt és a megjelenítés kapcsolását.
+Az átfogó téma a játékbeállítások natív `Game topic` selectjében választható,
+egyelőre egy `League of Legends` opcióval. A szólóindítás és a lobby ugyanazt
+a komponenst használja; a lobbyban csak a tulajdonos módosíthatja, a többi
+résztvevő a közös beállításban látja. Az előzmények az új meccsek témáját is
+megjelenítik. A későbbi bővítés helye a közös `gameTopicSchema`, a fordítási
+katalógus és a témához tartozó kérdésprovider; a fordulókategória külön fogalom.
 A csökkentett mozgás beállítása kikapcsolja az átmeneteket. A ticking timer nem
 live region; a fázisváltás a fő tartalomra viszi a fókuszt.
 
@@ -104,8 +110,9 @@ továbbra sincs. Közös eredményben a törölt személy „Deleted user” né
 
 ## Kisebb HTTP-kiegészítések
 
-- `GET /api/game-config`: a rendelkezésre álló, legfeljebb tíz forduló száma.
-  A jelenlegi mintakérdés-provider három kategóriája miatt most három. A frontend
+- `GET /api/game-config`: `topics: [{ id, maxRounds }]`, témánként a rendelkezésre
+  álló, legfeljebb tíz forduló száma. A jelenlegi LoL-mintakérdés-provider három
+  fordulókategóriája miatt most három. A frontend
   ezt a szervertől veszi át, nem tárol másolatot a kérdésekből/kategóriákból.
 - `POST /api/guest/session/renew`: a meglévő határidők mellett `guest.nickname`-t
   ad; userId/token továbbra sem kerül a válaszba.
@@ -163,6 +170,17 @@ megerősített többszörös választ és a többtabos zárolást is ellenőrzi.
 kezdőlapteszt vizsgálja a szövegváltást, a változatlan űrlappozíciót, a szünetet
 és folytatást, a billentyűzetes fókuszt, a reduced motion beállítást, valamint a
 világos/sötét témát három képernyőméreten, 200%-os szövegmérettel.
+
+Az átfogó témaválasztó után a teljes `npm run check` sikeres: **195 Vitest teszt,
+12 fejlesztői és 12 production böngészőteszt**. A natív select egyetlen opcióját,
+a szóló- és lobbybeállítást, a tagok közös témakijelzését és a teljes szélességű
+mobilos mezőt böngészőben is ellenőrizzük. Az új szervertesztek vizsgálják a
+téma továbbadását, az ismeretlen téma elutasítását, a témánkénti fordulókorlátot
+és a statikus példák validitását; a PostgreSQL-teszt a mentett témát és a régi,
+NULL témájú előzményt is ellenőrzi. A generált migráció a helyi adatbázison is
+sikeresen lefutott. Az első teljes futás egy meglévő sessionteszt szerverlezárási
+időtúllépésével állt meg; a teszt külön ismétlése és a teljes újrafuttatás is
+sikeres lett, a sessionteszt/tesztszerver lezárási kódjának változtatása nélkül.
 
 Az emailprovider a frontend elkészítése után Resendre változott; a korábbi
 böngészőtesztek emailportot helyettesítenek. A [Resend útmutató](email-guide.md)

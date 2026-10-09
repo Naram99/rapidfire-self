@@ -62,6 +62,7 @@ export function harness(
   options: Readonly<{
     persistence?: PersistencePort;
     prepare?: QuestionProvider['prepare'];
+    categories?: QuestionProvider['categories'];
     onMatchStarted?: Dependencies['onMatchStarted'];
     onGuestFinished?: Dependencies['onGuestFinished'];
   }> = {},
@@ -79,11 +80,14 @@ export function harness(
     clock: { now: () => timers.now },
     timers,
     questions: {
-      categories: ['c1', 'c2', 'c3'].map((id) => ({
-        id,
-        name: `Category ${id}`,
-        language: 'en',
-      })),
+      categories:
+        options.categories ??
+        (() =>
+          ['c1', 'c2', 'c3'].map((id) => ({
+            id,
+            name: `Category ${id}`,
+            language: 'en',
+          }))),
       prepare:
         options.prepare ??
         (async (request) => questionBatch(request.matchId, request.categoryId)),
@@ -174,7 +178,11 @@ export function harness(
 export async function createRoom(client: TestClient) {
   const ack = success(
     await client.send('room:create', {
-      settings: { rounds: 1, answerTimeMs: 20_000 },
+      settings: {
+        topicId: 'league-of-legends',
+        rounds: 1,
+        answerTimeMs: 20_000,
+      },
     }),
   );
   if (!('scope' in ack.data) || !ack.data.roomCode)

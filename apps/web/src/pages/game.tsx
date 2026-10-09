@@ -10,7 +10,7 @@ import type {
   Snapshot,
 } from '@rapidfire/contracts';
 import type { ClientState, GameClient } from '../lib/client';
-import { message, numbers, t } from '../lib/copy';
+import { message, numbers, t, topicName } from '../lib/copy';
 import { Link, navigate } from '../lib/router';
 import { Button, Icon, Notice, Timer, useDeadline } from '../components/ui';
 import { Settings } from '../components/settings';
@@ -46,9 +46,13 @@ function LobbySettings({
 }) {
   const [settings, setSettings] = useState<GameSettings>(room.settings);
   const [error, setError] = useState<string | null>(null);
+  const maxRounds =
+    state.topics.find((topic) => topic.id === settings.topicId)?.maxRounds ?? 0;
   if (!canUpdate)
     return (
       <p className="room-settings">
+        <span>{topicName(room.settings.topicId)}</span>
+        {' · '}
         {t('roundSettings', {
           rounds: room.settings.rounds,
           seconds: room.settings.answerTimeMs / 1000,
@@ -64,8 +68,8 @@ function LobbySettings({
         onSubmit={async (event) => {
           event.preventDefault();
           const parsed = settingsSchema.safeParse(settings);
-          if (!parsed.success || settings.rounds > state.maxRounds) {
-            setError(t('invalidSettings', { rounds: state.maxRounds }));
+          if (!parsed.success || settings.rounds > maxRounds) {
+            setError(t('invalidSettings', { rounds: maxRounds }));
             return;
           }
           try {
@@ -84,7 +88,7 @@ function LobbySettings({
         <Settings
           value={settings}
           change={setSettings}
-          maxRounds={state.maxRounds}
+          maxRounds={maxRounds}
           disabled={state.pending !== null || state.connection !== 'connected'}
         />
         {error ? <Notice kind="error">{error}</Notice> : null}

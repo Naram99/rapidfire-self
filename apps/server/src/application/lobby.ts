@@ -21,7 +21,11 @@ export type RoomState = Readonly<{
   lobbyCycleId: string;
 }>;
 export function sameSettings(a: GameSettings, b: GameSettings): boolean {
-  return a.rounds === b.rounds && a.answerTimeMs === b.answerTimeMs;
+  return (
+    a.topicId === b.topicId &&
+    a.rounds === b.rounds &&
+    a.answerTimeMs === b.answerTimeMs
+  );
 }
 export function graceDeadline(member: Member): number | null {
   const deadlines = [member.offlineDeadline, member.authDeadline].filter(

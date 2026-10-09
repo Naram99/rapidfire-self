@@ -82,6 +82,7 @@ export class AccountRepository {
         score: gameParticipant.totalScore,
         rank: gameParticipant.finalRank,
         rounds: game.roundCount,
+        topicId: game.topicId,
         answerTimeMs: game.answerTimeMs,
       })
       .from(userGame)

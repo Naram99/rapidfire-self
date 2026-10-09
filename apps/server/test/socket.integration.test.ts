@@ -1,3 +1,4 @@
+import { PROTOCOL_VERSION } from '@rapidfire/contracts';
 import { randomUUID } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { io as clientSocket } from 'socket.io-client';
@@ -32,7 +33,7 @@ async function network() {
     throw new Error('No server address');
   const url = `http://127.0.0.1:${address.port}`;
   const clients: Client[] = [];
-  function socket(personId?: string, version = 1) {
+  function socket(personId?: string, version = PROTOCOL_VERSION) {
     const credential = `Bearer ${randomUUID()}`;
     if (personId)
       credentials.set(credential, {
@@ -83,7 +84,7 @@ describe('actual Socket.IO transport', () => {
   it('rejects mismatched protocol, missing credentials and untrusted browser origins', async () => {
     const n = await network();
     try {
-      const mismatch = n.socket('u1', 2);
+      const mismatch = n.socket('u1', 1);
       const before = n.authCalls();
       const versionError = new Promise<string>((resolve) =>
         mismatch.client.once('connect_error', (error) =>
@@ -120,7 +121,11 @@ describe('actual Socket.IO transport', () => {
       const created = success(
         await first.client.timeout(2000).emitWithAck('room:create', {
           requestId: 'create',
-          settings: { rounds: 1, answerTimeMs: 20000 },
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+          },
         }),
       );
       if (!('scope' in created.data) || !created.data.roomCode)

@@ -398,6 +398,7 @@ export class FlowController {
       runner?.state ?? null,
       runner?.bindings ?? [],
       runner?.persistence ?? { status: 'not_configured', revision: 0 },
+      runner?.settings ?? null,
     );
     return {
       ...snapshot,
@@ -455,7 +456,8 @@ export class FlowController {
   }
   private checkSettings(settings: GameSettings): void {
     requireCommand(
-      settings.rounds <= this.dependencies.questions.categories.length,
+      settings.rounds <=
+        this.dependencies.questions.categories(settings.topicId).length,
       'INVALID_PAYLOAD',
     );
   }

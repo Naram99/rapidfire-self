@@ -15,6 +15,13 @@
       "when": 1791403537607,
       "tag": "0001_lifecycle",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791535613759,
+      "tag": "0002_fuzzy_blindfold",
+      "breakpoints": true
     }
   ]
 }

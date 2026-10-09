@@ -18,6 +18,10 @@ test.describe('complete browser game flows', () => {
     page.on('pageerror', (error) => errors.push(error.message));
     await page.goto(game.url);
     await page.getByLabel('Your nickname').fill('Mobile guest');
+    await page.locator('.home-play summary').click();
+    await expect(
+      page.getByRole('combobox', { name: 'Game topic' }),
+    ).toHaveValue('league-of-legends');
     await page.getByRole('button', { name: 'Start solo game' }).click();
     await expect(
       page.getByRole('heading', { name: 'Get ready' }),
@@ -138,10 +142,30 @@ test.describe('complete browser game flows', () => {
         .getByRole('button', { name: 'Create a room', exact: true })
         .click();
       await expect(alice.locator('.room-code')).toBeVisible();
+      await alice.locator('.room-controls summary').click();
+      const topic = alice.getByRole('combobox', { name: 'Game topic' });
+      await expect(topic).toHaveValue('league-of-legends');
+      await expect(topic.locator('option')).toHaveCount(1);
+      await expect(topic.locator('option')).toHaveText('League of Legends');
+      const topicBounds = await topic.boundingBox();
+      expect(topicBounds?.width).toBeGreaterThan(250);
+      await topic.selectOption('league-of-legends');
+      await alice
+        .getByRole('button', { name: 'Save game settings', exact: true })
+        .click();
       const code = await alice.locator('.room-code').innerText();
       await bob.getByLabel('Room code', { exact: true }).fill(code);
       await bob.getByRole('button', { name: 'Join room', exact: true }).click();
       await expect(alice.locator('.participant-list > li')).toHaveCount(2);
+      await expect(bob.locator('.room-settings')).toContainText(
+        'League of Legends',
+      );
+      await topic.focus();
+      await alice.screenshot({
+        path: testInfo.outputPath('lobby-topic-mobile.png'),
+        fullPage: true,
+        animations: 'disabled',
+      });
       const mirror = await aliceContext.newPage();
       mirror.on('pageerror', (error) => errors.push(error.message));
       await mirror.goto(`${game.url}/game`);

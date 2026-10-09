@@ -1,6 +1,6 @@
 # Rapidfire — MVP tervezési dokumentum
 
-Utolsó frissítés: 2026-10-08.
+Utolsó frissítés: 2026-10-09.
 
 Ez a dokumentum a beszélgetésben elfogadott termék-, adatmodell-, socket- és tranzakciós döntéseket foglalja össze. Nem SQL-séma vagy TypeScript-típusdefiníció. Az M0 környezet, M1 natív motor, M2 backendvezérlő/socket, M3 auth/tárolás és M4 frontend elkészült; részleteik a kapcsolódó megvalósítási dokumentumokban szerepelnek. A felhasználó 2026-10-08-i döntése alapján az emailprovider Resend, a korábbi SMTP2GO választás helyett. Valódi szolgáltatói kézbesítés és deployment továbbra sem ellenőrzött.
 
@@ -53,6 +53,7 @@ Az elfogadott terméktervek önmagukban nem jelentenek kipróbált működést. 
 - Egyéni játék és pontozás.
 - Szerver által automatikusan vezérelt meccsek.
 - Választható fordulószám; fordulónként egy kategória és pontosan öt kérdés.
+- A teljes meccshez átfogó téma választható a játékbeállításokban. Az MVP egyetlen opciója a League of Legends (`topicId: league-of-legends`); a fordulónként választott kategóriák ezen a témán belüliek.
 - Egyszeres és többszörös választás, kérdésenként 2, 4 vagy 6 opcióval.
 
 ### Technológiai kiindulás
@@ -403,6 +404,7 @@ Rendszeradatok, nem felhasználói konfiguráció. Nincs tárolt fordított feli
 | ended_at | Opcionális timestamptz; véglegesítéskor kitöltött. |
 | interruption_reason | Opcionális stabil kód, csak megszakításnál. |
 | round_count | Kötelező egész, 1–10. |
+| topic_id | Új meccsnél az átfogó téma stabil azonosítója; a korábbi általános mintameccsekben NULL. |
 | questions_per_round | Kötelező egész, MVP-ben 5. |
 | answer_time_ms | Kötelező egész, 5000–60000. |
 | start_countdown_ms | Kötelező egész, jelenleg 5000. |
