@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   ENGLISH_INTERRUPTION_MESSAGES,
   settingsSchema,
@@ -347,6 +347,7 @@ function Answering({
   phase,
 }: GameProps & { phase: Phase<'answering'> }) {
   const [draft, setDraft] = useState<readonly string[]>([]);
+  const submitting = useRef(false);
   const { milliseconds } = useDeadline(phase.deadline, state.clock);
   const receipt = snapshot.self.answer;
   const selected = receipt?.selectedOptionIds ?? draft;
@@ -361,6 +362,23 @@ function Answering({
     1,
     milliseconds / Math.max(1, phase.deadline - phase.openedAt),
   );
+  const submit = (optionIds: readonly string[]) => {
+    const match = snapshot.match;
+    if (!match || locked || submitting.current || optionIds.length === 0)
+      return;
+    submitting.current = true;
+    setDraft(optionIds);
+    void client
+      .command('answer:submit', {
+        matchId: match.id,
+        questionId: phase.question.id,
+        selectedOptionIds: [...optionIds],
+      })
+      .catch((error: unknown) => client.notify(message(error)))
+      .finally(() => {
+        submitting.current = false;
+      });
+  };
   return (
     <div className="question-panel">
       <div className="time-track" aria-hidden="true">
@@ -373,42 +391,45 @@ function Answering({
         noValidate
         onSubmit={(event) => {
           event.preventDefault();
-          const match = snapshot.match;
-          if (!match || locked || selected.length === 0) return;
-          void client
-            .command('answer:submit', {
-              matchId: match.id,
-              questionId: phase.question.id,
-              selectedOptionIds: [...selected],
-            })
-            .catch((error: unknown) => client.notify(message(error)));
+          submit(selected);
         }}
       >
         <fieldset className="answers" disabled={locked}>
           <legend>
             {t(phase.question.type === 'single' ? 'selectOne' : 'selectMany')}
           </legend>
-          {phase.question.options.map((option) => (
-            <label className="answer-option" key={option.id}>
-              <input
-                type={phase.question.type === 'single' ? 'radio' : 'checkbox'}
-                name="answer"
-                value={option.id}
-                checked={selected.includes(option.id)}
-                onChange={() =>
-                  setDraft((current) =>
-                    phase.question.type === 'single'
-                      ? [option.id]
-                      : current.includes(option.id)
+          {phase.question.options.map((option) =>
+            phase.question.type === 'single' ? (
+              <button
+                type="button"
+                className="answer-option"
+                key={option.id}
+                aria-pressed={selected.includes(option.id)}
+                onClick={() => submit([option.id])}
+              >
+                <span lang={phase.question.language}>{option.text}</span>
+                <Icon name="check" />
+              </button>
+            ) : (
+              <label className="answer-option" key={option.id}>
+                <input
+                  type="checkbox"
+                  name="answer"
+                  value={option.id}
+                  checked={selected.includes(option.id)}
+                  onChange={() =>
+                    setDraft((current) =>
+                      current.includes(option.id)
                         ? current.filter((id) => id !== option.id)
                         : [...current, option.id],
-                  )
-                }
-              />
-              <span lang={phase.question.language}>{option.text}</span>
-              <Icon name="check" />
-            </label>
-          ))}
+                    )
+                  }
+                />
+                <span lang={phase.question.language}>{option.text}</span>
+                <Icon name="check" />
+              </label>
+            ),
+          )}
         </fieldset>
         {receipt ? (
           <p className="answer-status" role="status">
@@ -423,7 +444,7 @@ function Answering({
           <p className="answer-status" role="status">
             {t('timeUp')}
           </p>
-        ) : (
+        ) : phase.question.type === 'multiple' ? (
           <Button
             className="answer-submit"
             type="submit"
@@ -432,7 +453,7 @@ function Answering({
             <Icon name="lock" />
             {t('lockAnswer')}
           </Button>
-        )}
+        ) : null}
         {receipt ? <p className="field-hint">{t('awaitingResults')}</p> : null}
       </form>
     </div>

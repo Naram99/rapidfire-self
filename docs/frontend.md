@@ -1,6 +1,6 @@
 # M4 — Reszponzív játék- és fiókfelület
 
-Frissítés: 2026-10-08.
+Frissítés: 2026-10-09.
 
 Az angol MVP-felület vendég szólómeccset és bejelentkezett többjátékos meccset
 kezel a meglévő motorral, authsessionnel és adatbázissal. A fő implementáció az
@@ -20,12 +20,20 @@ kérdésre és játékospanelre vált. A válaszrács saját container queryt ha
 `clamp()`, `dvh`, safe-area és CSS-változók végzik a méretezést. A designterv:
 [`design-system/rapidfire/MASTER.md`](../design-system/rapidfire/MASTER.md).
 
-Valódi linkek, natív radio/checkbox mezők, címkék, skip link, látható billentyűzetes
+Valódi linkek, natív válaszgombok/checkbox mezők, címkék, skip link, látható billentyűzetes
 fókusz, hibára fókuszáló összesítő és natív dialog segítik a használatot. A
 hibaszövegeknek fenntartott hely megelőzi a kattintás közbeni gombelmozdulást.
 A jelszómező támogatja a beillesztést, a jelszókezelőt és a megjelenítés kapcsolását.
 A csökkentett mozgás beállítása kikapcsolja az átmeneteket. A ticking timer nem
 live region; a fázisváltás a fő tartalomra viszi a fókuszt.
+
+A főoldali cím a csatolt prototípus ötletét követi: `Think.`, `Answer.`, `Guess.`,
+`Learn.`, `Play.`, `Win.` váltakozik két másodpercenként a fix `Fast.` mellett.
+A grid a leghosszabb szónak is helyet tart, így a váltás nem mozgatja az űrlapot.
+Az animáció szüneteltethető, a vezérlő fókuszakor és rejtett tabon megáll;
+csökkentett mozgásnál álló `Think. Fast.` cím látszik. A képernyőolvasó stabil
+címet kap, a díszítő szavak váltása nem indít ismételt felolvasást. Az időzítő
+és eseményfigyelők unmountkor takarítódnak, Strict Mode mellett is.
 
 ## Útvonalak
 
@@ -80,7 +88,11 @@ a `lib/copy.ts` cserélhető, típusos katalógusában vannak; szám/dátum: `In
 
 A kérdés előtti countdown csak a kategóriát és az időt jeleníti meg. A kérdés
 és az opciók megnyitáskor kerülnek a DOM-ba. Egyetlen elküldött válasz minden
-azonos felhasználói tabon zárol; az értékelésig nincs helyesopció-jelzés. Több
+azonos felhasználói tabon zárol; az értékelésig nincs helyesopció-jelzés.
+Egyszeres választásnál a natív válaszgomb koppintása vagy Enter/Space aktiválása
+azonnal beküldi az opciót, külön megerősítés nélkül. Egy folyamatban lévő
+beküldést a gyors ismételt aktiválás sem dupláz meg. Többválaszos kérdésnél
+a kiválasztás szerkeszthető a külön `Lock in answer` megerősítésig. Több
 helyes opcióhoz checkbox és részpont-kijelzés tartozik. A score/rank/idle/offline
 a szerver adata, a kliens nem számol saját pontot.
 
@@ -133,7 +145,7 @@ Hat kliens/séma unit teszt és két frontend HTTP-integrációs teszt is sikere
 A screenshotok alapján a 375/390px mobil és a 1440px asztali kezdőlap/játék
 olvasható, a világos és sötét kezdőlap nem csordul túl.
 
-A teljes `npm run check` sikeres: strict típusellenőrzés, build, **151 Vitest teszt**,
+Az eredeti M4 `npm run check` sikeres: strict típusellenőrzés, build, **151 Vitest teszt**,
 **9 fejlesztői és 9 production böngészőteszt**. A `format:check`, `npm ls --all`
 és az audit is sikeres (0 függőséghiba, 0 audit találat). A frontend assetekben
 a konfigurált adatbázis/auth titkok nem találhatók, a motor runtime függősége
@@ -143,6 +155,14 @@ Valódi Resend-kézbesítés továbbra is hiányzó providerkonfigurációt igé
 email-megerősítés nincs kikapcsolva. Más böngészőmotor és fizikai mobilkészülék
 nem volt tesztelve. A kérdésgenerálás/seed, ranglista/ELO-algoritmus, social login
 és deployment későbbi feladat.
+
+A 2026-10-09-i frontendfinomítás után a teljes `npm run check` ismét sikeres:
+**191 Vitest teszt, 12 fejlesztői és 12 production böngészőteszt**. A játékteszt
+koppintással és Enterrel történő azonnali egyszeres válaszküldést, külön
+megerősített többszörös választ és a többtabos zárolást is ellenőrzi. Két új
+kezdőlapteszt vizsgálja a szövegváltást, a változatlan űrlappozíciót, a szünetet
+és folytatást, a billentyűzetes fókuszt, a reduced motion beállítást, valamint a
+világos/sötét témát három képernyőméreten, 200%-os szövegmérettel.
 
 Az emailprovider a frontend elkészítése után Resendre változott; a korábbi
 böngészőtesztek emailportot helyettesítenek. A [Resend útmutató](email-guide.md)
