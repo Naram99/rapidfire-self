@@ -213,6 +213,10 @@ manifestjét és generátorát egy immutable kiadás köti össze; javítás kü
 revízió, a régi megmarad. Azonos seed/kiadás azonos kategóriacsomagokat ad,
 a teljes meccs kérdéssora azonos kategóriaválasztások mellett egyezik.
 A javasolt PRNG `xoshiro128**`, verziózott kezdőállapot- és streamképzéssel.
+Elfogadottak a kerek, metrikánkénti küszöblépések: HP 50, cooldown 1 s,
+darabszám 1, alap támadási sebesség 0,05. A százalékos határok az adathalmaz
+alapján hangolhatók; a végleges effektív profilt a kiadás manifestje rögzíti,
+publikálás után a változás új revíziót jelent.
 
 A csatolt `questionTypes.json` és `topics.json` alapján elkészült a
 [kérdés- és kategóriagenerálási terv](question-generation.md). A nehézségenként

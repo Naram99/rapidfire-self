@@ -90,6 +90,13 @@ Egy publikált kiadás változatlanul összeköti:
 - a használható kategóriaváltozatokat és a tartalmat befolyásoló
   keresési, kerekítési és sorrendezési szabályokat.
 
+A kerek küszöblépés metrikánként külön tartalomadat: HP 50, cooldown 1 s,
+darabszámok 1, alap támadási sebesség 0,05 az elfogadott induló értékek.
+A százalékos sávok az adathalmaz alapján a kiadás előkészítésében hangolhatók
+és arányosíthatók. A végleges effektív profil a manifestben és a kiadáshash-ben
+rögzül; egy már publikált kiadás nem kap megváltozott léptéket vagy sávot.
+A részletes szabály a [generálási tervben](question-generation.md) szerepel.
+
 Az első kiadás felirata például `16.20.1`, a kérdéseket módosító következőé
 `16.20.1 · r2`. A gépi azonosító saját UUID, nem a felirat. Ugyanazon patch
 újraimportja azonos tartalommal nem hoz létre új kiadást; megváltozott tény,
@@ -247,8 +254,10 @@ eredmény; nem tart nyitva DB-várakozást a motor állapotmódosítási sorába
   változó tartalom csak új revízióban; régi generátor elérhetetlensége jelzett hiba.
 - Kézi seed/kiadás váltása törli a ready állapotokat; a kérdés és opciók
   továbbra is csak a visszaszámlálás utáni megnyitáskor látszanak.
+- Metrikánkénti küszöbrács és effektív százalékos profil reprodukálása;
+  sávhangolás csak új kiadásban, a korábbi seed/kiadás eredménye változatlan.
 
 A tesztek még nem futottak le, mert az implementáció nincs engedélyezve.
-A következő tervezési feladat a leíró katalógus végleges mezői, a metrikánkénti
-küszöblépések és a véges keresési keret. Ezeket a publikált kiadás rögzíti;
+A következő tervezési feladat a leíró katalógus végleges mezői, a további
+metrikák konkrét küszöblépései/profiljai és a véges keresési keret. Ezeket a publikált kiadás rögzíti;
 az itt leírt seedformátum, verzióválasztás és ELO-kizárás már elfogadott.

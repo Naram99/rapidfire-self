@@ -67,6 +67,10 @@ Az egyeztetés során elfogadott pontosítások:
   kizárja a későbbi ELO-változásból.
 - Azonos seed/kiadás pár azonos kategóriacsomagokat ad. A teljes meccs
   kérdéssora azonos kategóriaválasztások mellett egyezik; a választás megmarad.
+- A küszöbök kerek, metrikánként rögzített lépésközű értékek: HP-nál 50,
+  cooldownnál 1 másodperc, skin/chroma darabszámnál 1, támadási sebességnél 0,05.
+- A százalékos sávok kiinduló beállítások; az adathalmaz alapján hangolhatók
+  és arányosíthatók. A publikált kiadás a végleges sávokat és léptékeket őrzi meg.
 
 ## 2. A csatolt katalógus feldolgozása
 
@@ -118,16 +122,16 @@ A fájlok szerkeszthető leíró adatok maradnak. A backend induláskor vagy egy
 új manifest aktiválásakor validálja és belső, egységes formára fordítja őket.
 Ez a fordítás nem futtat kódot a JSON-ból, és nem enged tetszőleges SQL-t.
 
-| Elem               | Javasolt tartalom                                                                                                  |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| Manifest           | Sémaverzió, változatlan tartalomazonosító/hash, tartalomnyelv, család- és műveletdefiníciók.                       |
-| Kategóriacsalád    | Stabil családkulcs, állapot, megjelenítési név/fordítási kulcs, generálási család, alanytípus, sablonhivatkozások. |
-| Numerikus család   | Engedélyezett metrikák és nehézségenként engedélyezett műveletek, relatív eltérési határok.                        |
-| Felismerési család | Nyom típusa (`spellName`, `passiveName`, `championTitle`), alanytípus, identitásegyezés és kérdéssablon.           |
-| Metrika            | Stabil kulcs, ellenőrzött backendolvasó, jelentés, egység, értékformátum, alanyszűrés és szükséges adatkapacitás.  |
-| Művelet            | Stabil műveletkulcs, értékelési szabály, `multipleCorrect`, megengedett generálási családok, szöveghivatkozások.   |
-| Nehézség           | `easy`, `medium`, `hard`, `challenger`; a család engedélyezett műveletei és értéksávja.                            |
-| Kategóriaváltozat  | Téma + család + nehézség természetes tartalomkulcsa, megjelenítési név, rendelkezésre állás.                       |
+| Elem               | Javasolt tartalom                                                                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Manifest           | Sémaverzió, változatlan tartalomazonosító/hash, tartalomnyelv, család- és műveletdefiníciók.                                                                  |
+| Kategóriacsalád    | Stabil családkulcs, állapot, megjelenítési név/fordítási kulcs, generálási család, alanytípus, sablonhivatkozások.                                            |
+| Numerikus család   | Engedélyezett metrikák és nehézségenként engedélyezett műveletek, relatív eltérési határok.                                                                   |
+| Felismerési család | Nyom típusa (`spellName`, `passiveName`, `championTitle`), alanytípus, identitásegyezés és kérdéssablon.                                                      |
+| Metrika            | Stabil kulcs, ellenőrzött backendolvasó, jelentés, egység, értékformátum, alanyszűrés, szükséges adatkapacitás, kerek küszöblépés és metrikánkénti sávprofil. |
+| Művelet            | Stabil műveletkulcs, értékelési szabály, `multipleCorrect`, megengedett generálási családok, szöveghivatkozások.                                              |
+| Nehézség           | `easy`, `medium`, `hard`, `challenger`; a család engedélyezett műveletei és értéksávja.                                                                       |
+| Kategóriaváltozat  | Téma + család + nehézség természetes tartalomkulcsa, megjelenítési név, rendelkezésre állás.                                                                  |
 
 A numerikus összehasonlítás, a név/cím felismerése és a későbbi képfelismerés
 külön generálási család. A `min` vagy `exactMatch` a kérdés szemantikája;
@@ -206,13 +210,66 @@ a `moreThan` helyes halmaza `x > v`. Mindkettő szigorú összehasonlítás.
 Az elfogadott szabály szerint minden opcióra **d(x, v)** teljesíti a
 nehézségi sávot. Legalább egy helyes és egy hibás opció szükséges.
 
-Javaslat: a küszöböt a metrika egységéhez illő, pontosan megjeleníthető értékekből
-válasszuk; nem kell feltétlenül egy konkrét hős értékével egyeznie. A generátor
-egy jóváhagyott, metrikához tartozó küszöblistából vagy értéklépésből dolgozhat,
-és csak olyan küszöböt használhat, amely mellett mindkét oldal összeállítható.
+Az elfogadott szabály szerint a küszöb a metrika egységéhez illő kerek
+érték. A lépés metrikánként külön megadható, és a kiválasztott kiadás
+rögzíti. Elfogadott induló lépések:
+
+| Metrika                                  | Küszöblépés            | Példa             |
+| ---------------------------------------- | ---------------------- | ----------------- |
+| Alap HP                                  | 50 HP                  | 550, 600, 650.    |
+| Első képességrang cooldownja             | 1 másodperc            | 10, 11, 12 s.     |
+| Skin/chroma darabszám, chroma skinenként | 1                      | 5, 6, 7.          |
+| Alap támadási sebesség                   | 0,05 támadás/másodperc | 0,60; 0,65; 0,70. |
+
+A további statok saját léptéket kapnak az értéktartományuk és egységük
+alapján; nem öröklik automatikusan az 50-et. A mana, regen, AD, armor,
+magic resist és növekedési paraméterek pontos lépése a metrikakatalógusban
+véglegesítendő. A lépés pozitív, véges és pontosan megjeleníthető.
+
+Javasolt rács: `v = k · thresholdStep`, pozitív egész `k`-val. A jelöltek
+minimuma és maximuma közötti rácspontok véges listát adnak. A használhatósági
+ellenőrzés csak azokat tartja meg, amelyekhez a kiadás sávjában mindkét
+oldalon van jelölt, és összesen előállítható a szükséges 4/6 opció.
+A megmaradt rácspontokból a seedelt stream választ stabil sorrend mellett.
+Ez a `lessThan`/`moreThan` küszöbének képzése; a numerikus `exactMatch`
+célértéke továbbra is valódi adatérték. A kerek küszöb nem kerekíti át az
+opciók forrásstatját: a helyességet az eredeti, validált tényekből számítjuk.
+
+Offline adatellenőrzés: a csatolt 16.20.1-es, 173 hősös lista alap HP-ja
+410–696. Az 550/600/650 küszöbnél a jelenlegi challenger 5%-os sávban is van
+legalább hat, küszöbtől eltérő jelölt és mindkét oldalon legalább egy.
+600-nál 29 kisebb és 55 nagyobb jelölt található a sávban. Ez HP-
+jelöltlefedettség, nem működő generátor vagy teljes ötös kategóriacsomag tesztje.
+
 A küszöbértékkel egyező jelöltet az első változatban javasolt kihagyni.
 Ez a nulla eltérés külön kérdését is elkerüli; a szigorú predikátum ettől
 függetlenül mindkét típusnál hamisra értékelné az egyenlőséget.
+
+### Adatfüggő sávhangolás a kiadás előkészítésében
+
+A felhasználó engedélyezte a százalékos eltérések módosítását és
+arányosítását, ha az adathalmazhoz túl szűkek vagy túl tágak. A mintabeli
+30% / 10–30% / 10% / 5% kiinduló profil; a lefedettségi eredmények alapján
+család-/metrikaszinten készülhet megfelelőbb profil.
+
+1. A teljes, validált készleten mérjük a metrika/művelet/nehézség
+   használhatóságát: 4/6 opció, mindkét oldal ahol szükséges, helyeshalmaz,
+   holtversenyszabály és öt különböző kérdés. Egy sikeres példa önmagában kevés.
+2. A profil a kiadás előkészítésekor módosul. Arányosítási javaslatként egy
+   pozitív metrikaszintű szorzó ugyanazzal az aránnyal skálázhatja az összes
+   nehézség meglévő minimum-/maximumhatárát; a hiányzó határ hiányzó marad.
+   Például 2-es szorzó: easy legalább 60%, medium 20–60%, hard legfeljebb
+   20%, challenger legfeljebb 10%. Ez illusztráció, nem jóváhagyott új számsor.
+3. A szükséges szorzót vagy egyedi határokat a teljes adatok alapján
+   véglegesítjük. A nehézségek sorrendjét és a közeli opciókkal nehezítő
+   értelmezést megőrizzük. Ugyanaz a metrika a rögzített effektív sávját
+   használja a kiadás minden kérdésében; runtime statisztika nem hangolja át.
+4. A végleges effektív határok és küszöblépések a manifest részei, bekerülnek
+   a kiadás tartalomhash-ébe. Publikálás utáni változás új revíziót igényel.
+   A lefedettségi jelentés megőrzi, melyik adatkészletre ellenőriztük őket.
+
+A hangolás mellett az inkluzív határok, a valódi forrásadatok, a nulla
+referencia kihagyása és a helyes/hibás opciók szabályai továbbra is érvényesek.
 
 ### Nulla, kerekítés és kevés jelölt
 
@@ -356,9 +413,10 @@ ugyanaz a naiv próbálkozási algoritmus sikeres. A generátornak a teljesíthe
 kombinációkat kell indexelnie, korlátos keresést és ellenőrzött hibakimenetet
 használnia. Határidő/abort után későn elkészült csomag nem kerülhet a motorba.
 
-Ha nem áll össze egy nehézségi változat, nem lazítunk titokban a százalékokon,
-nem írunk át statot és nem kínálunk fel kevesebb mint öt kérdést. A változat
-nem kerül az új meccsek kínálatába. Már elindult meccs technikai hibáját a
+Egy nehézségi változat kiadás előtt a lefedettségi vizsgálat alapján
+hangolható. A publikált kiadás már rögzített határai mellett generálunk;
+ha ezekkel nem áll össze öt kérdés és a teljes 4/6 opció, a változat nem
+kerül az adott kiadás kínálatába. Már elindult meccs technikai hibáját a
 meglévő előkészítési életciklus kezeli, nem a kategóriakatalógus önkényes cseréje.
 
 ### Opciószám és ismétlődés
@@ -525,9 +583,13 @@ A seedformátum, az automatikus/kézi mód, a kézi seed meccsszintű ELO-kizár
 a kategóriaválasztás megőrzése és a választható immutable kiadások külön
 javítási revízióval szintén elfogadottak; a seedterv részletezi őket.
 
+A metrikánkénti kerek küszöblépés és az adatfüggően hangolható százalékos
+sáv elfogadott. HP-nál 50, cooldownnál 1 s, darabszámoknál 1, alap támadási
+sebességnél 0,05 az induló lépték. A hangolt profil kiadásonként változatlan.
+
 Még nem elfogadott, ebben a tervben javasolt technikai részletek:
 
-- Küszöbök metrikánkénti képzése/lépésköze és az egyenlő jelöltek kihagyása.
+- A további metrikák lépésközei, végleges effektív sávjai és az egyenlő jelöltek kihagyása.
 - A véges keresési keret pontos értéke és a metrika-/műveletsorsolási súlyok.
 - A seedtervben javasolt `xoshiro128**` algoritmus tesztvektorai és a fizikai táblák részletei.
 - `Base stat growth` név és a metrikák pontos egységei.
@@ -557,5 +619,7 @@ teljes meccs és helyes válaszok publikus kiszivárgásának ellenőrzése.
 
 A csatolt JSON szintaxisát és hivatkozásait ténylegesen átnéztük. A fenti
 generátorteszt-esetek még tervek; működő import vagy generátor nélkül nem
-nevezhetők lefutott teszteknek. A seed-/kiadás-/ELO-esetek a kapcsolódó
+nevezhetők lefutott teszteknek. Az 50-es HP-rács jelöltlefedettségét a csatolt
+listán ténylegesen ellenőriztük; a többi metrika teljes lefedettsége és a
+generátorcsomagok még nem ellenőrzöttek. A seed-/kiadás-/ELO-esetek a kapcsolódó
 seedterv tesztlistájában szerepelnek, szintén végrehajtás nélkül.
