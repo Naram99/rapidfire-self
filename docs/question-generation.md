@@ -46,7 +46,8 @@ Az egyeztetés során elfogadott pontosítások:
   jelent, mindig `multiple` móddal. Az egyetlen helyes opció is megengedett;
   a felület nem vált át egyszeres módra a helyes opciók számából következtetve.
 - A `lessThan` és `moreThan` esetében az eltérés a kérdésben szereplő
-  küszöbértékhez mérendő, és a helyes, valamint hibás opciókra is érvényes.
+  küszöbértékhez mérendő; ahol van százalékos sáv, a helyes és hibás opciókra
+  is érvényes. Challengerben nincs százalékos eltérési korlát.
 - A skindarabszám az alapkinézetet és a chromákat kihagyja; a chromák
   külön metrikákban szerepelnek.
 - A cooldown a képesség első rangjának alapértéke, tárgyak és rúnák nélkül.
@@ -56,6 +57,8 @@ Az egyeztetés során elfogadott pontosítások:
   típusnál minden opció metrikaértéke különbözik.
 - Easy/medium esetén négy, hard/challenger esetén hat opció szerepel;
   nincs opciószám-sorsolás.
+- Challengerben minden numerikus művelethez hat különböző metrikaértékű
+  opció szükséges. A hat eltérő alanynév önmagában nem elegendő.
 - Azonos kategóriacsalád és nehézség alatt ugyanaz a kérdés nem ismétlődik.
   Más nehézségen új opcióhalmazzal visszatérhet. Az opciók átrendezése
   önmagában nem új halmaz.
@@ -210,22 +213,23 @@ paraméterét kérdezzük, nem egy kiszámított hősszint tényleges statját.
 
 Az elfogadott határok inkluzívak. Hiányzó minimum alsó korlát nélkül, hiányzó
 maximum felső korlát nélkül értendő; a művelet helyességi szabálya ettől még
-kötelező. A minták szerinti sávok átfedhetnek: 30% az easy és medium,
+kötelező. Ha mindkét határ hiányzik, nincs százalékos szűrés. Az induló
+sávok átfedhetnek: 30% az easy és medium,
 10% a medium és hard határán is megengedett. Ez nem konfigurációs hiba.
 
-| Nehézség   | Sáv a mintában          |
-| ---------- | ----------------------- |
-| easy       | Legalább 30% eltérés.   |
-| medium     | 10–30% eltérés.         |
-| hard       | Legfeljebb 10% eltérés. |
-| challenger | Legfeljebb 5% eltérés.  |
+| Nehézség   | Elfogadott kiinduló profil          |
+| ---------- | ----------------------------------- |
+| easy       | Legalább 30% eltérés.               |
+| medium     | 10–30% eltérés.                     |
+| hard       | Legfeljebb 10% eltérés.             |
+| challenger | Nincs minimum- vagy maximumeltérés. |
 
-A challenger profilban már a mintában sincs minimumeltérés. Az 5%-os
-maximum és a művelet helyességi szabálya ettől még korlátoz: hat különböző
-érték nem biztosítható minden metrikához. A minimum hiánya nem enged
-megoldási holtversenyt, és a küszöbbel egyező opciók továbbra is kimaradnak.
-A maximum teljes elhagyása külön, még tisztázandó módosítás lenne;
-nem következik a minimumfeltétel elhagyásából.
+A challenger maximumának elhagyását a felhasználó elfogadta. A végleges
+manifestben mindkét százalékos határ hiányzik ennél a nehézségnél; az
+eredeti referenciaminta 5%-os maximuma nem az elfogadott MVP-szabály.
+A challenger minden numerikus kérdésében hat különböző érték kell;
+hatnál kevesebb használható értékkel az adott metrika nem aktiválható ezen
+a nehézségen. A küszöbbel egyező opciók továbbra is kimaradnak.
 
 Ha `c = 100`, medium esetén az alsó jelöltek 70–90, a felsők 110–130
 között lehetnek. A valós adatban létező alanyokat választjuk ki ezekből;
@@ -243,7 +247,9 @@ kérdésben szerepel a célérték és az egység.
 
 Az elfogadott holtversenyszabály szerint az egyszeres kérdés megoldásánál
 nem lehet holtverseny. A második helyet kérő típusokhoz minden opció különböző
-metrikaértéket kap, így a „második” jelentése egyértelmű. A játékosok
+metrikaértéket kap, így a „második” jelentése egyértelmű. Challengerben ez
+az értékkülönbözőség minden numerikus típusra érvényes, nem csak a második
+helyet kérőkre. A játékosok
 rangsorolásának korábban elfogadott 1., 1., 3. szabálya külön szabály;
 nem határozza meg a generált opciók rendezését.
 
@@ -252,7 +258,10 @@ nem határozza meg a generált opciók rendezését.
 `v` a kérdésben szereplő küszöb. A `lessThan` helyes halmaza `x < v`,
 a `moreThan` helyes halmaza `x > v`. Mindkettő szigorú összehasonlítás.
 Az elfogadott szabály szerint minden opcióra **d(x, v)** teljesíti a
-nehézségi sávot. Legalább egy helyes és egy hibás opció szükséges.
+nehézségi sávot, ha az adott profil megad sávhatárt. Challengerben nincs
+százalékos szűrés, viszont hat különböző, küszöbtől eltérő érték kell,
+mindkét oldalon legalább egy opcióval. Legalább egy helyes és egy hibás
+opció minden nehézségen szükséges.
 
 Az elfogadott szabály szerint a küszöb a metrika egységéhez illő kerek
 érték. A lépés metrikánként külön megadható, és a kiválasztott kiadás
@@ -285,7 +294,7 @@ célértéke továbbra is valódi adatérték. A kerek küszöb nem kerekíti á
 opciók forrásstatját: a helyességet az eredeti, validált tényekből számítjuk.
 
 Offline adatellenőrzés: a csatolt 16.20.1-es, 173 hősös lista alap HP-ja
-410–696. Az 550/600/650 küszöbnél a jelenlegi challenger 5%-os sávban is van
+410–696. Az 550/600/650 küszöbnél a korábbi, 5%-os challenger sávban is volt
 legalább hat, küszöbtől eltérő jelölt és mindkét oldalon legalább egy.
 600-nál 29 kisebb és 55 nagyobb jelölt található a sávban. Ez HP-
 jelöltlefedettség, nem működő generátor vagy teljes ötös kategóriacsomag tesztje.
@@ -298,8 +307,9 @@ függetlenül mindkét típusnál hamisra értékelné az egyenlőséget.
 
 A felhasználó engedélyezte a százalékos eltérések módosítását és
 arányosítását, ha az adathalmazhoz túl szűkek vagy túl tágak. A mintabeli
-30% / 10–30% / 10% / 5% kiinduló profil; a lefedettségi eredmények alapján
-család-/metrikaszinten készülhet megfelelőbb profil.
+easy 30% / medium 10–30% / hard 10% kiinduló profil; a lefedettségi eredmények
+alapján család-/metrikaszinten készülhet megfelelőbb profil. A challenger
+elfogadott korlátmentes profiljához nem vezetünk vissza százalékos határt.
 
 1. A teljes, validált készleten mérjük a metrika/művelet/nehézség
    használhatóságát: 4/6 opció, mindkét oldal ahol szükséges, helyeshalmaz,
@@ -308,12 +318,13 @@ család-/metrikaszinten készülhet megfelelőbb profil.
    külön. Egy sikeres példa önmagában kevés.
 2. A profil a kiadás előkészítésekor módosul. Arányosítási javaslatként egy
    pozitív metrikaszintű szorzó ugyanazzal az aránnyal skálázhatja az összes
-   nehézség meglévő minimum-/maximumhatárát; a hiányzó határ hiányzó marad.
+   easy/medium/hard profil meglévő minimum-/maximumhatárát; a hiányzó határ hiányzó marad.
    Például 2-es szorzó: easy legalább 60%, medium 20–60%, hard legfeljebb
-   20%, challenger legfeljebb 10%. Ez illusztráció, nem jóváhagyott új számsor.
+   20%; challenger továbbra is korlátmentes. Ez illusztráció, nem jóváhagyott új számsor.
 3. A szükséges szorzót vagy egyedi határokat a teljes adatok alapján
-   véglegesítjük. A nehézségek sorrendjét és a közeli opciókkal nehezítő
-   értelmezést megőrizzük. Ugyanaz a metrika a rögzített effektív sávját
+   véglegesítjük. Az easy/medium/hard közeli opciókkal nehezítő sorrendjét
+   megőrizzük; challengerben a korlátmentes választás és a hat különböző
+   érték az elfogadott külön szabály. Ugyanaz a metrika a rögzített effektív profilját
    használja a kiadás minden kérdésében; runtime statisztika nem hangolja át.
 4. A végleges effektív határok és küszöblépések a manifest részei, bekerülnek
    a kiadás tartalomhash-ébe. Publikálás utáni változás új revíziót igényel.
@@ -322,7 +333,7 @@ család-/metrikaszinten készülhet megfelelőbb profil.
 A hangolás mellett az inkluzív határok, a valódi forrásadatok, a nulla
 referencia kihagyása és a helyes/hibás opciók szabályai továbbra is érvényesek.
 
-### Offline sávlefedettség a csatolt hőslistán
+### Offline sávlefedettség az eredeti profillal
 
 2026-10-10-én a 16.20.1-es, 173 hősös `champions.json` listán a két
 statcsalád mind a 18, eredeti referenciában felsorolt metrikáját ellenőriztük mind a négy
@@ -346,9 +357,11 @@ A széles engedélyezett sáv önmagában nem csökkenti a jelöltek számát.
 A hiányt a túl nagy minimumeltérés, a túl kicsi maximumeltérés, a
 diszkrét értékkészlet vagy a holtversenytilalom okozhatja. Az egyetlen közös
 skálázó sem minden metrikánál megfelelő: az easy minimumának csökkentése
-javíthatja annak lefedettségét, ugyanazzal a szorzóval a challenger maximuma
+javíthatja annak lefedettségét, ugyanazzal a szorzóval a hard maximuma
 viszont még szűkebb lenne. Ezért szükség esetén metrikánként és
-nehézségenként külön határokat hangolunk, a nehézségi sorrend megőrzésével.
+nehézségenként külön határokat hangolunk az első három nehézségnél.
+Az itt mért 5%-os challenger profil korábbi referencia; az új szabály
+szerinti eredményeket a következő rész tartalmazza.
 
 Csak teljesíthető metrika/művelet párok választhatók; a második hely
 szabálya nem lazul fel, és hat helyett nem készül négy opció. A referenciák
@@ -367,6 +380,26 @@ család/nehézség változat elérhetetlensége is. A lefedettségi eredmény é
 a ténylegesen engedélyezett részhalmaz a kiadás előkészítésekor rögzül;
 meccs közben nem lazítjuk a szabályokat egy hiányzó kérdés kedvéért.
 
+### Offline challenger-lefedettség az elfogadott szabállyal
+
+A 17 MVP-statmetrikát újra ellenőriztük százalékos határok nélkül, minden
+numerikus műveletnél hat különböző értéket megkövetelve. A mana-erőforrású
+hősökre szűrés és a nulla referencia kihagyása megmaradt.
+
+Mind a 17 metrikához van legalább hat különböző forrásérték, és mindegyiknél
+előállítható a `min`, `max`, `exactMatch`, `min2nd` és `max2nd` megfelelő
+hatopciós jelöltkészlete. Például mozgási sebességnél nyolc, alap AD-nál
+25, HP-regeneráció-növekedésnél 14, manaregeneráció-növekedésnél 13 különböző
+érték maradt a szűrt listában. Az ismert küszöblépésű metrikák mindegyikénél
+van olyan pozitív rácspont is, amelyhez hat különböző, küszöbtől eltérő
+érték adható, mindkét oldalon legalább egy jelölttel. Az ismeretlen léptékű
+metrikák küszöbös típusairól még nem állítunk teljesíthetőséget.
+
+Ez továbbra is jelöltlefedettség: nem bizonyít teljes ötös kérdéscsomagot,
+seedtesztet vagy a nehézségek közötti eltérő opcióhalmazt. A teljes
+skin/chroma- és cooldown-készletre még külön ellenőrzés kell. A kategória
+csak akkor kerülhet kínálatba, ha az öt különböző kérdés is biztosítható.
+
 ### Nulla, kerekítés és kevés jelölt
 
 Az elfogadott szabály szerint nulla referencia-/küszöbértékre százalékos sávot nem alkalmazunk.
@@ -375,10 +408,11 @@ nem oszt nullával, és nem vezet be rejtett nevezőt. A nulla adatként tovább
 is érvényes lehet, de nem azonos a hiányzó adattal. Abszolút eltérésen alapuló
 profil később, külön megadott szabály lehet.
 
-A számlálók egész értékek. Például 12 skinhez 5%-os maximum csak 0,6 skin
-eltérést enged: nincs egyetlen eltérő egész érték sem. Ilyen referencia mellett
-nem készülhet challenger összehasonlító kérdés. A két határ, a helyes opciók
-száma és a különbözőségi szabály együtt is ellenőrizendő.
+A számlálók egész értékek. Ha egy profil 12 skinhez 5%-os maximumot adna,
+az csak 0,6 skin eltérést engedne, eltérő egész érték nélkül. A challenger
+új profiljában ez a korlát nem szerepel; hat különböző darabszám továbbra
+is szükséges. A megadott határok, a helyes opciók száma és a különbözőségi
+szabály együtt is ellenőrizendő.
 
 A statok tizedes értékeit és a sávok határait pontosan kezeljük; a kijelzett
 célérték egyezzen a kiértékelttel. A végleges numerikus megoldás használhat
@@ -694,13 +728,13 @@ a kérdésszövegek javítási iránya szintén elfogadott. A hangolt profil kia
 
 Az `attackdamageperlevel` MVP-beli kizárása és a nem teljesíthető
 metrika-/kategória–nehézség párok kihagyása elfogadott. A challengerben
-a minimum hiánya már a referenciaprofil része; az 5%-os maximum teljes
-elhagyását külön kell tisztázni, addig a meglévő profil marad a tervezési alap.
+sem minimum-, sem maximumeltérés nincs. Minden challenger numerikus
+kérdéshez hat különböző metrikaértékű opció kell; enélkül a metrika ezen a
+nehézségen kimarad. Az öt kérdéses teljes kategóriacsomag feltétele megmarad.
 
 Még nem elfogadott, ebben a tervben javasolt technikai részletek:
 
 - Az alap mana/magic resist/mozgási sebesség/támadási távolság lépésközei és a végleges effektív sávok.
-- A challenger maximumeltérésének megtartása vagy teljes elhagyása; a minimum már nincs megadva.
 - A véges keresési keret pontos értéke és a metrika-/műveletsorsolási súlyok.
 - A seedtervben javasolt `xoshiro128**` algoritmus tesztvektorai és a fizikai táblák részletei.
 - `Base stat growth` név és a metrikák pontos egységei.
@@ -717,8 +751,10 @@ A továbblépés sorrendje:
 6. Mobil és desktop kategóriaválasztó ellenőrzése, öt kérdéses teljes meccspróbák.
 
 Tervezett érdemi ellenőrzések: placeholder- és hivatkozási hiba; a határokat
-pontosító 10/30%-os esetek; nulla referencia; 12 skinhez tartozó lehetetlen
-5%-os sáv; rendezési holtverseny; második hely helyessége; küszöbös kérdés
+pontosító 10/30%-os esetek; nulla referencia; feltételes 5%-os sáv egész
+darabszámokkal; challengerben távoli értékek elfogadása és hat különböző
+érték megkövetelése minden numerikus típusnál; rendezési holtverseny;
+második hely helyessége; küszöbös kérdés
 egy, több és minden/egyetlen helyes nélkül; ismeretlen erőforrástípus;
 az alapkinézet és chromák kizárása a skindarabszámból; hiányos chromaforrás;
 az első képességrang alap cooldownja és a különleges cooldown; öt egyedi prompt;
@@ -732,6 +768,7 @@ A csatolt JSON szintaxisát és hivatkozásait ténylegesen átnéztük. A fenti
 generátorteszt-esetek még tervek; működő import vagy generátor nélkül nem
 nevezhetők lefutott teszteknek. A két statcsalád 18 metrikájának mintabeli
 sávlefedettségét és az ismert küszöbrácsokat ténylegesen ellenőriztük a csatolt
-listán; a teljes skin/chroma-/cooldown-készlet és a generátorcsomagok még
+listán, majd a 17 MVP-metrikát az új challenger szabállyal is; a teljes
+skin/chroma-/cooldown-készlet és a generátorcsomagok még
 nem ellenőrzöttek. A seed-/kiadás-/ELO-esetek a kapcsolódó
 seedterv tesztlistájában szerepelnek, szintén végrehajtás nélkül.

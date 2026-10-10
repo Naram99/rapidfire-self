@@ -225,10 +225,13 @@ elfogadott MVP-katalógusból kimarad; az eredeti 18 statmetrikából 17 marad.
 Nem szükséges minden metrikához vagy kategóriához minden nehézséget
 biztosítani: a mozgási sebesség például kimaradhat az easy statkérdésekből.
 Csak öt különböző, 4/6 opciós kérdést biztosító család/nehézség kerül kínálatba.
-A challengerben már nincs minimumeltérés; az 5%-os maximum teljes elhagyása
-még külön tisztázandó, addig a meglévő profil a tervezési alap.
+A challengerben nincs minimum- vagy maximumeltérés, és minden numerikus
+kérdés hat különböző értékű opciót igényel. Az új szabállyal mind a 17
+MVP-statmetrikán ellenőriztük az öt numerikus referenciaalapú művelet
+hatopciós jelöltlistájának teljesíthetőségét; az ismert küszöblépésű metrikák
+küszöbös jelöltlistái is teljesíthetők.
 Ez nem teljes skin-/cooldown-készletre vagy működő generátorra adott garancia.
-A százalékos határok az adathalmaz
+A százalékos határok az easy/medium/hard nehézségen az adathalmaz
 alapján hangolhatók; a végleges effektív profilt a kiadás manifestje rögzíti,
 publikálás után a változás új revíziót jelent.
 

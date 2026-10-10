@@ -94,8 +94,12 @@ A kerek küszöblépés metrikánként külön tartalomadat: HP 50, cooldown 1 s
 darabszámok 1, alap támadási sebesség 0,05, alap AD-/armor-/regenerációértékek 1,
 növekedési paraméterek 0,2 az elfogadott induló értékek. A `lessThan`/`moreThan`
 küszöbével egyező jelöltek kihagyása szintén a változatlan tartalmi szabály része.
-A százalékos sávok az adathalmaz alapján a kiadás előkészítésében hangolhatók
-és arányosíthatók. A végleges effektív profil a manifestben és a kiadáshash-ben
+A százalékos sávok az easy/medium/hard nehézségnél az adathalmaz alapján a
+kiadás előkészítésében hangolhatók és arányosíthatók. Challengerben nincs
+minimum- vagy maximumeltérés; minden numerikus kérdés hat különböző
+metrikaértékű opciót igényel. A nem teljesíthető párok kimaradnak, a
+rendelkezésre álló részhalmazt a kiadás rögzíti.
+A végleges effektív profil a manifestben és a kiadáshash-ben
 rögzül; egy már publikált kiadás nem kap megváltozott léptéket vagy sávot.
 A részletes szabály a [generálási tervben](question-generation.md) szerepel.
 
