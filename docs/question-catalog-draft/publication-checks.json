@@ -1,105 +1,122 @@
 {
   "schemaVersion": 1,
   "checkedOn": "2026-10-10",
-  "status": "partial",
+  "status": "source-and-reference-checks-complete",
   "catalogApproval": "approved",
+  "sourceEligibilityApproval": "approved",
   "productionRelease": false,
   "applicationCodeChanged": false,
   "reportFile": "publication-checks.md",
-  "coverageFile": "source-and-coverage.json",
-  "witnessesFile": "stat-pack-witnesses.json",
-  "prngVectorsFile": "prng-test-vectors.json",
-  "inputFiles": [
-    "../question-generation-input/champions.json",
-    "../question-generation-input/aatrox.json"
+  "coverageFile": "full-source-and-coverage.json",
+  "witnessesFile": "full-pack-witnesses.json",
+  "prngVectorsFile": "full-prng-test-vectors.json",
+  "sourceInventoryFile": "full-source-inventory.json",
+  "sourceAnomaliesFile": "source-anomalies.json",
+  "sourceEligibilityFile": "source-eligibility.json",
+  "inputFiles": ["../question-generation-input/16.20.1.zip"],
+  "previousPartialReferenceFiles": [
+    "source-and-coverage.json",
+    "stat-pack-witnesses.json",
+    "prng-test-vectors.json"
   ],
   "checks": [
     {
       "pendingItem": 1,
       "id": "source-dataset",
-      "status": "blocked-missing-details",
+      "status": "passed-with-approved-exclusions",
+      "missingDetailResponses": 0,
       "passed": [
-        "173 unique champion records and version consistency",
-        "20 finite numeric stats per champion",
-        "Mana filtering for 145 champions",
-        "Aatrox shared summary/detail fields match",
-        "Aatrox skin/chroma parent links and flags",
-        "Aatrox four spell cooldown arrays"
+        "175 JSON files with consistent patch and no duplicate JSON keys",
+        "173 unique champions and full keys mapping",
+        "All individual detail responses equal championFull records",
+        "All summary/detail shared fields equal and prior samples match",
+        "9207 unique skin IDs, one default per champion, valid same-champion non-chroma parent links",
+        "692 unique spell names and 173 unique passive names",
+        "All 692 numeric cooldown arrays match their positive maxrank"
       ],
-      "missingDetailResponses": 172,
-      "remaining": [
-        "Full skin/chroma source and capability completeness",
-        "All champion parent skin links and cooldown values",
-        "Spell and passive name ambiguity checks",
-        "Source agreement with the user-provided en_US endpoint"
-      ]
+      "acceptedExclusions": {
+        "unknownSkinChromaCounts": 6,
+        "unknownChampionChromaTotals": 5,
+        "unverifiedZeroCooldownSpells": 20
+      },
+      "sourceLimitation": "Uploaded snapshot checked; live provenance and gameplay semantics are not independently certified. Exclusions do not assert that missing chromas or zero cooldowns are valid zero question facts.",
+      "remaining": []
     },
     {
       "pendingItem": 2,
       "id": "effective-profiles",
-      "status": "partial",
+      "status": "passed-for-uploaded-source",
+      "checkedNumericMetrics": 16,
       "checkedStatMetrics": 12,
-      "checkedMetricDifficultyRows": 48,
-      "effectiveStatProfiles": "catalog difficultyProfiles, no metric override needed",
+      "checkedMetricDifficultyRows": 64,
+      "effectiveProfiles": "catalog difficultyProfiles, no metric override needed",
       "pairsByDifficulty": {
         "easy": {
-          "feasible": 29,
-          "configured": 36
+          "feasible": 41,
+          "configured": 48
         },
         "medium": {
-          "feasible": 35,
-          "configured": 36
+          "feasible": 47,
+          "configured": 48
         },
         "hard": {
-          "feasible": 51,
-          "configured": 60
+          "feasible": 64,
+          "configured": 80
         },
         "challenger": {
-          "feasible": 84,
-          "configured": 84
+          "feasible": 112,
+          "configured": 112
         }
       },
-      "remaining": [
-        "Skin/chroma/cooldown profiles and feasible pairs on the complete source"
-      ]
+      "excludedCategoryVariants": [
+        {
+          "familyId": "chromaPerSkin",
+          "difficultyId": "hard",
+          "reason": "3 distinct feasible prompts; 5 required"
+        }
+      ],
+      "remaining": []
     },
     {
       "pendingItem": 3,
       "id": "five-question-packs",
-      "status": "partial",
-      "checkedCategoryVariants": 9,
-      "uncheckedPlannedCategoryVariants": 18,
+      "status": "reference-check-passed",
+      "checkedCategoryVariants": 26,
+      "excludedCategoryVariants": 1,
+      "uncheckedPlannedCategoryVariants": 0,
       "referenceAudit": {
         "seeds": 207,
-        "packsPerSeed": 9,
-        "packsChecked": 1863,
-        "questionsChecked": 9315,
+        "packsPerSeed": 26,
+        "packsChecked": 5382,
+        "questionsChecked": 26910,
         "repeatedContextSeeds": 7,
         "maxOptionSetAttemptsObserved": 1,
         "optionSetAttemptBudget": 128,
         "seedCaseAndLeadingZerosChecked": true,
         "canonicalKeyOrderHashChecked": true,
+        "sourceFactsHashChangeChecked": true,
         "familyOrderAndRetryIndependenceChecked": true,
         "reverseSourcePoolOrderChecked": true,
-        "scope": "analytical reference only; no production TypeScript generator or all-seed proof"
+        "elapsedSeconds": 16.908,
+        "scope": "analytical reference only, no production TypeScript generator or all-seed proof"
       },
       "remaining": [
-        "Complete-source reference packs for the other six families",
         "Native TypeScript generator contract and deterministic failure behavior"
       ],
-      "limitation": "A successful finite seed sample does not prove success for every valid seed."
+      "limitation": "A finite successful seed sample does not prove success for every valid seed or production integration."
     },
     {
       "pendingItem": 4,
       "id": "search-policy-and-prng",
-      "status": "partial",
+      "status": "reference-check-passed-integration-pending",
       "referenceRecommendation": {
         "metricSelection": "uniform feasible metrics",
-        "operatorSelection": "uniform feasible operators within the selected metric",
-        "referenceSelection": "uniform feasible references within the selected operator",
+        "operatorSelection": "uniform feasible operators within selected metric",
+        "referenceSelection": "uniform feasible references within selected operator",
         "optionSetAttemptBudget": 128,
         "indexRejectionAttemptBudget": 256,
-        "budgetExhaustion": "error, never biased fallback"
+        "budgetExhaustion": "error, never biased fallback",
+        "subsetSampling": "partial forward Fisher-Yates; full option order uses backward Fisher-Yates"
       },
       "observedMaximumOptionSetAttempts": 1,
       "prngVerification": {
@@ -113,12 +130,13 @@
         "invalidIndexSizesRejected": 4,
         "rejectionBudgetExhaustionChecked": true,
         "emptyAndSingletonShuffleChecked": true,
+        "subsetSamplingCases": 3,
         "productionGeneratorChecked": false
       },
       "remaining": [
-        "Full-source costs and bounded indexed search",
-        "Policy version and search manifest for the actual release",
-        "Agreement of the future native generator with reference vectors"
+        "Native compiler and bounded indexed search implementation",
+        "Policy version and search manifest in actual release",
+        "Agreement of the native generator with all reference vectors"
       ]
     },
     {
@@ -126,25 +144,25 @@
       "id": "immutable-release",
       "status": "blocked-not-implemented",
       "passed": [
-        "Canonical reference hashes",
-        "Object key order invariance",
-        "Catalog threshold and text changes alter hashes",
-        "Explicit partial fixture identity shared by reference outputs"
+        "Exact source archive and per-file SHA-256 inventory",
+        "Canonical full-source question-facts and catalogue/text fixture hashes",
+        "Object key and source fact order invariance",
+        "Source fact, threshold and text edits alter hashes",
+        "Versioned eligibility and subset sampling recipe included in full reference fixture identity"
       ],
-      "fixtureReleaseContentHash": "6f8ac02d5804a5f57e6819c03d88c4e2bc523a3520be80249e0b2cdc73dce97d",
+      "fixtureReleaseContentHash": "2af7bbc3eab1c278615244d42ec868d7c99275b732bc4810f176ce417f81ac40",
       "remaining": [
-        "Full normalized dataset",
+        "Physical normalized dataset, migrations and import",
         "Versioned normalizer, catalog compiler and generator",
         "Search and ordering policy manifest",
         "Actual runnable release assembly and database integration"
       ]
     }
   ],
-  "nextInput": {
-    "format": "ZIP or one champion-keyed combined detail file",
-    "patch": "16.20.1 preferred; all files must use the same patch",
-    "locale": "en_US",
-    "requiredFiles": "Summary plus detailed champion responses for all 173 summary records",
-    "imagesRequired": false
-  }
+  "nextInput": null,
+  "remainingBeforePublication": [
+    "Implement and verify the normalizer, import, compiler and native generator.",
+    "Bind the approved catalog, texts, subject eligibility and deterministic search rules into an immutable generation release.",
+    "Run integration tests for provider, HTTP/socket visibility, persistence and version/seed selection."
+  ]
 }

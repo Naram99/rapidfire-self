@@ -377,10 +377,11 @@ száma nem azonos az egyedi kérdésszövegek számával: a minimumkérdés új
 opciókkal is ugyanaz a prompt. A családonkénti öt különböző kérdés és a
 nehézségek közötti eltérő opcióhalmaz külön generátorellenőrzést igényel.
 
-Ez adatlefedettségi vizsgálat, nem lefutott generátorteszt vagy teljes
-kategóriacsomag. A teljes skin/chroma- és képességcooldown-készlet hiányában
-ezek végleges sávját még nem ellenőriztük. Az Aatrox-részlet egyetlen hős
-adata; abból teljes kategóriára nem adható lefedettségi garancia.
+Ez a korábbi adatlefedettségi vizsgálat nem volt lefutott generátorteszt
+vagy teljes kategóriacsomag. Akkor a skin/chroma- és képességcooldown-készlet
+hiányzott; az Aatrox-részletből nem adtunk teljes kategóriára garanciát.
+Az azóta feltöltött teljes ZIP aktuális ellenőrzését a külön
+[jelentés](question-catalog-draft/publication-checks.md) tartalmazza.
 
 Nem cél minden hiányzó kombinációt sávhangolással használhatóvá tenni.
 Az MVP-ben elfogadott a metrika/nehézség párok kihagyása és egy egész
@@ -403,13 +404,14 @@ van olyan pozitív rácspont is, amelyhez hat különböző, küszöbtől eltér
 érték adható, mindkét oldalon legalább egy jelölttel. Az ismeretlen léptékű
 metrikák küszöbös típusairól még nem állítunk teljesíthetőséget.
 
-Ez a korábbi vizsgálat jelöltlefedettség volt. A most jóváhagyott katalógus
-12 statmetrikájához már a küszöblépések és a statcsaládok ötös csomagjai is
-ellenőrizve vannak, 207 seedes elemzési referenciával. A részletes
+Ez a korábbi vizsgálat jelöltlefedettség volt. A jóváhagyott katalógus
+mind a 16 numerikus metrikájához már a küszöblépések és a teljesíthető
+családok ötös csomagjai is ellenőrizve vannak a teljes ZIP alapján,
+207 seedes elemzési referenciával. A részletes
 [publikálás előtti jelentés](question-catalog-draft/publication-checks.md)
-elkülöníti a lefutott elemzést a hiányzó teljes forrástól és a leendő
-generátorintegrációtól. A teljes skin/chroma- és cooldown-készletre még
-külön ellenőrzés kell.
+elkülöníti a lefutott elemzést az elfogadott alanykizárásoktól és a leendő
+generátorintegrációtól. A skinenkénti chroma hard változata nem biztosít
+öt különböző promptot, ezért kimarad.
 
 ### Nulla, kerekítés és kevés jelölt
 
@@ -472,10 +474,14 @@ válaszaként azonosította. A belső számítások és a tervezett forrás így
 
 A chromadarabszám-kategóriához teljes chromafelsorolás szükséges. Egy booleanból
 nem következtetünk chromadarabszámra. A forráskapacitást importkor ellenőrizzük;
-hiányos felsorolás esetén az érintett kategóriák nem aktiválhatók, az ismeretlen
-darabszám nem lesz 0. Teljes forrásban a ténylegesen nulla chroma validált 0.
-Az élő payload és a teljes hőslista részleteinek ellenőrzése az adatimportterv
-szerint még szükséges; a környezet hálózati tiltása ezt most nem tette lehetővé.
+hiányos felsorolásnál az érintett alany kimarad, az ismeretlen darabszám nem
+lesz 0. Ha a többi alany sem ad öt érvényes kérdést, a változat nem aktiválható.
+Teljes forrásban a ténylegesen nulla chroma validált 0. A teljes feltöltött ZIP
+ellenőrzése elkészült; 127 false flag mellett vannak gyerekrekordok, ezekből
+számolunk. Hat true jelzésű, gyerek nélküli skin és öt érintett hős összesített
+chromaszáma a felhasználó döntése szerint az MVP-ből kimarad. A többi
+adatuk megmarad; a [szűrés](question-catalog-draft/source-eligibility.json)
+kiadáshoz kötött, alanyonként levezetendő használhatóság.
 
 Skint tartalmazó opcióknál a hős neve és a skin neve együtt azonosítja az
 elemet, hogy azonos skinnevek vagy alapkinézetnevek ne okozzanak kétértelműséget.
@@ -495,7 +501,9 @@ a validált első elem a rang 1 alapértéke. A `cooldownBurn` megjelenítési
 szövegét nem alakítjuk vakon egyetlen számmá. A forrás numerikus
 rangsorozatából kinyert értéket az adapter külön ellenőrzi és tárolja; a nullás
 cooldown jelentését és a különleges, többformás képességek használhatóságát is
-ellenőrizni kell. Nem feldolgozott képesség nem kerül ebbe a jelöltlistába.
+ellenőrizni kell. A ZIP húsz végig nullás tömbje az elfogadott MVP-szűrés szerint
+kimarad a cooldownból, neve felismerési nyom lehet. Így 672 pozitív első-rangú
+érték a forrásalap. Nem feldolgozott képesség nem kerül ebbe a jelöltlistába.
 Az opció szövege például hősnév + slot + képességnév, saját stabil rekordkulccsal.
 
 ### Szöveges felismerés
@@ -752,20 +760,20 @@ A korábbi AD-növekedés-kizárás megmarad; 12 aktív statmetrika maradt.
 
 Fennmaradó technikai ellenőrzések:
 
-- A teljes részletes adathalmaz, valamint a skin/chroma- és képességkategóriák profiljai.
 - Az elemzési referenciában használt véges keresési keret és egyenletes sorsolási súlyok
-  ellenőrzése a teljes készleten és a leendő natív generátorban.
+  ellenőrzése a leendő natív generátorban; a teljes feltöltött készleten a referencia lefutott.
 - A meglévő `xoshiro128**` tesztvektorok alkalmazásbeli megfelelősége,
   a fizikai táblák és az immutable kiadás tényleges összeállítása.
 
 A továbblépés sorrendje:
 
 1. A [publikálás előtti ellenőrzések](question-catalog-draft/publication-checks.md)
-   befejezése az azonos patchhez és `en_US` locale-hoz tartozó teljes hősrészletekkel.
-   A statlefedettség, a stat-/hőscímcsomagok referenciavizsgálata és a két nyelvű
-   PRNG-vektor-összevetés már elkészült.
+   forrás- és referenciarésze elkészült. A 16 metrika és három felismerési család
+   vizsgálata 27 tervezett változatból 26-ot tesz elérhetővé; a hard
+   skinenkénti chromakategória három prompttal kimarad.
 2. A [forrásminták mezőszintű szerződésének](lol-source-schema.md) ellenőrzése
-   a teljes készleten, különösen a chromafelsorolás teljessége szempontjából.
+   a teljes készleten elkészült, a jóváhagyott alanykizárásokkal. Az importáló
+   ugyanennek a szerződésnek a runtime validálását még implementálja.
 3. Az adatimport/séma megvalósítása és referenciaminták készítése.
 4. Katalógusfordító és tiszta szöveges generátor, stabil seedtesztvektorokkal.
 5. Meglévő provider/meccsmentés és HTTP rendelkezésreállási szerződés illesztése.
@@ -789,8 +797,8 @@ A csatolt JSON szintaxisát és hivatkozásait ténylegesen átnéztük. A fenti
 generátorteszt-esetek még tervek; működő import vagy generátor nélkül nem
 nevezhetők lefutott alkalmazásteszteknek. A korábbi 18/17 metrikás lefedettségi
 vizsgálat után a jóváhagyott 12 statmetrikát az összes engedélyezett művelettel
-ellenőriztük. Az elemzési referencia 207 seedes, 1863 ötös csomagos próbája
-9315 kérdésen lefutott; a stat-/hőscímcsomagok ismétlődését és helyességét
-vizsgálta. A PRNG- és streamvektorok Pythonban és Node-ban egyeznek.
-A teljes skin/chroma-/cooldown-készlet, a futó TS-generátor és a kiadás-/ELO-/UI
-integráció tesztjei továbbra is hiányoznak.
+ellenőriztük, majd a teljes ZIP-pel mind a 16 numerikus metrikát és három
+felismerési családot. A teljes elemzési referencia 207 seedes, 5382 ötös
+csomagos próbája 26 910 kérdésen lefutott; az ismétlődést, a helyességet és az
+elfogadott alanyszűrést vizsgálta. A PRNG- és streamvektorok Pythonban és Node-ban
+egyeznek. A futó TS-generátor és a kiadás-/ELO-/UI integráció tesztjei továbbra is hiányoznak.

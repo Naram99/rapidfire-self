@@ -176,9 +176,13 @@ teljes és bizonyítottan kimerítő képességkészletét.
 A [mezőszintű forrásszerződés](lol-source-schema.md) alapján a `partype`
 megőrzése és besorolása biztosítja a mana/energia különválasztását.
 Az első rang numerikus cooldownja a validált `cooldown` tömb első eleme.
-A `cooldownBurn` továbbra is megjelenítési szöveg. A chromafelsorolás
-teljességét és automatikusan elérhető forrását még ellenőrizni kell;
-hiányzó képességadatból nem lesz számított 0.
+A `cooldownBurn` továbbra is megjelenítési szöveg. A teljes feltöltött
+16.20.1-es snapshot ellenőrzése elkészült, az elfogadott alanyszűréssel:
+hat skin és öt hős összesített chromaszáma ismeretlen, húsz végig nullás
+cooldownú képesség a cooldown-kérdésalapból kimarad. A nyers rekordok és
+más metrikák megmaradnak. Hiányzó vagy nem igazolt adatból nem lesz számított 0.
+A [szűrés](question-catalog-draft/source-eligibility.json) tartalmi szabály,
+az importált készletből vezetendő le, és a generálási kiadás rögzíti.
 
 ### Kulcsok és indexek
 
@@ -245,6 +249,13 @@ követi. Új, még nem játszható készlet nem cserélheti le a játék alapkia
 Azonos tartalom/szabályok újraimportja a meglévő kiadást használja; tartalmi
 változás új, változatlan revíziót publikál. Egy régi patch újraimportja sem
 előzheti meg alapértékként a numerikusan újabb játszható patch kiadását.
+
+A feltöltött `championFull.json` mind a 173 külön részlettel rekordról
+rekordra egyezik, ezért ugyanannak a normalizálónak aggregált bemenetként is
+adható. Az élő letöltési adapter ezt később használhatja a sok hőskérés helyett;
+a verzió-/listaegyezés, hősszám, méretkorlát és staging-tranzakciós határ változatlan
+követelmény. Az alanykizárások nem sérült hős csendes kihagyását jelentik:
+minden nyers hős megmarad, csak nem igazolt metrikája nem lesz kérdésjelölt.
 
 Timeout, korlátos válaszméret és teljes futásidőlimit kell. Átmeneti hálózati,
 429-es és 5xx hibára korlátos retry/backoff használható; 429-nél a `Retry-After`
@@ -387,12 +398,14 @@ lehetséges kiegészítő forrása; az MVP-ben nincs ilyen adapter és nincs rá
 futási függőség. A kapott Aatrox-mintára elfogadott Data Dragon-leképezés
 használható; külön CommunityDragon-adapter jelenleg nem szükséges a tervhez.
 
-Implementáció előtt a hálózati hozzáféréssel rendelkező környezetben a
-megadott Data Dragon-végpont élő válasza és a teljes hősdetail-letöltés
-ellenőrizendő. A pontos Aatrox-URL újabb ellenőrzése is a proxy 403-as CONNECT
-tiltásán akadt el; ez nem a Riot endpointjának válasza.
-Egy részletminta nem bizonyítja minden hős különleges
-képességformáját vagy a chromakatalógus teljességét.
+A felhasználó azóta feltöltötte a teljes [16.20.1.zip](question-generation-input/16.20.1.zip)
+archívumot. Mind a 173 hősrészlet, az összesítő és az aggregátum egyezik;
+a szülőkapcsolatok, stat- és rangszerkezetek ellenőrizve. A forráslefedettség
+és a 26 elérhető kategóriaváltozat 207 seedes referenciája elkészült, a
+jóváhagyott chroma-/cooldown-kizárásokkal. A részletes eredmény a
+[publikálás előtti jelentésben](question-catalog-draft/publication-checks.md) szerepel.
+Az élő hálózati eredetet és minden különleges képességforma játékbeli
+jelentését ez nem igazolja; az importáló saját runtime ellenőrzése még szükséges.
 Ez a terv nem állít sikeres importot, működő
 adminpanelt vagy ellenőrzött újrajátszhatóságot.
 

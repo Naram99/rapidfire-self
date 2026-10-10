@@ -252,16 +252,22 @@ A [jóváhagyott JSON-katalógus](question-catalog-draft/README.md)
 kérdéssablont tartalmaz. A négy további küszöblépés és a `Base stat growth` név
 elfogadott. Az öt bizonytalan egységű metrika elhalasztása után 12 hősstat
 marad. A `review.json` és a [publikálás előtti jelentés](question-catalog-draft/publication-checks.md)
-rögzíti az ellenőrzések részállapotát: 48 stat/nehézség sor, 207 seed,
-1863 ötös referenciacsomag és 9315 kérdés ellenőrizve; 176 PRNG-kimenet
-Pythonban és Node-ban egyezett. Ez leíró konfiguráció és elemzési referencia,
-nem alkalmazáskód, teljes készlet vagy már publikált kiadás.
+rögzíti az aktuális ellenőrzési állapotot: a teljes ZIP 16 metrikája 64
+metrika/nehézség sorban ellenőrizve; 207 seed, 5382 ötös referenciacsomag és
+26 910 kérdés sikeres. 176 PRNG-kimenet Pythonban és Node-ban egyezett.
+27 tervezett változatból 26 elérhető; a hard skinenkénti chromakategória
+három különböző prompttal kimarad. Ez leíró konfiguráció és elemzési
+referencia, nem alkalmazáskód vagy már publikált kiadás.
 A [mezőszintű forrásszerződés](lol-source-schema.md) feldolgozza a csatolt
 173 hősös listát és az Aatrox-részletet; rögzíti a `partype`, `cooldown[]`
 és `parentSkin`/`chromas` mezőket. A `parentSkin` jelenléte szerinti chromaazonosítás
 elfogadott; a `chromas` boolean külön forrásjelzés marad. Az Aatrox-minta
 a felhasználó szerint a 16.20.1-es, `en_US` Data Dragon-végpont közvetlen válasza.
-A teljes hősdetail-letöltés és a chromafelsorolás teljességének élő ellenőrzése még szükséges.
+A teljes feltöltött [16.20.1.zip](question-generation-input/16.20.1.zip)
+173 külön részlete, összesítője és aggregátuma egyezik. Az elfogadott
+alanyszűrés hat skin-/öt hős-chromaszámot és húsz cooldown-kérdésalanyt zár ki,
+nyers és egyéb adataikat megtartva. A forrás- és referenciavizsgálat elkészült;
+a leendő importáló/runtime validátor, generátor és valódi kiadásintegráció még hiányzik.
 A képes családok és a sebzésfeldolgozás továbbra is későbbi feladatok;
 ez a szelet sem változtatja meg a futó mintakérdés-providert.
 

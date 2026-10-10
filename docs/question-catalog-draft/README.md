@@ -1,7 +1,8 @@
 # League of Legends — jóváhagyott JSON-katalógus
 
 Dátum: 2026-10-10. Státusz: a katalógus és az ajánlott küszöblépések
-felhasználó által jóváhagyva; a publikálás előtti ellenőrzések részben elkészültek.
+felhasználó által jóváhagyva; a teljes feltöltött forrás és az elemzési
+referenciacsomagok ellenőrzése elkészült. A publikáláshoz még implementáció kell.
 A termékszabályok az elfogadott [generálási tervet](../question-generation.md)
 követik. A meglévő mappanév a korábbi hivatkozások miatt megmarad.
 
@@ -15,6 +16,8 @@ követik. A meglévő mappanév a korábbi hivatkozások miatt megmarad.
    az MVP-ből elhalasztott metrikák és a publikálás előtti ellenőrzések.
 4. [publication-checks.md](publication-checks.md): az elvégzett ellenőrzések,
    eredmények, technikai ajánlások és a lezáráshoz hiányzó adatok.
+5. [source-eligibility.json](source-eligibility.json): a jóváhagyott chroma- és
+   cooldown-kizárások; importkor alanyonként igazolandó használhatóság.
 
 A katalógus 16 numerikus metrikát tartalmaz: 12 hősstat, három skin/chroma
 darabszám és egy rank 1 cooldown. Kilenc aktívnak tervezett szöveges család
@@ -143,6 +146,12 @@ A cooldown Q/W/E/R első képességrangjának alapértéke, tárgyak és rúnák
 nélkül. Nem ellenőrzött numerikus cooldown nem válik jelöltté.
 A `requiredCapabilities` kapacitáskulcsai az adapter által igazolt adatokra
 hivatkoznak; a fájl puszta jelenléte nem teljesíti ezeket.
+A teljes snapshotban hat skin chromaszáma és öt hős chromaösszesítése
+ismeretlen; ezek csak az érintett metrikákból maradnak ki. A húsz végig
+nullás cooldownú képesség cooldown-kérdésben nem szerepel, neve használható.
+A képességek alanyonkénti igazolása nem tiltja le a teljes metrikát, ha a
+többi alany elegendő jelöltet biztosít. A nyers adatok és eltérő sourceflag-ek
+megmaradnak; a [szűrés](source-eligibility.json) a generálási kiadás része.
 
 ## Értékek, küszöbök és szöveg
 
@@ -198,17 +207,23 @@ ugyanazon hős többször előforduló nyoma önmagában nem ad második helyes 
 A dataset-, manifest-, szöveg- és generátorverziókat egy immutable
 [generálási kiadás](../question-seed-version.md) kapcsolja össze. A kiadás
 tartalomhash-e a végleges katalógust és az angol szövegeket is lefedi;
-nem írunk kiadás-UUID-t ebbe a katalógusba. A külön tesztvektorok részleges
-forrásból képzett hash-e kifejezetten referenciafixture-azonosító.
+nem írunk kiadás-UUID-t ebbe a katalógusba. A korábbi részleges és az új
+teljes forrásból képzett teszthash-ek kifejezetten referenciafixture-azonosítók.
 Egy későbbi fordítás külön nyelvi manifest/kiadás; nem írja át az angol kiadást.
 Seed, ELO, session, DB-migráció és PRNG-állapot külön felelősség.
 
 ## Ellenőrzési határ
 
 A katalógus JSON-szintaxisa, hivatkozásai, placeholderjei és konfigurációs
-szabályai ellenőrizve. A 12 statmetrika lefedettsége, a stat- és hőscímcsomagok
-207 seedes referenciavizsgálata és a PRNG-vektorok két nyelven történő
-összevetése elkészült. Ez elemzési ellenőrzés; teljes forrásimport,
-alkalmazásgenerátor vagy minden seedre adott sikerességi garancia még nincs.
+szabályai ellenőrizve. A teljes ZIP-ben minden külön hős és az aggregátum
+egyezik. A 16 numerikus metrika és a három felismerési család vizsgálata
+elkészült: 27 változatból 26 teljesíthető, a `chromaPerSkin:hard` kimarad.
+A 207 seedes referencia 26 910 kérdésén és a PRNG-vektorok két nyelvű
+összevetésén az ellenőrzések sikeresek. A teljes eredmények külön
+[lefedettségi fájlban](full-source-and-coverage.json),
+[130 mintakérdésben](full-pack-witnesses.json) és
+[tesztvektorokban](full-prng-test-vectors.json) szerepelnek; a korábbi
+részleges referencia változatlan előzmény. Ez elemzési ellenőrzés;
+alkalmazásbeli forrásimport, generátor és minden seedre adott garancia még nincs.
 A nyitott részfeladatokat a [publication-checks.json](publication-checks.json)
 és a hozzá tartozó [jelentés](publication-checks.md) rögzíti.

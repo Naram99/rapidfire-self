@@ -171,6 +171,9 @@ a rejection sampling és a Fisher–Yates keverés is ellenőrizve vannak.
 A vektorok részleges forrásból képzett fixture-hash-t használnak; ez nem
 publikált kiadásazonosító. A leendő natív TS-generátornak ugyanígy kell
 teljesítenie őket; ilyen alkalmazásimplementáció még nincs.
+A teljes ZIP-hez készült [új referencia-vektorok](question-catalog-draft/full-prng-test-vectors.json)
+ugyanígy egyeznek Pythonban és Node-ban, és a részhalmazmintavétel rögzített
+változatát is ellenőrzik. A régi vektorokat nem írják át.
 
 ## 6. Streamhatárok és a kategóriacsomagok
 
@@ -275,8 +278,13 @@ Az alkalmazásintegráció tesztjei még nem futottak le, mert az implementáci�
 nincs engedélyezve. A [leíró katalógus](question-catalog-draft/README.md) és
 küszöblépései jóváhagyva, a nem végleges egységű metrikák az MVP-ből kimaradnak.
 A [publikálás előtti ellenőrzés](question-catalog-draft/publication-checks.md)
-207 seedes stat-/hőscímcsomag-referenciát, két nyelven egyező PRNG-vektorokat
-és kanonikus hash-ellenőrzést tartalmaz. A referencia véges kerete és egyenletes
-metrika-/műveletsorsolása mérhető technikai ajánlás; a teljes készleten és a
-leendő generátorban még ellenőrizendő. A fizikai kiadás és táblái nem készültek el.
+a teljes ZIP 207 seedes referenciáját, két nyelven egyező PRNG-vektorokat és
+kanonikus hash-ellenőrzést tartalmaz. 26 elérhető változat 26 910 kérdésén
+lefutott a vizsgálat; az elfogadott chroma-/cooldown-kizárás és a
+`chromaPerSkin:hard` elérhetetlensége a kiadás tartalmi szabálya.
+A [teljes referencia vektorai](question-catalog-draft/full-prng-test-vectors.json)
+külön fixture-t használnak, a korábbi részleges tesztvektorok megmaradnak.
+A referencia véges kerete és egyenletes metrika-/műveletsorsolása mérhető
+technikai ajánlás; a leendő generátorban még ellenőrizendő.
+A fizikai kiadás és táblái nem készültek el.
 Az itt leírt seedformátum, verzióválasztás és ELO-kizárás már elfogadott.

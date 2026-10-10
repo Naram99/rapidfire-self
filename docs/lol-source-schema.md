@@ -1,6 +1,7 @@
 # LoL JSON-forrás — mezőszintű import- és normalizálási szerződés
 
-Dátum: 2026-10-09. Státusz: mintákkal ellenőrzött tervezési szerződés;
+Dátum: 2026-10-09; teljes forrásfelülvizsgálat: 2026-10-10.
+Státusz: mintákkal és a teljes feltöltött ZIP-pel ellenőrzött tervezési szerződés;
 a skin/chroma-leképezés elfogadott, az Aatrox-minta forrását a felhasználó
 megadta. Nincs implementált validátor, adatbázis-migráció vagy importfutás.
 
@@ -9,6 +10,10 @@ Kapcsolódó tervek: [adatimport](lol-champion-data.md),
 [champions.json](question-generation-input/champions.json) és
 [aatrox.json](question-generation-input/aatrox.json). A repóbeli másolatok
 szemantikailag változatlan tervezési adatok; a futó alkalmazás nem olvassa őket.
+Az új [16.20.1.zip](question-generation-input/16.20.1.zip) 173 hősrészlete,
+`champion.json` és `championFull.json` tartalma egyezik egymással és a
+korábbi mintákkal. A [teljes ellenőrzési jelentés](question-catalog-draft/publication-checks.md)
+rögzíti a jóváhagyott alanyszűréseket és az előállítható kategóriákat.
 
 ## 1. A mintákból ellenőrzött tények
 
@@ -162,6 +167,17 @@ hogy minden hős payloadja teljesíti ezt a szerződést. Ha egy verzió csak
 boolean jelzést ad tényleges chromarekordok nélkül, a darabszámhoz szükséges
 kapacitás hiányzik; nem gyártunk rekordot és nem tekintjük a darabszámot nullának.
 
+A teljes ZIP-ben 9207 skin/chroma rekord található: 173 alapkinézet,
+1959 skin és 7075 chroma, mindegyik szülőkapcsolat érvényes. 127 szülőnél
+false forrásflag mellett is vannak gyerekrekordok; ezekből számolunk, a flag
+megmarad metadata. Hat skinnél true mellett nincs gyerek: a skinenkénti
+szám ismeretlen, és öt érintett hős teljes chromaszáma sem igazolható.
+A felhasználó ezeket kizárta az MVP megfelelő kérdésmetrikáiból, más adataikat
+megtartva. A számlálási adapternek alanyonként értéket vagy ismeretlen
+állapotot kell képeznie; puszta `COUNT(*)` nem alakíthatja ezeket nullás ténnyé.
+A [kizárási szabály](question-catalog-draft/source-eligibility.json) snapshotból
+levezetendő, kiadáshoz kötött adat, nem végleges hőstiltás.
+
 ## 5. Képességek, cooldown és passzív
 
 | Útvonal                          | Forrástípus és szabály                                               | Normalizált szerep                                      |
@@ -192,6 +208,14 @@ Az R első rangja is használható; nem kötjük a hős első szintjéhez.
 Az alap slotsorrendet a standard adapterprofil határozza meg, nem a név
 vagy a spell ID utolsó betűje. A többformás vagy nem rangolható képességek
 számára külön használhatósági feltétel kell.
+
+A teljes ZIP 692 képességének tömbje a saját pozitív rangszámával egyező
+hosszúságú; az adapter nem rögzítheti minden képesség rangszámát 5-re/3-ra.
+Húsz tömb végig 0. A felhasználó döntése szerint ezek a numerikus
+cooldown-kérdésekből kimaradnak külön feldolgozásig; a nyers nulla megmarad,
+nem állítjuk róla, hogy bizonyított rang 1 cooldown. A képességnévük
+felismerési nyomként használható. A többi 672 képesség pozitív első eleme
+képezi az MVP forrásalapját, a forrás szerinti standard Q/W/E/R profilban.
 
 Javasolt további `lol_spell` mezők:
 
@@ -226,6 +250,9 @@ futtatjuk a saját kérdéssablon-renderelőn, és nem hajtunk végre belőlük 
 
 Ellenőrzött: a két feltöltött minta JSON-szintaxisa, verzióegyezése,
 hős-/skinazonosítói, Aatrox közös mezői, szülőkapcsolatai és rangtömbjei.
-Nem ellenőrzött: a megadott endpoint élő válaszával való egyezés és a teljes hősdetail-letöltés;
-az Aatrox-fixture nem bizonyítja minden hős speciális képességformáját.
+Az új ZIP mind a 173 részletének, összesítőjének és aggregátumának egyezése,
+azonosítói, rangtömbjei és szülőkapcsolatai szintén ellenőrizve. Az elfogadott
+hat skin-/öt hős-chromakizárás és húsz cooldown-kizárás mellett a kérdésalap
+rendelkezésre áll. Nem ellenőrzött: a megadott endpoint aktuális élő válaszával
+való egyezés és minden képesség különleges játékmeneti formájának szemantikája.
 Az importáló és a tervezett validátorteszt-csomag még nem készült el.

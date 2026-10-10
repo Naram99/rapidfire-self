@@ -1,0 +1,1074 @@
+{
+  "archiveFile": "16.20.1.zip",
+  "archiveSha256": "d141119a2070a594c6fb3c895449daa9d22e007fda806526506cc4aab16e7619",
+  "archiveSizeBytes": 1070689,
+  "uncompressedSizeBytes": 4635275,
+  "jsonFiles": 175,
+  "files": [
+    {
+      "path": "16.20.1/champion/Aatrox.json",
+      "sizeBytes": 11417,
+      "sha256": "051494ca7a5edb36512a3a1bb644717fcc31217ddf882a538c1d7989ddb5cad1",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Ahri.json",
+      "sizeBytes": 15631,
+      "sha256": "27a17429c2ee4391b190242985ad252e47eb7fe01e016db81c10497ecd4a3cb8",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Akali.json",
+      "sizeBytes": 16599,
+      "sha256": "9076eeae5ccb1208ff085d45dc3e6ebfe5043be47fb9eb3f0027a5dac2e28844",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Akshan.json",
+      "sizeBytes": 10848,
+      "sha256": "ffc47dc616ebe54175708873429ef63d3eb71ed6100e08aaaac8d0a0f69efa68",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Alistar.json",
+      "sizeBytes": 11273,
+      "sha256": "a5b00f1c2204ec8d8de20d80737143779ad4288507564ee4607423c1bbc538e3",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Ambessa.json",
+      "sizeBytes": 9944,
+      "sha256": "30d445d0cea838ebb98394fce837543370ad1fcc9037ee41ba0340078540a207",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Amumu.json",
+      "sizeBytes": 12985,
+      "sha256": "f94d254c826302e58cbe402ed194c68bc48d98cb49a9f1ce10f069012092f226",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Anivia.json",
+      "sizeBytes": 13892,
+      "sha256": "e94bc608d770d7b2eb5b0715313d50c8507152e19b119f8129a57ab8b1ae4a3e",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Annie.json",
+      "sizeBytes": 13051,
+      "sha256": "58fe285e1297f6736143f80b15611601bd786ed95c7b793f715baaf9165a138f",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Aphelios.json",
+      "sizeBytes": 11545,
+      "sha256": "c187d33b997e7afc3124e3a7c04f0a271bd2cbf0218c05d5a4e06a4a1b45ef2a",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Ashe.json",
+      "sizeBytes": 15583,
+      "sha256": "c40f2eb94d478873b9e0a81fd96b813734c54dcece4d9b45c3a5c5b7e9d44ea2",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/AurelionSol.json",
+      "sizeBytes": 13316,
+      "sha256": "d99eaf4cec7a4d2bddde9d4c0284f3893282f9fe5e3055972741f9b7a973d19c",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Aurora.json",
+      "sizeBytes": 10426,
+      "sha256": "a7a05b182e659020a8531c136011965a4568f8bc831e1c7fd7f908ece60e9515",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Azir.json",
+      "sizeBytes": 10728,
+      "sha256": "08423de7937194f882f613696c26663b886259990aa3db149dfbd39065771372",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Bard.json",
+      "sizeBytes": 12101,
+      "sha256": "9d286afd6de30ef2b07471394eabd4569d2f6143fd97927db215b2ebdec9918f",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Belveth.json",
+      "sizeBytes": 12169,
+      "sha256": "7acfc2db3621dabf4dc3dd95585772b80e974610edbfaa9f45ad82088a36ab43",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Blitzcrank.json",
+      "sizeBytes": 14266,
+      "sha256": "993fab7d9129f312df4d64fe05456987fa25d8ee01fdd3249a1c46e5d7f0eb6f",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Brand.json",
+      "sizeBytes": 12631,
+      "sha256": "c6ba2c9d688f3b039fce862ccbd6db14ced134a3505b58e8490ad55939c99b32",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Braum.json",
+      "sizeBytes": 14226,
+      "sha256": "6313e001607f37adbb4552be46971b30a2299c65a1e8900f05f53494f066d8a4",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Briar.json",
+      "sizeBytes": 12493,
+      "sha256": "fcbbf7d98e844a45314bc3f6e2cdf2649bd4cc682af70d76586b3d4631438063",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Caitlyn.json",
+      "sizeBytes": 13451,
+      "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Camille.json",
+      "sizeBytes": 13561,
+      "sha256": "1c8cf77c9fd1aad564b773e4d92d04eec564bb83c7a5aaac5149465e8b57fbad",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Cassiopeia.json",
+      "sizeBytes": 11076,
+      "sha256": "6bff96b0fbfd2ac8f26080ee24021233583c3986be48c4c9651cd4affde0a625",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Chogath.json",
+      "sizeBytes": 11525,
+      "sha256": "786a3325c660fae7369b7f71c907b34124bb8279bff54c31fb02983a585fd735",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Corki.json",
+      "sizeBytes": 11213,
+      "sha256": "a5f4cb89aad82e1cff448194e31733f732d357a7b3cc1c6536298a8a0e2e6033",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Darius.json",
+      "sizeBytes": 15118,
+      "sha256": "1cdfb03c1877eff520552058d9f867661dbdb283e9cf5ec3cc63ec1e4742aef0",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Diana.json",
+      "sizeBytes": 15878,
+      "sha256": "16798f9434bd88d0b61ca7cc60f270c3090720d7a5130456ba260a386a1b345a",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Draven.json",
+      "sizeBytes": 15570,
+      "sha256": "be3b8af8f5134fd85cf2619c91a826b2af0157d7e4f69b10896c7c51e66697ff",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/DrMundo.json",
+      "sizeBytes": 12101,
+      "sha256": "c29e40ae99af9fa40b312b51c2ee6925f169caf4c3466a55a18a1989d00da747",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Ekko.json",
+      "sizeBytes": 14036,
+      "sha256": "5a990fc32bed1c2a9467a596dbca7a327ea64b771d52ca2396555a5f02a2dffd",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Elise.json",
+      "sizeBytes": 11234,
+      "sha256": "a616e53bb6d3ce36b5389466f494a9934b7eb835c371197258a468a823d0256b",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Evelynn.json",
+      "sizeBytes": 15324,
+      "sha256": "9fe18c15c21f507a4f92bb7cda5cf4ca77354fce9de803000fc9a14127a96cfd",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Ezreal.json",
+      "sizeBytes": 14948,
+      "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Fiddlesticks.json",
+      "sizeBytes": 12602,
+      "sha256": "8b55b54b2097600bdfaac8dad6d4115ec062fffbd132ab40c4573b0fa2243674",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Fiora.json",
+      "sizeBytes": 17558,
+      "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Fizz.json",
+      "sizeBytes": 12794,
+      "sha256": "1d87e286459fe7e660c607116d0b519ff58b9454f72db779971e60eb201ad958",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Galio.json",
+      "sizeBytes": 12683,
+      "sha256": "78dd4936201ae2105d3f3ee13f29e828064fad95f2cfd5d877717ee9e431b94e",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Gangplank.json",
+      "sizeBytes": 11984,
+      "sha256": "cec7184dfafa4432c98dc0ec78dc24f59c3a9f2e3f696e157d662cff1db62faa",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Garen.json",
+      "sizeBytes": 12736,
+      "sha256": "3de32d7d93cbd2c03f2381f2b68cac9c03003b0b3cceddc17773bd9bf0362536",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Gnar.json",
+      "sizeBytes": 12466,
+      "sha256": "dc591417b01abcf2801ec9f4dfc273faeb60da19673b24a0240d269f3ecd93b3",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Gragas.json",
+      "sizeBytes": 11590,
+      "sha256": "1543e4adcf9c7e2b6e5e2d2db643a3159bde4c7c2000c867623052794d135df3",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Graves.json",
+      "sizeBytes": 12849,
+      "sha256": "9552b25d627a244f1c191b9437e8e3e6a159aa102e740924d28458d4d1916da8",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Gwen.json",
+      "sizeBytes": 14075,
+      "sha256": "ba63fea5864586943801283199e502e4d1a4a35ddd4c0fc3b69f0aab594c9599",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Hecarim.json",
+      "sizeBytes": 12630,
+      "sha256": "db38dff8cd11ebe7f42eae541025378fbff1c124431b834b95e206a5a0853bdf",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Heimerdinger.json",
+      "sizeBytes": 11637,
+      "sha256": "b327feed0a86349efee608ff7c5c64753fa30f89877e04efbc7f6efb9fb62f15",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Hwei.json",
+      "sizeBytes": 13923,
+      "sha256": "61bed7df5b12ed4c4ebd5d08300c93478fecef99f07225be321d262540e0fc54",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Illaoi.json",
+      "sizeBytes": 12549,
+      "sha256": "4dac33245a91777398784b701c8a07d24c38d2f1d9d3d6b21ae14f96317f07be",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Irelia.json",
+      "sizeBytes": 14418,
+      "sha256": "4e51653b812aa2dcea390b56f510fae64b1008936c9eb7366195b749bd9ae5ce",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Ivern.json",
+      "sizeBytes": 11841,
+      "sha256": "984e6a1c8f51e7ddbf01c186c956739047f754aebdae5045a363af9a4ee4c47d",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Janna.json",
+      "sizeBytes": 14819,
+      "sha256": "de3ec67b80818c4adf53f47f8e12b1a5c2a6f1cc4e96f1e05b0797365d4ccdee",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/JarvanIV.json",
+      "sizeBytes": 13088,
+      "sha256": "384d8fd140231660433ac7c1a0a3269f609426238d0708fdfe46e357b972f837",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Jax.json",
+      "sizeBytes": 11741,
+      "sha256": "a15a485180192e90dc498e57d59a111aa68876339f9296d0bb529b3d54d38aea",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Jayce.json",
+      "sizeBytes": 12366,
+      "sha256": "e92c42e47dda1dca35bd1ce7dacb88989686344617da60cec256e588e516d76a",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Jhin.json",
+      "sizeBytes": 14298,
+      "sha256": "7e9a93cf95183dee279b0c4d6678142ad38f2e046b0212f7cf4e96e50545d49e",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Jinx.json",
+      "sizeBytes": 14700,
+      "sha256": "02b2d6e1ef304a17e804b5fba8db1c73e6ee0008a22639d71d99f10cf3b97fe7",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Kaisa.json",
+      "sizeBytes": 15451,
+      "sha256": "f3b00f4f57d90eefef314b329145f2762fd8f6a2dd613cecae6551f25e4cf3b6",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Kalista.json",
+      "sizeBytes": 11749,
+      "sha256": "cc43233ed7ee5fbcd1cc86d09b3f2da3e5646f42c6496e703eb01ddf2063f245",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Karma.json",
+      "sizeBytes": 15337,
+      "sha256": "d3cb1e460d321aa12d8f03c5a69478298b436e88fb7b770648c2d7f956143620",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Karthus.json",
+      "sizeBytes": 11042,
+      "sha256": "c31c6c476d31d356448502b57ca046e98299d7ddebd3795a229efb4f5276f412",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Kassadin.json",
+      "sizeBytes": 11193,
+      "sha256": "b5184b5f13d1cddf91b3eb138dbf6b63e074db5ed97a31222a3bbdf13b9d1125",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Katarina.json",
+      "sizeBytes": 14753,
+      "sha256": "73c5a63e95c433e4cfd3839fc4db9c03db909b11bb9c64ddd578ad0163de7215",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Kayle.json",
+      "sizeBytes": 15967,
+      "sha256": "32cbb4760f80e98dfc982b8de9f26761af48afd7e980c06c7344f63f594938cb",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Kayn.json",
+      "sizeBytes": 11814,
+      "sha256": "f9eb83e6e7cdc30c278bba1d8f90f8e90945f66cb04718dcca1aa8facf72e50c",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Kennen.json",
+      "sizeBytes": 10915,
+      "sha256": "88ea7703c2feecacbe5b1b0e1258966e55ca840a66c126c17506508dbf728612",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Khazix.json",
+      "sizeBytes": 14650,
+      "sha256": "2b3b9d584699eb5646f656c6e881a00e3e3839a5323a17287b99b57be2e3b320",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Kindred.json",
+      "sizeBytes": 12007,
+      "sha256": "74508119dcd78358043a1b94195c0b91480dcb9749702214da03ea89c4420afb",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Kled.json",
+      "sizeBytes": 10957,
+      "sha256": "e3163bb4521645ea0b418284b10f6ede20da25a12f8cc1ce244c19d9134c68ab",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/KogMaw.json",
+      "sizeBytes": 13520,
+      "sha256": "31ae31bab68fee17d6c2a54bdcdfd9cd1724d6b077c0fad88188acf52b2bae42",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/KSante.json",
+      "sizeBytes": 11937,
+      "sha256": "a1b0421810affbe9642fec44584dcf2632a6c50d6eb9e83c4facd31f6146b58d",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Leblanc.json",
+      "sizeBytes": 13982,
+      "sha256": "e109f682e335c6e661f070d85b485e18f3fc80105be8674f17b2e4e60031a540",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/LeeSin.json",
+      "sizeBytes": 16033,
+      "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Leona.json",
+      "sizeBytes": 13995,
+      "sha256": "360213c3b8d53d505b9030bd8720241eea2a2a89b108813c226022b5a63e6ab0",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Lillia.json",
+      "sizeBytes": 12092,
+      "sha256": "000c218097c91a12bd552f74a317df56fb3779c1ab47c7ce63d7517b3db75586",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Lissandra.json",
+      "sizeBytes": 13294,
+      "sha256": "1c67c4b40661122ff554926b934377c4ea6dabe5f830d0725bd68d279c3e0989",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Locke.json",
+      "sizeBytes": 9262,
+      "sha256": "b08fb2f2fca92c126249fcf5bb62a7cfa780b1a6a19ea5dbebaa5582c75be2e0",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Lucian.json",
+      "sizeBytes": 14162,
+      "sha256": "33f55059a2f474d20b0677be9ae69e1b885639a8962ab802d3b487de791ecb87",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Lulu.json",
+      "sizeBytes": 13816,
+      "sha256": "cf913333e43f367210df1e2c6d3568d945f23584dcd63b363aafd565506221e3",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Lux.json",
+      "sizeBytes": 14376,
+      "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Malphite.json",
+      "sizeBytes": 13145,
+      "sha256": "4d6dc976238bc9f4a4c28f45b2c07aec445fbfbbeec97c361edec721183a1697",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Malzahar.json",
+      "sizeBytes": 13250,
+      "sha256": "f92058eec5876b311d06c8a6b2b96e3b6e6660847ba4f056209d9f9d8972951b",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Maokai.json",
+      "sizeBytes": 11299,
+      "sha256": "b780381f80706e5f9ef930e9e2f69b7f31eaae6226ca03c2e1c52aad266478fb",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/MasterYi.json",
+      "sizeBytes": 16404,
+      "sha256": "57aacd9bdc1fc4a18ef3411071fe20777530e452c79d923104a9f7482141385c",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Mel.json",
+      "sizeBytes": 11110,
+      "sha256": "b53d0b680220cd441388672dacac0ab9ef76aa1271852ec1b6ae93b94377caf9",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Milio.json",
+      "sizeBytes": 10419,
+      "sha256": "fcc9dd1f626ee8d43d8ef1891192abbe3ad380736140337a2a7c7623fd603777",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/MissFortune.json",
+      "sizeBytes": 14887,
+      "sha256": "a133f8d6be03f14aa55bdda3c3813dbfb433fa9e23ee01a4f3c1d8a292f955e1",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/MonkeyKing.json",
+      "sizeBytes": 11340,
+      "sha256": "8dd9695443c1845d4e4f88a793987bacbadbea8fded4df2dbfa46f8ce2420d5e",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Mordekaiser.json",
+      "sizeBytes": 12613,
+      "sha256": "5caf26b28a5944798631e4e5023569f48515574a74204ad3b9c9c7a1b85f04b1",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Morgana.json",
+      "sizeBytes": 15341,
+      "sha256": "346d7db6a34ac16ea002ea952b3cee0a7eb817dabddbf7ed2bf02f65783439bc",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Naafiri.json",
+      "sizeBytes": 12179,
+      "sha256": "0d25f73a9f6606ee02e6b0c34ac0876361b71eaacbdc914ef431a9937b8d62f7",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Nami.json",
+      "sizeBytes": 13533,
+      "sha256": "76e52142878f4269e82ba668b5c635f5bf49d4b2cc5b46ff252dd16b0d7bcdfd",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Nasus.json",
+      "sizeBytes": 13647,
+      "sha256": "d78697ca77dd2295adb0857aa3318a49e5f520c100ddfbb3d3ff8207b4a00d70",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Nautilus.json",
+      "sizeBytes": 12375,
+      "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Neeko.json",
+      "sizeBytes": 12892,
+      "sha256": "7be078c46c514b21752bfb46f66df5527df6544c858bfd3f186e9099b31d471e",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Nidalee.json",
+      "sizeBytes": 14857,
+      "sha256": "8a83ae54d262dc0c47411215623d8b29fd53949e81e80daaac5f4d0e10d3b010",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Nilah.json",
+      "sizeBytes": 10183,
+      "sha256": "910a1b7ff9f8eef049e45aba3fd9b4a49232245c581179ea236ff3c8c457ec21",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Nocturne.json",
+      "sizeBytes": 11684,
+      "sha256": "6dd314b7b491343c3bfcccd70d635f97e78c8bfa0f24504931866a15094fa79c",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Nunu.json",
+      "sizeBytes": 13905,
+      "sha256": "9b01e6aa75fcfb831f2a6021ce274a4b58911ac638ca30afe6e4137ef70b9cd7",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Olaf.json",
+      "sizeBytes": 12813,
+      "sha256": "7620a1c38e42e3c63058b505357d3011c466327fab0035e1c6ccc10253c0bd2e",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Orianna.json",
+      "sizeBytes": 11971,
+      "sha256": "b4222c989c6d8fe0ce03ee6302e52224f92f0e7f07bfe3d7659436eb9f56940c",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Ornn.json",
+      "sizeBytes": 12214,
+      "sha256": "6b5c63d0a13bb342d40cd5b2feef2005e5a5c094964790cf6dea5ecbc1f41929",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Pantheon.json",
+      "sizeBytes": 13070,
+      "sha256": "cd6b77c20fc056c675c3c300c812a444e955885b68c3be4fb12af1eb98c99ce8",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Poppy.json",
+      "sizeBytes": 13016,
+      "sha256": "aad9fd2f3ee61c63a53fc401912d160e4ffb15f60854d63c197ebcc4fc6fbaa4",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Pyke.json",
+      "sizeBytes": 15546,
+      "sha256": "df2953515fe96e88b2cbb16424695aa959ab7d2da539cdfe03b153a04d2c9e42",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Qiyana.json",
+      "sizeBytes": 12402,
+      "sha256": "4ff2d77e602bbfd936e5e864d5d7e95c94e694e138a07468d56e897c8b6627cf",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Quinn.json",
+      "sizeBytes": 11510,
+      "sha256": "e91a7cb19284e92f4c72dea222234fddaca1efdd893f76c377b33f9f2b20820b",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Rakan.json",
+      "sizeBytes": 12237,
+      "sha256": "cde33487abe8cfa978ce45a4b54874f585ade80395dbb9f08c4d24a0447c2b87",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Rammus.json",
+      "sizeBytes": 11122,
+      "sha256": "a7eeb41f47067c83a74c8ac026dc3b90365d9071ea88b5506a9c023d4e2e48db",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/RekSai.json",
+      "sizeBytes": 11482,
+      "sha256": "308c4b487aa23eaabe20f259e39214636d68807f15cd53133abda3e7c6f1c61f",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Rell.json",
+      "sizeBytes": 10591,
+      "sha256": "0d11bca42d23523ff9d42903604c0fb33a2c6d88c3da6a40d37499d7076a1d9a",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Renata.json",
+      "sizeBytes": 10419,
+      "sha256": "378ef14ad17b7cfebb3dd7b2fc3dcfd33c1fb57f30962c8e572a6a4366c43d10",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Renekton.json",
+      "sizeBytes": 14198,
+      "sha256": "993e072315ea35b372432e5201c3f48fa5db1b29b020f02dc9a43f3f7b245bbe",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Rengar.json",
+      "sizeBytes": 13830,
+      "sha256": "c6c5b6a6effbfe4f9b1e1619014dffa92760d3e66cf1ed7cd3606318e7312504",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Riven.json",
+      "sizeBytes": 14258,
+      "sha256": "43f89b647a696e20f7201705f4642e2870f99ea9567b46c3781db7c0ec3751dc",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Rumble.json",
+      "sizeBytes": 11450,
+      "sha256": "bb55c359bedd6c6df49969bf7f31288e13e051628c183c10ff587255f49411ac",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Ryze.json",
+      "sizeBytes": 11771,
+      "sha256": "7c0a4029b890e1cd0f529ba97c018592037cbd9535b7ee830ab98f737c520d83",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Samira.json",
+      "sizeBytes": 10950,
+      "sha256": "c7e7ea371fc67c9dde19034a72b0eb28484ffa11063762aceba3506ff29a4430",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Sejuani.json",
+      "sizeBytes": 13150,
+      "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Senna.json",
+      "sizeBytes": 14966,
+      "sha256": "181f8d5bd01f93b758c282d038573088478362990f323b869a6c2146f442af62",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Seraphine.json",
+      "sizeBytes": 14940,
+      "sha256": "bd338730e16552e7692c051e80483c68ab784dc358619c806044c693aa2d82b0",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Sett.json",
+      "sizeBytes": 14758,
+      "sha256": "1fd77ff95dcdaeb9351fc0e31dd24ea143a4c6816b16bb1360ab0101dbf32720",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Shaco.json",
+      "sizeBytes": 15560,
+      "sha256": "aaf80dbf059b3361270ca50ebbd2eef4adf0b10d823741d94c422d8a54dd424e",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Shen.json",
+      "sizeBytes": 13190,
+      "sha256": "5c84c51d0c5f9ba9cb8234dad1e2c12ffc4619cf1896710ca34b53c868348107",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Shyvana.json",
+      "sizeBytes": 12341,
+      "sha256": "14fdce69e88d8aa41b1e1cbda1f13c3d61b8b9349a704a6655420f405fc9d12e",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Singed.json",
+      "sizeBytes": 9785,
+      "sha256": "53fde4764b244e864219d1406130175e2fd5c20687890b718bbcb3087bca5d7f",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Sion.json",
+      "sizeBytes": 14603,
+      "sha256": "7fe5119441bb5d85e329af82e1b82f8ebfa6b8ed1642f772dc1b53253f0da1ba",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Sivir.json",
+      "sizeBytes": 14748,
+      "sha256": "c02ce194099be1a1a8d3dea944b625ec6d130ebb93a34235c7c253df84fd0ff6",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Skarner.json",
+      "sizeBytes": 9912,
+      "sha256": "e24d87059163cccd5d533e7af08f70363648dfda2e5ea65773e980f2a26cdaae",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Smolder.json",
+      "sizeBytes": 10393,
+      "sha256": "b828fef60f0522393c0f4e4fd4faf41f615ad8579904dd9a8300a5c43e74d315",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Sona.json",
+      "sizeBytes": 15853,
+      "sha256": "d821cea2fcf4c370a85c582de8d148d819b9bf5082c5c779b4e286909cc6a9ad",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Soraka.json",
+      "sizeBytes": 14167,
+      "sha256": "ec940a895346df8950ff021d40ac1c49aaec533fc698cb74b0fb13af073105bc",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Swain.json",
+      "sizeBytes": 13704,
+      "sha256": "b7b66610ecd3e22eb524188bbf1641457da6d7cf60a7ec4a443abe9694c23f4b",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Sylas.json",
+      "sizeBytes": 12336,
+      "sha256": "07df0b5f714b13f93f8e934ff849a5d4fe8f3dd9e397776bbabb65b07f23ed1d",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Syndra.json",
+      "sizeBytes": 15434,
+      "sha256": "7189f7247665f91c45dfb3afef2ede48e97aa45d65c1a4ba7cf4b95f87046c5f",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/TahmKench.json",
+      "sizeBytes": 14437,
+      "sha256": "bdc1c7dc49b79003d48a317d14bc362013d5e1c25df43a7873c5910b212998df",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Taliyah.json",
+      "sizeBytes": 10301,
+      "sha256": "a3d6f4c4d15eb56cb0aba46d23873377ffdbc3f16ac05e3097ff0d8ed68ff066",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Talon.json",
+      "sizeBytes": 13572,
+      "sha256": "d0c1bf31103bab5d4c86cbdb1199d6ee4478f6fe1a300c164d7389bfcfc00a0c",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Taric.json",
+      "sizeBytes": 10958,
+      "sha256": "47b3f7c80536bd35f3f366b832408040630dbff116726d72d74ed4b14a20278e",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Teemo.json",
+      "sizeBytes": 13566,
+      "sha256": "0369bb8bb758922f2a28d8a5c905068e6c5b81ccf24dd107c1d335c65362a16f",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Thresh.json",
+      "sizeBytes": 14321,
+      "sha256": "02531e17f49df6fd623c64b0ca3ed779f68a88acdb4aecd84256c3fc6e23a078",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Tristana.json",
+      "sizeBytes": 15368,
+      "sha256": "08a098ef940e81168859357aa751c71280aa3761faa04b83152ee299a6a2b115",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Trundle.json",
+      "sizeBytes": 10104,
+      "sha256": "6996d2d40a9183c719330d902791d44a57dfa46917b870b7db080f2d5f2cb4d9",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Tryndamere.json",
+      "sizeBytes": 11897,
+      "sha256": "22b0c8e59099a7b1f03bca09d53894f7b0af8cae79aecfda016af6bb9c780780",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/TwistedFate.json",
+      "sizeBytes": 12420,
+      "sha256": "636dffe081c6ceb1bf0005a68527e79ee248da3f888a636c4feab57d0385e821",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Twitch.json",
+      "sizeBytes": 13250,
+      "sha256": "343dcf4c4d10e9c6e944dedd3d6ea4cadbcac99cdaccc7e0667883422c574c9a",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Udyr.json",
+      "sizeBytes": 10470,
+      "sha256": "baa7e1443ab46a0922f5e86e621b1328ac50ff889c704963286651834eab8291",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Urgot.json",
+      "sizeBytes": 12986,
+      "sha256": "8170780434bdc7e123ad0c15ac2802d5320c12db95be1092f4308722cefa3515",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Varus.json",
+      "sizeBytes": 15543,
+      "sha256": "8e65b2d989e2a91863163407f2a498b76be1768c097bb90ec34e9e49e976978c",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Vayne.json",
+      "sizeBytes": 13963,
+      "sha256": "d20ebee74d8b2df103a86b9471d018fe23c18b269f242fe17854495643df3d86",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Veigar.json",
+      "sizeBytes": 14094,
+      "sha256": "a48efa5dce9bbdf57b691ee9f4f756b1b2df154f1fb675c9b8e2058344329751",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Velkoz.json",
+      "sizeBytes": 11438,
+      "sha256": "4ebc2038382d1c208e055bdabc117d9aea188252d6d508a9217983d5b388853f",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Vex.json",
+      "sizeBytes": 10418,
+      "sha256": "3ef98bb7e168b4c07bc599df85daa062f40682da88157c883314f8dc63330301",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Vi.json",
+      "sizeBytes": 12182,
+      "sha256": "7673c0e407524c4977b62aee37c22aba020d8420b1916c91d56e2fdb6e95c9d1",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Viego.json",
+      "sizeBytes": 11696,
+      "sha256": "19ee11e1af5a92449c70789b2c52f9900c41bea32e4fa1875aefb97c89b77b5b",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Viktor.json",
+      "sizeBytes": 12144,
+      "sha256": "e76dce9ee71f7f6c21149943267423d54a087e84d0e9e8d9b6e9627598615eea",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Vladimir.json",
+      "sizeBytes": 13990,
+      "sha256": "e996c1253cbcdb6a7953fcccf63bdee698c66429ccd8876c7a39ead5b7a18f7a",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Volibear.json",
+      "sizeBytes": 11630,
+      "sha256": "1c4f7f39b8e107bd57cd9185f0da789a37cf216c239553919242959323248d8d",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Warwick.json",
+      "sizeBytes": 13284,
+      "sha256": "24e550e9ca2daacae5f026afc15d2f51da151efa45f68c19e96dd2a63b439178",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Xayah.json",
+      "sizeBytes": 13346,
+      "sha256": "19454f06affbbf696806a17b0c30e24119beb4215d4d81e330ffe4b11ce326e7",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Xerath.json",
+      "sizeBytes": 10984,
+      "sha256": "1e1ef70a51049fcd50a93da98a32313a46f9703d9064e8e2fd6c9beb3f612616",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/XinZhao.json",
+      "sizeBytes": 13475,
+      "sha256": "c55267ca1a51c1a6d774972da65abc1ff3dfe56ef893c15ea031356400d63bbe",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Yasuo.json",
+      "sizeBytes": 16788,
+      "sha256": "564dc77d2e721ac15208e03c1b2e040d0fc09ddf465798844e4705f09090f873",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Yone.json",
+      "sizeBytes": 14778,
+      "sha256": "134686688468b7d8312211164c76645aac8c78e09736d74d8a3d6e6600afe0c0",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Yorick.json",
+      "sizeBytes": 14021,
+      "sha256": "d6a3193fc73f91c6dfc0cb806e3223f7cc1299850c71fb441b558cf2f2036626",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Yunara.json",
+      "sizeBytes": 9016,
+      "sha256": "65a556076834d7e97e3cbe01a1690eb556e136f7be7970f0ae8465b4018d0f45",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Yuumi.json",
+      "sizeBytes": 16968,
+      "sha256": "8bc6c6c597e8e4c6ba1e8645cddd2120b8540479b76c260d9ce53921a1c1f6c6",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Zaahen.json",
+      "sizeBytes": 8449,
+      "sha256": "ddb8b6df517b9e065b9bd4af3444e512e16009757b76c7d2779ddb6907a37408",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Zac.json",
+      "sizeBytes": 11981,
+      "sha256": "e00d616bbe36921cec7ddd34f301692580d96268d66bb6a44008a1f056d07989",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Zed.json",
+      "sizeBytes": 14695,
+      "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Zeri.json",
+      "sizeBytes": 12419,
+      "sha256": "2019cd3e36753aa12b7e4cafb5427e9c22d763dcb0775d8378e78b5e9a6d794b",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Ziggs.json",
+      "sizeBytes": 12352,
+      "sha256": "b8d1cb67405d8407ea450fcd6baeed7fb1b88ab1ad8591fc752a0e5674637e14",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Zilean.json",
+      "sizeBytes": 10486,
+      "sha256": "4f2cdcbfcd85fc03a95065a68b97d157e3841fde1879cfe6d353b0ef4a49f956",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Zoe.json",
+      "sizeBytes": 12564,
+      "sha256": "4e96cd7148c9ab8899287090eed0047ce985a5b88cb9a3e3d8be9b660c137121",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion/Zyra.json",
+      "sizeBytes": 15595,
+      "sha256": "49d2695512015dc315b8f1d58d371e223be2b9e79fcc044c1454ad721ffd4e35",
+      "records": 1
+    },
+    {
+      "path": "16.20.1/champion.json",
+      "sizeBytes": 159011,
+      "sha256": "84fd12721ea0cec502d2a747aea94d8e57d4da337422d1d3ca33a7890909787f",
+      "records": 173
+    },
+    {
+      "path": "16.20.1/championFull.json",
+      "sizeBytes": 2232752,
+      "sha256": "313a2a32d3ac081bde95ec6ead93c7502abef4eba601d1d1257d8dca933a4d17",
+      "records": 173
+    }
+  ],
+  "structuralIssues": [],
+  "duplicateJsonKeys": [],
+  "champions": 173,
+  "individualDetailsMatchFull": true,
+  "summaryMatchesAllDetails": true,
+  "previousSamplesMatchArchive": true,
+  "uniqueSkinIds": 9207,
+  "spellRanks": {
+    "5": 509,
+    "3": 168,
+    "6": 11,
+    "4": 3,
+    "1": 1
+  },
+  "productionRelease": false
+}

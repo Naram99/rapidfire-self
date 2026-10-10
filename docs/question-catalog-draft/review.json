@@ -1,5 +1,5 @@
 {
-  "status": "approved-pending-publication-checks",
+  "status": "approved-publication-awaits-implementation",
   "catalogFile": "catalog.json",
   "translationsFile": "texts.en.json",
   "proposalNote": "A katalógus szerkezete, neve és a négy ajánlott küszöblépés elfogadott. A bizonytalan regenerációs és attack speed growth egységű metrikák kimaradnak az MVP-ből. A jóváhagyás nem játszható kiadás publikálása.",
@@ -63,5 +63,11 @@
       "reason": "A növekedési paraméter százalékpont-egysége nem végleges; a felhasználó ezt a metrikát későbbre halasztotta."
     }
   ],
-  "publicationCheckResultsFile": "publication-checks.json"
+  "publicationCheckResultsFile": "publication-checks.json",
+  "sourceEligibilityDecisionsFile": "source-eligibility.json",
+  "remainingBeforePublication": [
+    "Implement and verify the normalizer, import, compiler and native generator.",
+    "Bind the approved catalog, texts, subject eligibility and deterministic search rules into an immutable generation release.",
+    "Run integration tests for provider, HTTP/socket visibility, persistence and version/seed selection."
+  ]
 }

@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "policyId": "league-of-legends-mvp-eligibility-v1",
+  "status": "approved",
+  "sourceVersion": "16.20.1",
+  "scope": "Question-subject eligibility for a fixed uploaded snapshot; raw records remain unchanged.",
+  "chromaIdentification": "parentSkin presence, never the chromas boolean",
+  "flagFalseWithListedChildren": "use validated child records and retain the conflicting source flag",
+  "flagTrueWithoutListedChildren": {
+    "skinChromaCount": "unknown, exclude affected skin",
+    "championChromaCount": "unknown, exclude affected champion",
+    "skinCount": "keep eligible",
+    "otherMetrics": "keep eligible"
+  },
+  "zeroCooldowns": {
+    "sourceValue": "retain original zero arrays",
+    "questionCooldownValue": "unverified, exclude affected spell",
+    "spellNameLookup": "keep eligible"
+  },
+  "exclusionsAreSnapshotDerived": true,
+  "excludedChromaCountChampionIds": [
+    "Ahri",
+    "Akali",
+    "Diana",
+    "Jhin",
+    "MasterYi"
+  ],
+  "excludedSkinChromaCounts": [
+    {
+      "championId": "Ahri",
+      "skinNum": 89,
+      "skinName": "After Hours Spirit Blossom Springs Ahri",
+      "sourceHasChromas": true,
+      "childRecords": 0,
+      "riotChampionKey": "103",
+      "riotSkinId": "103089"
+    },
+    {
+      "championId": "Akali",
+      "skinNum": 71,
+      "skinName": "Prestige Coven Akali",
+      "sourceHasChromas": true,
+      "childRecords": 0,
+      "riotChampionKey": "84",
+      "riotSkinId": "84071"
+    },
+    {
+      "championId": "Diana",
+      "skinNum": 77,
+      "skinName": "Eclipse Eternal Aspect Diana",
+      "sourceHasChromas": true,
+      "childRecords": 0,
+      "riotChampionKey": "131",
+      "riotSkinId": "131077"
+    },
+    {
+      "championId": "Jhin",
+      "skinNum": 37,
+      "skinName": "Dark Cosmic Erasure Jhin",
+      "sourceHasChromas": true,
+      "childRecords": 0,
+      "riotChampionKey": "202",
+      "riotSkinId": "202037"
+    },
+    {
+      "championId": "MasterYi",
+      "skinNum": 53,
+      "skinName": "Prestige Spirit Blossom Master Yi",
+      "sourceHasChromas": true,
+      "childRecords": 0,
+      "riotChampionKey": "11",
+      "riotSkinId": "11053"
+    },
+    {
+      "championId": "MasterYi",
+      "skinNum": 116,
+      "skinName": "PROJECT: Command Line Yi",
+      "sourceHasChromas": true,
+      "childRecords": 0,
+      "riotChampionKey": "11",
+      "riotSkinId": "11116"
+    }
+  ],
+  "excludedSpellCooldowns": [
+    {
+      "championId": "Aphelios",
+      "slot": "E",
+      "name": "Weapon Queue System"
+    },
+    {
+      "championId": "Ashe",
+      "slot": "Q",
+      "name": "Ranger's Focus"
+    },
+    {
+      "championId": "Bard",
+      "slot": "W",
+      "name": "Caretaker's Shrine"
+    },
+    {
+      "championId": "Gangplank",
+      "slot": "E",
+      "name": "Powder Keg"
+    },
+    {
+      "championId": "Kalista",
+      "slot": "E",
+      "name": "Rend"
+    },
+    {
+      "championId": "Karthus",
+      "slot": "Q",
+      "name": "Lay Waste"
+    },
+    {
+      "championId": "Rakan",
+      "slot": "E",
+      "name": "Battle Dance"
+    },
+    {
+      "championId": "Shyvana",
+      "slot": "R",
+      "name": "Dragon's Descent"
+    },
+    {
+      "championId": "Singed",
+      "slot": "Q",
+      "name": "Poison Trail"
+    },
+    {
+      "championId": "TahmKench",
+      "slot": "R",
+      "name": "Devour"
+    },
+    {
+      "championId": "Talon",
+      "slot": "E",
+      "name": "Assassin's Path"
+    },
+    {
+      "championId": "Teemo",
+      "slot": "E",
+      "name": "Toxic Shot"
+    },
+    {
+      "championId": "TwistedFate",
+      "slot": "E",
+      "name": "Stacked Deck"
+    },
+    {
+      "championId": "Vayne",
+      "slot": "W",
+      "name": "Silver Bolts"
+    },
+    {
+      "championId": "Veigar",
+      "slot": "W",
+      "name": "Dark Matter"
+    },
+    {
+      "championId": "Vi",
+      "slot": "W",
+      "name": "Denting Blows"
+    },
+    {
+      "championId": "Yunara",
+      "slot": "Q",
+      "name": "Cultivation of Spirit"
+    },
+    {
+      "championId": "Yuumi",
+      "slot": "W",
+      "name": "You and Me!"
+    },
+    {
+      "championId": "Zeri",
+      "slot": "Q",
+      "name": "Burst Fire"
+    },
+    {
+      "championId": "Zyra",
+      "slot": "W",
+      "name": "Rampant Growth"
+    }
+  ],
+  "eligibilityIsReleaseContent": true,
+  "productionRelease": false
+}
