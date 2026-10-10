@@ -75,6 +75,11 @@ Az egyeztetés során elfogadott pontosítások:
   illő egyes/többes számmal, felismerésnél konkrét nyommal és cooldownnál `rank 1`-gyel.
 - A százalékos sávok kiinduló beállítások; az adathalmaz alapján hangolhatók
   és arányosíthatók. A publikált kiadás a végleges sávokat és léptékeket őrzi meg.
+- Az `attackdamageperlevel` metrika nem része az MVP kérdésgenerálásának.
+  A többi növekedési metrika és az alap AD továbbra is használható.
+- Az MVP nem garantál minden metrikához és kategóriacsaládhoz minden
+  nehézséget. Például a mozgási sebesség kimaradhat az easy statkérdésekből;
+  ha a teljes család/nehézség sem tud öt különböző kérdést adni, nem kerül a kínálatba.
 
 ## 2. A csatolt katalógus feldolgozása
 
@@ -102,6 +107,12 @@ A nyolc kikapcsolt család: `baseStatsLvlRandom`, `skinType`, `skinModified`,
 `chromaType`, `abilityDamageLvlRandom`, `abilityCooldownLvlRandom`,
 `abilityRange`, `tags`. A kikapcsolás megőrzi a tervezett helyüket, de nem
 generál kategóriát vagy üres kérdést. A `damage` változatlanul `{}` marad.
+
+Az eredeti két statcsalád összesen 18 metrikát sorol fel. Az elfogadott
+MVP-katalógus ebből 17-et engedélyez: az `attackdamageperlevel` kimarad.
+Ez metrikaszintű kizárás, nem a teljes `baseStatsPerLevel` család tiltása.
+A referenciaminta és a nyers forrás megőrzése nem jelenti a metrika
+aktiválását; a nullás AD-növekedés kijavítása nem az MVP indulási feltétele.
 
 ### A mintákban javítandó részletek
 
@@ -209,6 +220,13 @@ kötelező. A minták szerinti sávok átfedhetnek: 30% az easy és medium,
 | hard       | Legfeljebb 10% eltérés. |
 | challenger | Legfeljebb 5% eltérés.  |
 
+A challenger profilban már a mintában sincs minimumeltérés. Az 5%-os
+maximum és a művelet helyességi szabálya ettől még korlátoz: hat különböző
+érték nem biztosítható minden metrikához. A minimum hiánya nem enged
+megoldási holtversenyt, és a küszöbbel egyező opciók továbbra is kimaradnak.
+A maximum teljes elhagyása külön, még tisztázandó módosítás lenne;
+nem következik a minimumfeltétel elhagyásából.
+
 Ha `c = 100`, medium esetén az alsó jelöltek 70–90, a felsők 110–130
 között lehetnek. A valós adatban létező alanyokat választjuk ki ezekből;
 nem találunk ki hőst vagy hamis statot. A válaszopció az alany neve, nem a
@@ -307,7 +325,7 @@ referencia kihagyása és a helyes/hibás opciók szabályai továbbra is érvé
 ### Offline sávlefedettség a csatolt hőslistán
 
 2026-10-10-én a 16.20.1-es, 173 hősös `champions.json` listán a két
-statcsalád mind a 18 engedélyezett metrikáját ellenőriztük mind a négy
+statcsalád mind a 18, eredeti referenciában felsorolt metrikáját ellenőriztük mind a négy
 nehézségen, a mintabeli százalékos profillal. Mana-/manaregen-metrikáknál
 csak a 145 `Mana` erőforrású hős szerepelt. Decimális számítással vizsgáltuk
 a nulla referenciák kihagyását, az inkluzív határokat, a 4/6 opciót és a
@@ -322,7 +340,7 @@ challenger küszöbös kérdések jelöltlistáit is ellenőriztük, egyenlősé
 | Armor, hard                               | Minimumkérdéshez elegendő jelölt van, a második legkisebbhez nincs megfelelő hat különböző érték.                               |
 | Alap HP-regeneráció, challenger           | Az 1-es küszöbrácson nincs olyan 5%-os, küszöbtől eltérő jelöltlista, amelynek mindkét oldalán lenne opció.                     |
 | HP-/manaregeneráció-növekedés, challenger | A megadott műveletek egyikéhez sincs megfelelő hatopciós kérdés, a 0,2-es küszöbrácson sem.                                     |
-| AD-növekedés, minden nehézség             | A csatolt listában mind a 173 érték 0; ez nem sávhangolási probléma, az adatot importkor külön ellenőrizni kell.                |
+| AD-növekedés, minden nehézség             | A csatolt listában mind a 173 érték 0; az elfogadott MVP-katalógus ezt a metrikát nem használja.                                |
 
 A széles engedélyezett sáv önmagában nem csökkenti a jelöltek számát.
 A hiányt a túl nagy minimumeltérés, a túl kicsi maximumeltérés, a
@@ -342,6 +360,12 @@ Ez adatlefedettségi vizsgálat, nem lefutott generátorteszt vagy teljes
 kategóriacsomag. A teljes skin/chroma- és képességcooldown-készlet hiányában
 ezek végleges sávját még nem ellenőriztük. Az Aatrox-részlet egyetlen hős
 adata; abból teljes kategóriára nem adható lefedettségi garancia.
+
+Nem cél minden hiányzó kombinációt sávhangolással használhatóvá tenni.
+Az MVP-ben elfogadott a metrika/nehézség párok kihagyása és egy egész
+család/nehézség változat elérhetetlensége is. A lefedettségi eredmény és
+a ténylegesen engedélyezett részhalmaz a kiadás előkészítésekor rögzül;
+meccs közben nem lazítjuk a szabályokat egy hiányzó kérdés kedvéért.
 
 ### Nulla, kerekítés és kevés jelölt
 
@@ -381,6 +405,8 @@ A `baseStatsPerLevel` a kiválasztott `*perlevel` forrásparamétert hasonlítja
 növekedési képlete és egyes statok értelmezése külön feldolgozás. Javasolt
 megjelenítési név: `Base stat growth`, egyértelmű, forrásparamétert kérő
 szöveggel. A `baseStatsLvlRandom` ezért továbbra is kikapcsolt.
+Az `attackdamageperlevel` kivétel: a felhasználó döntése alapján nem része
+az MVP engedélyezett metrikáinak, későbbi kiadásban külön aktiválható.
 
 ### Skin- és chromadarabszám
 
@@ -490,6 +516,11 @@ hangolható. A publikált kiadás már rögzített határai mellett generálunk;
 ha ezekkel nem áll össze öt kérdés és a teljes 4/6 opció, a változat nem
 kerül az adott kiadás kínálatába. Már elindult meccs technikai hibáját a
 meglévő előkészítési életciklus kezeli, nem a kategóriakatalógus önkényes cseréje.
+
+Ez az MVP-ben elfogadott működés, nem kötelezően kijavítandó tartalomhiány.
+A mozgási sebesség easy metrikapárjának kizárása például nem kapcsolja ki
+az egész `baseStatsLvl1:easy` kategóriát, ha más metrikákból annak öt kérdése
+előállítható. A katalógus nem követeli meg mind a négy nehézség meglétét.
 
 ### Opciószám és ismétlődés
 
@@ -661,9 +692,15 @@ sebességnél 0,05, alap AD-/armor-/regenerációértéknél 1, növekedési
 paramétereknél 0,2 az induló lépték. A küszöbbel egyező jelöltek kihagyása és
 a kérdésszövegek javítási iránya szintén elfogadott. A hangolt profil kiadásonként változatlan.
 
+Az `attackdamageperlevel` MVP-beli kizárása és a nem teljesíthető
+metrika-/kategória–nehézség párok kihagyása elfogadott. A challengerben
+a minimum hiánya már a referenciaprofil része; az 5%-os maximum teljes
+elhagyását külön kell tisztázni, addig a meglévő profil marad a tervezési alap.
+
 Még nem elfogadott, ebben a tervben javasolt technikai részletek:
 
 - Az alap mana/magic resist/mozgási sebesség/támadási távolság lépésközei és a végleges effektív sávok.
+- A challenger maximumeltérésének megtartása vagy teljes elhagyása; a minimum már nincs megadva.
 - A véges keresési keret pontos értéke és a metrika-/műveletsorsolási súlyok.
 - A seedtervben javasolt `xoshiro128**` algoritmus tesztvektorai és a fizikai táblák részletei.
 - `Base stat growth` név és a metrikák pontos egységei.

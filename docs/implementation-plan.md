@@ -220,7 +220,13 @@ kihagyja. A kérdésszövegek javítása elfogadott: teljes sablonok, konkrét
 felismerési nyom, egyes/többes szám és cooldownnál `rank 1`.
 A két statcsalád 18 metrikájának offline sávlefedettségét ellenőriztük a
 csatolt listán; az eredmények metrikánkénti/nehézségenkénti hangolást indokolnak,
-és külön adatellenőrzést a mintában mindenkinél nullás AD-növekedéshez.
+vagy a nem teljesíthető párok kihagyását. Az `attackdamageperlevel` az
+elfogadott MVP-katalógusból kimarad; az eredeti 18 statmetrikából 17 marad.
+Nem szükséges minden metrikához vagy kategóriához minden nehézséget
+biztosítani: a mozgási sebesség például kimaradhat az easy statkérdésekből.
+Csak öt különböző, 4/6 opciós kérdést biztosító család/nehézség kerül kínálatba.
+A challengerben már nincs minimumeltérés; az 5%-os maximum teljes elhagyása
+még külön tisztázandó, addig a meglévő profil a tervezési alap.
 Ez nem teljes skin-/cooldown-készletre vagy működő generátorra adott garancia.
 A százalékos határok az adathalmaz
 alapján hangolhatók; a végleges effektív profilt a kiadás manifestje rögzíti,
