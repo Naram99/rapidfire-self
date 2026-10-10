@@ -1,0 +1,77 @@
+{
+  "status": "draft-for-review",
+  "catalogFile": "catalog.json",
+  "translationsFile": "texts.en.json",
+  "proposalNote": "A mezőnevek és a JSON szerkezete technikai javaslatok. Az alábbi értékek még nem felhasználó által elfogadott döntések.",
+  "proposedValues": [
+    {
+      "id": "mana-threshold-step",
+      "path": "/metrics/mp/thresholdStep",
+      "value": 50,
+      "reason": "Kerek manaértékek; a teljes adat és az ötös csomag lefedettségével még ellenőrizendő."
+    },
+    {
+      "id": "magic-resist-threshold-step",
+      "path": "/metrics/spellblock/thresholdStep",
+      "value": 1,
+      "reason": "Az armorhoz hasonló, kis értéktartományú stat."
+    },
+    {
+      "id": "movement-speed-threshold-step",
+      "path": "/metrics/movespeed/thresholdStep",
+      "value": 5,
+      "reason": "A mintában a mozgási sebességek jellemzően 5-ös rácson vannak."
+    },
+    {
+      "id": "attack-range-threshold-step",
+      "path": "/metrics/attackrange/thresholdStep",
+      "value": 25,
+      "reason": "A gyakori 125/150/175-ös tartományhoz illő kerek lépték."
+    },
+    {
+      "id": "growth-family-name",
+      "path": "/families/baseStatsPerLevel/nameKey",
+      "value": "families.baseStatsPerLevel",
+      "translationPath": "/families.baseStatsPerLevel",
+      "proposedText": "Base stat growth",
+      "reason": "A forrás növekedési paraméterét kérdezi; nem számít tényleges szintenkénti statot."
+    },
+    {
+      "id": "regeneration-time-unit",
+      "paths": [
+        "/metrics/hpregen/unitId",
+        "/metrics/mpregen/unitId",
+        "/metrics/hpregenperlevel/unitId",
+        "/metrics/mpregenperlevel/unitId"
+      ],
+      "values": [
+        "hpPer5Seconds",
+        "manaPer5Seconds",
+        "hpPer5Seconds",
+        "manaPer5Seconds"
+      ],
+      "reason": "HP/manaregeneráció 5 másodperces egységben; az élő forrás szemantikájával még ellenőrizendő."
+    },
+    {
+      "id": "attack-speed-growth-unit",
+      "path": "/metrics/attackspeedperlevel/unitId",
+      "value": "percentagePoints",
+      "reason": "A forrás növekedési paraméterének egysége százalékpont; nem támadás/másodperc. Élő forrásellenőrzés még szükséges."
+    }
+  ],
+  "pendingBeforePublication": [
+    "A teljes normalizált skin/chroma-/cooldown-adathalmaz és erőforrásbesorolás ellenőrzése.",
+    "Az easy/medium/hard metrikánkénti effektív százalékos profiljai és a használható párok lefedettsége.",
+    "Öt különböző kérdés és nehézségek között eltérő alanyhalmaz ellenőrzése minden aktivált változathoz.",
+    "A generátor véges keresési kerete, metrika-/műveletsorsolási súlyai és PRNG-tesztvektorai a kiadásmodellben.",
+    "Az immutable kiadás összeállítása az adatokból, a végleges manifestből, a szövegekből és a generátorverzióból."
+  ],
+  "outsideCatalog": [
+    "match seed values",
+    "dataset and generation release IDs",
+    "database UUIDs",
+    "player scores and ELO changes",
+    "PRNG internal state",
+    "SMTP or authentication configuration"
+  ]
+}

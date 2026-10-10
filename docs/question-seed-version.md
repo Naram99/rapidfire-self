@@ -264,6 +264,7 @@ eredmény; nem tart nyitva DB-várakozást a motor állapotmódosítási sorába
   sávhangolás csak új kiadásban, a korábbi seed/kiadás eredménye változatlan.
 
 A tesztek még nem futottak le, mert az implementáció nincs engedélyezve.
-A következő tervezési feladat a leíró katalógus végleges mezői, a további
-metrikák konkrét küszöblépései/profiljai és a véges keresési keret. Ezeket a publikált kiadás rögzíti;
+Az [elkészült leíró katalógustervezet](question-catalog-draft/README.md)
+véglegesítése, a megjelölt metrikalépték-/egységjavaslatok és a véges keresési
+keret még tervezési feladat. Ezeket a publikált kiadás rögzíti;
 az itt leírt seedformátum, verzióválasztás és ELO-kizárás már elfogadott.

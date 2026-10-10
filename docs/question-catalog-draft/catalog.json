@@ -1,0 +1,701 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "league-of-legends-text-mvp",
+  "status": "draft",
+  "topicId": "league-of-legends",
+  "language": "en",
+  "translationsFile": "texts.en.json",
+  "supportedMedia": ["text"],
+  "categoryIdPattern": "{{topicId}}:{{familyId}}:{{difficultyId}}",
+  "categoryLabelKey": "category.variant",
+  "rules": {
+    "questionsPerCategory": 5,
+    "numericPrecision": "exactSourceDecimal",
+    "sourceValueRounding": "none",
+    "zeroReferencePolicy": "exclude",
+    "missingValuePolicy": "excludeSubject",
+    "thresholdEqualityPolicy": "excludeSubject",
+    "thresholdGrid": {
+      "origin": 0,
+      "minimumMultiplier": 1,
+      "range": "subjectMinimumToMaximum"
+    },
+    "ambiguousLookupCluePolicy": "exclude",
+    "singleAnswerCorrectCount": 1,
+    "multipleAnswerMinimumCorrectCount": 1,
+    "multipleAnswerMinimumIncorrectCount": 1,
+    "questionIdentity": {
+      "scope": "matchFamilyDifficulty",
+      "fields": ["familyId", "metricId", "operatorId", "visibleParameters"],
+      "crossDifficultyReuse": "differentSubjectSet",
+      "minimumChangedSubjects": 1
+    },
+    "availability": {
+      "invalidConfiguration": "rejectCatalog",
+      "missingCapability": "excludeAffectedPairs",
+      "insufficientOptions": "excludeAffectedPairs",
+      "insufficientQuestions": "excludeCategoryVariant"
+    }
+  },
+  "valueFormat": {
+    "decimalSeparator": ".",
+    "fractionDigits": "source",
+    "trimTrailingZeros": true,
+    "numberUnitSeparator": " "
+  },
+  "subjects": {
+    "champions": {
+      "keyFields": ["riotChampionKey"],
+      "optionTemplateKey": "options.champion"
+    },
+    "skins": {
+      "keyFields": ["riotChampionKey", "riotSkinId"],
+      "optionTemplateKey": "options.skin"
+    },
+    "spells": {
+      "keyFields": ["riotChampionKey", "spellSlot", "sourceSpellId"],
+      "optionTemplateKey": "options.spell"
+    }
+  },
+  "units": {
+    "hp": {
+      "singularKey": "units.hp.singular",
+      "pluralKey": "units.hp.plural"
+    },
+    "mana": {
+      "singularKey": "units.mana.singular",
+      "pluralKey": "units.mana.plural"
+    },
+    "movementSpeed": {
+      "singularKey": "units.movementSpeed.singular",
+      "pluralKey": "units.movementSpeed.plural"
+    },
+    "armor": {
+      "singularKey": "units.armor.singular",
+      "pluralKey": "units.armor.plural"
+    },
+    "magicResist": {
+      "singularKey": "units.magicResist.singular",
+      "pluralKey": "units.magicResist.plural"
+    },
+    "distance": {
+      "singularKey": "units.distance.singular",
+      "pluralKey": "units.distance.plural"
+    },
+    "hpPer5Seconds": {
+      "singularKey": "units.hpPer5Seconds.singular",
+      "pluralKey": "units.hpPer5Seconds.plural"
+    },
+    "manaPer5Seconds": {
+      "singularKey": "units.manaPer5Seconds.singular",
+      "pluralKey": "units.manaPer5Seconds.plural"
+    },
+    "attackDamage": {
+      "singularKey": "units.attackDamage.singular",
+      "pluralKey": "units.attackDamage.plural"
+    },
+    "attacksPerSecond": {
+      "singularKey": "units.attacksPerSecond.singular",
+      "pluralKey": "units.attacksPerSecond.plural"
+    },
+    "percentagePoints": {
+      "singularKey": "units.percentagePoints.singular",
+      "pluralKey": "units.percentagePoints.plural"
+    },
+    "skinCount": {
+      "singularKey": "units.skinCount.singular",
+      "pluralKey": "units.skinCount.plural"
+    },
+    "chromaCount": {
+      "singularKey": "units.chromaCount.singular",
+      "pluralKey": "units.chromaCount.plural"
+    },
+    "seconds": {
+      "singularKey": "units.seconds.singular",
+      "pluralKey": "units.seconds.plural"
+    }
+  },
+  "operators": {
+    "min": {
+      "kind": "numeric",
+      "solutionRule": "minimum",
+      "answerMode": "single",
+      "differenceReference": "correctOptionValue",
+      "requireDistinctOptionValues": false
+    },
+    "max": {
+      "kind": "numeric",
+      "solutionRule": "maximum",
+      "answerMode": "single",
+      "differenceReference": "correctOptionValue",
+      "requireDistinctOptionValues": false
+    },
+    "min2nd": {
+      "kind": "numeric",
+      "solutionRule": "secondMinimum",
+      "answerMode": "single",
+      "differenceReference": "correctOptionValue",
+      "requireDistinctOptionValues": true
+    },
+    "max2nd": {
+      "kind": "numeric",
+      "solutionRule": "secondMaximum",
+      "answerMode": "single",
+      "differenceReference": "correctOptionValue",
+      "requireDistinctOptionValues": true
+    },
+    "exactMatch": {
+      "kind": "numeric",
+      "solutionRule": "equalToVisibleValue",
+      "answerMode": "single",
+      "differenceReference": "visibleValue",
+      "requireDistinctOptionValues": false
+    },
+    "lessThan": {
+      "kind": "numeric",
+      "solutionRule": "belowVisibleThreshold",
+      "answerMode": "multiple",
+      "differenceReference": "visibleThreshold",
+      "requireDistinctOptionValues": false
+    },
+    "moreThan": {
+      "kind": "numeric",
+      "solutionRule": "aboveVisibleThreshold",
+      "answerMode": "multiple",
+      "differenceReference": "visibleThreshold",
+      "requireDistinctOptionValues": false
+    },
+    "identify": {
+      "kind": "lookup",
+      "solutionRule": "clueOwner",
+      "answerMode": "single"
+    }
+  },
+  "difficultyProfiles": {
+    "easy": {
+      "nameKey": "difficulty.easy",
+      "optionCount": 4,
+      "allowedNumericOperatorIds": ["min", "max", "exactMatch"],
+      "relativeDifference": {
+        "minimum": 0.3
+      },
+      "requireDistinctOptionValues": false
+    },
+    "medium": {
+      "nameKey": "difficulty.medium",
+      "optionCount": 4,
+      "allowedNumericOperatorIds": ["min", "max", "exactMatch"],
+      "relativeDifference": {
+        "minimum": 0.1,
+        "maximum": 0.3
+      },
+      "requireDistinctOptionValues": false
+    },
+    "hard": {
+      "nameKey": "difficulty.hard",
+      "optionCount": 6,
+      "allowedNumericOperatorIds": [
+        "min",
+        "max",
+        "min2nd",
+        "max2nd",
+        "exactMatch"
+      ],
+      "relativeDifference": {
+        "maximum": 0.1
+      },
+      "requireDistinctOptionValues": false
+    },
+    "challenger": {
+      "nameKey": "difficulty.challenger",
+      "optionCount": 6,
+      "allowedNumericOperatorIds": [
+        "min",
+        "max",
+        "min2nd",
+        "max2nd",
+        "exactMatch",
+        "lessThan",
+        "moreThan"
+      ],
+      "relativeDifference": {},
+      "requireDistinctOptionValues": true
+    }
+  },
+  "metricDifficultyOverrides": [],
+  "metrics": {
+    "hp": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "hp"
+      },
+      "nameKey": "metrics.hp",
+      "unitId": "hp",
+      "thresholdStep": 50,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "mp": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "mp"
+      },
+      "nameKey": "metrics.mp",
+      "unitId": "mana",
+      "thresholdStep": 50,
+      "requiredCapabilities": ["championStats", "championResourceTypes"],
+      "filters": {
+        "resourceType": "mana"
+      }
+    },
+    "movespeed": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "movespeed"
+      },
+      "nameKey": "metrics.movespeed",
+      "unitId": "movementSpeed",
+      "thresholdStep": 5,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "armor": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "armor"
+      },
+      "nameKey": "metrics.armor",
+      "unitId": "armor",
+      "thresholdStep": 1,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "spellblock": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "spellblock"
+      },
+      "nameKey": "metrics.spellblock",
+      "unitId": "magicResist",
+      "thresholdStep": 1,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "attackrange": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "attackrange"
+      },
+      "nameKey": "metrics.attackrange",
+      "unitId": "distance",
+      "thresholdStep": 25,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "hpregen": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "hpregen"
+      },
+      "nameKey": "metrics.hpregen",
+      "unitId": "hpPer5Seconds",
+      "thresholdStep": 1,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "mpregen": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "mpregen"
+      },
+      "nameKey": "metrics.mpregen",
+      "unitId": "manaPer5Seconds",
+      "thresholdStep": 1,
+      "requiredCapabilities": ["championStats", "championResourceTypes"],
+      "filters": {
+        "resourceType": "mana"
+      }
+    },
+    "attackdamage": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "attackdamage"
+      },
+      "nameKey": "metrics.attackdamage",
+      "unitId": "attackDamage",
+      "thresholdStep": 1,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "attackspeed": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "attackspeed"
+      },
+      "nameKey": "metrics.attackspeed",
+      "unitId": "attacksPerSecond",
+      "thresholdStep": 0.05,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "hpperlevel": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "hpperlevel"
+      },
+      "nameKey": "metrics.hpperlevel",
+      "unitId": "hp",
+      "thresholdStep": 0.2,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "mpperlevel": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "mpperlevel"
+      },
+      "nameKey": "metrics.mpperlevel",
+      "unitId": "mana",
+      "thresholdStep": 0.2,
+      "requiredCapabilities": ["championStats", "championResourceTypes"],
+      "filters": {
+        "resourceType": "mana"
+      }
+    },
+    "armorperlevel": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "armorperlevel"
+      },
+      "nameKey": "metrics.armorperlevel",
+      "unitId": "armor",
+      "thresholdStep": 0.2,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "spellblockperlevel": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "spellblockperlevel"
+      },
+      "nameKey": "metrics.spellblockperlevel",
+      "unitId": "magicResist",
+      "thresholdStep": 0.2,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "hpregenperlevel": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "hpregenperlevel"
+      },
+      "nameKey": "metrics.hpregenperlevel",
+      "unitId": "hpPer5Seconds",
+      "thresholdStep": 0.2,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "mpregenperlevel": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "mpregenperlevel"
+      },
+      "nameKey": "metrics.mpregenperlevel",
+      "unitId": "manaPer5Seconds",
+      "thresholdStep": 0.2,
+      "requiredCapabilities": ["championStats", "championResourceTypes"],
+      "filters": {
+        "resourceType": "mana"
+      }
+    },
+    "attackspeedperlevel": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championStat",
+        "statKey": "attackspeedperlevel"
+      },
+      "nameKey": "metrics.attackspeedperlevel",
+      "unitId": "percentagePoints",
+      "thresholdStep": 0.2,
+      "requiredCapabilities": ["championStats"],
+      "filters": {}
+    },
+    "skinsCount": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championSkinCount",
+        "excludeDefaultAppearance": true,
+        "excludeChromas": true
+      },
+      "nameKey": "metrics.skinsCount",
+      "unitId": "skinCount",
+      "thresholdStep": 1,
+      "requiredCapabilities": [
+        "skinRecords",
+        "skinDefaultFlags",
+        "skinChromaFlags"
+      ],
+      "filters": {}
+    },
+    "chromasCount": {
+      "subjectType": "champions",
+      "source": {
+        "kind": "championChromaCount"
+      },
+      "nameKey": "metrics.chromasCount",
+      "unitId": "chromaCount",
+      "thresholdStep": 1,
+      "requiredCapabilities": ["completeChromaRecords"],
+      "filters": {}
+    },
+    "chromasCountPerSkin": {
+      "subjectType": "skins",
+      "source": {
+        "kind": "skinChromaCount"
+      },
+      "nameKey": "metrics.chromasCountPerSkin",
+      "unitId": "chromaCount",
+      "thresholdStep": 1,
+      "requiredCapabilities": [
+        "completeChromaRecords",
+        "validatedChromaParentLinks"
+      ],
+      "filters": {
+        "excludeChromas": true
+      }
+    },
+    "abilityCooldownLvl1": {
+      "subjectType": "spells",
+      "source": {
+        "kind": "spellCooldown",
+        "rank": 1,
+        "modifiers": "none",
+        "allowedSlots": ["Q", "W", "E", "R"]
+      },
+      "nameKey": "metrics.abilityCooldownLvl1",
+      "unitId": "seconds",
+      "thresholdStep": 1,
+      "requiredCapabilities": ["validatedSpellCooldownsByRank"],
+      "filters": {}
+    }
+  },
+  "families": {
+    "baseStatsLvl1": {
+      "enabled": true,
+      "nameKey": "families.baseStatsLvl1",
+      "kind": "numeric",
+      "subjectType": "champions",
+      "metricIds": [
+        "hp",
+        "mp",
+        "movespeed",
+        "armor",
+        "spellblock",
+        "attackrange",
+        "hpregen",
+        "mpregen",
+        "attackdamage",
+        "attackspeed"
+      ],
+      "difficultyIds": ["easy", "medium", "hard", "challenger"],
+      "templateKeys": {
+        "min": "questions.baseStatsLvl1.min",
+        "max": "questions.baseStatsLvl1.max",
+        "min2nd": "questions.baseStatsLvl1.min2nd",
+        "max2nd": "questions.baseStatsLvl1.max2nd",
+        "exactMatch": "questions.baseStatsLvl1.exactMatch",
+        "lessThan": "questions.baseStatsLvl1.lessThan",
+        "moreThan": "questions.baseStatsLvl1.moreThan"
+      }
+    },
+    "baseStatsPerLevel": {
+      "enabled": true,
+      "nameKey": "families.baseStatsPerLevel",
+      "kind": "numeric",
+      "subjectType": "champions",
+      "metricIds": [
+        "hpperlevel",
+        "mpperlevel",
+        "armorperlevel",
+        "spellblockperlevel",
+        "hpregenperlevel",
+        "mpregenperlevel",
+        "attackspeedperlevel"
+      ],
+      "difficultyIds": ["easy", "medium", "hard", "challenger"],
+      "templateKeys": {
+        "min": "questions.baseStatsPerLevel.min",
+        "max": "questions.baseStatsPerLevel.max",
+        "min2nd": "questions.baseStatsPerLevel.min2nd",
+        "max2nd": "questions.baseStatsPerLevel.max2nd",
+        "exactMatch": "questions.baseStatsPerLevel.exactMatch",
+        "lessThan": "questions.baseStatsPerLevel.lessThan",
+        "moreThan": "questions.baseStatsPerLevel.moreThan"
+      }
+    },
+    "baseStatsLvlRandom": {
+      "enabled": false,
+      "nameKey": "families.baseStatsLvlRandom",
+      "disabledReason": "outside-mvp"
+    },
+    "skinNumber": {
+      "enabled": true,
+      "nameKey": "families.skinNumber",
+      "kind": "numeric",
+      "subjectType": "champions",
+      "metricIds": ["skinsCount"],
+      "difficultyIds": ["easy", "medium", "hard", "challenger"],
+      "templateKeys": {
+        "min": "questions.skinNumber.min",
+        "max": "questions.skinNumber.max",
+        "min2nd": "questions.skinNumber.min2nd",
+        "max2nd": "questions.skinNumber.max2nd",
+        "exactMatch": "questions.skinNumber.exactMatch",
+        "lessThan": "questions.skinNumber.lessThan",
+        "moreThan": "questions.skinNumber.moreThan"
+      }
+    },
+    "skinType": {
+      "enabled": false,
+      "nameKey": "families.skinType",
+      "disabledReason": "outside-mvp"
+    },
+    "skinModified": {
+      "enabled": false,
+      "nameKey": "families.skinModified",
+      "disabledReason": "outside-mvp"
+    },
+    "chromaNumber": {
+      "enabled": true,
+      "nameKey": "families.chromaNumber",
+      "kind": "numeric",
+      "subjectType": "champions",
+      "metricIds": ["chromasCount"],
+      "difficultyIds": ["easy", "medium", "hard", "challenger"],
+      "templateKeys": {
+        "min": "questions.chromaNumber.min",
+        "max": "questions.chromaNumber.max",
+        "min2nd": "questions.chromaNumber.min2nd",
+        "max2nd": "questions.chromaNumber.max2nd",
+        "exactMatch": "questions.chromaNumber.exactMatch",
+        "lessThan": "questions.chromaNumber.lessThan",
+        "moreThan": "questions.chromaNumber.moreThan"
+      }
+    },
+    "chromaType": {
+      "enabled": false,
+      "nameKey": "families.chromaType",
+      "disabledReason": "outside-mvp"
+    },
+    "chromaPerSkin": {
+      "enabled": true,
+      "nameKey": "families.chromaPerSkin",
+      "kind": "numeric",
+      "subjectType": "skins",
+      "metricIds": ["chromasCountPerSkin"],
+      "difficultyIds": ["easy", "medium", "hard", "challenger"],
+      "templateKeys": {
+        "min": "questions.chromaPerSkin.min",
+        "max": "questions.chromaPerSkin.max",
+        "min2nd": "questions.chromaPerSkin.min2nd",
+        "max2nd": "questions.chromaPerSkin.max2nd",
+        "exactMatch": "questions.chromaPerSkin.exactMatch",
+        "lessThan": "questions.chromaPerSkin.lessThan",
+        "moreThan": "questions.chromaPerSkin.moreThan"
+      }
+    },
+    "abilityDamageLvlRandom": {
+      "enabled": false,
+      "nameKey": "families.abilityDamageLvlRandom",
+      "disabledReason": "outside-mvp"
+    },
+    "abilityByIcon": {
+      "enabled": false,
+      "nameKey": "families.abilityByIcon",
+      "disabledReason": "outside-mvp"
+    },
+    "abilityCooldownLvl1": {
+      "enabled": true,
+      "nameKey": "families.abilityCooldownLvl1",
+      "kind": "numeric",
+      "subjectType": "spells",
+      "metricIds": ["abilityCooldownLvl1"],
+      "difficultyIds": ["easy", "medium", "hard", "challenger"],
+      "templateKeys": {
+        "min": "questions.abilityCooldownLvl1.min",
+        "max": "questions.abilityCooldownLvl1.max",
+        "min2nd": "questions.abilityCooldownLvl1.min2nd",
+        "max2nd": "questions.abilityCooldownLvl1.max2nd",
+        "exactMatch": "questions.abilityCooldownLvl1.exactMatch",
+        "lessThan": "questions.abilityCooldownLvl1.lessThan",
+        "moreThan": "questions.abilityCooldownLvl1.moreThan"
+      }
+    },
+    "abilityCooldownLvlRandom": {
+      "enabled": false,
+      "nameKey": "families.abilityCooldownLvlRandom",
+      "disabledReason": "outside-mvp"
+    },
+    "abilityRange": {
+      "enabled": false,
+      "nameKey": "families.abilityRange",
+      "disabledReason": "outside-mvp"
+    },
+    "abilityName": {
+      "enabled": true,
+      "nameKey": "families.abilityName",
+      "kind": "lookup",
+      "subjectType": "champions",
+      "clueKind": "spellName",
+      "operatorId": "identify",
+      "difficultyIds": ["easy"],
+      "templateKey": "questions.abilityName.identify",
+      "requiredCapabilities": ["spellNames"]
+    },
+    "passiveName": {
+      "enabled": true,
+      "nameKey": "families.passiveName",
+      "kind": "lookup",
+      "subjectType": "champions",
+      "clueKind": "passiveName",
+      "operatorId": "identify",
+      "difficultyIds": ["easy"],
+      "templateKey": "questions.passiveName.identify",
+      "requiredCapabilities": ["passiveNames"]
+    },
+    "tags": {
+      "enabled": false,
+      "nameKey": "families.tags",
+      "disabledReason": "outside-mvp"
+    },
+    "title": {
+      "enabled": true,
+      "nameKey": "families.title",
+      "kind": "lookup",
+      "subjectType": "champions",
+      "clueKind": "championTitle",
+      "operatorId": "identify",
+      "difficultyIds": ["easy"],
+      "templateKey": "questions.title.identify",
+      "requiredCapabilities": ["championTitles"]
+    }
+  },
+  "excludedMetricIds": ["attackdamageperlevel"],
+  "deferredOperatorIds": ["multiSelect", "modifiedImage"]
+}

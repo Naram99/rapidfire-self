@@ -14,6 +14,9 @@ Az elfogadott seed-, kiadásválasztási és ELO-szabályokat a
 A JSON-ok itt tervezési referenciák; a futó alkalmazás nem tölti be őket.
 Tartalmukat megőrizzük, csak a formázást igazítjuk a repóhoz. Az alábbi javítások
 és kiegészítések a javasolt szerződéshez tartoznak, nem elkészült generátorhoz.
+Az elfogadott szabályokból elkészült a külön
+[mezőszintű JSON-katalógustervezet](question-catalog-draft/README.md):
+katalógus, angol szövegek és a még nyitott értékjavaslatok listája.
 
 ## 1. Értékelés és elfogadott irány
 
@@ -741,7 +744,8 @@ Még nem elfogadott, ebben a tervben javasolt technikai részletek:
 
 A továbblépés sorrendje:
 
-1. A leíró JSON szerződésének és a fennmaradó technikai részleteknek a véglegesítése.
+1. A [konkrét JSON-tervezet](question-catalog-draft/README.md) átnézése és a
+   megjelölt értékjavaslatok, valamint a fennmaradó technikai részletek véglegesítése.
 2. A [forrásminták mezőszintű szerződésének](lol-source-schema.md) ellenőrzése
    élő, teljes hősletöltéssel, különösen a chromafelsorolás teljessége szempontjából.
    A mintákban az erőforrástípus és a numerikus cooldown szerkezete már ellenőrizhető.

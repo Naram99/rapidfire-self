@@ -245,6 +245,10 @@ A nulla referencia kihagyása, az inkluzív sávhatárok és a holtversenymentes
 megoldások elfogadottak. Az új generátor easy/medium esetén négy,
 hard/challenger esetén hat opcióval dolgozik. Azonos család és nehézség alatt nincs ismétlődő kérdés;
 más nehézségen eltérő opcióhalmazzal visszatérhet ugyanaz a prompt.
+Az [átnézhető JSON-katalógustervezet](question-catalog-draft/README.md)
+21 numerikus metrikát, kilenc szöveges családot és 45 teljes angol
+kérdéssablont tartalmaz. A külön `review.json` jelöli a még nem elfogadott
+küszöblépés-/egység-/névjavaslatokat. Ez leíró konfiguráció, nem alkalmazáskód.
 A [mezőszintű forrásszerződés](lol-source-schema.md) feldolgozza a csatolt
 173 hősös listát és az Aatrox-részletet; rögzíti a `partype`, `cooldown[]`
 és `parentSkin`/`chromas` mezőket. A `parentSkin` jelenléte szerinti chromaazonosítás
