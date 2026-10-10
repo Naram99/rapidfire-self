@@ -91,7 +91,9 @@ Egy publikált kiadás változatlanul összeköti:
   keresési, kerekítési és sorrendezési szabályokat.
 
 A kerek küszöblépés metrikánként külön tartalomadat: HP 50, cooldown 1 s,
-darabszámok 1, alap támadási sebesség 0,05 az elfogadott induló értékek.
+darabszámok 1, alap támadási sebesség 0,05, alap AD-/armor-/regenerációértékek 1,
+növekedési paraméterek 0,2 az elfogadott induló értékek. A `lessThan`/`moreThan`
+küszöbével egyező jelöltek kihagyása szintén a változatlan tartalmi szabály része.
 A százalékos sávok az adathalmaz alapján a kiadás előkészítésében hangolhatók
 és arányosíthatók. A végleges effektív profil a manifestben és a kiadáshash-ben
 rögzül; egy már publikált kiadás nem kap megváltozott léptéket vagy sávot.

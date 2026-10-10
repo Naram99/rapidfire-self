@@ -214,7 +214,15 @@ revízió, a régi megmarad. Azonos seed/kiadás azonos kategóriacsomagokat ad,
 a teljes meccs kérdéssora azonos kategóriaválasztások mellett egyezik.
 A javasolt PRNG `xoshiro128**`, verziózott kezdőállapot- és streamképzéssel.
 Elfogadottak a kerek, metrikánkénti küszöblépések: HP 50, cooldown 1 s,
-darabszám 1, alap támadási sebesség 0,05. A százalékos határok az adathalmaz
+darabszám 1, alap támadási sebesség 0,05, alap AD-/armor-/regenerációérték 1,
+növekedési paraméter 0,2. A küszöbbel egyező jelölteket a `lessThan`/`moreThan`
+kihagyja. A kérdésszövegek javítása elfogadott: teljes sablonok, konkrét
+felismerési nyom, egyes/többes szám és cooldownnál `rank 1`.
+A két statcsalád 18 metrikájának offline sávlefedettségét ellenőriztük a
+csatolt listán; az eredmények metrikánkénti/nehézségenkénti hangolást indokolnak,
+és külön adatellenőrzést a mintában mindenkinél nullás AD-növekedéshez.
+Ez nem teljes skin-/cooldown-készletre vagy működő generátorra adott garancia.
+A százalékos határok az adathalmaz
 alapján hangolhatók; a végleges effektív profilt a kiadás manifestje rögzíti,
 publikálás után a változás új revíziót jelent.
 

@@ -68,7 +68,11 @@ Az egyeztetés során elfogadott pontosítások:
 - Azonos seed/kiadás pár azonos kategóriacsomagokat ad. A teljes meccs
   kérdéssora azonos kategóriaválasztások mellett egyezik; a választás megmarad.
 - A küszöbök kerek, metrikánként rögzített lépésközű értékek: HP-nál 50,
-  cooldownnál 1 másodperc, skin/chroma darabszámnál 1, támadási sebességnél 0,05.
+  cooldownnál 1 másodperc, skin/chroma darabszámnál 1, támadási sebességnél 0,05,
+  alap AD-/armor-/regenerációértéknél 1, növekedési paramétereknél 0,2.
+- A küszöbbel egyező jelöltek kimaradnak a `lessThan`/`moreThan` opcióiból.
+- A kérdésszövegek teljes angol sablonokat használnak, a választási módhoz
+  illő egyes/többes számmal, felismerésnél konkrét nyommal és cooldownnál `rank 1`-gyel.
 - A százalékos sávok kiinduló beállítások; az adathalmaz alapján hangolhatók
   és arányosíthatók. A publikált kiadás a végleges sávokat és léptékeket őrzi meg.
 
@@ -163,6 +167,28 @@ SQL-oszlopnév-interpoláció. Az új metrikát külön olvasó és ellenőrzés
 - Ismeretlen mező és elírt kulcs jelzett konfigurációhiba. A referenciahibákat
   a végleges katalógus létrehozásakor javítjuk, nem futás közben találgatjuk.
 
+### Elfogadott kérdésszöveg-javítások
+
+A felismerési nyom a teljes kérdés része; a sablonok például:
+
+- `Which champion has the ability “{{clue}}”?`
+- `Which champion has the passive “{{clue}}”?`
+- `Which champion has the title “{{clue}}”?`
+
+A numerikus kérdések teljes sablonjai a műveletet és az alanytípust is
+figyelembe veszik. Például:
+
+- `Which champion has the lowest {{metricLabel}} at level 1 among these champions?`
+- `Which champion has the second-highest {{metricLabel}} at level 1 among these champions?`
+- `Which champions have less than {{threshold}} {{metricLabel}} at level 1?`
+- `Which champion has the highest {{metricLabel}} growth value among these champions?`
+- `Which ability has the lowest base cooldown at rank 1 among these abilities?`
+
+Ezek a végleges katalógushoz elfogadott szövegezési irányok; nem teljes
+sablonmátrix és nem a referenciaminták helyben átírt tartalma. A metrikacímke
+és az értékformátum együtt ad egyértelmű mértékegységet. A forrás növekedési
+paraméterét kérdezzük, nem egy kiszámított hősszint tényleges statját.
+
 ## 4. Numerikus kérdések szabályai
 
 ### Helyes opció és relatív eltérés
@@ -214,17 +240,22 @@ Az elfogadott szabály szerint a küszöb a metrika egységéhez illő kerek
 érték. A lépés metrikánként külön megadható, és a kiválasztott kiadás
 rögzíti. Elfogadott induló lépések:
 
-| Metrika                                  | Küszöblépés            | Példa             |
-| ---------------------------------------- | ---------------------- | ----------------- |
-| Alap HP                                  | 50 HP                  | 550, 600, 650.    |
-| Első képességrang cooldownja             | 1 másodperc            | 10, 11, 12 s.     |
-| Skin/chroma darabszám, chroma skinenként | 1                      | 5, 6, 7.          |
-| Alap támadási sebesség                   | 0,05 támadás/másodperc | 0,60; 0,65; 0,70. |
+| Metrika                                  | Küszöblépés              | Példa             |
+| ---------------------------------------- | ------------------------ | ----------------- |
+| Alap HP                                  | 50 HP                    | 550, 600, 650.    |
+| Első képességrang cooldownja             | 1 másodperc              | 10, 11, 12 s.     |
+| Skin/chroma darabszám, chroma skinenként | 1                        | 5, 6, 7.          |
+| Alap támadási sebesség                   | 0,05 támadás/másodperc   | 0,60; 0,65; 0,70. |
+| Alap AD és armor                         | 1 a metrika egységében   | 50, 51, 52.       |
+| Alap HP-/manaregeneráció                 | 1 a metrika egységében   | 5, 6, 7.          |
+| Statnövekedési paraméterek               | 0,2 a metrika egységében | 0,2; 0,4; 0,6.    |
 
 A további statok saját léptéket kapnak az értéktartományuk és egységük
-alapján; nem öröklik automatikusan az 50-et. A mana, regen, AD, armor,
-magic resist és növekedési paraméterek pontos lépése a metrikakatalógusban
-véglegesítendő. A lépés pozitív, véges és pontosan megjeleníthető.
+alapján; nem öröklik automatikusan az 50-et. Az alap mana, magic resist,
+mozgási sebesség és támadási távolság pontos lépése még a metrikakatalógusban
+véglegesítendő. A lépés pozitív, véges és pontosan megjeleníthető. A 0,2-es
+növekedési lépték a forrásparaméter saját egységében értendő; például
+támadásisebesség-növekedésnél nem 0,2 támadás/másodpercet jelent.
 
 Javasolt rács: `v = k · thresholdStep`, pozitív egész `k`-val. A jelöltek
 minimuma és maximuma közötti rácspontok véges listát adnak. A használhatósági
@@ -241,7 +272,7 @@ legalább hat, küszöbtől eltérő jelölt és mindkét oldalon legalább egy.
 600-nál 29 kisebb és 55 nagyobb jelölt található a sávban. Ez HP-
 jelöltlefedettség, nem működő generátor vagy teljes ötös kategóriacsomag tesztje.
 
-A küszöbértékkel egyező jelöltet az első változatban javasolt kihagyni.
+A küszöbértékkel egyező jelöltet az elfogadott szabály szerint kihagyjuk.
 Ez a nulla eltérés külön kérdését is elkerüli; a szigorú predikátum ettől
 függetlenül mindkét típusnál hamisra értékelné az egyenlőséget.
 
@@ -254,7 +285,9 @@ család-/metrikaszinten készülhet megfelelőbb profil.
 
 1. A teljes, validált készleten mérjük a metrika/művelet/nehézség
    használhatóságát: 4/6 opció, mindkét oldal ahol szükséges, helyeshalmaz,
-   holtversenyszabály és öt különböző kérdés. Egy sikeres példa önmagában kevés.
+   holtversenyszabály. Az öt különböző kérdés a teljes család–nehézség
+   kategóriacsomagra vonatkozik, nem minden egyes metrikára vagy műveletre
+   külön. Egy sikeres példa önmagában kevés.
 2. A profil a kiadás előkészítésekor módosul. Arányosítási javaslatként egy
    pozitív metrikaszintű szorzó ugyanazzal az aránnyal skálázhatja az összes
    nehézség meglévő minimum-/maximumhatárát; a hiányzó határ hiányzó marad.
@@ -270,6 +303,45 @@ család-/metrikaszinten készülhet megfelelőbb profil.
 
 A hangolás mellett az inkluzív határok, a valódi forrásadatok, a nulla
 referencia kihagyása és a helyes/hibás opciók szabályai továbbra is érvényesek.
+
+### Offline sávlefedettség a csatolt hőslistán
+
+2026-10-10-én a 16.20.1-es, 173 hősös `champions.json` listán a két
+statcsalád mind a 18 engedélyezett metrikáját ellenőriztük mind a négy
+nehézségen, a mintabeli százalékos profillal. Mana-/manaregen-metrikáknál
+csak a 145 `Mana` erőforrású hős szerepelt. Decimális számítással vizsgáltuk
+a nulla referenciák kihagyását, az inkluzív határokat, a 4/6 opciót és a
+második helyhez szükséges hat különböző értéket. Az ismert léptékekkel a
+challenger küszöbös kérdések jelöltlistáit is ellenőriztük, egyenlőség nélkül.
+
+| Eset                                      | Eredmény a mintabeli profillal                                                                                                  |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| HP, challenger, 600-as küszöb             | 29 kisebb és 55 nagyobb jelölt esik az 5%-os sávba; hat opcióhoz elegendő.                                                      |
+| Mozgási sebesség, easy                    | A 315–355 tartomány legnagyobb relatív eltérése kb. 12,7%; a legalább 30%-os feltételhez egyetlen megfelelő eltérő opció sincs. |
+| AD, challenger                            | A minimum/maximum/egyezés előállítható, de az 5%-os sávban egyik második helyes művelethez sincs hat különböző érték.           |
+| Armor, hard                               | Minimumkérdéshez elegendő jelölt van, a második legkisebbhez nincs megfelelő hat különböző érték.                               |
+| Alap HP-regeneráció, challenger           | Az 1-es küszöbrácson nincs olyan 5%-os, küszöbtől eltérő jelöltlista, amelynek mindkét oldalán lenne opció.                     |
+| HP-/manaregeneráció-növekedés, challenger | A megadott műveletek egyikéhez sincs megfelelő hatopciós kérdés, a 0,2-es küszöbrácson sem.                                     |
+| AD-növekedés, minden nehézség             | A csatolt listában mind a 173 érték 0; ez nem sávhangolási probléma, az adatot importkor külön ellenőrizni kell.                |
+
+A széles engedélyezett sáv önmagában nem csökkenti a jelöltek számát.
+A hiányt a túl nagy minimumeltérés, a túl kicsi maximumeltérés, a
+diszkrét értékkészlet vagy a holtversenytilalom okozhatja. Az egyetlen közös
+skálázó sem minden metrikánál megfelelő: az easy minimumának csökkentése
+javíthatja annak lefedettségét, ugyanazzal a szorzóval a challenger maximuma
+viszont még szűkebb lenne. Ezért szükség esetén metrikánként és
+nehézségenként külön határokat hangolunk, a nehézségi sorrend megőrzésével.
+
+Csak teljesíthető metrika/művelet párok választhatók; a második hely
+szabálya nem lazul fel, és hat helyett nem készül négy opció. A referenciák
+száma nem azonos az egyedi kérdésszövegek számával: a minimumkérdés új
+opciókkal is ugyanaz a prompt. A családonkénti öt különböző kérdés és a
+nehézségek közötti eltérő opcióhalmaz külön generátorellenőrzést igényel.
+
+Ez adatlefedettségi vizsgálat, nem lefutott generátorteszt vagy teljes
+kategóriacsomag. A teljes skin/chroma- és képességcooldown-készlet hiányában
+ezek végleges sávját még nem ellenőriztük. Az Aatrox-részlet egyetlen hős
+adata; abból teljes kategóriára nem adható lefedettségi garancia.
 
 ### Nulla, kerekítés és kevés jelölt
 
@@ -585,11 +657,13 @@ javítási revízióval szintén elfogadottak; a seedterv részletezi őket.
 
 A metrikánkénti kerek küszöblépés és az adatfüggően hangolható százalékos
 sáv elfogadott. HP-nál 50, cooldownnál 1 s, darabszámoknál 1, alap támadási
-sebességnél 0,05 az induló lépték. A hangolt profil kiadásonként változatlan.
+sebességnél 0,05, alap AD-/armor-/regenerációértéknél 1, növekedési
+paramétereknél 0,2 az induló lépték. A küszöbbel egyező jelöltek kihagyása és
+a kérdésszövegek javítási iránya szintén elfogadott. A hangolt profil kiadásonként változatlan.
 
 Még nem elfogadott, ebben a tervben javasolt technikai részletek:
 
-- A további metrikák lépésközei, végleges effektív sávjai és az egyenlő jelöltek kihagyása.
+- Az alap mana/magic resist/mozgási sebesség/támadási távolság lépésközei és a végleges effektív sávok.
 - A véges keresési keret pontos értéke és a metrika-/műveletsorsolási súlyok.
 - A seedtervben javasolt `xoshiro128**` algoritmus tesztvektorai és a fizikai táblák részletei.
 - `Base stat growth` név és a metrikák pontos egységei.
@@ -619,7 +693,8 @@ teljes meccs és helyes válaszok publikus kiszivárgásának ellenőrzése.
 
 A csatolt JSON szintaxisát és hivatkozásait ténylegesen átnéztük. A fenti
 generátorteszt-esetek még tervek; működő import vagy generátor nélkül nem
-nevezhetők lefutott teszteknek. Az 50-es HP-rács jelöltlefedettségét a csatolt
-listán ténylegesen ellenőriztük; a többi metrika teljes lefedettsége és a
-generátorcsomagok még nem ellenőrzöttek. A seed-/kiadás-/ELO-esetek a kapcsolódó
+nevezhetők lefutott teszteknek. A két statcsalád 18 metrikájának mintabeli
+sávlefedettségét és az ismert küszöbrácsokat ténylegesen ellenőriztük a csatolt
+listán; a teljes skin/chroma-/cooldown-készlet és a generátorcsomagok még
+nem ellenőrzöttek. A seed-/kiadás-/ELO-esetek a kapcsolódó
 seedterv tesztlistájában szerepelnek, szintén végrehajtás nélkül.
