@@ -10,6 +10,8 @@ import { AuthPage, ResetPage, VerificationPage } from './pages/auth';
 import { AccountPage } from './pages/account';
 import { HistoryDetailPage, HistoryPage } from './pages/history';
 import { GamePage, PersistenceNotice } from './pages/game';
+import { AdminLolDataPage } from './pages/admin-lol-data';
+import { AdminLink } from './components/admin-link';
 
 const closure: Readonly<Record<ClosureReason, CopyKey | null>> = {
   left: 'closedLeft',
@@ -117,7 +119,17 @@ export function App() {
           id={route.pathname.slice('/history/'.length)}
         />
       );
-  } else if (route.pathname === '/game')
+  } else if (route.pathname === '/admin/lol-data')
+    page = (
+      <AdminLolDataPage
+        key={
+          state.identity.kind === 'user'
+            ? state.identity.profile.userId
+            : state.identity.kind
+        }
+      />
+    );
+  else if (route.pathname === '/game')
     page = (
       <section className="page page--form">
         <h1>
@@ -192,6 +204,11 @@ export function App() {
                   >
                     {t('profile')}
                   </Link>
+                  <AdminLink
+                    key={state.identity.profile.userId}
+                    userId={state.identity.profile.userId}
+                    pathname={route.pathname}
+                  />
                   <Button
                     variant="quiet"
                     onClick={() => {

@@ -24,6 +24,8 @@ npm run check
 
 Beginner Hungarian instructions: [PostgreSQL in Docker, schema generation and migrations](docs/database-guide.md). Apply committed migrations with `db:migrate`; schema generation is for schema changes, not ordinary first setup.
 
+The [LoL data and admin guide](docs/lol-data-guide.md) covers the new migration, granting admin access, manual Data Dragon imports and loading the uploaded snapshot locally. Imported data is ready for the upcoming generator; the playable question provider still uses the existing sample set.
+
 `db:up` waits for PostgreSQL readiness. Database data lives in a named Docker volume. `npm run db:stop` stops the database without deleting data. The development database listens on loopback only.
 
 ## Development

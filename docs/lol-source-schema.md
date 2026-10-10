@@ -1,9 +1,10 @@
 # LoL JSON-forrás — mezőszintű import- és normalizálási szerződés
 
 Dátum: 2026-10-09; teljes forrásfelülvizsgálat: 2026-10-10.
-Státusz: mintákkal és a teljes feltöltött ZIP-pel ellenőrzött tervezési szerződés;
+Státusz: mintákkal és a teljes feltöltött ZIP-pel ellenőrzött, implementált forrásszerződés;
 a skin/chroma-leképezés elfogadott, az Aatrox-minta forrását a felhasználó
-megadta. Nincs implementált validátor, adatbázis-migráció vagy importfutás.
+megadta. A validátor, adatbázis-migráció és importfutás elkészült;
+használatuk a [LoL-adatimport útmutatóban](lol-data-guide.md) olvasható.
 
 Kapcsolódó tervek: [adatimport](lol-champion-data.md),
 [kérdésgenerálás](question-generation.md). Feldolgozott referenciák:
@@ -255,4 +256,5 @@ azonosítói, rangtömbjei és szülőkapcsolatai szintén ellenőrizve. Az elfo
 hat skin-/öt hős-chromakizárás és húsz cooldown-kizárás mellett a kérdésalap
 rendelkezésre áll. Nem ellenőrzött: a megadott endpoint aktuális élő válaszával
 való egyezés és minden képesség különleges játékmeneti formájának szemantikája.
-Az importáló és a tervezett validátorteszt-csomag még nem készült el.
+Az importáló és a validátorteszt-csomag elkészült, a teljes ZIP feldolgozásával
+és PostgreSQL-be mentésével is ellenőrizve. Az élő provider elérésének korlátja változatlan.

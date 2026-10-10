@@ -75,7 +75,7 @@ Az első parancs listázza a táblákat, a `\d` megmutatja az oszlopokat, kulcso
 2. **SQL-migráció készítése:** `npm run db:generate`. Összehasonlítja a Drizzle TypeScript-sémát a korábbi pillanatképpel és új SQL-fájlt készít. Ez sem módosítja az adatbázist. Nézd át a generált SQL-t, különösen az átnevezéseket és esetleges adatvesztést okozó műveleteket.
 3. **Migráció alkalmazása:** `npm run db:migrate`. Lefuttatja a még nem alkalmazott, verziózott SQL-fájlokat a `.env` / környezeti `DATABASE_URL` adatbázisán. Másodszori futtatáskor a már alkalmazottakat kihagyja.
 
-Ha saját táblán változtatsz, először a `schema.ts` fájlt módosítsd, majd generálj, ellenőrizz és alkalmazz migrációt. Authváltozásnál előbb az authséma generálása következik. A sémafájl, új SQL és `meta` fájlok együtt kerüljenek commitba. A már alkalmazott migrációt ne írd át; további változásnak új migráció kell.
+Ha saját táblán változtatsz, először a `schema.ts` vagy a LoL-adatoknál a `lol-schema.ts` fájlt módosítsd, majd generálj, ellenőrizz és alkalmazz migrációt. Authváltozásnál előbb az authséma generálása következik. A sémafájl, új SQL és `meta` fájlok együtt kerüljenek commitba. A már alkalmazott migrációt ne írd át; további változásnak új migráció kell.
 
 A `0001_lifecycle.sql` kézi SQL-migráció: állapotkódokat tölt fel és profil-létrehozási/fióktörlési triggereket készít. A Drizzle generátora ezeket a függvényeket nem kezeli; változtatásukhoz új kézi migráció szükséges. Üres fájlt a backend mappájában így készíthetsz:
 

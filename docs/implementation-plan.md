@@ -1,12 +1,12 @@
 # MVP megvalósítási terv
 
-Utolsó frissítés: 2026-10-09.
+Utolsó frissítés: 2026-10-10.
 
 Kapcsolódó specifikációk:
 
 - [MVP tervezési dokumentum](design.md)
 - [Authadapterek és meccsvisszatérés](auth-adapters.md)
-- [LoL hősadatok PostgreSQL-importja és adminfrissítése — tervezet](lol-champion-data.md)
+- [LoL hősadatok PostgreSQL-importja és adminfrissítése](lol-champion-data.md)
 
 Ez a dokumentum a megvalósítás sorrendjét és ellenőrzési feltételeit rögzíti. Az M0–M3 változásait a felhasználó mainbe merge-ölte és engedélyezte az M4 frontendjét, saját designskillekkel és CSS-változókkal. Az elkészült M1 részletei a [motor dokumentációjában](game-engine.md), az M2 a [backend dokumentációjában](backend-controller.md), az M3 az [auth/mentés dokumentációjában](backend-auth-storage.md), az M4 a [frontend dokumentációjában](frontend.md) olvasható. A deployment későbbi mérföldkő. A környezetkonfigurációt és M0 eredményeket a [környezeti dokumentum](development-environment.md) rögzíti; a [magyar adatbázis-útmutató](database-guide.md) az M3 használatát mutatja.
 
@@ -192,8 +192,8 @@ Az M4 áttekintése után az M5-höz szükséges csomag:
 4. Kiadási/CI ellenőrzések a végleges hostingon. Éles publikálás a felhasználó aktuális utasítása alapján történik.
 
 A tiebreak, ELO-számítás, social login és profilkép továbbra is későbbi tervek.
-A felhasználó aktuális iránya a valódi LoL-adatalap és seedelt kérdésgenerálás
-tervezése; ez nem engedélyezi automatikusan az implementációt vagy deploymentet.
+A felhasználó 2026-10-10-én engedélyezte a következő fejlesztési szelet
+megvalósítását, a teljes forráscsomag és az alanyszűrések elfogadása után.
 
 A felhasználó által most kiválasztott következő fejlesztési szelet a LoL-hősadatok
 PostgreSQL-tárolása és kizárólag kézi adminfrissítése, a [külön adatimportterv](lol-champion-data.md)
@@ -201,8 +201,13 @@ szerint. A skinek és chromák közös rekordhalmazba kerülnek: az `is_chroma`
 jelölés az elem típusát mutatja, a chroma `parent_skin_id` kapcsolata a
 hozzá tartozó skinre mutat. A képességek `damage` mezője egyelőre `{}` marad;
 a sebzésfeldolgozás külön későbbi feladat. A kérdésgenerálás
-ezen az adatalapon tervezhető tovább; a seed-/generátorszerződés még nincs
-véglegesítve. Az adatimportterv dokumentáció, nem elkészült adminpanel vagy migráció.
+ezen az adatalapon valósítható meg a már elfogadott katalógus alapján.
+Elkészült a PostgreSQL-séma/migráció, natív TS normalizáló, tartós importfutás,
+Data Dragon-adapter, fájlimportáló CLI, adminjog-CLI, HTTP API és reszponzív
+adminpanel. A teljes 173 hősös ZIP feldolgozása és DB-mentése tesztelve.
+Használat: [adatimport és adminútmutató](lol-data-guide.md).
+Az importált készlet még nem játszható generálási kiadás; a valódi generátor,
+kiadáspublikálás és lobby seed-/verzióválasztó a következő implementációs lépés.
 
 A [seed- és kiadásválasztási terv](question-seed-version.md) rögzíti a
 2026-10-10-i elfogadott szabályokat: 1–10 ASCII alfanumerikus karakter,

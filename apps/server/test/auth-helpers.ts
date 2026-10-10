@@ -11,6 +11,7 @@ import { createApplication } from '../src/bootstrap/application.js';
 import { runtimeDependencies } from '../src/infrastructure/runtime.js';
 import { harness } from './game-helpers.js';
 import { isolatedDatabase } from './isolated-database.js';
+import type { LolSource } from '../src/lol-data/model.js';
 
 export class CookieJar {
   private readonly values = new Map<string, string>();
@@ -32,7 +33,7 @@ export class CookieJar {
   }
 }
 
-export async function authHarness(manual = false) {
+export async function authHarness(manual = false, lolSource?: LolSource) {
   const database = await isolatedDatabase();
   const gameHarness = harness();
   gameHarness.timers.now = Date.now();
@@ -52,6 +53,7 @@ export async function authHarness(manual = false) {
     secret: 'isolated-tests-only-secret-never-for-deployment-123456789',
     publicUrl: 'http://test.local',
     allowedOrigins: ['http://test.local'],
+    ...(lolSource ? { lolSource } : {}),
   });
   await new Promise<void>((resolve) =>
     app.httpServer.listen(0, '127.0.0.1', resolve),
@@ -175,6 +177,7 @@ export async function authHarness(manual = false) {
   const close = async () => {
     for (const socket of sockets) socket.disconnect();
     app.email.close();
+    await app.lolImporter.close();
     await app.service.shutdown();
     await app.service.persistenceIdle();
     await new Promise<void>((resolve) => app.io.close(() => resolve()));

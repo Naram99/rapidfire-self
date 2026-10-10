@@ -9,7 +9,9 @@
     "build": "tsc --project tsconfig.build.json",
     "auth:generate": "auth generate --config ./auth.generate.ts --adapter drizzle --dialect postgresql --output ./src/database/auth-schema.ts --yes",
     "db:generate": "drizzle-kit generate --config drizzle.config.ts",
-    "db:migrate": "tsx --env-file-if-exists=../../.env src/database/migrate-cli.ts"
+    "db:migrate": "tsx --env-file-if-exists=../../.env src/database/migrate-cli.ts",
+    "admin:access": "tsx --env-file-if-exists=../../.env src/lol-data/admin-cli.ts",
+    "lol:import-files": "tsx --env-file-if-exists=../../.env src/lol-data/import-files-cli.ts"
   },
   "dependencies": {
     "@rapidfire/contracts": "0.0.0",

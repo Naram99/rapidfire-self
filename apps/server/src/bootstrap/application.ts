@@ -14,6 +14,10 @@ import { EmailQueue } from '../email/queue.js';
 import type { EmailPort } from '../email/types.js';
 import { createApiRouter } from '../transport/http.js';
 import { createGameServer } from './create-server.js';
+import { LolRepository } from '../lol-data/repository.js';
+import { LolImporter } from '../lol-data/importer.js';
+import { dataDragonSource } from '../lol-data/source.js';
+import type { LolSource } from '../lol-data/model.js';
 
 export function createApplication(
   options: Readonly<{
@@ -24,11 +28,17 @@ export function createApplication(
     secret: string;
     allowedOrigins: readonly string[];
     webRoot?: string;
+    lolSource?: LolSource;
   }>,
 ) {
   const { clock, timers } = options.dependencies;
   const credentials = new Credentials(clock);
   const accounts = new AccountRepository(options.db);
+  const lolRepository = new LolRepository(options.db);
+  const lolImporter = new LolImporter(
+    lolRepository,
+    options.lolSource ?? dataDragonSource(),
+  );
   const email = new EmailQueue({
     clock,
     timers,
@@ -94,6 +104,8 @@ export function createApplication(
     email,
     clock,
     allowedOrigins: options.allowedOrigins,
+    lolRepository,
+    lolImporter,
   });
   const server = createGameServer({
     service,
@@ -103,5 +115,15 @@ export function createApplication(
       bridge?.authenticate(headers, signal) ?? Promise.resolve(null),
     ...(options.webRoot ? { webRoot: options.webRoot } : {}),
   });
-  return { ...server, service, auth, bridge, credentials, accounts, email };
+  return {
+    ...server,
+    service,
+    auth,
+    bridge,
+    credentials,
+    accounts,
+    email,
+    lolRepository,
+    lolImporter,
+  };
 }

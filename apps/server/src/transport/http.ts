@@ -16,6 +16,9 @@ import type { AuthBridge } from '../auth/bridge.js';
 import type { Auth } from '../auth/create-auth.js';
 import { cookieToken } from '../auth/credentials.js';
 import type { Credentials } from '../auth/credentials.js';
+import { createLolAdminRouter } from '../lol-data/http.js';
+import type { LolRepository } from '../lol-data/repository.js';
+import type { LolImporter } from '../lol-data/importer.js';
 
 function cookies(response: Response, headers: Headers): void {
   for (const value of headers.getSetCookie())
@@ -36,6 +39,8 @@ export function createApiRouter(
     email: EmailQueue;
     clock: Clock;
     allowedOrigins: readonly string[];
+    lolRepository: LolRepository;
+    lolImporter: LolImporter;
   }>,
 ) {
   const router = express.Router();
@@ -378,6 +383,9 @@ export function createApiRouter(
     }
     response.json(result);
   });
+  router.use(
+    createLolAdminRouter(bridge, options.lolRepository, options.lolImporter),
+  );
   router.use(
     (
       error: unknown,
