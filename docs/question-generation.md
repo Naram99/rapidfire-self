@@ -1,6 +1,6 @@
 # League of Legends — kategória- és kérdésgenerálás terve
 
-Tervezési dátum: 2026-10-09. Státusz: egyeztetés alatt, alkalmazáskód nélkül.
+Tervezési dátum: 2026-10-10. Státusz: egyeztetés alatt, alkalmazáskód nélkül.
 
 Alapok: a felhasználó [questionTypes.json](question-generation-input/questionTypes.json)
 és [topics.json](question-generation-input/topics.json) mintái, a
@@ -9,6 +9,8 @@ Alapok: a felhasználó [questionTypes.json](question-generation-input/questionT
 Az új [champions.json](question-generation-input/champions.json) és
 [aatrox.json](question-generation-input/aatrox.json) adatokból külön
 [mezőszintű forrásszerződés](lol-source-schema.md) készült.
+Az elfogadott seed-, kiadásválasztási és ELO-szabályokat a
+[seed- és verzióterv](question-seed-version.md) részletezi.
 A JSON-ok itt tervezési referenciák; a futó alkalmazás nem tölti be őket.
 Tartalmukat megőrizzük, csak a formázást igazítjuk a repóhoz. Az alábbi javítások
 és kiegészítések a javasolt szerződéshez tartoznak, nem elkészült generátorhoz.
@@ -57,6 +59,14 @@ Az egyeztetés során elfogadott pontosítások:
 - Azonos kategóriacsalád és nehézség alatt ugyanaz a kérdés nem ismétlődik.
   Más nehézségen új opcióhalmazzal visszatérhet. Az opciók átrendezése
   önmagában nem új halmaz.
+- A várószobában választható az adatbázisban elérhető játszható kiadás,
+  alapból a legfrissebb. A kiadás az adatokat és a generálási szabályokat
+  együtt rögzíti; tartalmi javítás külön revíziót kap.
+- A seed 1–10 ASCII alfanumerikus karakter, kis-/nagybetűt megkülönböztetve.
+  Alapból automatikus, de kézzel is megadható; az utóbbi az egész meccset
+  kizárja a későbbi ELO-változásból.
+- Azonos seed/kiadás pár azonos kategóriacsomagokat ad. A teljes meccs
+  kérdéssora azonos kategóriaválasztások mellett egyezik; a választás megmarad.
 
 ## 2. A csatolt katalógus feldolgozása
 
@@ -307,8 +317,8 @@ flowchart LR
   G --> H[Meglévő kérdésvalidátor és motor]
 ```
 
-A fájl nem közvetlenül a motorhoz kerül. A backend metrikaolvasói az aktív,
-változatlan adatkészletből validált tényeket készítenek; a generáló tiszta
+A fájl nem közvetlenül a motorhoz kerül. A backend metrikaolvasói a kiválasztott
+kiadás változatlan adatkészletéből validált tényeket készítenek; a generáló tiszta
 függvények ezekből és a seedből dolgoznak. A szövegrenderelés és az opciósorrend
 is determinisztikus. A motor továbbra is kész kérdéseket kap.
 
@@ -320,9 +330,10 @@ Javasolt folyamat:
    család/nehézség számára öt különböző, érvényes kérdés. Ehhez érték szerint
    rendezett jelöltindexek és ellenőrzött próbacsomag használható; nem a JSON
    bejegyzéseinek száma jelenti a rendelkezésre állást.
-3. Új meccs előkészítésekor a készlet, manifest, generátorverzió és a használható
-   kategóriaváltozatok egyetlen kontextusba rögzülnek. Egy közben végzett
-   adminfrissítés a következő meccsekhez készít új kontextust.
+3. Új meccs előkészítésekor a várószobában kiválasztott kiadás és a tényleges
+   seed egyetlen kontextusba rögzül. A kiadás már összeköti a készletet,
+   manifestet, generátort és használható kategóriaváltozatokat.
+   Adminfrissítés nem írja át sem ezt, sem a várószoba explicit választását.
 4. A kiválasztott kategóriához pontosan öt kérdés készül. Metrika/művelet csak
    az adott nehézség engedélyezett és teljesíthető kombinációiból sorsolható.
    A választás nincs az adatbázis sor-visszaadási sorrendjére bízva.
@@ -383,9 +394,11 @@ mellett az öt különböző kérdéshez több, különböző célértékű `exa
 szükséges. A használhatósági ellenőrzés ezt is bizonyítja, különben nem
 aktiválja a változatot. A pontosan öt kérdéses szabály megmarad.
 
-A generálás közbeni tiltóhalmaz csomagonként épül; sikeres csomag után válik
-a meccskontextus részévé. Egy félbeszakadt generálás vagy retry nem fogyaszt
-el tartósan új kérdéseket, a korábbi sikeres csomag újra felhasználható.
+A generálás közbeni tiltóhalmaz a család kanonikus nehézségi tervében épül,
+nem a játékos választási sorrendjétől függ. Így azonos seed/kiadás mellett
+ugyanaz a kategória mindig ugyanazt a csomagot kapja. Egy félbeszakadt
+generálás vagy retry nem fogyaszt el tartósan új kérdéseket; a korábbi
+sikeres csomag újra felhasználható. A részleteket a seedterv rögzíti.
 
 A kategóriaváltozatok a meglévő kínálati mechanizmusban külön kategóriák.
 Az egyenlő kategóriánkénti esély miatt a négy nehézséget kínáló család
@@ -394,35 +407,39 @@ sorsolás külön, később elfogadható szabály; nem következik automatikusan
 
 ## 7. Seed, verziózás és megőrzés
 
-A generálás reprodukálásához a seed mellett az adat és a konfiguráció
-változatlansága is szükséges. Javasolt rögzített metadata:
+A [részletes seed- és kiadásszerződés](question-seed-version.md) rögzíti a
+2026-10-10-én elfogadott termékszabályokat és a technikai javaslatot.
+A kiválasztható kiadás együtt tartja változatlanul az adatot, konfigurációt
+és generátort. Ez teszi tartóssá a seed + verzió garanciát.
 
-| Szint      | Megőrzött adat                                                                                                                         |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Meccs      | `question_dataset_id`, sablonmanifest UUID/hash, generátorverzió, PRNG-verzió, gyökérseed, forráslocale és kérdésnyelv.                |
-| Forduló    | Fordulósorszám, ténylegesen választott család/nehézség kulcsa, determinisztikusan származtatott fordulóseed, generált tartalom hash-e. |
-| Kérdésslot | A fordulóseedből képzett stabil sorszám és külön véletlenszám-folyam; nem kell játékosválasztást vagy teljes szöveget tárolni.         |
+Javasolt rögzített metadata:
 
-A gyökérseed szerveroldalon keletkezik. A PRNG konkrét algoritmusa és
-tesztvektorai implementáció előtt rögzítendők. `Math.random`, óraérték,
-új UUID, adatbázissorrend vagy megváltozó globális véletlenállapot nem adhat
-rejtett bemenetet a tartalomgeneráláshoz. A meccsbeli technikai azonosítók
-saját UUID-k; az újrajátszás tartalma és opciósorrendje reprodukálható új
-meccsazonosítók mellett is.
+| Szint      | Megőrzött adat                                                                                                                                                                       |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Meccs      | `generation_release_id`, tényleges seed, szerver által rögzített seederedet és `custom_seed` ELO-kizárási ok. A kiadás rögzíti a készletet, manifestet és generátor-/PRNG-verziókat. |
+| Forduló    | Fordulósorszám, ténylegesen választott család/nehézség kulcsa és generált tartalomhash.                                                                                              |
+| Kérdésslot | A seed/kiadás/kategóriakulcsból képzett stabil sorszám és külön stream; nem kell játékosválasztást vagy teljes szöveget tárolni.                                                     |
+
+Automatikus módban a szerver tízkarakteres seedet generál; kézi módban a
+validált 1–10 karakteres szöveg marad meg. A javasolt `xoshiro128**` PRNG
+kezdőállapota SHA-256-leképezésből képződik, célonként külön streammel.
+`Math.random`, óraérték, új UUID, adatbázissorrend vagy közös, megváltozó
+véletlenállapot nem adhat rejtett bemenetet a tartalomhoz.
 
 A kategóriaválasztás emberi döntés, ezért a meccsseedből nem következtethető
 ki. A ténylegesen kiválasztott változatokat és sorrendjüket is meg kell őrizni.
-Javasolt fordulóseed-bemenet: gyökérseed, fordulósorszám és kategóriaváltozat
-stabil tartalomkulcsa; új meccs-/forduló-UUID nem módosítja a tartalmat.
-A forduló- és slotonkénti külön stream biztosítja, hogy egy előkészítési
-újrapróbálás ne változtassa meg a következő kérdés eredményét.
+A kategóriacsomag seedbemenetéből a fordulósorszám kimarad: ugyanaz a
+kategória más fordulóban is ugyanazt az öt kérdést kapja. A kínálatsorsolás
+külön, fordulóhoz és korábbi választásokhoz kötött streamből dolgozik.
+A kategória-/slotonkénti külön stream miatt egy előkészítési retry nem
+változtatja meg a következő kérdés eredményét.
 A tartalomhash a szöveget, szemantikai adatokat és stabil alanykulcsok szerinti
 opciósorrendet veszi figyelembe; futás közben képzett technikai UUID-t vagy
 időpontot nem. Így a visszagenerált tartalom azonosítása új meccsben is értelmes.
 
 Az adatimportterv mellett új immutable sablonmanifest-megőrzés szükséges:
 az eredeti/véglegesített leírás JSONB-ben, tartalomhash-sel és sémaverzióval,
-saját UUID-val. A meccs erre is hivatkozik. Egy Git-commit azonosító önmagában
+saját UUID-val. A meccs kiadása erre is hivatkozik. Egy Git-commit azonosító önmagában
 nem garantálja, hogy a futó rendszer később eléri a régi definíciókat.
 Régi generátorverzióból újrajátszáshoz annak kompatibilis megvalósítását is
 meg kell őrizni; ismeretlen verziót nem futtatunk csendben a legfrissebb kóddal.
@@ -443,17 +460,22 @@ A vendégmeccs metadata nem kerül tartós historyba a korábbi szabály szerint
   `categories(topicId)` jelenlegi globális eredménye önmagában nem elegendő
   az adat- és manifestverzió garantált rögzítéséhez. A meccsépítésnek ugyanazt
   az immutable kínálatot kell átadnia a motornak, amelyből a `prepare` dolgozik.
-- Az aktív készlet és manifest ellenőrzéséből származó katalógus induláskor
-  betöltődik, és atomi váltással frissíthető. A motor állapotmódosítási sorát
+- A publikált kiadásokhoz tartozó katalógusok induláskor betöltődnek; az
+  alapértelmezett kiadás pointere atomian frissíthető. A motor állapotmódosítási sorát
   nem tartja fel adatbázis-lekérdezés vagy generálásra várakozás.
-- `/api/game-config`: a fordulómaximum ténylegesen használható kategóriákból
-  jön. Üres katalógushoz explicit unavailable állapot és letiltott indítás
+- `/api/game-config`: választható kiadások és alapértelmezett azonosító;
+  a fordulómaximum kiadásonként a ténylegesen használható kategóriákból jön.
+  Üres katalógushoz explicit unavailable állapot és letiltott indítás
   kell; a jelenlegi legalább egyet váró HTTP-szerződés tudatos bővítést igényel.
 - A szöveges `Question` és a publikus kérdés alapmezői elegendők. A kategória
   nehézsége a névben megjelenhet; az első generátorhoz új motorbeli pontozási
   képlet vagy külön globális difficulty lobbybeállítás nem szükséges.
-- A seed, nyers statok, helyes opciók és generálási metadata szerveroldali
-  adat. A meglévő snapshot-projekció csak megnyitáskor küldi a kérdést/opciókat,
+- A kiadás és a seedválasztás várószobai beállítás, tulajdonosi módosítással;
+  valódi változásuk törli a ready állapotokat. Ez a contracts és a
+  socketprotokoll következő verzióját igényli, nem pusztán új HTML-mezőket.
+- A kézi seed publikus beállítás; az automatikus tényleges seed meccs után
+  megjeleníthető. A nyers statok, helyes opciók, PRNG-állapot és előkészített
+  csomagok szerveroldali adatok. A snapshot-projekció csak megnyitáskor küldi a kérdést/opciókat,
   és csak lezáráskor a helyes halmazt. A countdown továbbra is kategórianévvel működik.
 
 Az MVP megjelenítési nyelve `en`, a LoL-forráslocale `en_US`. A családnevek,
@@ -499,11 +521,15 @@ chromaazonosítás elfogadott, a `chromas` boolean külön forrásjelzés.
 Az Aatrox-minta megadott forrása a verziózott Data Dragon-végpont közvetlen válasza;
 ezekhez további felhasználói pontosítás nem szükséges.
 
+A seedformátum, az automatikus/kézi mód, a kézi seed meccsszintű ELO-kizárása,
+a kategóriaválasztás megőrzése és a választható immutable kiadások külön
+javítási revízióval szintén elfogadottak; a seedterv részletezi őket.
+
 Még nem elfogadott, ebben a tervben javasolt technikai részletek:
 
 - Küszöbök metrikánkénti képzése/lépésköze és az egyenlő jelöltek kihagyása.
 - A véges keresési keret pontos értéke és a metrika-/műveletsorsolási súlyok.
-- A PRNG algoritmusa, verziója és a generálási metadata fizikai táblái.
+- A seedtervben javasolt `xoshiro128**` algoritmus tesztvektorai és a fizikai táblák részletei.
 - `Base stat growth` név és a metrikák pontos egységei.
 
 A továbblépés sorrendje:
@@ -531,4 +557,5 @@ teljes meccs és helyes válaszok publikus kiszivárgásának ellenőrzése.
 
 A csatolt JSON szintaxisát és hivatkozásait ténylegesen átnéztük. A fenti
 generátorteszt-esetek még tervek; működő import vagy generátor nélkül nem
-nevezhetők lefutott teszteknek.
+nevezhetők lefutott teszteknek. A seed-/kiadás-/ELO-esetek a kapcsolódó
+seedterv tesztlistájában szerepelnek, szintén végrehajtás nélkül.

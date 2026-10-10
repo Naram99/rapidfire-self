@@ -1,6 +1,6 @@
 # League of Legends hősadatok — PostgreSQL-import terve
 
-Tervezési dátum: 2026-10-09. Státusz: megvalósítás előtti terv.
+Tervezési dátum: 2026-10-10. Státusz: megvalósítás előtti terv.
 
 Kapcsolódik a [backend kérdésprovideréhez](backend-controller.md), az
 [adatbázis-útmutatóhoz](database-guide.md) és a [megvalósítási tervhez](implementation-plan.md).
@@ -10,6 +10,8 @@ szerződését a [kérdésgenerálási terv](question-generation.md) egyezteti;
 az még nem véglegesített implementációs szerződés.
 Az új hősadatminták [mezőszintű forrásszerződése](lol-source-schema.md)
 rögzíti a ténylegesen megfigyelt JSON-mezőket és a további ellenőrzéseket.
+A [seed- és kiadásválasztási terv](question-seed-version.md) az adatverziót
+a változatlan sablon-/generátorkiadással együtt teszi választhatóvá.
 
 ## 1. Elfogadott hatókör
 
@@ -32,6 +34,9 @@ rögzíti a ténylegesen megfigyelt JSON-mezőket és a további ellenőrzéseke
 - Az MVP adatnyelve `en_US`; a verziózott készletben külön locale mező készíti
   elő a későbbi nyelveket. A rendszerüzenetek továbbra is fordítható kódok.
 - Egy meccs egyetlen, rögzített adatkészletből kapja az összes forduló kérdését.
+- A várószobában a már tárolt, játszható kiadások közül lehet választani;
+  az alapérték a legfrissebb. Az azonos patchhez tartozó tartalmi javítás
+  külön kiadást kap, a régi adatok és generálási szabályok megmaradnak.
 
 ## 2. A csatolt programból megtartott és módosított részek
 
@@ -232,6 +237,15 @@ normalizáló vagy ugyanazon patch újraellenőrzésére. Ez is új készletet �
 nem írja át a régi, meccsekhez rögzített sorokat. Külön kézi visszaállító
 felület nem része az első adminpanel-javaslatnak.
 
+A kész adatimport és a játszható kérdéskiadás külön állapot. A sablonok,
+generátor és kategóriakapacitások validálása után készülhet új
+`question_generation_release`. A `question_catalog.default_release_id`
+csak kész kiadásra mutat; a nyers `active_dataset_id` az adatimport állapotát
+követi. Új, még nem játszható készlet nem cserélheti le a játék alapkiadását.
+Azonos tartalom/szabályok újraimportja a meglévő kiadást használja; tartalmi
+változás új, változatlan revíziót publikál. Egy régi patch újraimportja sem
+előzheti meg alapértékként a numerikusan újabb játszható patch kiadását.
+
 Timeout, korlátos válaszméret és teljes futásidőlimit kell. Átmeneti hálózati,
 429-es és 5xx hibára korlátos retry/backoff használható; 429-nél a `Retry-After`
 figyelembevételével. Sérült JSON, idegen azonosító vagy hiányos adat nem lesz
@@ -292,24 +306,27 @@ flowchart LR
   A[Adminindítás] --> B[Data Dragon letöltés]
   B --> C[Staging készlet és validálás]
   C --> D[Atomi aktívverzió-váltás]
-  D --> E[Új meccs készletének rögzítése]
-  E --> F[Kérdésprovider]
+  D --> E[Választható kiadás validálása és publikálása]
+  E --> M[Meccs kiválasztott kiadásának rögzítése]
+  M --> F[Kérdésprovider]
   F --> G[Natív játékmotor]
 ```
 
 Az adatimport infrastruktúra-/alkalmazási feladat. A natív motor nem ismeri a
 Riot-végpontot, adatbázist vagy nyers JSON-t; kész, validált kérdéseket kap.
 
-A backend a meccs indulásának előkészítésekor rögzíti az aktuális `dataset_id`-t.
-Indulási visszaszámlálás törlése után egy új indulás választhat frissebb készletet.
-Tényleges indulás után minden forduló és előkészítési retry ugyanazt a készletet
-használja. Frissítés közben sem az opciók, sem a helyes válaszok alapja nem vált át.
+A backend a meccs indulásának előkészítésekor rögzíti a várószobában
+kiválasztott `generation_release_id`-t. Ez a kiadás határozza meg a
+`dataset_id`-t is. A közben importált frissebb adatok nem írják át a szoba
+választását. Tényleges indulás után minden forduló és retry ugyanazt a
+készletet használja; sem az opciók, sem a helyes válaszok alapja nem vált át.
 
-A tervezett adatkapcsolat a `game` táblában nullable `question_dataset_id` FK;
-a korábbi mintameccsekben NULL marad, az új generált meccsekben kötelező.
-A meccsmentési checkpoint a rögzített készletazonosítót is továbbadja. A pontos
-provider-bővítést és generálási metadata mezőit a kérdésgenerálási szerződés
-véglegesítésekor vezetjük be, nem helyettesítjük őket most kitalált seedformátummal.
+A korábbi közvetlen `game.question_dataset_id` javaslatot a kiadásra mutató
+`game.generation_release_id` FK váltja fel. Így az adat-/manifest-/generátor-
+kapcsolatnak egy gazdája van, nem kell két eltérő FK összhangját fenntartani.
+A korábbi mintameccseknél NULL, az új generált meccseknél kötelező.
+A checkpoint a kiadást, tényleges seedet, seederedetet és kizárási okot is
+továbbadja a [seedterv](question-seed-version.md) szerint. Ez még nem migráció.
 
 Újrajátszhatósághoz a seed önmagában kevés: a készletazonosító, locale,
 normalizáló- és generátorverzió, kérdéssablonok és a jelöltek stabil rendezése is

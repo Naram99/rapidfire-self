@@ -191,7 +191,9 @@ Az M4 áttekintése után az M5-höz szükséges csomag:
 3. Reprezentatív több szobás próba, mért kapacitás, naplózás és provider/DB hibák üzemeltetési ellenőrzése.
 4. Kiadási/CI ellenőrzések a végleges hostingon. Éles publikálás a felhasználó aktuális utasítása alapján történik.
 
-Nem szükséges a seed/generálás, tiebreak, ELO-algoritmus, social login vagy profilkép előrehozása az MVP-hez. Ezek továbbra is külön későbbi tervek.
+A tiebreak, ELO-számítás, social login és profilkép továbbra is későbbi tervek.
+A felhasználó aktuális iránya a valódi LoL-adatalap és seedelt kérdésgenerálás
+tervezése; ez nem engedélyezi automatikusan az implementációt vagy deploymentet.
 
 A felhasználó által most kiválasztott következő fejlesztési szelet a LoL-hősadatok
 PostgreSQL-tárolása és kizárólag kézi adminfrissítése, a [külön adatimportterv](lol-champion-data.md)
@@ -201,6 +203,16 @@ hozzá tartozó skinre mutat. A képességek `damage` mezője egyelőre `{}` mar
 a sebzésfeldolgozás külön későbbi feladat. A kérdésgenerálás
 ezen az adatalapon tervezhető tovább; a seed-/generátorszerződés még nincs
 véglegesítve. Az adatimportterv dokumentáció, nem elkészült adminpanel vagy migráció.
+
+A [seed- és kiadásválasztási terv](question-seed-version.md) rögzíti a
+2026-10-10-i elfogadott szabályokat: 1–10 ASCII alfanumerikus karakter,
+alapból automatikus seed, várószobai kézi megadás; kézi módban minden
+résztvevő kizárása a későbbi ELO-változásból. Választható a DB-ben tárolt,
+játszható kiadás, alapból a numerikusan legfrissebb. A patch adatát,
+manifestjét és generátorát egy immutable kiadás köti össze; javítás külön
+revízió, a régi megmarad. Azonos seed/kiadás azonos kategóriacsomagokat ad,
+a teljes meccs kérdéssora azonos kategóriaválasztások mellett egyezik.
+A javasolt PRNG `xoshiro128**`, verziózott kezdőállapot- és streamképzéssel.
 
 A csatolt `questionTypes.json` és `topics.json` alapján elkészült a
 [kérdés- és kategóriagenerálási terv](question-generation.md). A nehézségenként
