@@ -91,8 +91,11 @@ Egy publikált kiadás változatlanul összeköti:
   keresési, kerekítési és sorrendezési szabályokat.
 
 A kerek küszöblépés metrikánként külön tartalomadat: HP 50, cooldown 1 s,
-darabszámok 1, alap támadási sebesség 0,05, alap AD-/armor-/regenerációértékek 1,
-növekedési paraméterek 0,2 az elfogadott induló értékek. A `lessThan`/`moreThan`
+darabszámok 1, alap támadási sebesség 0,05, alap AD/armor/magic resist 1,
+alap mana 50, mozgási sebesség 5, támadási távolság 25, a négy aktív
+növekedési paraméter 0,2 az elfogadott induló értékek. A regeneráció és
+támadásisebesség-növekedés nem végleges egységű metrikái kimaradnak az MVP-ből.
+A `lessThan`/`moreThan`
 küszöbével egyező jelöltek kihagyása szintén a változatlan tartalmi szabály része.
 A százalékos sávok az easy/medium/hard nehézségnél az adathalmaz alapján a
 kiadás előkészítésében hangolhatók és arányosíthatók. Challengerben nincs
@@ -161,8 +164,13 @@ Javasolt verziózott leképezés:
 A SHA-256 a backend standard Node-API-ja; a tiszta generátor a rögzített
 állapotot/tényeket kapja, nem végez hálózati vagy adatbázisműveletet.
 A [Blackman–Vigna referencia](https://prng.di.unimi.it/xoshiro128starstar.c)
-az algoritmus forrása; a leendő implementációhoz előre rögzített tesztvektorok
-kellenek. Ebben a dokumentációs szeletben ilyen implementáció vagy teszt még nincs.
+az algoritmus forrása. A [rögzített referencia-tesztvektorok](question-catalog-draft/prng-test-vectors.json)
+már elkészültek: négy nyers kezdőállapot és hét seedelt stream összesen
+176 kimenete egyezett a külön Python- és Node-ellenőrzésben. Az indexhatárok,
+a rejection sampling és a Fisher–Yates keverés is ellenőrizve vannak.
+A vektorok részleges forrásból képzett fixture-hash-t használnak; ez nem
+publikált kiadásazonosító. A leendő natív TS-generátornak ugyanígy kell
+teljesítenie őket; ilyen alkalmazásimplementáció még nincs.
 
 ## 6. Streamhatárok és a kategóriacsomagok
 
@@ -263,8 +271,12 @@ eredmény; nem tart nyitva DB-várakozást a motor állapotmódosítási sorába
 - Metrikánkénti küszöbrács és effektív százalékos profil reprodukálása;
   sávhangolás csak új kiadásban, a korábbi seed/kiadás eredménye változatlan.
 
-A tesztek még nem futottak le, mert az implementáció nincs engedélyezve.
-Az [elkészült leíró katalógustervezet](question-catalog-draft/README.md)
-véglegesítése, a megjelölt metrikalépték-/egységjavaslatok és a véges keresési
-keret még tervezési feladat. Ezeket a publikált kiadás rögzíti;
-az itt leírt seedformátum, verzióválasztás és ELO-kizárás már elfogadott.
+Az alkalmazásintegráció tesztjei még nem futottak le, mert az implementáció
+nincs engedélyezve. A [leíró katalógus](question-catalog-draft/README.md) és
+küszöblépései jóváhagyva, a nem végleges egységű metrikák az MVP-ből kimaradnak.
+A [publikálás előtti ellenőrzés](question-catalog-draft/publication-checks.md)
+207 seedes stat-/hőscímcsomag-referenciát, két nyelven egyező PRNG-vektorokat
+és kanonikus hash-ellenőrzést tartalmaz. A referencia véges kerete és egyenletes
+metrika-/műveletsorsolása mérhető technikai ajánlás; a teljes készleten és a
+leendő generátorban még ellenőrizendő. A fizikai kiadás és táblái nem készültek el.
+Az itt leírt seedformátum, verzióválasztás és ELO-kizárás már elfogadott.

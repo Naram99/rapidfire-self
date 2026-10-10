@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-10-10",
+  "status": "partial",
+  "catalogApproval": "approved",
+  "productionRelease": false,
+  "applicationCodeChanged": false,
+  "reportFile": "publication-checks.md",
+  "coverageFile": "source-and-coverage.json",
+  "witnessesFile": "stat-pack-witnesses.json",
+  "prngVectorsFile": "prng-test-vectors.json",
+  "inputFiles": [
+    "../question-generation-input/champions.json",
+    "../question-generation-input/aatrox.json"
+  ],
+  "checks": [
+    {
+      "pendingItem": 1,
+      "id": "source-dataset",
+      "status": "blocked-missing-details",
+      "passed": [
+        "173 unique champion records and version consistency",
+        "20 finite numeric stats per champion",
+        "Mana filtering for 145 champions",
+        "Aatrox shared summary/detail fields match",
+        "Aatrox skin/chroma parent links and flags",
+        "Aatrox four spell cooldown arrays"
+      ],
+      "missingDetailResponses": 172,
+      "remaining": [
+        "Full skin/chroma source and capability completeness",
+        "All champion parent skin links and cooldown values",
+        "Spell and passive name ambiguity checks",
+        "Source agreement with the user-provided en_US endpoint"
+      ]
+    },
+    {
+      "pendingItem": 2,
+      "id": "effective-profiles",
+      "status": "partial",
+      "checkedStatMetrics": 12,
+      "checkedMetricDifficultyRows": 48,
+      "effectiveStatProfiles": "catalog difficultyProfiles, no metric override needed",
+      "pairsByDifficulty": {
+        "easy": {
+          "feasible": 29,
+          "configured": 36
+        },
+        "medium": {
+          "feasible": 35,
+          "configured": 36
+        },
+        "hard": {
+          "feasible": 51,
+          "configured": 60
+        },
+        "challenger": {
+          "feasible": 84,
+          "configured": 84
+        }
+      },
+      "remaining": [
+        "Skin/chroma/cooldown profiles and feasible pairs on the complete source"
+      ]
+    },
+    {
+      "pendingItem": 3,
+      "id": "five-question-packs",
+      "status": "partial",
+      "checkedCategoryVariants": 9,
+      "uncheckedPlannedCategoryVariants": 18,
+      "referenceAudit": {
+        "seeds": 207,
+        "packsPerSeed": 9,
+        "packsChecked": 1863,
+        "questionsChecked": 9315,
+        "repeatedContextSeeds": 7,
+        "maxOptionSetAttemptsObserved": 1,
+        "optionSetAttemptBudget": 128,
+        "seedCaseAndLeadingZerosChecked": true,
+        "canonicalKeyOrderHashChecked": true,
+        "familyOrderAndRetryIndependenceChecked": true,
+        "reverseSourcePoolOrderChecked": true,
+        "scope": "analytical reference only; no production TypeScript generator or all-seed proof"
+      },
+      "remaining": [
+        "Complete-source reference packs for the other six families",
+        "Native TypeScript generator contract and deterministic failure behavior"
+      ],
+      "limitation": "A successful finite seed sample does not prove success for every valid seed."
+    },
+    {
+      "pendingItem": 4,
+      "id": "search-policy-and-prng",
+      "status": "partial",
+      "referenceRecommendation": {
+        "metricSelection": "uniform feasible metrics",
+        "operatorSelection": "uniform feasible operators within the selected metric",
+        "referenceSelection": "uniform feasible references within the selected operator",
+        "optionSetAttemptBudget": 128,
+        "indexRejectionAttemptBudget": 256,
+        "budgetExhaustion": "error, never biased fallback"
+      },
+      "observedMaximumOptionSetAttempts": 1,
+      "prngVerification": {
+        "runtimes": [
+          "Python 3 exact integer reference",
+          "Node v24.19.0 Math.imul unsigned integer reference"
+        ],
+        "rawStateOutputsCompared": 64,
+        "streamOutputsCompared": 112,
+        "indexBoundaryCases": 4,
+        "invalidIndexSizesRejected": 4,
+        "rejectionBudgetExhaustionChecked": true,
+        "emptyAndSingletonShuffleChecked": true,
+        "productionGeneratorChecked": false
+      },
+      "remaining": [
+        "Full-source costs and bounded indexed search",
+        "Policy version and search manifest for the actual release",
+        "Agreement of the future native generator with reference vectors"
+      ]
+    },
+    {
+      "pendingItem": 5,
+      "id": "immutable-release",
+      "status": "blocked-not-implemented",
+      "passed": [
+        "Canonical reference hashes",
+        "Object key order invariance",
+        "Catalog threshold and text changes alter hashes",
+        "Explicit partial fixture identity shared by reference outputs"
+      ],
+      "fixtureReleaseContentHash": "6f8ac02d5804a5f57e6819c03d88c4e2bc523a3520be80249e0b2cdc73dce97d",
+      "remaining": [
+        "Full normalized dataset",
+        "Versioned normalizer, catalog compiler and generator",
+        "Search and ordering policy manifest",
+        "Actual runnable release assembly and database integration"
+      ]
+    }
+  ],
+  "nextInput": {
+    "format": "ZIP or one champion-keyed combined detail file",
+    "patch": "16.20.1 preferred; all files must use the same patch",
+    "locale": "en_US",
+    "requiredFiles": "Summary plus detailed champion responses for all 173 summary records",
+    "imagesRequired": false
+  }
+}

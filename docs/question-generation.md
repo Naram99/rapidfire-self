@@ -1,6 +1,7 @@
 # League of Legends — kategória- és kérdésgenerálás terve
 
-Tervezési dátum: 2026-10-10. Státusz: egyeztetés alatt, alkalmazáskód nélkül.
+Tervezési dátum: 2026-10-10. Státusz: termékszabályok és katalógus jóváhagyva,
+publikálás előtti ellenőrzések részben elkészültek; alkalmazáskód nélkül.
 
 Alapok: a felhasználó [questionTypes.json](question-generation-input/questionTypes.json)
 és [topics.json](question-generation-input/topics.json) mintái, a
@@ -15,8 +16,8 @@ A JSON-ok itt tervezési referenciák; a futó alkalmazás nem tölti be őket.
 Tartalmukat megőrizzük, csak a formázást igazítjuk a repóhoz. Az alábbi javítások
 és kiegészítések a javasolt szerződéshez tartoznak, nem elkészült generátorhoz.
 Az elfogadott szabályokból elkészült a külön
-[mezőszintű JSON-katalógustervezet](question-catalog-draft/README.md):
-katalógus, angol szövegek és a még nyitott értékjavaslatok listája.
+[jóváhagyott mezőszintű JSON-katalógus](question-catalog-draft/README.md):
+katalógus, angol szövegek és a publikálás előtti ellenőrzések részállapota.
 
 ## 1. Értékelés és elfogadott irány
 
@@ -75,14 +76,16 @@ Az egyeztetés során elfogadott pontosítások:
   kérdéssora azonos kategóriaválasztások mellett egyezik; a választás megmarad.
 - A küszöbök kerek, metrikánként rögzített lépésközű értékek: HP-nál 50,
   cooldownnál 1 másodperc, skin/chroma darabszámnál 1, támadási sebességnél 0,05,
-  alap AD-/armor-/regenerációértéknél 1, növekedési paramétereknél 0,2.
+  alap AD/armor/magic resist esetén 1, alap manánál 50, mozgási sebességnél 5,
+  támadási távolságnál 25, a négy aktív növekedési paraméternél 0,2.
 - A küszöbbel egyező jelöltek kimaradnak a `lessThan`/`moreThan` opcióiból.
 - A kérdésszövegek teljes angol sablonokat használnak, a választási módhoz
   illő egyes/többes számmal, felismerésnél konkrét nyommal és cooldownnál `rank 1`-gyel.
 - A százalékos sávok kiinduló beállítások; az adathalmaz alapján hangolhatók
   és arányosíthatók. A publikált kiadás a végleges sávokat és léptékeket őrzi meg.
 - Az `attackdamageperlevel` metrika nem része az MVP kérdésgenerálásának.
-  A többi növekedési metrika és az alap AD továbbra is használható.
+  Az öt nem végleges egységű regenerációs/támadásisebesség-növekedési metrika
+  szintén kimarad; a HP-/mana-/armor-/magic resist növekedés és az alap AD megmarad.
 - Az MVP nem garantál minden metrikához és kategóriacsaládhoz minden
   nehézséget. Például a mozgási sebesség kimaradhat az easy statkérdésekből;
   ha a teljes család/nehézség sem tud öt különböző kérdést adni, nem kerül a kínálatba.
@@ -277,15 +280,17 @@ rögzíti. Elfogadott induló lépések:
 | Skin/chroma darabszám, chroma skinenként | 1                        | 5, 6, 7.          |
 | Alap támadási sebesség                   | 0,05 támadás/másodperc   | 0,60; 0,65; 0,70. |
 | Alap AD és armor                         | 1 a metrika egységében   | 50, 51, 52.       |
-| Alap HP-/manaregeneráció                 | 1 a metrika egységében   | 5, 6, 7.          |
-| Statnövekedési paraméterek               | 0,2 a metrika egységében | 0,2; 0,4; 0,6.    |
+| Alap mana                                | 50 mana                  | 250, 300, 350.    |
+| Alap magic resist                        | 1 magic resist           | 30, 31, 32.       |
+| Mozgási sebesség                         | 5 egység/másodperc       | 320, 325, 330.    |
+| Támadási távolság                        | 25 egység                | 125, 150, 175.    |
+| HP-/mana-/armor-/magic resist növekedés  | 0,2 a metrika egységében | 0,2; 0,4; 0,6.    |
 
-A további statok saját léptéket kapnak az értéktartományuk és egységük
-alapján; nem öröklik automatikusan az 50-et. Az alap mana, magic resist,
-mozgási sebesség és támadási távolság pontos lépése még a metrikakatalógusban
-véglegesítendő. A lépés pozitív, véges és pontosan megjeleníthető. A 0,2-es
-növekedési lépték a forrásparaméter saját egységében értendő; például
-támadásisebesség-növekedésnél nem 0,2 támadás/másodpercet jelent.
+A négy további ajánlott léptéket a felhasználó jóváhagyta. Új metrika
+saját léptéket kap az értéktartomány és az egység alapján; nem örökli
+automatikusan az 50-et. A lépés pozitív, véges és pontosan megjeleníthető.
+A regeneráció és támadásisebesség-növekedés nem végleges egységű metrikái
+kimaradnak az MVP-ből; a többi négy növekedési paraméter 0,2-es léptéke megmarad.
 
 Javasolt rács: `v = k · thresholdStep`, pozitív egész `k`-val. A jelöltek
 minimuma és maximuma közötti rácspontok véges listát adnak. A használhatósági
@@ -385,11 +390,11 @@ meccs közben nem lazítjuk a szabályokat egy hiányzó kérdés kedvéért.
 
 ### Offline challenger-lefedettség az elfogadott szabállyal
 
-A 17 MVP-statmetrikát újra ellenőriztük százalékos határok nélkül, minden
+A korábbi, még 17 metrikás katalógust újra ellenőriztük százalékos határok nélkül, minden
 numerikus műveletnél hat különböző értéket megkövetelve. A mana-erőforrású
 hősökre szűrés és a nulla referencia kihagyása megmaradt.
 
-Mind a 17 metrikához van legalább hat különböző forrásérték, és mindegyiknél
+Mind a 17 akkori metrikához volt legalább hat különböző forrásérték, és mindegyiknél
 előállítható a `min`, `max`, `exactMatch`, `min2nd` és `max2nd` megfelelő
 hatopciós jelöltkészlete. Például mozgási sebességnél nyolc, alap AD-nál
 25, HP-regeneráció-növekedésnél 14, manaregeneráció-növekedésnél 13 különböző
@@ -398,10 +403,13 @@ van olyan pozitív rácspont is, amelyhez hat különböző, küszöbtől eltér
 érték adható, mindkét oldalon legalább egy jelölttel. Az ismeretlen léptékű
 metrikák küszöbös típusairól még nem állítunk teljesíthetőséget.
 
-Ez továbbra is jelöltlefedettség: nem bizonyít teljes ötös kérdéscsomagot,
-seedtesztet vagy a nehézségek közötti eltérő opcióhalmazt. A teljes
-skin/chroma- és cooldown-készletre még külön ellenőrzés kell. A kategória
-csak akkor kerülhet kínálatba, ha az öt különböző kérdés is biztosítható.
+Ez a korábbi vizsgálat jelöltlefedettség volt. A most jóváhagyott katalógus
+12 statmetrikájához már a küszöblépések és a statcsaládok ötös csomagjai is
+ellenőrizve vannak, 207 seedes elemzési referenciával. A részletes
+[publikálás előtti jelentés](question-catalog-draft/publication-checks.md)
+elkülöníti a lefutott elemzést a hiányzó teljes forrástól és a leendő
+generátorintegrációtól. A teljes skin/chroma- és cooldown-készletre még
+külön ellenőrzés kell.
 
 ### Nulla, kerekítés és kevés jelölt
 
@@ -429,17 +437,18 @@ fordíthatja meg a 10%-os határ vagy egy pontos egyezés helyességét.
 
 A jelenlegi mezőtérkép megtartható, egységekkel és alanyszűréssel kiegészítve.
 A forrás `mp` mezője más erőforrású hősöknél nem automatikusan mana.
-Mana-/manaregeneráció-kérdéshez az adatadapternek külön erőforrástípust kell
+Mana-/mananövekedés-kérdéshez az adatadapternek külön erőforrástípust kell
 szolgáltatnia, és csak mana-hősök kerülhetnek a jelöltek közé. Ezt a puszta
 pozitív `mp` értékből nem lehet kikövetkeztetni.
 
 A támadási sebesség és százalékos támadásisebesség-növekedés eltérő egységek.
-A HP-/manaregeneráció szövegéhez is rögzített időegység kell. Ezeket az adapter
-és a metrikaleírás ellenőrzi a tényleges adatforráson.
+A HP-/manaregeneráció szövegéhez is rögzített időegység kell. Az öt érintett
+metrikát a felhasználó az MVP-ből kizárta, így egységük további tisztázása
+nem blokkolja az MVP-katalógust. A forrásmezők továbbra is megőrizhetők.
 
 A `baseStatsPerLevel` a kiválasztott `*perlevel` forrásparamétert hasonlítja
 össze. Nem számolja ki a tetszőleges szintű hős tényleges statját: a LoL
-növekedési képlete és egyes statok értelmezése külön feldolgozás. Javasolt
+növekedési képlete és egyes statok értelmezése külön feldolgozás. Elfogadott
 megjelenítési név: `Base stat growth`, egyértelmű, forrásparamétert kérő
 szöveggel. A `baseStatsLvlRandom` ezért továbbra is kikapcsolt.
 Az `attackdamageperlevel` kivétel: a felhasználó döntése alapján nem része
@@ -725,8 +734,9 @@ javítási revízióval szintén elfogadottak; a seedterv részletezi őket.
 
 A metrikánkénti kerek küszöblépés és az adatfüggően hangolható százalékos
 sáv elfogadott. HP-nál 50, cooldownnál 1 s, darabszámoknál 1, alap támadási
-sebességnél 0,05, alap AD-/armor-/regenerációértéknél 1, növekedési
-paramétereknél 0,2 az induló lépték. A küszöbbel egyező jelöltek kihagyása és
+sebességnél 0,05, alap AD-/armor-/magic resist értéknél 1, alap manánál 50,
+mozgási sebességnél 5, támadási távolságnál 25, a négy aktív növekedési
+paraméternél 0,2 az induló lépték. A küszöbbel egyező jelöltek kihagyása és
 a kérdésszövegek javítási iránya szintén elfogadott. A hangolt profil kiadásonként változatlan.
 
 Az `attackdamageperlevel` MVP-beli kizárása és a nem teljesíthető
@@ -735,20 +745,27 @@ sem minimum-, sem maximumeltérés nincs. Minden challenger numerikus
 kérdéshez hat különböző metrikaértékű opció kell; enélkül a metrika ezen a
 nehézségen kimarad. Az öt kérdéses teljes kategóriacsomag feltétele megmarad.
 
-Még nem elfogadott, ebben a tervben javasolt technikai részletek:
+A katalógus, a `Base stat growth` név és az ajánlott küszöblépések jóváhagyva.
+A bizonytalan egységű `hpregen`, `mpregen`, `hpregenperlevel`,
+`mpregenperlevel` és `attackspeedperlevel` az MVP-ből elhalasztva.
+A korábbi AD-növekedés-kizárás megmarad; 12 aktív statmetrika maradt.
 
-- Az alap mana/magic resist/mozgási sebesség/támadási távolság lépésközei és a végleges effektív sávok.
-- A véges keresési keret pontos értéke és a metrika-/műveletsorsolási súlyok.
-- A seedtervben javasolt `xoshiro128**` algoritmus tesztvektorai és a fizikai táblák részletei.
-- `Base stat growth` név és a metrikák pontos egységei.
+Fennmaradó technikai ellenőrzések:
+
+- A teljes részletes adathalmaz, valamint a skin/chroma- és képességkategóriák profiljai.
+- Az elemzési referenciában használt véges keresési keret és egyenletes sorsolási súlyok
+  ellenőrzése a teljes készleten és a leendő natív generátorban.
+- A meglévő `xoshiro128**` tesztvektorok alkalmazásbeli megfelelősége,
+  a fizikai táblák és az immutable kiadás tényleges összeállítása.
 
 A továbblépés sorrendje:
 
-1. A [konkrét JSON-tervezet](question-catalog-draft/README.md) átnézése és a
-   megjelölt értékjavaslatok, valamint a fennmaradó technikai részletek véglegesítése.
+1. A [publikálás előtti ellenőrzések](question-catalog-draft/publication-checks.md)
+   befejezése az azonos patchhez és `en_US` locale-hoz tartozó teljes hősrészletekkel.
+   A statlefedettség, a stat-/hőscímcsomagok referenciavizsgálata és a két nyelvű
+   PRNG-vektor-összevetés már elkészült.
 2. A [forrásminták mezőszintű szerződésének](lol-source-schema.md) ellenőrzése
-   élő, teljes hősletöltéssel, különösen a chromafelsorolás teljessége szempontjából.
-   A mintákban az erőforrástípus és a numerikus cooldown szerkezete már ellenőrizhető.
+   a teljes készleten, különösen a chromafelsorolás teljessége szempontjából.
 3. Az adatimport/séma megvalósítása és referenciaminták készítése.
 4. Katalógusfordító és tiszta szöveges generátor, stabil seedtesztvektorokkal.
 5. Meglévő provider/meccsmentés és HTTP rendelkezésreállási szerződés illesztése.
@@ -770,9 +787,10 @@ teljes meccs és helyes válaszok publikus kiszivárgásának ellenőrzése.
 
 A csatolt JSON szintaxisát és hivatkozásait ténylegesen átnéztük. A fenti
 generátorteszt-esetek még tervek; működő import vagy generátor nélkül nem
-nevezhetők lefutott teszteknek. A két statcsalád 18 metrikájának mintabeli
-sávlefedettségét és az ismert küszöbrácsokat ténylegesen ellenőriztük a csatolt
-listán, majd a 17 MVP-metrikát az új challenger szabállyal is; a teljes
-skin/chroma-/cooldown-készlet és a generátorcsomagok még
-nem ellenőrzöttek. A seed-/kiadás-/ELO-esetek a kapcsolódó
-seedterv tesztlistájában szerepelnek, szintén végrehajtás nélkül.
+nevezhetők lefutott alkalmazásteszteknek. A korábbi 18/17 metrikás lefedettségi
+vizsgálat után a jóváhagyott 12 statmetrikát az összes engedélyezett művelettel
+ellenőriztük. Az elemzési referencia 207 seedes, 1863 ötös csomagos próbája
+9315 kérdésen lefutott; a stat-/hőscímcsomagok ismétlődését és helyességét
+vizsgálta. A PRNG- és streamvektorok Pythonban és Node-ban egyeznek.
+A teljes skin/chroma-/cooldown-készlet, a futó TS-generátor és a kiadás-/ELO-/UI
+integráció tesztjei továbbra is hiányoznak.

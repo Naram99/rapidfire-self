@@ -1,8 +1,9 @@
-# League of Legends — JSON-katalógustervezet
+# League of Legends — jóváhagyott JSON-katalógus
 
-Dátum: 2026-10-10. Státusz: átnézésre kész tervezet. A mezőnevek és a
-fájlszerkezet technikai javaslatok; a termékszabályok a korábban elfogadott
-[generálási tervet](../question-generation.md) követik.
+Dátum: 2026-10-10. Státusz: a katalógus és az ajánlott küszöblépések
+felhasználó által jóváhagyva; a publikálás előtti ellenőrzések részben elkészültek.
+A termékszabályok az elfogadott [generálási tervet](../question-generation.md)
+követik. A meglévő mappanév a korábbi hivatkozások miatt megmarad.
 
 ## Fájlok és olvasási sorrend
 
@@ -10,39 +11,43 @@ fájlszerkezet technikai javaslatok; a termékszabályok a korábban elfogadott
    `difficultyProfiles` után a `families`, majd a `metrics` részt érdemes átnézni.
 2. [texts.en.json](texts.en.json): az angol kategórianevek, metrikanevek,
    mértékegységek, opciófeliratok és teljes kérdéssablonok.
-3. [review.json](review.json): a még nem elfogadott értékjavaslatok pontos
-   JSON-pointerrel, valamint a publikálás előtti ellenőrzések.
+3. [review.json](review.json): az elfogadott értékek pontos JSON-pointerrel,
+   az MVP-ből elhalasztott metrikák és a publikálás előtti ellenőrzések.
+4. [publication-checks.md](publication-checks.md): az elvégzett ellenőrzések,
+   eredmények, technikai ajánlások és a lezáráshoz hiányzó adatok.
 
-A katalógus 21 numerikus metrikát tartalmaz: 17 hősstat, három skin/chroma
+A katalógus 16 numerikus metrikát tartalmaz: 12 hősstat, három skin/chroma
 darabszám és egy rank 1 cooldown. Kilenc aktívnak tervezett szöveges család
 van: hat numerikus és három felismerési. A 18 eredeti családkulcs megmarad;
 a képes és egyéb későbbi családok `enabled: false` jelölést kapnak.
 Az angol fájlban 45 teljes kérdéssablon szerepel.
 
 Az `enabled: true` a tervezett használatot jelenti, nem igazolt játszhatóságot.
-A fájlok nem tartalmaznak generált kérdéseket vagy valódi kiadásazonosítót.
-Az alkalmazás még nem tölti be őket. A forrásként kapott JSON-ok külön,
-változatlan referenciák maradnak.
+A katalógus és a szövegfájl nem tartalmaz generált kérdéseket vagy valódi
+kiadásazonosítót. A külön ellenőrzési fájlok elemzési mintákat és
+tesztvektorokat tartalmaznak, valódi kiadásnak nem minősülnek.
+Az alkalmazás még nem tölti be a katalógust. A forrásként kapott JSON-ok
+külön, változatlan referenciák maradnak.
 
 ## Mezők
 
-| Mező                                       | Jelentés                                                                     |
-| ------------------------------------------ | ---------------------------------------------------------------------------- |
-| `schemaVersion`                            | A katalógus szerkezetének verziója; nem LoL-patch vagy generátorverzió.      |
-| `catalogId`, `topicId`                     | A logikai katalógus és a meccstéma stabil kulcsa.                            |
-| `status`                                   | Itt `draft`; ilyen tervezet nem publikálható játszható kiadásként.           |
-| `language`, `translationsFile`             | A kérdésnyelv és a hozzá tartozó szövegfájl.                                 |
-| `supportedMedia`                           | Az MVP-ben kizárólag `text`.                                                 |
-| `categoryIdPattern`, `categoryLabelKey`    | Téma + család + nehézség stabil kulcsa, illetve fordítható felirata.         |
-| `rules`                                    | Öt kérdés, értékkezelés, helyeshalmaz, küszöb és ismétlődés közös szabályai. |
-| `subjects`                                 | Az opciók alanytípusa, stabil külső kulcsmezői és megjelenítési sablonja.    |
-| `units`, `valueFormat`                     | Mértékegységek és pontos, angol számformázás.                                |
-| `operators`                                | Műveletek jelentése, válaszadási módja és referenciája.                      |
-| `difficultyProfiles`                       | Központi opciószám, numerikus műveletlista, sáv és értékkülönbözőség.        |
-| `metricDifficultyOverrides`                | Publikálás előtt hangolt metrika/nehézség sávok; most üres lista.            |
-| `metrics`                                  | Adatolvasás logikai hivatkozása, egység, küszöblépés, kapacitás és szűrés.   |
-| `families`                                 | Numerikus vagy felismerési családok és a hozzájuk tartozó metrikák/sablonok. |
-| `excludedMetricIds`, `deferredOperatorIds` | Az MVP-ből kizárt metrika és a későbbi műveleti tervek.                      |
+| Mező                                       | Jelentés                                                                       |
+| ------------------------------------------ | ------------------------------------------------------------------------------ |
+| `schemaVersion`                            | A katalógus szerkezetének verziója; nem LoL-patch vagy generátorverzió.        |
+| `catalogId`, `topicId`                     | A logikai katalógus és a meccstéma stabil kulcsa.                              |
+| `status`                                   | Itt `approved`: leíró konfiguráció jóváhagyva; önmagában nem játszható kiadás. |
+| `language`, `translationsFile`             | A kérdésnyelv és a hozzá tartozó szövegfájl.                                   |
+| `supportedMedia`                           | Az MVP-ben kizárólag `text`.                                                   |
+| `categoryIdPattern`, `categoryLabelKey`    | Téma + család + nehézség stabil kulcsa, illetve fordítható felirata.           |
+| `rules`                                    | Öt kérdés, értékkezelés, helyeshalmaz, küszöb és ismétlődés közös szabályai.   |
+| `subjects`                                 | Az opciók alanytípusa, stabil külső kulcsmezői és megjelenítési sablonja.      |
+| `units`, `valueFormat`                     | Mértékegységek és pontos, angol számformázás.                                  |
+| `operators`                                | Műveletek jelentése, válaszadási módja és referenciája.                        |
+| `difficultyProfiles`                       | Központi opciószám, numerikus műveletlista, sáv és értékkülönbözőség.          |
+| `metricDifficultyOverrides`                | Publikálás előtt hangolt metrika/nehézség sávok; most üres lista.              |
+| `metrics`                                  | Adatolvasás logikai hivatkozása, egység, küszöblépés, kapacitás és szűrés.     |
+| `families`                                 | Numerikus vagy felismerési családok és a hozzájuk tartozó metrikák/sablonok.   |
+| `excludedMetricIds`, `deferredOperatorIds` | Az MVP-ből kizárt metrika és a későbbi műveleti tervek.                        |
 
 Az objektum kulcsa maga az azonosító: például `metrics.hp` azonosítója `hp`.
 Nem ismételjük meg külön `id` mezőben. Ezek tartalomkulcsok; az adatbázis
@@ -105,25 +110,28 @@ százalékos korlátot bevezető felülírás.
 
 ## Metrikák és adatfeltételek
 
-Az alap AD-/armor-/regenerációértékek küszöblépése 1, a növekedési
-paramétereké 0,2. HP 50, attack speed 0,05, cooldown és darabszám 1.
-Négy további küszöblépés a tervezetben **javaslat**, a `review.json` jelöli:
+Az alap AD-/armorértékek küszöblépése 1, a négy engedélyezett növekedési
+paraméteré 0,2. HP 50, attack speed 0,05, cooldown és darabszám 1.
+A négy további ajánlott küszöblépés szintén **elfogadott**:
 
-| Metrika           | Javasolt lépték |
-| ----------------- | --------------- |
-| Alap mana         | 50              |
-| Alap magic resist | 1               |
-| Mozgási sebesség  | 5               |
-| Támadási távolság | 25              |
+| Metrika           | Elfogadott lépték |
+| ----------------- | ----------------- |
+| Alap mana         | 50                |
+| Alap magic resist | 1                 |
+| Mozgási sebesség  | 5                 |
+| Támadási távolság | 25                |
 
-A regeneráció 5 másodperces mértékegysége és az attack speed growth
-százalékpont-egysége szintén külön ellenőrizendő javaslatként szerepel.
-A `Base stat growth` megjelenítési név is átnézendő; a sablon a forrás
-növekedési paraméterét kérdezi, nem kiszámított, tényleges szintenkénti statot.
+A nem végleges egységű `hpregen`, `mpregen`, `hpregenperlevel`,
+`mpregenperlevel` és `attackspeedperlevel` kimarad az MVP-katalógusból.
+Az `hpperlevel`, `mpperlevel`, `armorperlevel` és `spellblockperlevel`
+megmarad. A `Base stat growth` megjelenítési név elfogadott; a sablon
+a forrás növekedési paraméterét kérdezi, nem kiszámított,
+tényleges szintenkénti statot.
 
-Mana és manaregeneráció csak `resourceType: mana` hősökből készülhet.
-Az `attackdamageperlevel` kizárt metrika; a hét másik növekedési metrika
-és az alap AD ettől továbbra is aktívnak tervezett.
+Mana és mananövekedés csak `resourceType: mana` hősökből készülhet.
+Az `attackdamageperlevel` továbbra is kizárt metrika; az alap AD megmarad.
+A kizárások a kérdéskatalógusra vonatkoznak; a nyers forrásadatokban és
+a tervezett importban a későbbi felhasználásra megőrizhetők ezek a mezők.
 
 A skinszám kihagyja az alapkinézetet és a chromákat. A chromaszámot
 tényleges, teljes chromarekordokból számoljuk; a forrás `chromas` booleanja
@@ -190,13 +198,17 @@ ugyanazon hős többször előforduló nyoma önmagában nem ad második helyes 
 A dataset-, manifest-, szöveg- és generátorverziókat egy immutable
 [generálási kiadás](../question-seed-version.md) kapcsolja össze. A kiadás
 tartalomhash-e a végleges katalógust és az angol szövegeket is lefedi;
-nem írunk hamis hash-t, patchszámot vagy kiadás-UUID-t ebbe a tervezetbe.
+nem írunk kiadás-UUID-t ebbe a katalógusba. A külön tesztvektorok részleges
+forrásból képzett hash-e kifejezetten referenciafixture-azonosító.
 Egy későbbi fordítás külön nyelvi manifest/kiadás; nem írja át az angol kiadást.
 Seed, ELO, session, DB-migráció és PRNG-állapot külön felelősség.
 
 ## Ellenőrzési határ
 
-A tervezet JSON-szintaxisa, hivatkozásai, placeholderjei és az elfogadott
-konfigurációs szabályok külön ellenőrizhetők. Ez nem működő generátor,
-runtime validátor, teljes forrásimport vagy garantált ötös kérdéscsomag.
-A `review.json` publikálás előtti listája ezeket továbbra is nyitva tartja.
+A katalógus JSON-szintaxisa, hivatkozásai, placeholderjei és konfigurációs
+szabályai ellenőrizve. A 12 statmetrika lefedettsége, a stat- és hőscímcsomagok
+207 seedes referenciavizsgálata és a PRNG-vektorok két nyelven történő
+összevetése elkészült. Ez elemzési ellenőrzés; teljes forrásimport,
+alkalmazásgenerátor vagy minden seedre adott sikerességi garancia még nincs.
+A nyitott részfeladatokat a [publication-checks.json](publication-checks.json)
+és a hozzá tartozó [jelentés](publication-checks.md) rögzíti.

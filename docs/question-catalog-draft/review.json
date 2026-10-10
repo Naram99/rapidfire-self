@@ -1,14 +1,30 @@
 {
-  "status": "draft-for-review",
+  "status": "approved-pending-publication-checks",
   "catalogFile": "catalog.json",
   "translationsFile": "texts.en.json",
-  "proposalNote": "A mezőnevek és a JSON szerkezete technikai javaslatok. Az alábbi értékek még nem felhasználó által elfogadott döntések.",
-  "proposedValues": [
+  "proposalNote": "A katalógus szerkezete, neve és a négy ajánlott küszöblépés elfogadott. A bizonytalan regenerációs és attack speed growth egységű metrikák kimaradnak az MVP-ből. A jóváhagyás nem játszható kiadás publikálása.",
+  "proposedValues": [],
+  "pendingBeforePublication": [
+    "A teljes normalizált skin/chroma-/cooldown-adathalmaz és erőforrásbesorolás ellenőrzése.",
+    "Az easy/medium/hard metrikánkénti effektív százalékos profiljai és a használható párok lefedettsége.",
+    "Öt különböző kérdés és nehézségek között eltérő alanyhalmaz ellenőrzése minden aktivált változathoz.",
+    "A generátor véges keresési kerete, metrika-/műveletsorsolási súlyai és PRNG-tesztvektorai a kiadásmodellben.",
+    "Az immutable kiadás összeállítása az adatokból, a végleges manifestből, a szövegekből és a generátorverzióból."
+  ],
+  "outsideCatalog": [
+    "match seed values",
+    "dataset and generation release IDs",
+    "database UUIDs",
+    "player scores and ELO changes",
+    "PRNG internal state",
+    "SMTP or authentication configuration"
+  ],
+  "acceptedValues": [
     {
       "id": "mana-threshold-step",
       "path": "/metrics/mp/thresholdStep",
       "value": 50,
-      "reason": "Kerek manaértékek; a teljes adat és az ötös csomag lefedettségével még ellenőrizendő."
+      "reason": "Elfogadott kerek manaértékek; a listán a lépték és az ötös referenciacsomagok ellenőrizve."
     },
     {
       "id": "magic-resist-threshold-step",
@@ -33,45 +49,19 @@
       "path": "/families/baseStatsPerLevel/nameKey",
       "value": "families.baseStatsPerLevel",
       "translationPath": "/families.baseStatsPerLevel",
-      "proposedText": "Base stat growth",
-      "reason": "A forrás növekedési paraméterét kérdezi; nem számít tényleges szintenkénti statot."
-    },
-    {
-      "id": "regeneration-time-unit",
-      "paths": [
-        "/metrics/hpregen/unitId",
-        "/metrics/mpregen/unitId",
-        "/metrics/hpregenperlevel/unitId",
-        "/metrics/mpregenperlevel/unitId"
-      ],
-      "values": [
-        "hpPer5Seconds",
-        "manaPer5Seconds",
-        "hpPer5Seconds",
-        "manaPer5Seconds"
-      ],
-      "reason": "HP/manaregeneráció 5 másodperces egységben; az élő forrás szemantikájával még ellenőrizendő."
-    },
-    {
-      "id": "attack-speed-growth-unit",
-      "path": "/metrics/attackspeedperlevel/unitId",
-      "value": "percentagePoints",
-      "reason": "A forrás növekedési paraméterének egysége százalékpont; nem támadás/másodperc. Élő forrásellenőrzés még szükséges."
+      "reason": "A forrás növekedési paraméterét kérdezi; nem számít tényleges szintenkénti statot.",
+      "acceptedText": "Base stat growth"
     }
   ],
-  "pendingBeforePublication": [
-    "A teljes normalizált skin/chroma-/cooldown-adathalmaz és erőforrásbesorolás ellenőrzése.",
-    "Az easy/medium/hard metrikánkénti effektív százalékos profiljai és a használható párok lefedettsége.",
-    "Öt különböző kérdés és nehézségek között eltérő alanyhalmaz ellenőrzése minden aktivált változathoz.",
-    "A generátor véges keresési kerete, metrika-/műveletsorsolási súlyai és PRNG-tesztvektorai a kiadásmodellben.",
-    "Az immutable kiadás összeállítása az adatokból, a végleges manifestből, a szövegekből és a generátorverzióból."
+  "deferredMvpMetrics": [
+    {
+      "metricIds": ["hpregen", "mpregen", "hpregenperlevel", "mpregenperlevel"],
+      "reason": "A regeneráció időegysége nem végleges; a felhasználó az érintett metrikákat későbbre halasztotta."
+    },
+    {
+      "metricIds": ["attackspeedperlevel"],
+      "reason": "A növekedési paraméter százalékpont-egysége nem végleges; a felhasználó ezt a metrikát későbbre halasztotta."
+    }
   ],
-  "outsideCatalog": [
-    "match seed values",
-    "dataset and generation release IDs",
-    "database UUIDs",
-    "player scores and ELO changes",
-    "PRNG internal state",
-    "SMTP or authentication configuration"
-  ]
+  "publicationCheckResultsFile": "publication-checks.json"
 }

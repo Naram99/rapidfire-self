@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "catalogId": "league-of-legends-text-mvp",
-  "status": "draft",
+  "status": "approved",
   "topicId": "league-of-legends",
   "language": "en",
   "translationsFile": "texts.en.json",
@@ -82,14 +82,6 @@
       "singularKey": "units.distance.singular",
       "pluralKey": "units.distance.plural"
     },
-    "hpPer5Seconds": {
-      "singularKey": "units.hpPer5Seconds.singular",
-      "pluralKey": "units.hpPer5Seconds.plural"
-    },
-    "manaPer5Seconds": {
-      "singularKey": "units.manaPer5Seconds.singular",
-      "pluralKey": "units.manaPer5Seconds.plural"
-    },
     "attackDamage": {
       "singularKey": "units.attackDamage.singular",
       "pluralKey": "units.attackDamage.plural"
@@ -97,10 +89,6 @@
     "attacksPerSecond": {
       "singularKey": "units.attacksPerSecond.singular",
       "pluralKey": "units.attacksPerSecond.plural"
-    },
-    "percentagePoints": {
-      "singularKey": "units.percentagePoints.singular",
-      "pluralKey": "units.percentagePoints.plural"
     },
     "skinCount": {
       "singularKey": "units.skinCount.singular",
@@ -298,32 +286,6 @@
       "requiredCapabilities": ["championStats"],
       "filters": {}
     },
-    "hpregen": {
-      "subjectType": "champions",
-      "source": {
-        "kind": "championStat",
-        "statKey": "hpregen"
-      },
-      "nameKey": "metrics.hpregen",
-      "unitId": "hpPer5Seconds",
-      "thresholdStep": 1,
-      "requiredCapabilities": ["championStats"],
-      "filters": {}
-    },
-    "mpregen": {
-      "subjectType": "champions",
-      "source": {
-        "kind": "championStat",
-        "statKey": "mpregen"
-      },
-      "nameKey": "metrics.mpregen",
-      "unitId": "manaPer5Seconds",
-      "thresholdStep": 1,
-      "requiredCapabilities": ["championStats", "championResourceTypes"],
-      "filters": {
-        "resourceType": "mana"
-      }
-    },
     "attackdamage": {
       "subjectType": "champions",
       "source": {
@@ -394,44 +356,6 @@
       },
       "nameKey": "metrics.spellblockperlevel",
       "unitId": "magicResist",
-      "thresholdStep": 0.2,
-      "requiredCapabilities": ["championStats"],
-      "filters": {}
-    },
-    "hpregenperlevel": {
-      "subjectType": "champions",
-      "source": {
-        "kind": "championStat",
-        "statKey": "hpregenperlevel"
-      },
-      "nameKey": "metrics.hpregenperlevel",
-      "unitId": "hpPer5Seconds",
-      "thresholdStep": 0.2,
-      "requiredCapabilities": ["championStats"],
-      "filters": {}
-    },
-    "mpregenperlevel": {
-      "subjectType": "champions",
-      "source": {
-        "kind": "championStat",
-        "statKey": "mpregenperlevel"
-      },
-      "nameKey": "metrics.mpregenperlevel",
-      "unitId": "manaPer5Seconds",
-      "thresholdStep": 0.2,
-      "requiredCapabilities": ["championStats", "championResourceTypes"],
-      "filters": {
-        "resourceType": "mana"
-      }
-    },
-    "attackspeedperlevel": {
-      "subjectType": "champions",
-      "source": {
-        "kind": "championStat",
-        "statKey": "attackspeedperlevel"
-      },
-      "nameKey": "metrics.attackspeedperlevel",
-      "unitId": "percentagePoints",
       "thresholdStep": 0.2,
       "requiredCapabilities": ["championStats"],
       "filters": {}
@@ -508,8 +432,6 @@
         "armor",
         "spellblock",
         "attackrange",
-        "hpregen",
-        "mpregen",
         "attackdamage",
         "attackspeed"
       ],
@@ -533,10 +455,7 @@
         "hpperlevel",
         "mpperlevel",
         "armorperlevel",
-        "spellblockperlevel",
-        "hpregenperlevel",
-        "mpregenperlevel",
-        "attackspeedperlevel"
+        "spellblockperlevel"
       ],
       "difficultyIds": ["easy", "medium", "hard", "challenger"],
       "templateKeys": {
@@ -696,6 +615,13 @@
       "requiredCapabilities": ["championTitles"]
     }
   },
-  "excludedMetricIds": ["attackdamageperlevel"],
+  "excludedMetricIds": [
+    "attackdamageperlevel",
+    "hpregen",
+    "mpregen",
+    "hpregenperlevel",
+    "mpregenperlevel",
+    "attackspeedperlevel"
+  ],
   "deferredOperatorIds": ["multiSelect", "modifiedImage"]
 }

@@ -214,20 +214,22 @@ revízió, a régi megmarad. Azonos seed/kiadás azonos kategóriacsomagokat ad,
 a teljes meccs kérdéssora azonos kategóriaválasztások mellett egyezik.
 A javasolt PRNG `xoshiro128**`, verziózott kezdőállapot- és streamképzéssel.
 Elfogadottak a kerek, metrikánkénti küszöblépések: HP 50, cooldown 1 s,
-darabszám 1, alap támadási sebesség 0,05, alap AD-/armor-/regenerációérték 1,
-növekedési paraméter 0,2. A küszöbbel egyező jelölteket a `lessThan`/`moreThan`
+darabszám 1, alap támadási sebesség 0,05, alap AD/armor/magic resist 1,
+alap mana 50, mozgási sebesség 5, támadási távolság 25, a négy aktív
+növekedési paraméter 0,2. A nem végleges egységű regeneráció és
+támadásisebesség-növekedés kimarad az MVP-katalógusból. A küszöbbel egyező jelölteket a `lessThan`/`moreThan`
 kihagyja. A kérdésszövegek javítása elfogadott: teljes sablonok, konkrét
 felismerési nyom, egyes/többes szám és cooldownnál `rank 1`.
 A két statcsalád 18 metrikájának offline sávlefedettségét ellenőriztük a
 csatolt listán; az eredmények metrikánkénti/nehézségenkénti hangolást indokolnak,
 vagy a nem teljesíthető párok kihagyását. Az `attackdamageperlevel` az
-elfogadott MVP-katalógusból kimarad; az eredeti 18 statmetrikából 17 marad.
+elfogadott MVP-katalógusból kimarad; ebben a korábbi vizsgálatban az eredeti 18 statmetrikából 17 maradt.
 Nem szükséges minden metrikához vagy kategóriához minden nehézséget
 biztosítani: a mozgási sebesség például kimaradhat az easy statkérdésekből.
 Csak öt különböző, 4/6 opciós kérdést biztosító család/nehézség kerül kínálatba.
 A challengerben nincs minimum- vagy maximumeltérés, és minden numerikus
-kérdés hat különböző értékű opciót igényel. Az új szabállyal mind a 17
-MVP-statmetrikán ellenőriztük az öt numerikus referenciaalapú művelet
+kérdés hat különböző értékű opciót igényel. Az új szabállyal a korábbi 17
+statmetrikán ellenőriztük az öt numerikus referenciaalapú művelet
 hatopciós jelöltlistájának teljesíthetőségét; az ismert küszöblépésű metrikák
 küszöbös jelöltlistái is teljesíthetők.
 Ez nem teljes skin-/cooldown-készletre vagy működő generátorra adott garancia.
@@ -245,10 +247,15 @@ A nulla referencia kihagyása, az inkluzív sávhatárok és a holtversenymentes
 megoldások elfogadottak. Az új generátor easy/medium esetén négy,
 hard/challenger esetén hat opcióval dolgozik. Azonos család és nehézség alatt nincs ismétlődő kérdés;
 más nehézségen eltérő opcióhalmazzal visszatérhet ugyanaz a prompt.
-Az [átnézhető JSON-katalógustervezet](question-catalog-draft/README.md)
-21 numerikus metrikát, kilenc szöveges családot és 45 teljes angol
-kérdéssablont tartalmaz. A külön `review.json` jelöli a még nem elfogadott
-küszöblépés-/egység-/névjavaslatokat. Ez leíró konfiguráció, nem alkalmazáskód.
+A [jóváhagyott JSON-katalógus](question-catalog-draft/README.md)
+16 numerikus metrikát, kilenc szöveges családot és 45 teljes angol
+kérdéssablont tartalmaz. A négy további küszöblépés és a `Base stat growth` név
+elfogadott. Az öt bizonytalan egységű metrika elhalasztása után 12 hősstat
+marad. A `review.json` és a [publikálás előtti jelentés](question-catalog-draft/publication-checks.md)
+rögzíti az ellenőrzések részállapotát: 48 stat/nehézség sor, 207 seed,
+1863 ötös referenciacsomag és 9315 kérdés ellenőrizve; 176 PRNG-kimenet
+Pythonban és Node-ban egyezett. Ez leíró konfiguráció és elemzési referencia,
+nem alkalmazáskód, teljes készlet vagy már publikált kiadás.
 A [mezőszintű forrásszerződés](lol-source-schema.md) feldolgozza a csatolt
 173 hősös listát és az Aatrox-részletet; rögzíti a `partype`, `cooldown[]`
 és `parentSkin`/`chromas` mezőket. A `parentSkin` jelenléte szerinti chromaazonosítás
