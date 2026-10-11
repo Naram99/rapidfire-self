@@ -62,10 +62,12 @@ function icon(value: unknown): string {
 function unique(values: readonly (string | number)[]): void {
   if (new Set(values).size !== values.length) invalid();
 }
+export function isSourceVersion(value: unknown): value is string {
+  return typeof value === 'string' && /^\d{1,4}\.\d{1,4}\.\d{1,4}$/.test(value);
+}
 export function sourceVersion(value: unknown): string {
-  const version = string(value);
-  if (!/^\d{1,4}\.\d{1,4}\.\d{1,4}$/.test(version)) return invalid();
-  return version;
+  if (!isSourceVersion(value)) return invalid();
+  return value;
 }
 export function jsonValue(value: unknown): JsonValue {
   if (value === null || typeof value === 'boolean' || typeof value === 'string')

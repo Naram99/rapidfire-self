@@ -1,7 +1,7 @@
 import { setTimeout as delay } from 'node:timers/promises';
 import { LolImportError, LOL_LOCALE } from './model.js';
 import type { LolSource } from './model.js';
-import { sourceVersion } from './normalize.js';
+import { isSourceVersion, sourceVersion } from './normalize.js';
 
 const origin = 'https://ddragon.leagueoflegends.com';
 export function dataDragonSource(
@@ -112,7 +112,14 @@ export function dataDragonSource(
       const value = await json('/api/versions.json', signal);
       if (!Array.isArray(value) || !value.length || value.length > 10000)
         throw new LolImportError('SOURCE_DATA_INVALID');
-      const versions = value.map(sourceVersion);
+      const entries = value.map((entry: unknown) => {
+        if (typeof entry !== 'string' || !entry.length || entry.length > 100000)
+          throw new LolImportError('SOURCE_DATA_INVALID');
+        return entry;
+      });
+      // The provider catalog includes historical names such as lolpatch_7.20.
+      // Only supported numeric patches can be selected or used in a CDN path.
+      const versions = entries.filter(isSourceVersion);
       // Numeric comparison, independent of provider ordering or string lexicography.
       versions.sort((a, b) => {
         const left = a.split('.').map(Number),

@@ -4,6 +4,7 @@ import { expect, test } from 'vitest';
 import { LolImporter } from '../src/lol-data/importer.js';
 import { LolRepository } from '../src/lol-data/repository.js';
 import { LolImportError } from '../src/lol-data/model.js';
+import { dataDragonSource } from '../src/lol-data/source.js';
 import { user } from '../src/database/auth-schema.js';
 import {
   appAdmin,
@@ -108,6 +109,67 @@ test('imports the full snapshot into PostgreSQL with exact values, all rows and 
     await database.close();
   }
 }, 30000);
+
+test('imports through a mixed Data Dragon catalog and preserves the dataset after a malformed catalog', async () => {
+  const database = await isolatedDatabase(),
+    repository = new LolRepository(database.db);
+  const fixture = smallLolFixture();
+  const urls: string[] = [];
+  let malformed = false;
+  const source = dataDragonSource({
+    fetch: async (input) => {
+      const url = String(input);
+      urls.push(url);
+      return Response.json(
+        url.endsWith('/versions.json')
+          ? malformed
+            ? [version, null]
+            : [
+                'lolpatch_7.20',
+                '10.10.3216176',
+                '16.9.1',
+                version,
+                '10.10.3208608',
+                'lolpatch_7.19',
+              ]
+          : url.endsWith('/championFull.json')
+            ? fixture.full
+            : fixture.summary,
+      );
+    },
+  });
+  const importer = new LolImporter(repository, source);
+  try {
+    const id = await admin(repository, database);
+    const run = await importer.start(id, 'latest');
+    await importer.idle();
+    expect(await repository.run(run.id)).toMatchObject({
+      status: 'succeeded',
+      sourceVersion: version,
+      totalChampions: 1,
+      processedChampions: 1,
+    });
+    expect(urls).toEqual([
+      'https://ddragon.leagueoflegends.com/api/versions.json',
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion.json`,
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/championFull.json`,
+    ]);
+    const active = await repository.activeDataset();
+    expect(active?.sourceVersion).toBe(version);
+    malformed = true;
+    const failed = await importer.start(id, 'latest');
+    await importer.idle();
+    expect(await repository.run(failed.id)).toMatchObject({
+      status: 'failed',
+      errorCode: 'SOURCE_DATA_INVALID',
+      sourceVersion: null,
+    });
+    expect((await repository.activeDataset())?.id).toBe(active?.id);
+  } finally {
+    await importer.close();
+    await database.close();
+  }
+});
 
 test('deduplicates concurrent starts and identical reimports, preserves previous datasets on failure/restart', async () => {
   const database = await isolatedDatabase(),

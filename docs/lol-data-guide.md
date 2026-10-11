@@ -78,6 +78,11 @@ A szerver a `https://ddragon.leagueoflegends.com` rögzített hostról kér:
 - `/cdn/<version>/data/en_US/champion.json`;
 - `/cdn/<version>/data/en_US/championFull.json`.
 
+A verziólistában régi `lolpatch_*` nevek és hosszú buildazonosítók is lehetnek.
+Ezeket a verzióválasztás kihagyja, és a támogatott numerikus patchek közül
+választja a legfrissebbet. Hibás lista vagy használható patch hiánya esetén az
+import leáll; a letöltött hősadatok validálása változatlanul szigorú.
+
 A teljes aggregátum ugyanazt a normalizálót használja, mint az ellenőrzött
 hősreferenciák. Összeveti a listával az azonosítókat, verziót, közös statokat és
 szövegeket; minden hőshöz pontosan négy, rangszám szerint validált képesség kell.
