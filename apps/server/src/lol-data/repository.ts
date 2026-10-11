@@ -115,7 +115,12 @@ export class LolRepository {
         .orderBy(desc(lolImportRun.createdAt), desc(lolImportRun.id))
         .limit(20),
     ]);
-    return { activeDataset, runs: runs.map((row) => this.view(row)) };
+    return {
+      activeDataset,
+      releases: [],
+      defaultReleaseId: null,
+      runs: runs.map((row) => this.view(row)),
+    };
   }
   async createRun(
     userId: string,
@@ -327,8 +332,9 @@ export class LolRepository {
     datasetId: string,
     hash: string,
     counts: LolCounts,
-  ): Promise<void> {
-    await this.db.transaction(async (tx) => {
+    finish = true,
+  ): Promise<{ datasetId: string; unchanged: boolean }> {
+    return this.db.transaction(async (tx) => {
       await tx
         .insert(questionCatalog)
         .values({ id: randomUUID(), topicId: LOL_TOPIC, locale: LOL_LOCALE })
@@ -394,17 +400,28 @@ export class LolRepository {
       await tx
         .update(lolImportRun)
         .set({
-          status: duplicate ? 'unchanged' : 'succeeded',
-          stage: 'finished',
+          status: finish ? (duplicate ? 'unchanged' : 'succeeded') : 'running',
+          stage: finish ? 'finished' : 'publishing',
           datasetId: publishedId,
-          completedAt: new Date(),
+          completedAt: finish ? new Date() : null,
         })
         .where(eq(lolImportRun.id, runId));
       if (duplicate)
         await tx
           .delete(questionDataset)
           .where(eq(questionDataset.id, datasetId));
+      return { datasetId: publishedId, unchanged: Boolean(duplicate) };
     });
+  }
+  async completePublication(id: string, unchanged: boolean): Promise<void> {
+    await this.db
+      .update(lolImportRun)
+      .set({
+        status: unchanged ? 'unchanged' : 'succeeded',
+        stage: 'finished',
+        completedAt: new Date(),
+      })
+      .where(eq(lolImportRun.id, id));
   }
   async fail(id: string, code: LolImportErrorCode): Promise<void> {
     await this.db.transaction(async (tx) => {

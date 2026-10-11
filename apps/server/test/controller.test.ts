@@ -19,6 +19,8 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
       first.send('room:create', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20_000,
         },
@@ -26,6 +28,8 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
       other.send('solo:start', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20_000,
         },
@@ -54,6 +58,8 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
         expectedSettingsVersion: version,
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20_000,
         },
@@ -66,6 +72,8 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
         expectedSettingsVersion: version,
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 10_000,
         },
@@ -79,6 +87,8 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
         expectedSettingsVersion: version,
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 2,
           answerTimeMs: 10_000,
         },
@@ -92,6 +102,8 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
         expectedSettingsVersion: version,
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 10_000,
         },
@@ -178,6 +190,8 @@ describe('lobby ownership, lifecycle and exclusive flow', () => {
       await guest.send('room:create', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20_000,
         },
@@ -328,6 +342,8 @@ describe('match, projections and multi-device commands', () => {
       await guest.send('solo:start', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20_000,
         },
@@ -355,6 +371,8 @@ describe('match, projections and multi-device commands', () => {
       await guest.send('solo:start', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20000,
         },
@@ -380,6 +398,8 @@ describe('session expiry, explicit revocation and cache', () => {
       await user.send('solo:start', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20000,
         },
@@ -455,6 +475,8 @@ describe('session expiry, explicit revocation and cache', () => {
     const payload = {
       settings: {
         topicId: 'league-of-legends',
+        releaseId: null,
+        seed: null,
         rounds: 1,
         answerTimeMs: 20000,
       },

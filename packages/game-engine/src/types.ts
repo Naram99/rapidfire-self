@@ -145,7 +145,14 @@ export type MatchInput = Readonly<{
   categories: readonly Category[];
   participants: readonly ParticipantSeed[];
 }>;
-export type Context = Readonly<{ now: number; random?: readonly number[] }>;
+export type Context = Readonly<{
+  now: number;
+  random?: readonly number[];
+  categoryChoices?: (
+    purpose: 'category-offer' | 'automatic-category',
+    items: readonly string[],
+  ) => number;
+}>;
 type EventBase = Readonly<{ matchId: string }>;
 type Received = Readonly<{ receivedAt: number }>;
 export type MatchEvent = EventBase &

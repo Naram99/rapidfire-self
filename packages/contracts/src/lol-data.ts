@@ -1,3 +1,4 @@
+import { generationReleaseSchema } from './generation.js';
 import { z } from 'zod';
 
 export const lolImportRequestSchema = z.strictObject({
@@ -9,6 +10,7 @@ export const lolImportErrorSchema = z.enum([
   'SOURCE_TIMEOUT',
   'IMPORT_STORAGE_FAILED',
   'IMPORT_ABORTED',
+  'GENERATION_CHECK_FAILED',
 ]);
 export type LolImportErrorCode = z.infer<typeof lolImportErrorSchema>;
 export const lolCountsSchema = z.strictObject({
@@ -61,6 +63,8 @@ export const lolImportRunSchema = z.strictObject({
 export type LolImportRunView = z.infer<typeof lolImportRunSchema>;
 export const lolAdminDataSchema = z.strictObject({
   activeDataset: lolDatasetSchema.nullable(),
+  releases: z.array(generationReleaseSchema).default([]),
+  defaultReleaseId: z.uuid().nullable().default(null),
   runs: z.array(lolImportRunSchema),
 });
 export type LolAdminData = z.infer<typeof lolAdminDataSchema>;
@@ -75,6 +79,8 @@ export const LOL_IMPORT_ENGLISH_MESSAGES: Readonly<
   SOURCE_TIMEOUT: 'Downloading champion data timed out. Try again.',
   IMPORT_STORAGE_FAILED:
     'Champion data could not be saved. Check database availability and retry.',
+  GENERATION_CHECK_FAILED:
+    'Champion data was imported, but question validation failed. The previous playable version is still available.',
   IMPORT_ABORTED:
     'The import stopped when the server restarted or shut down. Start a new import.',
 };

@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import { gameTopicSchema } from '@rapidfire/contracts';
-import type { GameSettings } from '@rapidfire/contracts';
+import type { GameSettings, GenerationRelease } from '@rapidfire/contracts';
 import { t, topicName } from '../lib/copy';
 import { Field } from './ui';
 
@@ -8,14 +8,20 @@ export function Settings({
   value,
   change,
   maxRounds,
+  releases = [],
+  defaultReleaseId = null,
   disabled = false,
 }: {
   value: GameSettings;
   change: (settings: GameSettings) => void;
   maxRounds: number;
+  releases?: readonly GenerationRelease[];
+  defaultReleaseId?: string | null;
   disabled?: boolean;
 }) {
   const topicSelectId = useId();
+  const releaseSelectId = useId();
+  const customSeedId = useId();
   return (
     <fieldset className="settings-fields" disabled={disabled}>
       <legend>{t('settings')}</legend>
@@ -69,6 +75,62 @@ export function Settings({
         autoComplete="off"
         required
       />
+
+      <div className="field settings-version">
+        <label htmlFor={releaseSelectId}>{t('questionVersion')}</label>
+        <select
+          id={releaseSelectId}
+          name="releaseId"
+          value={value.releaseId ?? defaultReleaseId ?? ''}
+          onChange={(event) =>
+            change({ ...value, releaseId: event.target.value || null })
+          }
+        >
+          {!releases.length ? (
+            <option value="">{t('noQuestionVersion')}</option>
+          ) : null}
+          {value.releaseId &&
+          !releases.some((release) => release.id === value.releaseId) ? (
+            <option value={value.releaseId}>{t('unavailableVersion')}</option>
+          ) : null}
+          {releases.map((release) => (
+            <option key={release.id} value={release.id}>
+              {release.label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="field settings-seed">
+        <label className="checkbox-label" htmlFor={customSeedId}>
+          <input
+            id={customSeedId}
+            type="checkbox"
+            checked={value.seed !== null}
+            onChange={(event) =>
+              change({ ...value, seed: event.target.checked ? '' : null })
+            }
+          />
+          {t('customSeed')}
+        </label>
+        {value.seed !== null ? (
+          <Field
+            label={t('seed')}
+            name="seed"
+            value={value.seed}
+            minLength={1}
+            maxLength={10}
+            pattern="[A-Za-z0-9]{1,10}"
+            autoComplete="off"
+            autoCapitalize="none"
+            spellCheck={false}
+            required
+            onChange={(event) => change({ ...value, seed: event.target.value })}
+            hint={t('seedHint')}
+          />
+        ) : (
+          <p className="field-hint">{t('automaticSeedHint')}</p>
+        )}
+      </div>
       <p className="field-hint">{t('questionsPerRound')}</p>
     </fieldset>
   );

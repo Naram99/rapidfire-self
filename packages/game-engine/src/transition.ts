@@ -16,6 +16,7 @@ export type Work = {
   now: number;
   random: readonly number[];
   randomIndex: number;
+  categoryChoices: Context['categoryChoices'];
   effects: Effect[];
   receipt: AnswerReceipt | null;
 };
@@ -26,6 +27,7 @@ export function createWork(state: MatchState, context: Context): Work {
     now: context.now,
     random: context.random ?? [],
     randomIndex: 0,
+    categoryChoices: context.categoryChoices,
     effects: [],
     receipt: null,
   };
@@ -119,4 +121,22 @@ export function isEnded(state: MatchState): boolean {
     state.phase.type === 'interrupted' ||
     state.phase.type === 'returned'
   );
+}
+
+/** Content decisions have their own purpose-specific input; person selection uses random. */
+export function chooseCategory(
+  work: Work,
+  items: readonly string[],
+  purpose: 'category-offer' | 'automatic-category',
+): string {
+  if (!work.categoryChoices) return choose(work, items);
+  const index = work.categoryChoices(purpose, items);
+  requireRule(
+    Number.isInteger(index) && index >= 0 && index < items.length,
+    'INVALID_RANDOM_INPUT',
+  );
+  const item = items[index];
+  if (item === undefined)
+    throw new Error('Engine invariant: selected category missing');
+  return item;
 }

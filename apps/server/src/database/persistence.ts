@@ -6,6 +6,7 @@ import {
   game,
   gameParticipant,
   gameQuestionResult,
+  gameRoundGeneration,
   userGame,
 } from './schema.js';
 
@@ -63,6 +64,10 @@ export class PostgresPersistence implements PersistencePort {
       const values = {
         id: match.id,
         topicId: match.settings.topicId,
+        generationReleaseId: match.generation?.releaseId ?? null,
+        generationSeed: match.generation?.seed ?? null,
+        seedOrigin: match.generation?.seedOrigin ?? null,
+        eloExclusionReason: match.generation?.eloExclusionReason ?? null,
         mode: match.mode,
         statusCode: match.status,
         startedAt,
@@ -91,6 +96,12 @@ export class PostgresPersistence implements PersistencePort {
         .insert(game)
         .values(values)
         .onConflictDoUpdate({ target: game.id, set: values });
+      for (const round of match.rounds ?? []) {
+        await tx
+          .insert(gameRoundGeneration)
+          .values({ gameId: match.id, ...round })
+          .onConflictDoNothing();
+      }
       for (const participant of match.participants) {
         const registered = identities.has(participant.personId);
         const data = {

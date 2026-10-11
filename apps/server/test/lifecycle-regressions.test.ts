@@ -23,6 +23,8 @@ describe('scope, identity and snapshot regressions', () => {
       await user.send('solo:start', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20000,
         },
@@ -44,6 +46,8 @@ describe('scope, identity and snapshot regressions', () => {
       await user.send('solo:start', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20000,
         },
@@ -110,6 +114,8 @@ describe('scope, identity and snapshot regressions', () => {
       await reconnect.send('solo:start', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20000,
         },

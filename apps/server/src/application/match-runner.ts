@@ -9,7 +9,7 @@ import type { GameSettings, PersistenceStatus } from '@rapidfire/contracts';
 import { failEngine } from './errors.js';
 import { checkpoint, PersistenceQueue } from './persistence.js';
 import type { Binding, PersistenceView } from './projection.js';
-import type { Dependencies } from './ports.js';
+import type { Dependencies, MatchGeneration } from './ports.js';
 
 export type RunnerHooks = Readonly<{
   enqueue: (task: () => void) => void;
@@ -21,6 +21,7 @@ export class MatchRunner {
   state: MatchState;
   bindings: readonly Binding[];
   persistence: PersistenceView;
+  readonly generation: MatchGeneration | null;
   private readonly saves: PersistenceQueue;
   private preparation: AbortController | null = null;
   private timerKey: string | null = null;
@@ -34,6 +35,8 @@ export class MatchRunner {
     private readonly hooks: RunnerHooks,
   ) {
     this.bindings = bindings;
+    this.generation =
+      dependencies.questions.createGeneration?.(settings) ?? null;
     const result = createMatch(
       {
         id,
@@ -42,7 +45,10 @@ export class MatchRunner {
           rounds: settings.rounds,
           answerTimeMs: settings.answerTimeMs,
         },
-        categories: dependencies.questions.categories(settings.topicId),
+        categories: dependencies.questions.categories(
+          settings.topicId,
+          settings.releaseId,
+        ),
         participants: bindings.map((binding, index) => ({
           id: binding.participantId,
           name: binding.person.name,
@@ -72,6 +78,9 @@ export class MatchRunner {
     const result = transitionMatch(this.state, event, {
       now: Math.max(this.state.updatedAt, this.dependencies.clock.now()),
       random: this.dependencies.random(),
+      ...(this.generation
+        ? { categoryChoices: this.generation.categoryChoices(this.state) }
+        : {}),
     });
     if (!result.ok) failEngine(result.error);
     const changed = result.state !== this.state;
@@ -79,6 +88,19 @@ export class MatchRunner {
     this.effects(result.effects);
     if (changed && this.state.phase.type !== 'returned') this.hooks.changed();
     return result.receipt;
+  }
+  publicGeneration() {
+    if (!this.generation) return null;
+    const ended = ['finished', 'interrupted', 'returned'].includes(
+      this.state.phase.type,
+    );
+    return {
+      ...this.generation.metadata,
+      seed:
+        ended || this.generation.metadata.seedOrigin === 'custom'
+          ? this.generation.metadata.seed
+          : null,
+    };
   }
   stop(): void {
     this.stopped = true;
@@ -127,7 +149,14 @@ export class MatchRunner {
     const revision = this.persistence.revision + 1;
     this.persistence = { ...this.persistence, revision };
     this.saves.submit(
-      checkpoint(this.state, this.bindings, revision, kind, this.settings),
+      checkpoint(
+        this.state,
+        this.bindings,
+        revision,
+        kind,
+        this.settings,
+        this.generation,
+      ),
     );
   }
   private effects(
@@ -163,11 +192,13 @@ export class MatchRunner {
           this.preparation = abort;
           void Promise.resolve()
             .then(() =>
-              this.dependencies.questions.prepare({
-                ...effect,
-                topicId: this.settings.topicId,
-                signal: abort.signal,
-              }),
+              this.generation
+                ? this.generation.prepare(effect.categoryId)
+                : this.dependencies.questions.prepare({
+                    ...effect,
+                    topicId: this.settings.topicId,
+                    signal: abort.signal,
+                  }),
             )
             .then(
               (questions) =>

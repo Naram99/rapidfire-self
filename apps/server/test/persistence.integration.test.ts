@@ -61,6 +61,8 @@ function checkpoint(
       mode,
       settings: {
         topicId: 'league-of-legends',
+        releaseId: null,
+        seed: null,
         rounds: 1,
         answerTimeMs: 20000,
       },
@@ -209,6 +211,10 @@ describe('real PostgreSQL domain transactions', () => {
     expect(saved).toMatchObject({
       statusCode: 'completed',
       topicId: 'league-of-legends',
+      generationReleaseId: null,
+      generationSeed: null,
+      seedOrigin: null,
+      eloExclusionReason: null,
       persistenceRevision: 5n,
       checkpointQuestionNumber: 1,
     });

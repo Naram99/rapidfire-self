@@ -1,3 +1,4 @@
+import { GenerationInfo } from '../components/generation-info';
 import { useEffect, useState } from 'react';
 import {
   gameResultResponseSchema,
@@ -195,6 +196,7 @@ export function HistoryDetailPage({ id }: { id: string }) {
             })}{' '}
             · {gameStatus(game.game.statusCode)}
           </p>
+          <GenerationInfo generation={game.game.generation} />
           <Standings participants={game.participants} />
           <h2>{t('yourAnswers')}</h2>
           <QuestionResults results={game.questions} />

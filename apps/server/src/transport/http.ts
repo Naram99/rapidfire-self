@@ -41,6 +41,7 @@ export function createApiRouter(
     allowedOrigins: readonly string[];
     lolRepository: LolRepository;
     lolImporter: LolImporter;
+    reloadGeneration?: () => Promise<void>;
   }>,
 ) {
   const router = express.Router();
@@ -99,10 +100,14 @@ export function createApiRouter(
         : null,
     );
   });
-  router.get('/api/game-config', (_request, response) => {
+  router.get('/api/game-config', async (_request, response) => {
+    await options.reloadGeneration?.();
     response.json({
       topics: gameTopicSchema.options.map((id) => ({
         id,
+        releases: service.dependencies.questions.releases?.() ?? [],
+        defaultReleaseId:
+          service.dependencies.questions.defaultReleaseId?.() ?? null,
         maxRounds: Math.min(
           10,
           service.dependencies.questions.categories(id).length,
@@ -384,7 +389,12 @@ export function createApiRouter(
     response.json(result);
   });
   router.use(
-    createLolAdminRouter(bridge, options.lolRepository, options.lolImporter),
+    createLolAdminRouter(
+      bridge,
+      options.lolRepository,
+      options.lolImporter,
+      service.dependencies.questions,
+    ),
   );
   router.use(
     (

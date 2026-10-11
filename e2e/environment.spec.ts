@@ -124,7 +124,7 @@ test('a late rejected guest renewal preserves a newer browser session', async ({
   context,
 }) => {
   await page.goto('/');
-  await expect(page.getByRole('button', { name: 'Start solo' })).toBeEnabled();
+  await expect(page.getByLabel('Your nickname')).toBeEnabled();
 
   const rejected = Promise.withResolvers<void>();
   const release = Promise.withResolvers<void>();

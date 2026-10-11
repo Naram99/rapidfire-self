@@ -26,6 +26,8 @@ describe('asynchronous adapters and intake ordering', () => {
       await guest.send('solo:start', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20000,
         },
@@ -63,6 +65,8 @@ describe('asynchronous adapters and intake ordering', () => {
     await user.send('solo:start', {
       settings: {
         topicId: 'league-of-legends',
+        releaseId: null,
+        seed: null,
         rounds: 1,
         answerTimeMs: 20000,
       },
@@ -177,6 +181,8 @@ describe('asynchronous adapters and intake ordering', () => {
       await user.send('solo:start', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20000,
         },

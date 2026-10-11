@@ -1,6 +1,7 @@
 import { rankParticipants, scoreAnswer } from './scoring.js';
 import {
   choose,
+  chooseCategory,
   getQuestion,
   getRound,
   move,
@@ -22,7 +23,7 @@ export function beginRound(work: Work): void {
   else {
     const pool = [...remaining];
     for (let index = 0; index < 4; index++) {
-      const category = choose(work, pool);
+      const category = chooseCategory(work, pool, 'category-offer');
       offered.push(category);
       pool.splice(pool.indexOf(category), 1);
     }
@@ -49,7 +50,7 @@ export function beginRound(work: Work): void {
   work.state = { ...state, rounds: [...state.rounds, round] };
   if (offered.length === 1 || selector === null) {
     prepareRound(work, round.id, {
-      categoryId: choose(work, offered),
+      categoryId: chooseCategory(work, offered, 'automatic-category'),
       reason: offered.length === 1 ? 'single_option' : 'all_idle',
     });
   } else

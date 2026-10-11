@@ -1,8 +1,8 @@
 # Seed, választható kiadás és determinisztikus kérdések
 
-Dátum: 2026-10-10. Státusz: a termékszabályok felhasználói pontosításokkal
-elfogadottak; az algoritmus és a fizikai mezők alább technikai javaslatok.
-Ez dokumentáció, nincs hozzá implementált generátor, migráció vagy felület.
+Dátum: 2026-10-11. Státusz: a termékszabályok elfogadottak, a natív TS-generátor,
+a kiadás-/seedválasztó és a `0004` migráció elkészült. A futtatási lépések a
+[kérdésgenerálási útmutatóban](question-generation-guide.md) találhatók.
 
 Kapcsolódó tervek: [kérdésgenerálás](question-generation.md),
 [adatimport](lol-champion-data.md), [forrásmezők](lol-source-schema.md).
@@ -50,11 +50,10 @@ Ez nem igényel új csomagot. A seed egyszer rögzül az indulási előkészít�
 a kérdés-előkészítés retryja, reconnect vagy új eszköz nem generálja újra.
 Megszakított indulás után egy új automatikus meccselőkészítés új seedet kaphat.
 
-Tervezett játékbeállítás: `generationReleaseId` UUID és `seedSelection`.
-A kiadásazonosító a felkínált, az adott témához tartozó kész kiadásra mutat.
-A `seedSelection` diszkriminált választás; automatikus
-módban nincs kliens által megadható érték, kézi módban kötelező az érvényes
-szöveg. A szerver állítja elő és rögzíti a végső `seed_origin` értéket.
+Játékbeállítás: `releaseId` UUID vagy NULL, illetve `seed` szöveg vagy NULL.
+Létrehozáskor a NULL kiadás a legfrissebb játszható kiadás konkrét UUID-jére
+oldódik fel. A NULL seed automatikus módot jelent; kézi módban kötelező az
+érvényes szöveg. A szerver állítja elő és rögzíti a végső `seed_origin` értéket.
 Nem fogadunk el kliens által szabadon beállítható ELO-jogosultságot.
 
 A kézi seed látható a közös várószobai beállításban. Az automatikus mód ott
@@ -132,9 +131,9 @@ kell; nincs automatikus helyettesítés a legfrissebbel. A kiadáshoz tartozó
 használható kategóriákból számoljuk a fordulómaximumot, továbbra is legfeljebb
 tíz. A tulajdonosnak rendeznie kell az ezzel ütköző fordulóbeállítást.
 
-## 5. Javasolt determinisztikus algoritmus
+## 5. Determinisztikus algoritmus
 
-Javasolt PRNG: `xoshiro128**`, négy 32 bites állapotszóval.
+PRNG: `xoshiro128**`, négy 32 bites állapotszóval.
 A szorzásokat 32 bites egészműveletként, a XOR-okat, biteltolásokat és
 rotációkat rögzített unsigned szabállyal végezzük. Ezt kis, natív TypeScript
 modul tudja megvalósítani, külső könyvtár nélkül.
@@ -143,7 +142,7 @@ Az algoritmus állapotát egy ismert átmeneti szabály lépteti. Ugyanazon
 kezdőállapotból ugyanazok a 32 bites kimenetek származnak; az automatikus seed
 előállítása és a seed utáni determinisztikus sorsolás külön művelet.
 
-Javasolt verziózott leképezés:
+Verziózott leképezés:
 
 1. A gyökérdigest SHA-256 a seedből és a kiadás tartalomhash-éből.
    Bemeneti kódolása UTF-8, rögzített JSON-tömb:
@@ -169,8 +168,8 @@ már elkészültek: négy nyers kezdőállapot és hét seedelt stream összesen
 176 kimenete egyezett a külön Python- és Node-ellenőrzésben. Az indexhatárok,
 a rejection sampling és a Fisher–Yates keverés is ellenőrizve vannak.
 A vektorok részleges forrásból képzett fixture-hash-t használnak; ez nem
-publikált kiadásazonosító. A leendő natív TS-generátornak ugyanígy kell
-teljesítenie őket; ilyen alkalmazásimplementáció még nincs.
+publikált kiadásazonosító. A natív TS-generátor automatizált tesztjei
+ellenőrzik a nyers és a teljes ZIP-hez tartozó streamvektorokat.
 A teljes ZIP-hez készült [új referencia-vektorok](question-catalog-draft/full-prng-test-vectors.json)
 ugyanígy egyeznek Pythonban és Node-ban, és a részhalmazmintavétel rögzített
 változatát is ellenőrzik. A régi vektorokat nem írják át.
@@ -199,9 +198,9 @@ Egy slot vagy csomag sikertelen előkészítése nem fogyasztja el más stream
 állapotát. A korábbi prompt- és halmazellenőrzés e kanonikus terv része.
 
 Játékos-/tulajdonosválasztás, online állapot és válaszok nem fogyaszthatják
-a tartalom streamjeit. A motor jelenleg közös `Context.random` listából
-sorsolja a kínálatot és a választó személyt; ezt az integrációban külön
-szerepű bemenetekre kell bontani. A motor továbbra sem ismeri a seedet,
+a tartalom streamjeit. A motor a kínálathoz és az automatikus választáshoz
+külön `categoryChoices` bemenetet kap; a személyválasztás a `Context.random`
+listát használja. A motor továbbra sem ismeri a seedet,
 adatbázist vagy Node-cryptót, és továbbra sem kap külső csomagfüggőséget.
 
 A jelöltek külső tartalomkulcson, rögzített összehasonlítással rendezettek.
@@ -211,7 +210,7 @@ Az eltérések és keresési lépések egész/ellenőrzött decimális szabálya
 része. Falióra-timeout megszakíthatja a generálást, de nem választhat más
 kérdést; a verziózott logikai próbakeret és az előálló csomag változatlan.
 
-## 7. Javasolt tárolási és publikus határok
+## 7. Tárolási és publikus határok
 
 | Tervezett adat                        | Szerep                                                                                                                                                      |
 | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -252,7 +251,7 @@ A szólóindítás ugyanazt a közös beállításmodellt használja. A már meg
 veszik. Az indulási kontextus létrehozása egyszeri, a vezérlő sorába visszatérő
 eredmény; nem tart nyitva DB-várakozást a motor állapotmódosítási sorában.
 
-## 8. Tervezett ellenőrzések és következő lépés
+## 8. Ellenőrzési szempontok
 
 - Seedhossz 1 és 10; üres kézi seed, 11 karakter, szóköz/sortörés és nem ASCII
   elutasítása; kis-/nagybetű és vezető nulla megőrzése.
@@ -274,8 +273,9 @@ eredmény; nem tart nyitva DB-várakozást a motor állapotmódosítási sorába
 - Metrikánkénti küszöbrács és effektív százalékos profil reprodukálása;
   sávhangolás csak új kiadásban, a korábbi seed/kiadás eredménye változatlan.
 
-Az alkalmazásintegráció tesztjei még nem futottak le, mert az implementáció
-nincs engedélyezve. A [leíró katalógus](question-catalog-draft/README.md) és
+Az alkalmazásintegráció elkészült; az automatikus publikálást a felhasználó
+jóváhagyta. A futtatási részleteket és ellenőrzéseket a
+[kérdésgenerálási útmutató](question-generation-guide.md) tartalmazza. A [leíró katalógus](question-catalog-draft/README.md) és
 küszöblépései jóváhagyva, a nem végleges egységű metrikák az MVP-ből kimaradnak.
 A [publikálás előtti ellenőrzés](question-catalog-draft/publication-checks.md)
 a teljes ZIP 207 seedes referenciáját, két nyelven egyező PRNG-vektorokat és
@@ -285,6 +285,6 @@ lefutott a vizsgálat; az elfogadott chroma-/cooldown-kizárás és a
 A [teljes referencia vektorai](question-catalog-draft/full-prng-test-vectors.json)
 külön fixture-t használnak, a korábbi részleges tesztvektorok megmaradnak.
 A referencia véges kerete és egyenletes metrika-/műveletsorsolása mérhető
-technikai ajánlás; a leendő generátorban még ellenőrizendő.
-A fizikai kiadás és táblái nem készültek el.
+technikai szabály; az alkalmazásgenerátor tesztjei is ellenőrzik.
+A fizikai kiadás és táblái a `0004_generation_releases.sql` migrációval elkészültek.
 Az itt leírt seedformátum, verzióválasztás és ELO-kizárás már elfogadott.

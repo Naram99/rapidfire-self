@@ -1,3 +1,4 @@
+import { GenerationReleases } from '../question-generation/releases.js';
 import type { Dependencies } from '../application/ports.js';
 import { GameService } from '../application/game-service.js';
 import { AuthBridge } from '../auth/bridge.js';
@@ -29,15 +30,24 @@ export function createApplication(
     allowedOrigins: readonly string[];
     webRoot?: string;
     lolSource?: LolSource;
+    questionMode?: 'published' | 'fixture';
   }>,
 ) {
   const { clock, timers } = options.dependencies;
   const credentials = new Credentials(clock);
   const accounts = new AccountRepository(options.db);
   const lolRepository = new LolRepository(options.db);
+  const generationReleases = new GenerationReleases(options.db);
+  const fixtureMode = options.questionMode === 'fixture';
   const lolImporter = new LolImporter(
     lolRepository,
     options.lolSource ?? dataDragonSource(),
+    ...(fixtureMode
+      ? []
+      : [
+          (datasetId: string, signal: AbortSignal) =>
+            generationReleases.publish(datasetId, signal),
+        ]),
   );
   const email = new EmailQueue({
     clock,
@@ -55,6 +65,9 @@ export function createApplication(
   let bridge: AuthBridge | null = null;
   const service = new GameService({
     ...options.dependencies,
+    questions: fixtureMode
+      ? options.dependencies.questions
+      : generationReleases.questions,
     persistence: new PostgresPersistence(options.db),
     onMatchFinished: (matchId) => credentials.finishMatch(matchId),
     onParticipantReleased: (personId) =>
@@ -106,6 +119,9 @@ export function createApplication(
     allowedOrigins: options.allowedOrigins,
     lolRepository,
     lolImporter,
+    ...(fixtureMode
+      ? {}
+      : { reloadGeneration: () => generationReleases.load() }),
   });
   const server = createGameServer({
     service,
@@ -125,5 +141,6 @@ export function createApplication(
     email,
     lolRepository,
     lolImporter,
+    generationReleases,
   };
 }

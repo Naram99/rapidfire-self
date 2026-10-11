@@ -1,3 +1,4 @@
+import { GenerationInfo } from '../components/generation-info';
 import { useRef, useState } from 'react';
 import {
   ENGLISH_INTERRUPTION_MESSAGES,
@@ -46,12 +47,24 @@ function LobbySettings({
 }) {
   const [settings, setSettings] = useState<GameSettings>(room.settings);
   const [error, setError] = useState<string | null>(null);
+  const topic = state.topics.find((topic) => topic.id === settings.topicId);
   const maxRounds =
-    state.topics.find((topic) => topic.id === settings.topicId)?.maxRounds ?? 0;
+    topic?.releases.find((release) => release.id === settings.releaseId)
+      ?.maxRounds ?? (settings.releaseId ? 0 : (topic?.maxRounds ?? 0));
   if (!canUpdate)
     return (
       <p className="room-settings">
         <span>{topicName(room.settings.topicId)}</span>
+        {' · '}
+        {room.settings.releaseId
+          ? (state.topics
+              .flatMap((topic) => topic.releases)
+              .find((release) => release.id === room.settings.releaseId)
+              ?.label ?? t('unavailableVersion'))
+          : null}
+        {room.settings.seed !== null
+          ? ` · ${t('seed')}: ${room.settings.seed}`
+          : null}
         {' · '}
         {t('roundSettings', {
           rounds: room.settings.rounds,
@@ -89,6 +102,8 @@ function LobbySettings({
           value={settings}
           change={setSettings}
           maxRounds={maxRounds}
+          releases={topic?.releases ?? []}
+          defaultReleaseId={topic?.defaultReleaseId ?? null}
           disabled={state.pending !== null || state.connection !== 'connected'}
         />
         {error ? <Notice kind="error">{error}</Notice> : null}
@@ -586,6 +601,7 @@ function Finished({
       {snapshot.match ? (
         <PersistenceNotice status={snapshot.match.persistence.status} />
       ) : null}
+      <GenerationInfo generation={snapshot.match?.generation ?? null} />
       <Standings participants={participants} />
       <h2>{t('yourAnswers')}</h2>
       <QuestionResults
@@ -670,6 +686,9 @@ function PhaseView(props: GameProps) {
               status={props.snapshot.match.persistence.status}
             />
           ) : null}
+          <GenerationInfo
+            generation={props.snapshot.match?.generation ?? null}
+          />
           <Timer
             deadline={phase.deadline}
             clock={props.state.clock}

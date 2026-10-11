@@ -23,6 +23,8 @@ export type RoomState = Readonly<{
 export function sameSettings(a: GameSettings, b: GameSettings): boolean {
   return (
     a.topicId === b.topicId &&
+    a.releaseId === b.releaseId &&
+    a.seed === b.seed &&
     a.rounds === b.rounds &&
     a.answerTimeMs === b.answerTimeMs
   );

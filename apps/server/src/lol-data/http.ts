@@ -1,3 +1,4 @@
+import type { QuestionProvider } from '../application/ports.js';
 import express from 'express';
 import { lolImportRequestSchema } from '@rapidfire/contracts';
 import type { AuthBridge } from '../auth/bridge.js';
@@ -8,6 +9,7 @@ export function createLolAdminRouter(
   bridge: AuthBridge,
   repository: LolRepository,
   importer: LolImporter,
+  questions: QuestionProvider,
 ) {
   const router = express.Router();
   router.get('/api/admin/access', async (request, response) => {
@@ -30,7 +32,11 @@ export function createLolAdminRouter(
     next();
   });
   router.get('/api/admin/lol-data', async (_request, response) => {
-    response.json(await repository.overview());
+    response.json({
+      ...(await repository.overview()),
+      releases: questions.releases?.() ?? [],
+      defaultReleaseId: questions.defaultReleaseId?.() ?? null,
+    });
   });
   router.post(
     '/api/admin/lol-data/imports',

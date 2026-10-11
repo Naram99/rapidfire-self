@@ -180,6 +180,8 @@ export async function createRoom(client: TestClient) {
     await client.send('room:create', {
       settings: {
         topicId: 'league-of-legends',
+        releaseId: null,
+        seed: null,
         rounds: 1,
         answerTimeMs: 20_000,
       },

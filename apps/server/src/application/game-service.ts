@@ -354,10 +354,15 @@ export class GameService {
           ? 'ALREADY_IN_ROOM'
           : 'ALREADY_IN_MATCH',
       );
+      const settings =
+        this.dependencies.questions.resolveSettings?.(
+          command.payload.settings,
+        ) ?? command.payload.settings;
       requireCommand(
-        command.payload.settings.rounds <=
+        settings.rounds <=
           this.dependencies.questions.categories(
-            command.payload.settings.topicId,
+            settings.topicId,
+            settings.releaseId,
           ).length,
         'INVALID_PAYLOAD',
       );
@@ -379,7 +384,7 @@ export class GameService {
       const created = new FlowController(
         scope,
         person,
-        command.payload.settings,
+        settings,
         code,
         this.dependencies,
         this.hooks(),

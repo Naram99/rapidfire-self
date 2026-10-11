@@ -33,7 +33,11 @@ export class CookieJar {
   }
 }
 
-export async function authHarness(manual = false, lolSource?: LolSource) {
+export async function authHarness(
+  manual = false,
+  lolSource?: LolSource,
+  questionMode: 'fixture' | 'published' = 'fixture',
+) {
   const database = await isolatedDatabase();
   const gameHarness = harness();
   gameHarness.timers.now = Date.now();
@@ -42,6 +46,7 @@ export async function authHarness(manual = false, lolSource?: LolSource) {
     : runtimeDependencies();
   const messages: EmailMessage[] = [];
   const app = createApplication({
+    questionMode,
     db: database.db,
     dependencies,
     emailPort: {

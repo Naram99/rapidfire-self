@@ -1,3 +1,8 @@
+import {
+  generationMetadataSchema,
+  generationReleaseSchema,
+  generationRoundSchema,
+} from './generation.js';
 import { z } from 'zod';
 import {
   gameTopicSchema,
@@ -162,6 +167,7 @@ export const snapshotSchema = z.object({
       id,
       mode: z.enum(['solo', 'multiplayer']),
       settings: settingsSchema,
+      generation: generationMetadataSchema.nullable(),
       persistence,
       participants: z
         .array(
@@ -214,6 +220,8 @@ const errorCode = z.enum([
   'PROTOCOL_VERSION_UNSUPPORTED',
   'RATE_LIMITED',
   'SERVER_UNAVAILABLE',
+  'GENERATION_UNAVAILABLE',
+  'RELEASE_UNAVAILABLE',
 ]) satisfies z.ZodType<ErrorCode>;
 const ackBase = { requestId: id.nullable(), serverTime: time };
 export const ackSchema = z.discriminatedUnion('ok', [
@@ -260,7 +268,9 @@ export const gameConfigResponseSchema = z.object({
     .array(
       z.object({
         id: gameTopicSchema,
-        maxRounds: z.number().int().min(1).max(10),
+        maxRounds: z.number().int().min(0).max(10),
+        releases: z.array(generationReleaseSchema),
+        defaultReleaseId: z.uuid().nullable(),
       }),
     )
     .min(1),
@@ -291,6 +301,7 @@ export const historyEntrySchema = z.object({
   rank: z.number().int().positive().nullable(),
   rounds: count,
   answerTimeMs: count,
+  generation: generationMetadataSchema.nullable(),
 });
 export const historyResponseSchema = z.object({
   games: z.array(historyEntrySchema),
@@ -305,7 +316,9 @@ export const gameResultResponseSchema = z.object({
     endedAt: z.iso.datetime().nullable(),
     roundCount: count,
     answerTimeMs: count,
+    generation: generationMetadataSchema.nullable(),
   }),
+  rounds: z.array(generationRoundSchema),
   participants: z.array(
     z.object({
       id: z.uuid(),

@@ -116,7 +116,12 @@ export function AdminLolDataPage() {
                 ...current.runs.filter((item) => item.id !== run.id),
               ].slice(0, 20),
             }
-          : { activeDataset: null, runs: [run] },
+          : {
+              activeDataset: null,
+              runs: [run],
+              releases: [],
+              defaultReleaseId: null,
+            },
       );
       setRevision((value) => value + 1);
     } catch (error) {
@@ -158,6 +163,22 @@ export function AdminLolDataPage() {
         </Notice>
       ) : null}
       {!data && !error ? <p role="status">{t('loading')}</p> : null}
+      {data?.releases.length ? (
+        <section className="generation-info">
+          <h2>{t('playableVersions')}</h2>
+          <ul>
+            {data.releases.map((release) => (
+              <li key={release.id}>
+                <strong>{release.label}</strong> —{' '}
+                {t('versionCategories', { count: release.categoryCount })}
+                {release.id === data.defaultReleaseId
+                  ? ` (${t('defaultVersion')})`
+                  : ''}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
       {active ? (
         <div className="admin-data-progress" role="status">
           <h2>{t(stages[active.stage])}</h2>

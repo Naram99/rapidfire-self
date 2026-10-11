@@ -71,6 +71,10 @@ export const questionCatalog = pgTable(
     topicId: text('topic_id').notNull(),
     locale: text('locale').notNull(),
     activeDatasetId: uuid('active_dataset_id'),
+    defaultReleaseId: uuid('default_release_id').references(
+      (): AnyPgColumn => questionGenerationRelease.id,
+      { onDelete: 'restrict' },
+    ),
     updatedAt: date('updated_at').notNull().defaultNow(),
   },
   (t) => [
@@ -300,5 +304,50 @@ export const lolChampionTag = pgTable(
   (t) => [
     unique('lol_tag_champion').on(t.championId, t.tag),
     index('lol_tag_lookup').on(t.tag, t.championId),
+  ],
+);
+
+export const questionTemplateManifest = pgTable('question_template_manifest', {
+  id: uuid('id').primaryKey(),
+  schemaVersion: integer('schema_version').notNull(),
+  language: text('language').notNull(),
+  contentHash: text('content_hash').notNull().unique(),
+  content: jsonb('content').$type<JsonObject>().notNull(),
+  createdAt: date('created_at').notNull().defaultNow(),
+});
+export const questionGenerationRelease = pgTable(
+  'question_generation_release',
+  {
+    id: uuid('id').primaryKey(),
+    topicId: text('topic_id').notNull(),
+    locale: text('locale').notNull(),
+    language: text('language').notNull(),
+    sourceVersion: text('source_version').notNull(),
+    revision: integer('revision').notNull(),
+    datasetId: uuid('dataset_id')
+      .notNull()
+      .references(() => questionDataset.id, { onDelete: 'restrict' }),
+    manifestId: uuid('manifest_id')
+      .notNull()
+      .references(() => questionTemplateManifest.id, { onDelete: 'restrict' }),
+    generatorVersion: text('generator_version').notNull(),
+    seedVersion: text('seed_version').notNull(),
+    prngVersion: text('prng_version').notNull(),
+    contentHash: text('content_hash').notNull().unique(),
+    categoryCount: integer('category_count').notNull(),
+    publishedAt: date('published_at').notNull().defaultNow(),
+  },
+  (t) => [
+    unique('release_version_revision').on(
+      t.topicId,
+      t.locale,
+      t.language,
+      t.sourceVersion,
+      t.revision,
+    ),
+    check(
+      'release_counts',
+      sql`${t.revision} >= 1 AND ${t.categoryCount} >= 1`,
+    ),
   ],
 );

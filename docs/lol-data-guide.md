@@ -56,8 +56,9 @@ a korábbi importadatok és futások megmaradnak, a kezdeményező FK-ja NULL le
 - **Re-import current version**: az aktív patch két adatfájlját újra letölti.
   Azonos tartalomnál a meglévő készletet használja; eltérő tartalom új készletet
   kap. A korábbi készlet sorait nem írja át.
-- Az aktív verzió, nyelv, aktiválási idő, darabszámok és az utolsó húsz futás
-  látszik. A skinek darabszáma az alapkinézet és chromák nélküli szám.
+- Az aktív adatverzió, nyelv, aktiválási idő, darabszámok, játszható kiadások
+  és az utolsó húsz futás látszik. A skinek darabszáma az alapkinézet és
+  chromák nélküli szám.
 - Aktív importnál a gombok tiltottak. Több eszközről történő indítás ugyanannak
   a folyamatban lévő importnak az azonosítóját adja vissza.
 - A látható oldal kétmásodpercenként kér állapotot, ha van aktív import.
@@ -103,8 +104,10 @@ sorrendtől, UUID-któl és időpontoktól független. A raw mezők változása 
 hash-t ad. A normalizáló szerződésének későbbi változásakor új
 `normalization_version` kell; a régi készletek nem módosíthatók az importálóval.
 A tranzakciók hősönként tízes csoportokat mentenek; letöltés közben nincs
-nyitott DB-tranzakció. A készlet, az aktív pointer és a sikeres futásállapot
-végül egyetlen tranzakcióban áll át.
+nyitott DB-tranzakció. A nyers készlet és az aktív adatpointer együtt áll át.
+Utána a kérdésellenőrzés és a kiadáspublikálás következik; a játszható
+alapkiadás külön tranzakcióban változik. A futás csak ezek után sikeres.
+Sikertelen kérdésellenőrzésnél a korábbi játszható kiadás marad meg.
 
 ## 5. A feltöltött ZIP használata, hálózati letöltés nélkül
 
@@ -113,14 +116,14 @@ SHA-256-tal rögzített ZIP-et dolgozzák fel. A tényleges helyi importhoz az
 üzemeltető ugyanazon az importfolyamaton betöltheti a kibontott két forrásfájlt.
 Ez nem nyilvános upload API, és nem indít automatikusan frissítést.
 
-Állítsd le a Node backendet az üzemeltetési fájlimport idejére, a PostgreSQL
-maradjon futó állapotban. A repository gyökerében például:
+A PostgreSQL maradjon futó állapotban. A Node backend az import közben is
+futhat; a következő játékbeállítás-lekérés betölti az új kiadást.
+A repository gyökerében például:
 
 ```sh
 mkdir -p .cache/lol-source
 unzip docs/question-generation-input/16.20.1.zip -d .cache/lol-source
 npm run lol:import-files -- <admin-user-uuid> "$PWD/.cache/lol-source/16.20.1"
-npm run dev
 ```
 
 A parancs adminfiókot ellenőriz, háttérfutást nyit, megvárja a befejezést és
@@ -131,12 +134,12 @@ A könyvtárnak `champion.json` és `championFull.json` fájlt kell tartalmaznia
 egyező verzióval. A fiók UUID-je nem titok; authsession vagy Resend-kulcs nem kell
 az argumentumokba. A devparancsok az előzetesen felépített közös csomagokat használják.
 
-## 6. API és következő fejlesztési lépés
+## 6. API és kérdésgenerálás
 
 `GET /api/admin/access` csak a frissen ellenőrzött `isAdmin` jelzést adja vissza.
 Az adminadatok végpontjai:
 
-- `GET /api/admin/lol-data`: aktív készlet és futáselőzmények;
+- `GET /api/admin/lol-data`: aktív készlet, játszható kiadások és futáselőzmények;
 - `POST /api/admin/lol-data/imports`, body: `{ "mode": "latest" }` vagy
   `{ "mode": "reimport" }`, válasz: `202` és az importfutás;
 - `GET /api/admin/lol-data/imports/:runId`: egy futás állapota.
@@ -146,13 +149,7 @@ adminjogot kér. Vendég- vagy meccsvisszatérési cookie nem elég. A közös
 originvédelem, payloadméret- és HTTP-korlátok itt is működnek. A hibák stabil
 kódjaihoz angol szövegkatalógus tartozik, későbbi fordítások előkészítésével.
 
-**Ez az adatréteg elkészült, a valódi kérdésgenerátor még nincs bekötve.**
-Az aktív adatimport nem játszható generálási kiadás. A lobby jelenlegi
-példakérdésproviderét nem címkézi át. A következő lépés az elfogadott
-katalógus, determinisztikus generátor és változatlan kiadás publikálása, majd
-seed-/verzióválasztás a lobbyban, a [kiadásterv](question-seed-version.md) szerint.
-
-Az adminoldal a meglévő arculatot követi: Bebas Neue címsor, DM Sans szöveg,
-`--canvas`/`--surface`/`--text`/`--brand-surface` változók az ash és ember
-palettából. Egy hangsúlyos verzióblokkot követ a darabszámok rácsa és a
-futások egyszerű listája; mobilon tördelődik, nincs széles görgetendő táblázat.
+**A kérdésgenerátor és az automatikus kiadáspublikálás is elkészült.**
+Az import után csak az ellenőrzéseken átment kiadás választható játékhoz.
+A seed-/verzióválasztás, első publikálás, új revíziók és a szükséges
+`0004` migráció részletei a [kérdésgenerálási útmutatóban](question-generation-guide.md) vannak.
