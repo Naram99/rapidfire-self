@@ -7,6 +7,7 @@ import type { EmailMessage } from '../../src/email/types.js';
 import { createApplication } from '../../src/bootstrap/application.js';
 import { harness } from '../game-helpers.js';
 import { isolatedDatabase } from '../isolated-database.js';
+import { fixtureSource } from '../lol-fixture.js';
 
 async function availablePort(): Promise<number> {
   const reservation = createServer();
@@ -37,6 +38,7 @@ async function browserApplication() {
     publicUrl: url,
     allowedOrigins: [url],
     webRoot: resolve('apps/web/dist'),
+    lolSource: fixtureSource(),
   });
   await new Promise<void>((done) =>
     app.httpServer.listen(Number(new URL(url).port), '127.0.0.1', done),
@@ -116,6 +118,7 @@ async function browserApplication() {
     signIn,
     close: async () => {
       app.email.close();
+      await app.lolImporter.close();
       await app.service.shutdown();
       await app.service.persistenceIdle();
       await new Promise<void>((done) => app.io.close(() => done()));

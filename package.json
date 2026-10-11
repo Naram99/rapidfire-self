@@ -29,6 +29,8 @@
     "auth:generate": "npm run auth:generate --workspace=@rapidfire/server",
     "db:generate": "npm run db:generate --workspace=@rapidfire/server",
     "db:migrate": "npm run db:migrate --workspace=@rapidfire/server",
+    "admin:access": "npm run admin:access --workspace=@rapidfire/server --",
+    "lol:import-files": "npm run lol:import-files --workspace=@rapidfire/server --",
     "predev": "npm run build:shared",
     "dev": "concurrently --kill-others --names server,web \"npm run dev --workspace=@rapidfire/server\" \"npm run dev --workspace=@rapidfire/web\"",
     "typecheck": "npm run build:shared && npm run typecheck --workspaces && tsc --project tsconfig.tooling.json",

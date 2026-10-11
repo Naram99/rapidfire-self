@@ -1,13 +1,16 @@
 # League of Legends hősadatok — PostgreSQL-import terve
 
-Tervezési dátum: 2026-10-10. Státusz: megvalósítás előtti terv.
+Tervezési dátum: 2026-10-10. Státusz: az adatimport, normalizáló, PostgreSQL-séma
+és adminfrissítés megvalósítva. Használat: [LoL-adatimport útmutató](lol-data-guide.md).
 
 Kapcsolódik a [backend kérdésprovideréhez](backend-controller.md), az
 [adatbázis-útmutatóhoz](database-guide.md) és a [megvalósítási tervhez](implementation-plan.md).
-Ez a dokumentum az adatimportot és az adminfrissítést tervezi át; nem migráció
-és nem elkészült importáló. A kérdéssablonok és a seed/generátor részletes
+Ez a dokumentum az elfogadott adatimport- és adminfrissítési tervet őrzi.
+A megvalósítás a validált `championFull.json` aggregátumot használja, tíz hősös
+rövid staging-tranzakciókkal; a forrásfájlok és a hősök teljes JSON-ja megmarad.
+A kérdéssablonok és a seed/generátor részletes
 szerződését a [kérdésgenerálási terv](question-generation.md) egyezteti;
-az még nem véglegesített implementációs szerződés.
+annak implementálása a következő fejlesztési lépés.
 Az új hősadatminták [mezőszintű forrásszerződése](lol-source-schema.md)
 rögzíti a ténylegesen megfigyelt JSON-mezőket és a további ellenőrzéseket.
 A [seed- és kiadásválasztási terv](question-seed-version.md) az adatverziót
