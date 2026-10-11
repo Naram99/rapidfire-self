@@ -2,7 +2,8 @@
 
 Dátum: 2026-10-10. Státusz: a katalógus és az ajánlott küszöblépések
 felhasználó által jóváhagyva; a teljes feltöltött forrás és az elemzési
-referenciacsomagok ellenőrzése elkészült. A publikáláshoz még implementáció kell.
+referenciacsomagok ellenőrzése elkészült. A natív TS-generátor és az automatikus publikálás is elkészült; használatát a
+[kérdésgenerálási útmutató](../question-generation-guide.md) írja le.
 A termékszabályok az elfogadott [generálási tervet](../question-generation.md)
 követik. A meglévő mappanév a korábbi hivatkozások miatt megmarad.
 
@@ -29,7 +30,8 @@ Az `enabled: true` a tervezett használatot jelenti, nem igazolt játszhatóság
 A katalógus és a szövegfájl nem tartalmaz generált kérdéseket vagy valódi
 kiadásazonosítót. A külön ellenőrzési fájlok elemzési mintákat és
 tesztvektorokat tartalmaznak, valódi kiadásnak nem minősülnek.
-Az alkalmazás még nem tölti be a katalógust. A forrásként kapott JSON-ok
+Az alkalmazás a katalógus és a szövegek verziózott példányát tárolja a
+publikált kiadás manifestjében. A forrásként kapott JSON-ok
 külön, változatlan referenciák maradnak.
 
 ## Mezők

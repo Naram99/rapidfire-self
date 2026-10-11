@@ -19,6 +19,8 @@ describe('real cookie, socket and match lifecycle', () => {
           requestId: 'room',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },
@@ -131,6 +133,8 @@ describe('real cookie, socket and match lifecycle', () => {
           requestId: 'guest-room',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },
@@ -141,6 +145,8 @@ describe('real cookie, socket and match lifecycle', () => {
           requestId: 'guest-solo',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },
@@ -210,6 +216,8 @@ describe('real cookie, socket and match lifecycle', () => {
           requestId: 'solo',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },
@@ -233,6 +241,8 @@ describe('real cookie, socket and match lifecycle', () => {
           requestId: 'new-denied',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },
@@ -285,6 +295,8 @@ describe('real cookie, socket and match lifecycle', () => {
           requestId: 'solo',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },
@@ -329,6 +341,8 @@ describe('real cookie, socket and match lifecycle', () => {
           requestId: 'solo',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },
@@ -372,6 +386,8 @@ describe('real cookie, socket and match lifecycle', () => {
           requestId: 'room',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },

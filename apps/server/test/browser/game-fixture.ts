@@ -7,7 +7,11 @@ import type { EmailMessage } from '../../src/email/types.js';
 import { createApplication } from '../../src/bootstrap/application.js';
 import { harness } from '../game-helpers.js';
 import { isolatedDatabase } from '../isolated-database.js';
-import { fixtureSource } from '../lol-fixture.js';
+import {
+  fixtureSource,
+  fullLolFixture,
+  smallLolFixture,
+} from '../lol-fixture.js';
 
 async function availablePort(): Promise<number> {
   const reservation = createServer();
@@ -19,13 +23,14 @@ async function availablePort(): Promise<number> {
   );
   return address.port;
 }
-async function browserApplication() {
+async function browserApplication(publishedQuestions: boolean) {
   const database = await isolatedDatabase();
   const controlled = harness();
   controlled.timers.now = Date.now();
   const url = `http://127.0.0.1:${await availablePort()}`;
   const messages: EmailMessage[] = [];
   const app = createApplication({
+    questionMode: publishedQuestions ? 'published' : 'fixture',
     db: database.db,
     dependencies: controlled.dependencies,
     emailPort: {
@@ -38,7 +43,9 @@ async function browserApplication() {
     publicUrl: url,
     allowedOrigins: [url],
     webRoot: resolve('apps/web/dist'),
-    lolSource: fixtureSource(),
+    lolSource: fixtureSource(
+      publishedQuestions ? fullLolFixture() : smallLolFixture(),
+    ),
   });
   await new Promise<void>((done) =>
     app.httpServer.listen(Number(new URL(url).port), '127.0.0.1', done),
@@ -128,9 +135,11 @@ async function browserApplication() {
 }
 export const test = base.extend<{
   game: Awaited<ReturnType<typeof browserApplication>>;
+  publishedQuestions: boolean;
 }>({
-  game: async ({}, use) => {
-    const game = await browserApplication();
+  publishedQuestions: [false, { option: true }],
+  game: async ({ publishedQuestions }, use) => {
+    const game = await browserApplication(publishedQuestions);
     try {
       await use(game);
     } finally {

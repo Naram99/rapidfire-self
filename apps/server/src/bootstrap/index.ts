@@ -22,17 +22,23 @@ try {
   );
 }
 if (!config.resend) console.warn('RESEND_NOT_CONFIGURED');
-const { httpServer, io, service, email, lolImporter } = createApplication({
-  db: database.db,
-  dependencies: runtimeDependencies(),
-  emailPort: resendEmailPort(config.resend),
-  secret: config.secret,
-  publicUrl: config.publicUrl,
-  allowedOrigins: config.allowedOrigins,
-  ...(process.env.NODE_ENV === 'production'
-    ? { webRoot: fileURLToPath(new URL('../../../web/dist/', import.meta.url)) }
-    : {}),
-});
+const { httpServer, io, service, email, lolImporter, generationReleases } =
+  createApplication({
+    db: database.db,
+    dependencies: runtimeDependencies(),
+    emailPort: resendEmailPort(config.resend),
+    secret: config.secret,
+    publicUrl: config.publicUrl,
+    allowedOrigins: config.allowedOrigins,
+    ...(process.env.NODE_ENV === 'production'
+      ? {
+          webRoot: fileURLToPath(
+            new URL('../../../web/dist/', import.meta.url),
+          ),
+        }
+      : {}),
+  });
+await generationReleases.load();
 httpServer.listen(port, host, () =>
   console.log(`Server listening on ${host}:${port}`),
 );

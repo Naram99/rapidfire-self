@@ -123,6 +123,8 @@ describe('actual Socket.IO transport', () => {
           requestId: 'create',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },

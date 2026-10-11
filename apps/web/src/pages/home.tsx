@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { nicknameSchema, settingsSchema } from '@rapidfire/contracts';
 import type { GameSettings } from '@rapidfire/contracts';
 import type { ClientState, GameClient } from '../lib/client';
@@ -17,9 +17,19 @@ export function HomePage({
 }) {
   const [settings, setSettings] = useState<GameSettings>({
     topicId: 'league-of-legends',
+    releaseId: null,
+    seed: null,
     rounds: 1,
     answerTimeMs: 20000,
   });
+  useEffect(() => {
+    void client.refreshConfig();
+  }, [client]);
+  const topic = state.topics.find((topic) => topic.id === settings.topicId);
+  const effectiveSettings = {
+    ...settings,
+    releaseId: settings.releaseId ?? topic?.defaultReleaseId ?? null,
+  };
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +38,11 @@ export function HomePage({
   const loading = state.session === 'loading';
   const pending = busy || state.pending !== null;
   const maxRounds =
-    state.topics.find((topic) => topic.id === settings.topicId)?.maxRounds ?? 0;
+    topic?.releases.find(
+      (release) => release.id === effectiveSettings.releaseId,
+    )?.maxRounds ??
+    topic?.maxRounds ??
+    0;
   const fail = (error: string) => {
     setError(error);
     requestAnimationFrame(() => errorRef.current?.focus());
@@ -60,6 +74,9 @@ export function HomePage({
         </p>
       </section>
       <div className="home-play">
+        {maxRounds === 0 ? (
+          <Notice kind="warning">{t('noQuestionVersionHint')}</Notice>
+        ) : null}
         {error ? (
           <div
             ref={errorRef}
@@ -81,7 +98,7 @@ export function HomePage({
             noValidate
             onSubmit={(event) => {
               event.preventDefault();
-              const parsed = settingsSchema.safeParse(settings);
+              const parsed = settingsSchema.safeParse(effectiveSettings);
               if (!parsed.success || settings.rounds > maxRounds) {
                 fail(t('invalidSettings', { rounds: maxRounds }));
                 return;
@@ -117,15 +134,17 @@ export function HomePage({
             <details>
               <summary>{t('settings')}</summary>
               <Settings
-                value={settings}
+                value={effectiveSettings}
                 change={setSettings}
                 maxRounds={maxRounds}
+                releases={topic?.releases ?? []}
+                defaultReleaseId={topic?.defaultReleaseId ?? null}
                 disabled={pending}
               />
             </details>
             <Button
               type="submit"
-              disabled={pending || loading}
+              disabled={pending || loading || maxRounds === 0}
               aria-busy={pending}
             >
               <Icon name="bolt" />
@@ -147,9 +166,9 @@ export function HomePage({
             <div className="stack">
               <Button
                 variant="secondary"
-                disabled={pending}
+                disabled={pending || maxRounds === 0}
                 onClick={() => {
-                  const parsed = settingsSchema.safeParse(settings);
+                  const parsed = settingsSchema.safeParse(effectiveSettings);
                   if (!parsed.success || settings.rounds > maxRounds) {
                     fail(t('invalidSettings', { rounds: maxRounds }));
                     return;

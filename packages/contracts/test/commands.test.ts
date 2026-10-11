@@ -63,8 +63,43 @@ describe('public command schemas', () => {
       }).success,
     ).toBe(true);
   });
+  it.each(['', '12345678901', 'a b', 'á', 'A\n', ' A', 'A_', 'A-'])(
+    'rejects invalid custom seed %j',
+    (seed) => {
+      expect(
+        parseCommand('solo:start', {
+          requestId: 'r',
+          settings: {
+            topicId: 'league-of-legends',
+            rounds: 1,
+            answerTimeMs: 20000,
+            seed,
+          },
+        }).success,
+      ).toBe(false);
+    },
+  );
+  it.each(['A', 'a', '001', '0123456789'])(
+    'preserves valid seed %s',
+    (seed) => {
+      const parsed = parseCommand('solo:start', {
+        requestId: 'r',
+        settings: {
+          topicId: 'league-of-legends',
+          rounds: 1,
+          answerTimeMs: 20000,
+          seed,
+        },
+      });
+      expect(
+        parsed.success &&
+          parsed.data.type === 'solo:start' &&
+          parsed.data.payload.settings.seed,
+      ).toBe(seed);
+    },
+  );
   it('exposes stable protocol version and an English fallback for future codes', () => {
-    expect(PROTOCOL_VERSION).toBe(2);
+    expect(PROTOCOL_VERSION).toBe(3);
     expect(errorMessage('AUTH_REQUIRED')).toBe('Sign in to continue.');
     expect(errorMessage('FUTURE_CODE')).toBe('Something went wrong.');
   });

@@ -1,3 +1,4 @@
+import { GenerationReleases } from '../question-generation/releases.js';
 import { createDatabase } from '../database/client.js';
 import { fileSource } from './file-source.js';
 import { LolImporter } from './importer.js';
@@ -20,7 +21,12 @@ if (
   if (!url) throw new Error('DATABASE_URL missing; run npm run env:init');
   const database = createDatabase(url);
   const repository = new LolRepository(database.db);
-  const importer = new LolImporter(repository, fileSource(directory));
+  const releases = new GenerationReleases(database.db);
+  const importer = new LolImporter(
+    repository,
+    fileSource(directory),
+    (id, signal) => releases.publish(id, signal),
+  );
   try {
     if (!(await repository.isAdmin(userId)))
       throw new Error('Verified admin account required.');

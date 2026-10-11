@@ -14,6 +14,7 @@ import type {
   CommandName,
   CommandPayload,
   GameTopic,
+  GenerationRelease,
   Profile,
   Snapshot,
 } from '@rapidfire/contracts';
@@ -42,7 +43,12 @@ export type ClientState = Readonly<{
   clock: ClockAnchor;
   pending: CommandName | null;
   notice: string | null;
-  topics: readonly Readonly<{ id: GameTopic; maxRounds: number }>[];
+  topics: readonly Readonly<{
+    id: GameTopic;
+    maxRounds: number;
+    releases: readonly GenerationRelease[];
+    defaultReleaseId: string | null;
+  }>[];
 }>;
 
 export class GameClient {
@@ -54,7 +60,12 @@ export class GameClient {
     clock: { serverTime: Date.now(), monotonicTime: performance.now() },
     pending: null,
     notice: null,
-    topics: gameTopicSchema.options.map((id) => ({ id, maxRounds: 10 })),
+    topics: gameTopicSchema.options.map((id) => ({
+      id,
+      maxRounds: 0,
+      releases: [],
+      defaultReleaseId: null,
+    })),
   };
   private readonly listeners = new Set<() => void>();
   private readonly socket: GameSocket = io({
@@ -64,6 +75,7 @@ export class GameClient {
   });
   private controller: AbortController | null = null;
   private interval: ReturnType<typeof setInterval> | null = null;
+  private configuration: Promise<void> | null = null;
   private checking: Promise<void> | null = null;
   private checkAt = 0;
   private activityAt = performance.now();
@@ -91,6 +103,7 @@ export class GameClient {
     if (document.visibilityState === 'visible') {
       this.activity();
       void this.checkSession();
+      void this.refreshConfig();
       if (!this.socket.connected && this.state.connection !== 'incompatible')
         this.socket.connect();
       else this.synchronize();
@@ -103,6 +116,7 @@ export class GameClient {
   private connected = () => {
     this.update({ connection: 'connected' });
     this.synchronize();
+    void this.refreshConfig();
     void this.syncTime();
   };
   private disconnected = () => {
@@ -186,17 +200,7 @@ export class GameClient {
         void this.syncTime();
     }, 60000);
     const epoch = this.epoch;
-    void read(
-      '/api/game-config',
-      gameConfigResponseSchema,
-      this.controller.signal,
-    )
-      .then((config) => {
-        if (epoch === this.epoch) this.update({ topics: config.topics });
-      })
-      .catch(() => {
-        /* The server also validates settings if configuration cannot be loaded. */
-      });
+    void this.refreshConfig();
     void this.checkSession().then(() => {
       if (
         epoch === this.epoch &&
@@ -206,10 +210,34 @@ export class GameClient {
         this.socket.connect();
     });
   }
+  refreshConfig(): Promise<void> {
+    if (!this.controller || this.controller.signal.aborted)
+      return Promise.resolve();
+    if (this.configuration) return this.configuration;
+    const epoch = this.epoch;
+    const work = read(
+      '/api/game-config',
+      gameConfigResponseSchema,
+      this.controller?.signal,
+    )
+      .then((config) => {
+        if (epoch === this.epoch) this.update({ topics: config.topics });
+      })
+      .catch(() => {
+        if (epoch === this.epoch)
+          this.update({ topics: [], notice: t('configurationUnavailable') });
+      })
+      .finally(() => {
+        if (this.configuration === work) this.configuration = null;
+      });
+    this.configuration = work;
+    return work;
+  }
   stop(): void {
     this.epoch++;
     this.controller?.abort();
     this.controller = null;
+    this.configuration = null;
     this.checking = null;
     if (this.interval) clearInterval(this.interval);
     this.interval = null;

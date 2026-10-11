@@ -20,6 +20,8 @@ describe('Better Auth over real HTTP and PostgreSQL', () => {
           requestId: 'change-room',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },
@@ -230,6 +232,8 @@ describe('Better Auth over real HTTP and PostgreSQL', () => {
           requestId: 'after-refresh',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },
@@ -254,6 +258,8 @@ describe('Better Auth over real HTTP and PostgreSQL', () => {
           requestId: 'create',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },
@@ -285,6 +291,8 @@ describe('Better Auth over real HTTP and PostgreSQL', () => {
           requestId: 'blocked',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },
@@ -309,6 +317,8 @@ describe('Better Auth over real HTTP and PostgreSQL', () => {
           requestId: 'reset-room',
           settings: {
             topicId: 'league-of-legends',
+            releaseId: null,
+            seed: null,
             rounds: 1,
             answerTimeMs: 20000,
           },

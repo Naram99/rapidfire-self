@@ -1,7 +1,7 @@
 import type { GameSettings, PersistenceStatus } from '@rapidfire/contracts';
 import type { MatchState } from '@rapidfire/game-engine';
 import type { Binding } from './projection.js';
-import type { Checkpoint, Dependencies } from './ports.js';
+import type { Checkpoint, Dependencies, MatchGeneration } from './ports.js';
 
 export function checkpoint(
   state: MatchState,
@@ -9,6 +9,7 @@ export function checkpoint(
   revision: number,
   kind: Checkpoint['kind'],
   settings: GameSettings,
+  generation: MatchGeneration | null = null,
 ): Checkpoint {
   const phase = state.phase;
   const completed =
@@ -24,6 +25,8 @@ export function checkpoint(
       id: state.id,
       mode: state.mode,
       settings: { ...settings },
+      generation: generation?.metadata ?? null,
+      rounds: generation?.rounds(state) ?? [],
       startedAt: state.startedAt,
       endedAt: state.endedAt,
       status: completed

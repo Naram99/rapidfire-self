@@ -18,7 +18,9 @@ export type ErrorCode =
   | 'MATCH_INTERRUPTED'
   | 'PROTOCOL_VERSION_UNSUPPORTED'
   | 'RATE_LIMITED'
-  | 'SERVER_UNAVAILABLE';
+  | 'SERVER_UNAVAILABLE'
+  | 'GENERATION_UNAVAILABLE'
+  | 'RELEASE_UNAVAILABLE';
 export type CommandError = Readonly<{
   code: ErrorCode;
   params: Readonly<Record<string, string | number>>;
@@ -75,6 +77,10 @@ export const ENGLISH_MESSAGES: Readonly<Record<ErrorCode, string>> = {
   PROTOCOL_VERSION_UNSUPPORTED: 'Refresh the page to use the current version.',
   RATE_LIMITED: 'Too many requests. Try again shortly.',
   SERVER_UNAVAILABLE: 'The server is temporarily unavailable.',
+  GENERATION_UNAVAILABLE:
+    'No question version is available yet. Ask an administrator to import champion data.',
+  RELEASE_UNAVAILABLE:
+    'This question version is unavailable. Choose another version in the lobby.',
 };
 export function errorMessage(code: string): string {
   return isErrorCode(code) ? ENGLISH_MESSAGES[code] : 'Something went wrong.';

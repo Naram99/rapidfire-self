@@ -1,3 +1,4 @@
+import type { GenerationMetadata } from './generation.js';
 import type { AnswerReceipt } from './messages.js';
 import type { GameSettings, Scope } from './commands.js';
 
@@ -124,6 +125,7 @@ export type PublicMatch = Readonly<{
   id: string;
   mode: 'solo' | 'multiplayer';
   settings: GameSettings;
+  generation: GenerationMetadata | null;
   persistence: Readonly<{ status: PersistenceStatus; revision: number }>;
   participants: readonly Readonly<{
     id: string;

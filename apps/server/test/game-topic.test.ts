@@ -29,6 +29,8 @@ describe('game topics', () => {
       await player.send('solo:start', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 1,
           answerTimeMs: 20000,
         },
@@ -70,6 +72,8 @@ describe('game topics', () => {
       await player.send('solo:start', {
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 2,
           answerTimeMs: 20000,
         },
@@ -82,12 +86,14 @@ describe('game topics', () => {
         expectedSettingsVersion: 1,
         settings: {
           topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
           rounds: 2,
           answerTimeMs: 20000,
         },
       }),
     ).toMatchObject({ ok: false, error: { code: 'INVALID_PAYLOAD' } });
-    expect(categories).toHaveBeenCalledWith('league-of-legends');
+    expect(categories).toHaveBeenCalledWith('league-of-legends', null);
     expect(player.latest().room?.settings.rounds).toBe(1);
   });
 

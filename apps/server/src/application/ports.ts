@@ -1,5 +1,8 @@
 import type {
   GameSettings,
+  GenerationMetadata,
+  GenerationRelease,
+  GenerationRound,
   GameTopic,
   Scope,
   Snapshot,
@@ -9,6 +12,7 @@ import type {
   MatchState,
   Participant,
   QuestionResult,
+  Question,
   Standing,
 } from '@rapidfire/game-engine';
 
@@ -31,8 +35,28 @@ export type TimerPort = Readonly<{
   schedule: (key: string, deadline: number, callback: () => void) => void;
   cancel: (key: string) => void;
 }>;
+export type ResolvedGeneration = Omit<GenerationMetadata, 'seed'> &
+  Readonly<{ seed: string }>;
+export type MatchGeneration = Readonly<{
+  metadata: ResolvedGeneration;
+  prepare: (categoryId: string) => readonly Question[];
+  categoryChoices: (
+    state: MatchState,
+  ) => (
+    purpose: 'category-offer' | 'automatic-category',
+    items: readonly string[],
+  ) => number;
+  rounds: (state: MatchState) => readonly GenerationRound[];
+}>;
 export type QuestionProvider = Readonly<{
-  categories: (topicId: GameTopic) => readonly Category[];
+  categories: (
+    topicId: GameTopic,
+    releaseId?: string | null,
+  ) => readonly Category[];
+  resolveSettings?: (settings: GameSettings) => GameSettings;
+  createGeneration?: (settings: GameSettings) => MatchGeneration;
+  releases?: () => readonly GenerationRelease[];
+  defaultReleaseId?: () => string | null;
   prepare: (
     request: Readonly<{
       matchId: string;
@@ -48,6 +72,8 @@ export type MatchRecord = Readonly<{
   id: string;
   mode: MatchState['mode'];
   settings: GameSettings;
+  generation?: ResolvedGeneration | null;
+  rounds?: readonly GenerationRound[];
   startedAt: number | null;
   endedAt: number | null;
   status: 'in_progress' | 'completed' | 'interrupted';

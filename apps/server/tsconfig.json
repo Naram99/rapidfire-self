@@ -6,6 +6,7 @@
     "lib": ["ES2024"],
     "types": ["node"],
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     "outDir": "dist"
   },
   "include": ["src", "test", "auth.generate.ts", "drizzle.config.ts"],

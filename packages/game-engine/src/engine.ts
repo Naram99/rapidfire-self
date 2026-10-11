@@ -18,7 +18,7 @@ import {
   move,
   replaceParticipant,
   replaceRound,
-  choose,
+  chooseCategory,
 } from './transition.js';
 import type { Work } from './transition.js';
 import type {
@@ -186,7 +186,11 @@ function handleTimer(
     case 'category_selection': {
       const round = getRound(work.state, phase.roundId);
       return prepareRound(work, round.id, {
-        categoryId: choose(work, round.offeredCategoryIds),
+        categoryId: chooseCategory(
+          work,
+          round.offeredCategoryIds,
+          'automatic-category',
+        ),
         reason: 'timeout',
       });
     }

@@ -8,6 +8,24 @@ import { ApiError } from './api';
 
 export const en = {
   skip: 'Skip to content',
+  questionVersion: 'Question version',
+  playableVersions: 'Playable question versions',
+  versionCategories: '{count} categories',
+  defaultVersion: 'Default',
+  noQuestionVersion: 'No version available',
+  unavailableVersion: 'Selected version is unavailable',
+  noQuestionVersionHint:
+    'Questions are not ready yet. Ask an administrator to import champion data.',
+  configurationUnavailable:
+    'Game settings could not be loaded. Reload the page to try again.',
+  customSeed: 'Use a custom seed',
+  seed: 'Seed',
+  seedHint:
+    '1–10 letters or digits. Case matters. Custom seeds disable rating changes for this game.',
+  automaticSeedHint:
+    'A random seed is created for each game and revealed in the results.',
+  eloExcluded: 'Custom seed: rating changes disabled for this game.',
+
   play: 'Play',
   history: 'History',
   profile: 'Profile',
@@ -20,7 +38,7 @@ export const en = {
     'Import the latest patch to prepare the question data.',
   championDataReady: 'Data imported',
   championDataPending:
-    'Question generation will be available in a later update.',
+    'Playable versions are published automatically after question validation.',
   championDataUpdate: 'Update champion data',
   championDataReimport: 'Re-import current version',
   championDataReimportHint:

@@ -1,3 +1,4 @@
+import { questionGenerationRelease } from './lol-schema.js';
 import { and, desc, eq, lt, or } from 'drizzle-orm';
 import { verifyPassword } from 'better-auth/crypto';
 import type {
@@ -11,6 +12,7 @@ import {
   game,
   gameParticipant,
   gameQuestionResult,
+  gameRoundGeneration,
   userGame,
   userProfile,
 } from './schema.js';
@@ -84,9 +86,19 @@ export class AccountRepository {
         rounds: game.roundCount,
         topicId: game.topicId,
         answerTimeMs: game.answerTimeMs,
+        releaseId: game.generationReleaseId,
+        seed: game.generationSeed,
+        seedOrigin: game.seedOrigin,
+        eloExclusionReason: game.eloExclusionReason,
+        sourceVersion: questionGenerationRelease.sourceVersion,
+        releaseRevision: questionGenerationRelease.revision,
       })
       .from(userGame)
       .innerJoin(game, eq(game.id, userGame.gameId))
+      .leftJoin(
+        questionGenerationRelease,
+        eq(questionGenerationRelease.id, game.generationReleaseId),
+      )
       .innerJoin(
         gameParticipant,
         eq(gameParticipant.id, userGame.participantId),
@@ -108,7 +120,30 @@ export class AccountRepository {
       .orderBy(desc(game.startedAt), desc(game.id))
       .limit(limit);
     return rows.map((row) => ({
-      ...row,
+      id: row.id,
+      mode: row.mode,
+      status: row.status,
+      score: row.score,
+      rank: row.rank,
+      rounds: row.rounds,
+      topicId: row.topicId,
+      answerTimeMs: row.answerTimeMs,
+      generation:
+        row.releaseId &&
+        row.seed &&
+        row.seedOrigin &&
+        row.sourceVersion &&
+        row.releaseRevision
+          ? {
+              releaseId: row.releaseId,
+              seed: row.status === 'in_progress' ? null : row.seed,
+              seedOrigin: row.seedOrigin,
+              eloExclusionReason: row.eloExclusionReason,
+              releaseLabel:
+                row.sourceVersion +
+                (row.releaseRevision === 1 ? '' : ` · r${row.releaseRevision}`),
+            }
+          : null,
       startedAt: row.startedAt.toISOString(),
       endedAt: row.endedAt?.toISOString() ?? null,
     }));
@@ -146,14 +181,50 @@ export class AccountRepository {
         gameQuestionResult.roundNumber,
         gameQuestionResult.questionNumber,
       );
+    const [release] = match.generationReleaseId
+      ? await this.db
+          .select()
+          .from(questionGenerationRelease)
+          .where(eq(questionGenerationRelease.id, match.generationReleaseId))
+      : [];
+    const generation =
+      release && match.generationSeed && match.seedOrigin
+        ? {
+            releaseId: release.id,
+            releaseLabel:
+              release.sourceVersion +
+              (release.revision === 1 ? '' : ` · r${release.revision}`),
+            seed:
+              match.statusCode === 'in_progress' ? null : match.generationSeed,
+            seedOrigin: match.seedOrigin,
+            eloExclusionReason: match.eloExclusionReason,
+          }
+        : null;
+    const rounds = await this.db
+      .select({
+        roundNumber: gameRoundGeneration.roundNumber,
+        categoryId: gameRoundGeneration.categoryId,
+        contentHash: gameRoundGeneration.contentHash,
+      })
+      .from(gameRoundGeneration)
+      .where(eq(gameRoundGeneration.gameId, gameId))
+      .orderBy(gameRoundGeneration.roundNumber);
     // BigInt is converted explicitly and auth IDs never appear in shared standings.
     return {
       game: {
-        ...match,
-        persistenceRevision: match.persistenceRevision.toString(),
+        id: match.id,
+        topicId: match.topicId,
+        mode: match.mode,
+        statusCode: match.statusCode,
+        startedAt: match.startedAt,
+        endedAt: match.endedAt,
+        roundCount: match.roundCount,
+        answerTimeMs: match.answerTimeMs,
+        generation,
       },
       participants,
       questions,
+      rounds,
     };
   }
 }

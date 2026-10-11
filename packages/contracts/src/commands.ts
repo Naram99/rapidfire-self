@@ -1,6 +1,7 @@
 import { z } from 'zod';
+import { generationSeedSchema } from './generation.js';
 
-export const PROTOCOL_VERSION = 2;
+export const PROTOCOL_VERSION = 3;
 export const handshakeSchema = z.strictObject({
   protocolVersion: z.literal(PROTOCOL_VERSION),
 });
@@ -11,6 +12,8 @@ export const gameTopicSchema = z.enum(['league-of-legends']);
 export type GameTopic = z.infer<typeof gameTopicSchema>;
 export const settingsSchema = z.strictObject({
   topicId: gameTopicSchema,
+  releaseId: z.uuid().nullable().default(null),
+  seed: generationSeedSchema.nullable().default(null),
   rounds: z.number().int().min(1).max(10),
   answerTimeMs: z.number().int().min(5_000).max(60_000).multipleOf(1_000),
 });

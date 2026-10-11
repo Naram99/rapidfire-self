@@ -186,12 +186,16 @@ export class FlowController {
           'STALE_STATE',
           true,
         );
-        this.checkSettings(command.payload.settings);
-        if (!sameSettings(this.room.settings, command.payload.settings)) {
+        const settings =
+          this.dependencies.questions.resolveSettings?.(
+            command.payload.settings,
+          ) ?? command.payload.settings;
+        this.checkSettings(settings);
+        if (!sameSettings(this.room.settings, settings)) {
           this.cancelCountdown();
           this.room = {
             ...this.room,
-            settings: { ...command.payload.settings },
+            settings: { ...settings },
             settingsVersion: this.room.settingsVersion + 1,
             members: this.room.members.map((item) => ({
               ...item,
@@ -203,6 +207,8 @@ export class FlowController {
         return this.ack();
       }
       case 'room:ready': {
+        if (command.payload.ready && this.room)
+          this.checkSettings(this.room.settings);
         requireCommand(
           this.room !== null && this.isLobby() && viewer.freshSession,
           'FORBIDDEN',
@@ -399,6 +405,7 @@ export class FlowController {
       runner?.bindings ?? [],
       runner?.persistence ?? { status: 'not_configured', revision: 0 },
       runner?.settings ?? null,
+      runner?.publicGeneration() ?? null,
     );
     return {
       ...snapshot,
@@ -457,7 +464,10 @@ export class FlowController {
   private checkSettings(settings: GameSettings): void {
     requireCommand(
       settings.rounds <=
-        this.dependencies.questions.categories(settings.topicId).length,
+        this.dependencies.questions.categories(
+          settings.topicId,
+          settings.releaseId,
+        ).length,
       'INVALID_PAYLOAD',
     );
   }
@@ -491,6 +501,7 @@ export class FlowController {
     people: readonly Person[],
     id: string,
   ): void {
+    this.checkSettings(settings);
     const bindings: Binding[] = people.map((person) => ({
       person: { ...person },
       participantId: this.dependencies.id(),

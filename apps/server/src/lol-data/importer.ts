@@ -15,6 +15,10 @@ export class LolImporter {
   constructor(
     private readonly repository: LolRepository,
     private readonly source: LolSource,
+    private readonly publishGeneration?: (
+      datasetId: string,
+      signal: AbortSignal,
+    ) => Promise<void>,
   ) {}
   async start(
     userId: string,
@@ -62,6 +66,7 @@ export class LolImporter {
         active.normalizationVersion === NORMALIZATION_VERSION
       ) {
         check();
+        await this.publishGeneration?.(active.id, signal);
         await this.repository.unchanged(run.id, active);
         return;
       }
@@ -97,7 +102,17 @@ export class LolImporter {
       }
       check();
       await this.repository.progress(run.id, { stage: 'publishing' });
-      await this.repository.publish(run.id, datasetId, hash, counts);
+      const published = await this.repository.publish(
+        run.id,
+        datasetId,
+        hash,
+        counts,
+        !this.publishGeneration,
+      );
+      if (this.publishGeneration) {
+        await this.publishGeneration(published.datasetId, signal);
+        await this.repository.completePublication(run.id, published.unchanged);
+      }
     } catch (error) {
       const code = this.controller.signal.aborted
         ? 'IMPORT_ABORTED'

@@ -12,6 +12,7 @@ import {
   unique,
   uuid,
 } from 'drizzle-orm/pg-core';
+import { questionGenerationRelease } from './lol-schema.js';
 import { user } from './auth-schema.js';
 
 const audit = () => ({
@@ -49,6 +50,13 @@ export const game = pgTable(
   {
     id: uuid('id').primaryKey(),
     topicId: text('topic_id'),
+    generationReleaseId: uuid('generation_release_id').references(
+      () => questionGenerationRelease.id,
+      { onDelete: 'restrict' },
+    ),
+    generationSeed: text('generation_seed'),
+    seedOrigin: text('seed_origin', { enum: ['automatic', 'custom'] }),
+    eloExclusionReason: text('elo_exclusion_reason', { enum: ['custom_seed'] }),
     mode: text('mode', { enum: ['solo', 'multiplayer'] }).notNull(),
     statusCode: text('status_code', {
       enum: ['in_progress', 'completed', 'interrupted'],
@@ -76,6 +84,10 @@ export const game = pgTable(
   },
   (t) => [
     index('game_status_idx').on(t.statusCode),
+    check(
+      'game_generation_context',
+      sql`((${t.generationReleaseId} IS NULL AND ${t.generationSeed} IS NULL AND ${t.seedOrigin} IS NULL AND ${t.eloExclusionReason} IS NULL) OR (${t.generationReleaseId} IS NOT NULL AND ${t.generationSeed} IS NOT NULL AND ${t.generationSeed} ~ '^[A-Za-z0-9]{1,10}$' AND ${t.seedOrigin} IS NOT NULL AND ((${t.seedOrigin} = 'automatic' AND ${t.eloExclusionReason} IS NULL) OR (${t.seedOrigin} = 'custom' AND ${t.eloExclusionReason} IS NOT NULL AND ${t.eloExclusionReason} = 'custom_seed'))))`,
+    ),
     check('game_mode', sql`${t.mode} IN ('solo', 'multiplayer')`),
     check('game_round_count', sql`${t.roundCount} BETWEEN 1 AND 10`),
     check('game_question_count', sql`${t.questionsPerRound} = 5`),
@@ -200,5 +212,21 @@ export const gameQuestionResult = pgTable(
       'result_outcome',
       sql`${t.outcome} IN ('correct','partial','incorrect','unanswered') AND (${t.outcome} <> 'unanswered' OR (${t.selectedCorrectCount} = 0 AND ${t.selectedIncorrectCount} = 0 AND ${t.pointsAwarded} = 0))`,
     ),
+  ],
+);
+
+export const gameRoundGeneration = pgTable(
+  'game_round_generation',
+  {
+    gameId: uuid('game_id')
+      .notNull()
+      .references(() => game.id, { onDelete: 'cascade' }),
+    roundNumber: integer('round_number').notNull(),
+    categoryId: text('category_id').notNull(),
+    contentHash: text('content_hash').notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.gameId, t.roundNumber] }),
+    check('generation_round_number', sql`${t.roundNumber} BETWEEN 1 AND 10`),
   ],
 );

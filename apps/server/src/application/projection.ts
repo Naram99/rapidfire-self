@@ -1,5 +1,5 @@
 import { PROTOCOL_VERSION } from '@rapidfire/contracts';
-import type { GameSettings } from '@rapidfire/contracts';
+import type { GameSettings, GenerationMetadata } from '@rapidfire/contracts';
 import type {
   ClosureReason,
   PersistenceStatus,
@@ -139,6 +139,7 @@ export function projectSnapshot(
   bindings: readonly Binding[],
   persistence: PersistenceView,
   settings: GameSettings | null,
+  generation: GenerationMetadata | null = null,
 ): Snapshot {
   if (state && !settings)
     throw new Error('Projection invariant: match settings missing');
@@ -170,6 +171,7 @@ export function projectSnapshot(
           id: state.id,
           mode: state.mode,
           settings: { ...settings },
+          generation,
           persistence: { ...persistence },
           participants: state.participants.map((participant) => ({
             id: participant.id,
