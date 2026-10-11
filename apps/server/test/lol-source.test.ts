@@ -23,6 +23,44 @@ test('resolves numeric latest and pins version/locale to the fixed Data Dragon h
     'SOURCE_DATA_INVALID',
   );
 });
+test('resolves a stable numeric patch even when the catalog includes historical names and build identifiers', async () => {
+  const source = dataDragonSource({
+    fetch: async () =>
+      Response.json([
+        'lolpatch_7.20',
+        '10.10.3216176',
+        '16.9.1',
+        '3.04.3',
+        '16.20.1',
+        '10.10.3208608',
+        'lolpatch_7.19',
+      ]),
+  });
+  await expect(source.latest(signal())).resolves.toBe('16.20.1');
+});
+test.each([
+  null,
+  {},
+  [],
+  ['lolpatch_7.20'],
+  ['10.10.3216176', '10.10.3208608'],
+  ['16.20.1', null],
+  ['16.20.1', 42],
+  ['16.20.1', {}],
+  ['16.20.1', ''],
+  ['16.20.1', 'x'.repeat(100001)],
+  Array.from({ length: 10001 }, () => '16.20.1'),
+])(
+  'rejects malformed catalogs and catalogs without a supported patch',
+  async (catalog) => {
+    const source = dataDragonSource({
+      fetch: async () => Response.json(catalog),
+    });
+    await expect(source.latest(signal())).rejects.toThrow(
+      'SOURCE_DATA_INVALID',
+    );
+  },
+);
 test('retries transient failures with bounded Retry-After and the same pinned URL', async () => {
   let calls = 0;
   const waits: number[] = [];
