@@ -1,0 +1,1637 @@
+{
+  "seed": "Ab1",
+  "fixtureReleaseContentHash": "6f8ac02d5804a5f57e6819c03d88c4e2bc523a3520be80249e0b2cdc73dce97d",
+  "productionRelease": false,
+  "scope": "analytical reference witnesses, not production generator output",
+  "packs": {
+    "baseStatsLvl1": {
+      "easy": [
+        {
+          "metricId": "spellblock",
+          "operatorId": "exactMatch",
+          "visibleValue": "26",
+          "options": [
+            {
+              "subjectKey": "91",
+              "name": "Talon",
+              "sourceValue": "36",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "84",
+              "name": "Akali",
+              "sourceValue": "37",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "61",
+              "name": "Orianna",
+              "sourceValue": "26",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "50",
+              "name": "Swain",
+              "sourceValue": "34",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "armor",
+          "operatorId": "exactMatch",
+          "visibleValue": "19",
+          "options": [
+            {
+              "subjectKey": "10",
+              "name": "Kayle",
+              "sourceValue": "26",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "904",
+              "name": "Zaahen",
+              "sourceValue": "36",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "74",
+              "name": "Heimerdinger",
+              "sourceValue": "19",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "432",
+              "name": "Bard",
+              "sourceValue": "32",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblock",
+          "operatorId": "exactMatch",
+          "visibleValue": "22",
+          "options": [
+            {
+              "subjectKey": "876",
+              "name": "Lillia",
+              "sourceValue": "32",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "32",
+              "name": "Amumu",
+              "sourceValue": "32",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "161",
+              "name": "Vel'Koz",
+              "sourceValue": "30",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "10",
+              "name": "Kayle",
+              "sourceValue": "22",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "armor",
+          "operatorId": "exactMatch",
+          "visibleValue": "26",
+          "options": [
+            {
+              "subjectKey": "266",
+              "name": "Aatrox",
+              "sourceValue": "38",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "98",
+              "name": "Shen",
+              "sourceValue": "34",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "24",
+              "name": "Jax",
+              "sourceValue": "36",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "902",
+              "name": "Milio",
+              "sourceValue": "26",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "attackrange",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "420",
+              "name": "Illaoi",
+              "sourceValue": "125",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "876",
+              "name": "Lillia",
+              "sourceValue": "325",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "875",
+              "name": "Sett",
+              "sourceValue": "125",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "516",
+              "name": "Ornn",
+              "sourceValue": "175",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "medium": [
+        {
+          "metricId": "attackrange",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "99",
+              "name": "Lux",
+              "sourceValue": "550",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "51",
+              "name": "Caitlyn",
+              "sourceValue": "650",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "21",
+              "name": "Miss Fortune",
+              "sourceValue": "550",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "117",
+              "name": "Lulu",
+              "sourceValue": "550",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "movespeed",
+          "operatorId": "exactMatch",
+          "visibleValue": "315",
+          "options": [
+            {
+              "subjectKey": "102",
+              "name": "Shyvana",
+              "sourceValue": "350",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "75",
+              "name": "Nasus",
+              "sourceValue": "350",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "526",
+              "name": "Rell",
+              "sourceValue": "315",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "24",
+              "name": "Jax",
+              "sourceValue": "350",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "attackrange",
+          "operatorId": "exactMatch",
+          "visibleValue": "425",
+          "options": [
+            {
+              "subjectKey": "267",
+              "name": "Nami",
+              "sourceValue": "550",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "29",
+              "name": "Twitch",
+              "sourceValue": "550",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "711",
+              "name": "Vex",
+              "sourceValue": "550",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "104",
+              "name": "Graves",
+              "sourceValue": "425",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "armor",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "42",
+              "name": "Corki",
+              "sourceValue": "27",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "888",
+              "name": "Renata Glasc",
+              "sourceValue": "27",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "134",
+              "name": "Syndra",
+              "sourceValue": "25",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "92",
+              "name": "Riven",
+              "sourceValue": "33",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "attackrange",
+          "operatorId": "exactMatch",
+          "visibleValue": "500",
+          "options": [
+            {
+              "subjectKey": "104",
+              "name": "Graves",
+              "sourceValue": "425",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "203",
+              "name": "Kindred",
+              "sourceValue": "500",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "42",
+              "name": "Corki",
+              "sourceValue": "550",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "267",
+              "name": "Nami",
+              "sourceValue": "550",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "hard": [
+        {
+          "metricId": "attackdamage",
+          "operatorId": "max2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "4",
+              "name": "Twisted Fate",
+              "sourceValue": "52",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "76",
+              "name": "Nidalee",
+              "sourceValue": "58",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "360",
+              "name": "Samira",
+              "sourceValue": "57",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "910",
+              "name": "Hwei",
+              "sourceValue": "54",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "268",
+              "name": "Azir",
+              "sourceValue": "56",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "526",
+              "name": "Rell",
+              "sourceValue": "55",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "movespeed",
+          "operatorId": "exactMatch",
+          "visibleValue": "350",
+          "options": [
+            {
+              "subjectKey": "115",
+              "name": "Ziggs",
+              "sourceValue": "325",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "10",
+              "name": "Kayle",
+              "sourceValue": "335",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "34",
+              "name": "Anivia",
+              "sourceValue": "325",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "18",
+              "name": "Tristana",
+              "sourceValue": "325",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "893",
+              "name": "Aurora",
+              "sourceValue": "335",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "2",
+              "name": "Olaf",
+              "sourceValue": "350",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "attackdamage",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "4",
+              "name": "Twisted Fate",
+              "sourceValue": "52",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "17",
+              "name": "Teemo",
+              "sourceValue": "54",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "112",
+              "name": "Viktor",
+              "sourceValue": "53",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "360",
+              "name": "Samira",
+              "sourceValue": "57",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "63",
+              "name": "Brand",
+              "sourceValue": "57",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "267",
+              "name": "Nami",
+              "sourceValue": "54",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "attackspeed",
+          "operatorId": "min2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "2",
+              "name": "Olaf",
+              "sourceValue": "0.72",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "79",
+              "name": "Gragas",
+              "sourceValue": "0.675",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "63",
+              "name": "Brand",
+              "sourceValue": "0.681",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "429",
+              "name": "Kalista",
+              "sourceValue": "0.694",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "56",
+              "name": "Nocturne",
+              "sourceValue": "0.721",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "33",
+              "name": "Rammus",
+              "sourceValue": "0.7",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "hp",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "57",
+              "name": "Maokai",
+              "sourceValue": "665",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "233",
+              "name": "Briar",
+              "sourceValue": "625",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "68",
+              "name": "Rumble",
+              "sourceValue": "640",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "98",
+              "name": "Shen",
+              "sourceValue": "610",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "236",
+              "name": "Lucian",
+              "sourceValue": "641",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "119",
+              "name": "Draven",
+              "sourceValue": "675",
+              "isCorrect": true
+            }
+          ]
+        }
+      ],
+      "challenger": [
+        {
+          "metricId": "spellblock",
+          "operatorId": "moreThan",
+          "visibleValue": "33",
+          "options": [
+            {
+              "subjectKey": "50",
+              "name": "Swain",
+              "sourceValue": "34",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "893",
+              "name": "Aurora",
+              "sourceValue": "32",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "36",
+              "name": "Dr. Mundo",
+              "sourceValue": "29",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "10",
+              "name": "Kayle",
+              "sourceValue": "22",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "63",
+              "name": "Brand",
+              "sourceValue": "30",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "91",
+              "name": "Talon",
+              "sourceValue": "36",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "attackspeed",
+          "operatorId": "moreThan",
+          "visibleValue": "0.65",
+          "options": [
+            {
+              "subjectKey": "161",
+              "name": "Vel'Koz",
+              "sourceValue": "0.643",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "69",
+              "name": "Cassiopeia",
+              "sourceValue": "0.647",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "2",
+              "name": "Olaf",
+              "sourceValue": "0.72",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "1",
+              "name": "Annie",
+              "sourceValue": "0.61",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "497",
+              "name": "Rakan",
+              "sourceValue": "0.635",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "895",
+              "name": "Nilah",
+              "sourceValue": "0.697",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "spellblock",
+          "operatorId": "moreThan",
+          "visibleValue": "29",
+          "options": [
+            {
+              "subjectKey": "60",
+              "name": "Elise",
+              "sourceValue": "30",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "56",
+              "name": "Nocturne",
+              "sourceValue": "32",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "350",
+              "name": "Yuumi",
+              "sourceValue": "25",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "68",
+              "name": "Rumble",
+              "sourceValue": "28",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "10",
+              "name": "Kayle",
+              "sourceValue": "22",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "96",
+              "name": "Kog'Maw",
+              "sourceValue": "33",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "hp",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "1",
+              "name": "Annie",
+              "sourceValue": "560",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "6",
+              "name": "Urgot",
+              "sourceValue": "655",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "103",
+              "name": "Ahri",
+              "sourceValue": "590",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "888",
+              "name": "Renata Glasc",
+              "sourceValue": "545",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "83",
+              "name": "Yorick",
+              "sourceValue": "650",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "31",
+              "name": "Cho'Gath",
+              "sourceValue": "644",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "attackspeed",
+          "operatorId": "lessThan",
+          "visibleValue": "0.6",
+          "options": [
+            {
+              "subjectKey": "201",
+              "name": "Braum",
+              "sourceValue": "0.644",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "104",
+              "name": "Graves",
+              "sourceValue": "0.475",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "32",
+              "name": "Amumu",
+              "sourceValue": "0.736",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "113",
+              "name": "Sejuani",
+              "sourceValue": "0.688",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "57",
+              "name": "Maokai",
+              "sourceValue": "0.8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "56",
+              "name": "Nocturne",
+              "sourceValue": "0.721",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    "baseStatsPerLevel": {
+      "easy": [
+        {
+          "metricId": "mpperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "44",
+              "name": "Taric",
+              "sourceValue": "60",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "53",
+              "name": "Blitzcrank",
+              "sourceValue": "40",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "122",
+              "name": "Darius",
+              "sourceValue": "58",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "38",
+              "name": "Kassadin",
+              "sourceValue": "87",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "429",
+              "name": "Kalista",
+              "sourceValue": "5.2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "122",
+              "name": "Darius",
+              "sourceValue": "5.2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "29",
+              "name": "Twitch",
+              "sourceValue": "4",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "113",
+              "name": "Sejuani",
+              "sourceValue": "5.45",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "exactMatch",
+          "visibleValue": "2.05",
+          "options": [
+            {
+              "subjectKey": "267",
+              "name": "Nami",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "83",
+              "name": "Yorick",
+              "sourceValue": "2.05",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "127",
+              "name": "Lissandra",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "90",
+              "name": "Malzahar",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "427",
+              "name": "Ivern",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "897",
+              "name": "K'Sante",
+              "sourceValue": "2.1",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "150",
+              "name": "Gnar",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "1",
+              "name": "Annie",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "hpperlevel",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "13",
+              "name": "Ryze",
+              "sourceValue": "124",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "240",
+              "name": "Kled",
+              "sourceValue": "84",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "150",
+              "name": "Gnar",
+              "sourceValue": "79",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "350",
+              "name": "Yuumi",
+              "sourceValue": "69",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "medium": [
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "150",
+              "name": "Gnar",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "17",
+              "name": "Teemo",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "29",
+              "name": "Twitch",
+              "sourceValue": "1.1",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "711",
+              "name": "Vex",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "exactMatch",
+          "visibleValue": "2.55",
+          "options": [
+            {
+              "subjectKey": "517",
+              "name": "Sylas",
+              "sourceValue": "2.55",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "120",
+              "name": "Hecarim",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "41",
+              "name": "Gangplank",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "516",
+              "name": "Ornn",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "hpperlevel",
+          "operatorId": "exactMatch",
+          "visibleValue": "101",
+          "options": [
+            {
+              "subjectKey": "83",
+              "name": "Yorick",
+              "sourceValue": "114",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "89",
+              "name": "Leona",
+              "sourceValue": "101",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "12",
+              "name": "Alistar",
+              "sourceValue": "120",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "136",
+              "name": "Aurelion Sol",
+              "sourceValue": "90",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "mpperlevel",
+          "operatorId": "exactMatch",
+          "visibleValue": "28",
+          "options": [
+            {
+              "subjectKey": "143",
+              "name": "Zyra",
+              "sourceValue": "25",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "800",
+              "name": "Mel",
+              "sourceValue": "28",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "63",
+              "name": "Brand",
+              "sourceValue": "21",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "131",
+              "name": "Diana",
+              "sourceValue": "25",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "mpperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "897",
+              "name": "K'Sante",
+              "sourceValue": "60",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "81",
+              "name": "Ezreal",
+              "sourceValue": "70",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "13",
+              "name": "Ryze",
+              "sourceValue": "70",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "805",
+              "name": "Locke",
+              "sourceValue": "70",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "hard": [
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "777",
+              "name": "Yone",
+              "sourceValue": "4.6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "59",
+              "name": "Jarvan IV",
+              "sourceValue": "4.6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "22",
+              "name": "Ashe",
+              "sourceValue": "4.6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "64",
+              "name": "Lee Sin",
+              "sourceValue": "4.5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "131",
+              "name": "Diana",
+              "sourceValue": "4.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "10",
+              "name": "Kayle",
+              "sourceValue": "4.2",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "131",
+              "name": "Diana",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "897",
+              "name": "K'Sante",
+              "sourceValue": "2.1",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "113",
+              "name": "Sejuani",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "31",
+              "name": "Cho'Gath",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "5",
+              "name": "Xin Zhao",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "53",
+              "name": "Blitzcrank",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "exactMatch",
+          "visibleValue": "1.45",
+          "options": [
+            {
+              "subjectKey": "86",
+              "name": "Garen",
+              "sourceValue": "1.55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "876",
+              "name": "Lillia",
+              "sourceValue": "1.55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "sourceValue": "1.55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "76",
+              "name": "Nidalee",
+              "sourceValue": "1.45",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "56",
+              "name": "Nocturne",
+              "sourceValue": "1.55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "50",
+              "name": "Swain",
+              "sourceValue": "1.55",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "exactMatch",
+          "visibleValue": "2.1",
+          "options": [
+            {
+              "subjectKey": "19",
+              "name": "Warwick",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "75",
+              "name": "Nasus",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "80",
+              "name": "Pantheon",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "897",
+              "name": "K'Sante",
+              "sourceValue": "2.1",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "3",
+              "name": "Galio",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "106",
+              "name": "Volibear",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "hpperlevel",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "145",
+              "name": "Kai'Sa",
+              "sourceValue": "102",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "58",
+              "name": "Renekton",
+              "sourceValue": "111",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "163",
+              "name": "Taliyah",
+              "sourceValue": "104",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "141",
+              "name": "Kayn",
+              "sourceValue": "103",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "4",
+              "name": "Twisted Fate",
+              "sourceValue": "108",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "21",
+              "name": "Miss Fortune",
+              "sourceValue": "100",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "challenger": [
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "lessThan",
+          "visibleValue": "1.6",
+          "options": [
+            {
+              "subjectKey": "36",
+              "name": "Dr. Mundo",
+              "sourceValue": "2.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "897",
+              "name": "K'Sante",
+              "sourceValue": "2.1",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "2",
+              "name": "Olaf",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "42",
+              "name": "Corki",
+              "sourceValue": "1.1",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "517",
+              "name": "Sylas",
+              "sourceValue": "2.55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "76",
+              "name": "Nidalee",
+              "sourceValue": "1.45",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "min2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "81",
+              "name": "Ezreal",
+              "sourceValue": "4.2",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "44",
+              "name": "Taric",
+              "sourceValue": "4.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "910",
+              "name": "Hwei",
+              "sourceValue": "4.7",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "34",
+              "name": "Anivia",
+              "sourceValue": "4.1",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "120",
+              "name": "Hecarim",
+              "sourceValue": "5.45",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "42",
+              "name": "Corki",
+              "sourceValue": "4.5",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "mpperlevel",
+          "operatorId": "lessThan",
+          "visibleValue": "39.4",
+          "options": [
+            {
+              "subjectKey": "91",
+              "name": "Talon",
+              "sourceValue": "37",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "90",
+              "name": "Malzahar",
+              "sourceValue": "28",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "120",
+              "name": "Hecarim",
+              "sourceValue": "40",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "4",
+              "name": "Twisted Fate",
+              "sourceValue": "39",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "99",
+              "name": "Lux",
+              "sourceValue": "23.5",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "33",
+              "name": "Rammus",
+              "sourceValue": "33",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "267",
+              "name": "Nami",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "31",
+              "name": "Cho'Gath",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "897",
+              "name": "K'Sante",
+              "sourceValue": "2.1",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "76",
+              "name": "Nidalee",
+              "sourceValue": "1.45",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "36",
+              "name": "Dr. Mundo",
+              "sourceValue": "2.3",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "526",
+              "name": "Rell",
+              "sourceValue": "1.8",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "58",
+              "name": "Renekton",
+              "sourceValue": "5.2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "777",
+              "name": "Yone",
+              "sourceValue": "4.6",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "16",
+              "name": "Soraka",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "89",
+              "name": "Leona",
+              "sourceValue": "4.8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "120",
+              "name": "Hecarim",
+              "sourceValue": "5.45",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "799",
+              "name": "Ambessa",
+              "sourceValue": "4.9",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    "title": {
+      "easy": [
+        {
+          "clue": "the Monkey King",
+          "options": [
+            {
+              "subjectKey": "18",
+              "name": "Tristana",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "62",
+              "name": "Wukong",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "81",
+              "name": "Ezreal",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "126",
+              "name": "Jayce",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "clue": "the Missing Link",
+          "options": [
+            {
+              "subjectKey": "150",
+              "name": "Gnar",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "136",
+              "name": "Aurelion Sol",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "268",
+              "name": "Azir",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "223",
+              "name": "Tahm Kench",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "clue": "the Enlightened One",
+          "options": [
+            {
+              "subjectKey": "43",
+              "name": "Karma",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "25",
+              "name": "Morgana",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "4",
+              "name": "Twisted Fate",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "432",
+              "name": "Bard",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "clue": "the Hound of a Hundred Bites",
+          "options": [
+            {
+              "subjectKey": "121",
+              "name": "Kha'Zix",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "60",
+              "name": "Elise",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "523",
+              "name": "Aphelios",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "950",
+              "name": "Naafiri",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "clue": "the Exemplar of Demacia",
+          "options": [
+            {
+              "subjectKey": "141",
+              "name": "Kayn",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "63",
+              "name": "Brand",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "59",
+              "name": "Jarvan IV",
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

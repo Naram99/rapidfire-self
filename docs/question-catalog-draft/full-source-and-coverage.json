@@ -1,0 +1,1185 @@
+{
+  "sourceVersion": "16.20.1",
+  "sourceLocale": "en_US (user-provided source)",
+  "sourceScope": "uploaded full archive, no independent live download",
+  "policyScenario": "approved-mvp-eligibility-v1",
+  "eligibilityPolicy": {
+    "unverifiedChromaCounts": "excludeAffectedSubjects",
+    "zeroCooldowns": "excludeUnverifiedSpells"
+  },
+  "catalogHash": "3f8e4e4bbf622291c6466183e074a6b11aa340641224455b54fd9021ad507dda",
+  "textsHash": "0f04b0caa17899b02645710f86519d80801276ae365aabc4a7eef67c3ffb1b40",
+  "sourceFactsFixtureHash": "a18d44416d1eec805f4878cbf79d7c14bb453aa340f56e107a06089cb797aff7",
+  "fixtureReleaseContentHash": "2af7bbc3eab1c278615244d42ec868d7c99275b732bc4810f176ce417f81ac40",
+  "archiveSha256": "d141119a2070a594c6fb3c895449daa9d22e007fda806526506cc4aab16e7619",
+  "productionRelease": false,
+  "champions": 173,
+  "detailResponses": 173,
+  "missingDetailResponses": 0,
+  "skins": {
+    "records": 9207,
+    "baseAppearances": 173,
+    "skins": 1959,
+    "chromas": 7075,
+    "flagFalseWithChildren": 127,
+    "flagTrueWithoutChildren": 6,
+    "championsWithUnverifiedChromaTotals": 5
+  },
+  "spells": {
+    "records": 692,
+    "sourceZeroCooldowns": 20,
+    "cooldownEligible": 672
+  },
+  "lookups": {
+    "abilityName": {
+      "uniqueClues": 692,
+      "ambiguousClues": 0
+    },
+    "passiveName": {
+      "uniqueClues": 173,
+      "ambiguousClues": 0
+    },
+    "title": {
+      "uniqueClues": 173,
+      "ambiguousClues": 0
+    }
+  },
+  "metrics": [
+    {
+      "metricId": "hp",
+      "difficultyId": "easy",
+      "subjects": 173,
+      "distinctValues": 50,
+      "minimumValue": "410",
+      "maximumValue": "696",
+      "feasibleReferenceCount": {
+        "min": 2,
+        "max": 0,
+        "exactMatch": 2
+      }
+    },
+    {
+      "metricId": "hp",
+      "difficultyId": "medium",
+      "subjects": 173,
+      "distinctValues": 50,
+      "minimumValue": "410",
+      "maximumValue": "696",
+      "feasibleReferenceCount": {
+        "min": 24,
+        "max": 33,
+        "exactMatch": 49
+      }
+    },
+    {
+      "metricId": "hp",
+      "difficultyId": "hard",
+      "subjects": 173,
+      "distinctValues": 50,
+      "minimumValue": "410",
+      "maximumValue": "696",
+      "feasibleReferenceCount": {
+        "min": 46,
+        "max": 44,
+        "min2nd": 44,
+        "max2nd": 44,
+        "exactMatch": 49
+      }
+    },
+    {
+      "metricId": "hp",
+      "difficultyId": "challenger",
+      "subjects": 173,
+      "distinctValues": 50,
+      "minimumValue": "410",
+      "maximumValue": "696",
+      "feasibleReferenceCount": {
+        "min": 45,
+        "max": 45,
+        "min2nd": 45,
+        "max2nd": 45,
+        "exactMatch": 50,
+        "lessThan": 5,
+        "moreThan": 5
+      }
+    },
+    {
+      "metricId": "mp",
+      "difficultyId": "easy",
+      "subjects": 145,
+      "distinctValues": 61,
+      "minimumValue": "232",
+      "maximumValue": "530",
+      "feasibleReferenceCount": {
+        "min": 42,
+        "max": 24,
+        "exactMatch": 61
+      }
+    },
+    {
+      "metricId": "mp",
+      "difficultyId": "medium",
+      "subjects": 145,
+      "distinctValues": 61,
+      "minimumValue": "232",
+      "maximumValue": "530",
+      "feasibleReferenceCount": {
+        "min": 51,
+        "max": 50,
+        "exactMatch": 61
+      }
+    },
+    {
+      "metricId": "mp",
+      "difficultyId": "hard",
+      "subjects": 145,
+      "distinctValues": 61,
+      "minimumValue": "232",
+      "maximumValue": "530",
+      "feasibleReferenceCount": {
+        "min": 55,
+        "max": 55,
+        "min2nd": 55,
+        "max2nd": 55,
+        "exactMatch": 60
+      }
+    },
+    {
+      "metricId": "mp",
+      "difficultyId": "challenger",
+      "subjects": 145,
+      "distinctValues": 61,
+      "minimumValue": "232",
+      "maximumValue": "530",
+      "feasibleReferenceCount": {
+        "min": 56,
+        "max": 56,
+        "min2nd": 56,
+        "max2nd": 56,
+        "exactMatch": 61,
+        "lessThan": 6,
+        "moreThan": 6
+      }
+    },
+    {
+      "metricId": "movespeed",
+      "difficultyId": "easy",
+      "subjects": 173,
+      "distinctValues": 8,
+      "minimumValue": "315",
+      "maximumValue": "355",
+      "feasibleReferenceCount": {
+        "min": 0,
+        "max": 0,
+        "exactMatch": 0
+      }
+    },
+    {
+      "metricId": "movespeed",
+      "difficultyId": "medium",
+      "subjects": 173,
+      "distinctValues": 8,
+      "minimumValue": "315",
+      "maximumValue": "355",
+      "feasibleReferenceCount": {
+        "min": 1,
+        "max": 0,
+        "exactMatch": 1
+      }
+    },
+    {
+      "metricId": "movespeed",
+      "difficultyId": "hard",
+      "subjects": 173,
+      "distinctValues": 8,
+      "minimumValue": "315",
+      "maximumValue": "355",
+      "feasibleReferenceCount": {
+        "min": 6,
+        "max": 6,
+        "min2nd": 3,
+        "max2nd": 3,
+        "exactMatch": 8
+      }
+    },
+    {
+      "metricId": "movespeed",
+      "difficultyId": "challenger",
+      "subjects": 173,
+      "distinctValues": 8,
+      "minimumValue": "315",
+      "maximumValue": "355",
+      "feasibleReferenceCount": {
+        "min": 3,
+        "max": 3,
+        "min2nd": 3,
+        "max2nd": 3,
+        "exactMatch": 8,
+        "lessThan": 7,
+        "moreThan": 7
+      }
+    },
+    {
+      "metricId": "armor",
+      "difficultyId": "easy",
+      "subjects": 173,
+      "distinctValues": 24,
+      "minimumValue": "18",
+      "maximumValue": "43",
+      "feasibleReferenceCount": {
+        "min": 13,
+        "max": 16,
+        "exactMatch": 24
+      }
+    },
+    {
+      "metricId": "armor",
+      "difficultyId": "medium",
+      "subjects": 173,
+      "distinctValues": 24,
+      "minimumValue": "18",
+      "maximumValue": "43",
+      "feasibleReferenceCount": {
+        "min": 19,
+        "max": 22,
+        "exactMatch": 24
+      }
+    },
+    {
+      "metricId": "armor",
+      "difficultyId": "hard",
+      "subjects": 173,
+      "distinctValues": 24,
+      "minimumValue": "18",
+      "maximumValue": "43",
+      "feasibleReferenceCount": {
+        "min": 19,
+        "max": 21,
+        "min2nd": 0,
+        "max2nd": 1,
+        "exactMatch": 23
+      }
+    },
+    {
+      "metricId": "armor",
+      "difficultyId": "challenger",
+      "subjects": 173,
+      "distinctValues": 24,
+      "minimumValue": "18",
+      "maximumValue": "43",
+      "feasibleReferenceCount": {
+        "min": 19,
+        "max": 19,
+        "min2nd": 19,
+        "max2nd": 19,
+        "exactMatch": 24,
+        "lessThan": 24,
+        "moreThan": 24
+      }
+    },
+    {
+      "metricId": "spellblock",
+      "difficultyId": "easy",
+      "subjects": 173,
+      "distinctValues": 11,
+      "minimumValue": "22",
+      "maximumValue": "37",
+      "feasibleReferenceCount": {
+        "min": 3,
+        "max": 0,
+        "exactMatch": 3
+      }
+    },
+    {
+      "metricId": "spellblock",
+      "difficultyId": "medium",
+      "subjects": 173,
+      "distinctValues": 11,
+      "minimumValue": "22",
+      "maximumValue": "37",
+      "feasibleReferenceCount": {
+        "min": 6,
+        "max": 7,
+        "exactMatch": 11
+      }
+    },
+    {
+      "metricId": "spellblock",
+      "difficultyId": "hard",
+      "subjects": 173,
+      "distinctValues": 11,
+      "minimumValue": "22",
+      "maximumValue": "37",
+      "feasibleReferenceCount": {
+        "min": 5,
+        "max": 6,
+        "min2nd": 0,
+        "max2nd": 0,
+        "exactMatch": 8
+      }
+    },
+    {
+      "metricId": "spellblock",
+      "difficultyId": "challenger",
+      "subjects": 173,
+      "distinctValues": 11,
+      "minimumValue": "22",
+      "maximumValue": "37",
+      "feasibleReferenceCount": {
+        "min": 6,
+        "max": 6,
+        "min2nd": 6,
+        "max2nd": 6,
+        "exactMatch": 11,
+        "lessThan": 14,
+        "moreThan": 14
+      }
+    },
+    {
+      "metricId": "attackrange",
+      "difficultyId": "easy",
+      "subjects": 173,
+      "distinctValues": 19,
+      "minimumValue": "125",
+      "maximumValue": "650",
+      "feasibleReferenceCount": {
+        "min": 10,
+        "max": 16,
+        "exactMatch": 19
+      }
+    },
+    {
+      "metricId": "attackrange",
+      "difficultyId": "medium",
+      "subjects": 173,
+      "distinctValues": 19,
+      "minimumValue": "125",
+      "maximumValue": "650",
+      "feasibleReferenceCount": {
+        "min": 10,
+        "max": 14,
+        "exactMatch": 17
+      }
+    },
+    {
+      "metricId": "attackrange",
+      "difficultyId": "hard",
+      "subjects": 173,
+      "distinctValues": 19,
+      "minimumValue": "125",
+      "maximumValue": "650",
+      "feasibleReferenceCount": {
+        "min": 5,
+        "max": 7,
+        "min2nd": 0,
+        "max2nd": 0,
+        "exactMatch": 8
+      }
+    },
+    {
+      "metricId": "attackrange",
+      "difficultyId": "challenger",
+      "subjects": 173,
+      "distinctValues": 19,
+      "minimumValue": "125",
+      "maximumValue": "650",
+      "feasibleReferenceCount": {
+        "min": 14,
+        "max": 14,
+        "min2nd": 14,
+        "max2nd": 14,
+        "exactMatch": 19,
+        "lessThan": 20,
+        "moreThan": 20
+      }
+    },
+    {
+      "metricId": "attackdamage",
+      "difficultyId": "easy",
+      "subjects": 173,
+      "distinctValues": 25,
+      "minimumValue": "44",
+      "maximumValue": "69",
+      "feasibleReferenceCount": {
+        "min": 9,
+        "max": 2,
+        "exactMatch": 11
+      }
+    },
+    {
+      "metricId": "attackdamage",
+      "difficultyId": "medium",
+      "subjects": 173,
+      "distinctValues": 25,
+      "minimumValue": "44",
+      "maximumValue": "69",
+      "feasibleReferenceCount": {
+        "min": 18,
+        "max": 17,
+        "exactMatch": 25
+      }
+    },
+    {
+      "metricId": "attackdamage",
+      "difficultyId": "hard",
+      "subjects": 173,
+      "distinctValues": 25,
+      "minimumValue": "44",
+      "maximumValue": "69",
+      "feasibleReferenceCount": {
+        "min": 23,
+        "max": 21,
+        "min2nd": 20,
+        "max2nd": 19,
+        "exactMatch": 25
+      }
+    },
+    {
+      "metricId": "attackdamage",
+      "difficultyId": "challenger",
+      "subjects": 173,
+      "distinctValues": 25,
+      "minimumValue": "44",
+      "maximumValue": "69",
+      "feasibleReferenceCount": {
+        "min": 20,
+        "max": 20,
+        "min2nd": 20,
+        "max2nd": 20,
+        "exactMatch": 25,
+        "lessThan": 24,
+        "moreThan": 24
+      }
+    },
+    {
+      "metricId": "attackspeed",
+      "difficultyId": "easy",
+      "subjects": 173,
+      "distinctValues": 34,
+      "minimumValue": "0.475",
+      "maximumValue": "0.8",
+      "feasibleReferenceCount": {
+        "min": 1,
+        "max": 0,
+        "exactMatch": 1
+      }
+    },
+    {
+      "metricId": "attackspeed",
+      "difficultyId": "medium",
+      "subjects": 173,
+      "distinctValues": 34,
+      "minimumValue": "0.475",
+      "maximumValue": "0.8",
+      "feasibleReferenceCount": {
+        "min": 18,
+        "max": 8,
+        "exactMatch": 30
+      }
+    },
+    {
+      "metricId": "attackspeed",
+      "difficultyId": "hard",
+      "subjects": 173,
+      "distinctValues": 34,
+      "minimumValue": "0.475",
+      "maximumValue": "0.8",
+      "feasibleReferenceCount": {
+        "min": 29,
+        "max": 31,
+        "min2nd": 27,
+        "max2nd": 28,
+        "exactMatch": 33
+      }
+    },
+    {
+      "metricId": "attackspeed",
+      "difficultyId": "challenger",
+      "subjects": 173,
+      "distinctValues": 34,
+      "minimumValue": "0.475",
+      "maximumValue": "0.8",
+      "feasibleReferenceCount": {
+        "min": 29,
+        "max": 29,
+        "min2nd": 29,
+        "max2nd": 29,
+        "exactMatch": 34,
+        "lessThan": 6,
+        "moreThan": 6
+      }
+    },
+    {
+      "metricId": "hpperlevel",
+      "difficultyId": "easy",
+      "subjects": 173,
+      "distinctValues": 36,
+      "minimumValue": "69",
+      "maximumValue": "126",
+      "feasibleReferenceCount": {
+        "min": 10,
+        "max": 4,
+        "exactMatch": 14
+      }
+    },
+    {
+      "metricId": "hpperlevel",
+      "difficultyId": "medium",
+      "subjects": 173,
+      "distinctValues": 36,
+      "minimumValue": "69",
+      "maximumValue": "126",
+      "feasibleReferenceCount": {
+        "min": 26,
+        "max": 26,
+        "exactMatch": 36
+      }
+    },
+    {
+      "metricId": "hpperlevel",
+      "difficultyId": "hard",
+      "subjects": 173,
+      "distinctValues": 36,
+      "minimumValue": "69",
+      "maximumValue": "126",
+      "feasibleReferenceCount": {
+        "min": 30,
+        "max": 31,
+        "min2nd": 30,
+        "max2nd": 29,
+        "exactMatch": 34
+      }
+    },
+    {
+      "metricId": "hpperlevel",
+      "difficultyId": "challenger",
+      "subjects": 173,
+      "distinctValues": 36,
+      "minimumValue": "69",
+      "maximumValue": "126",
+      "feasibleReferenceCount": {
+        "min": 31,
+        "max": 31,
+        "min2nd": 31,
+        "max2nd": 31,
+        "exactMatch": 36,
+        "lessThan": 284,
+        "moreThan": 284
+      }
+    },
+    {
+      "metricId": "mpperlevel",
+      "difficultyId": "easy",
+      "subjects": 145,
+      "distinctValues": 31,
+      "minimumValue": "20",
+      "maximumValue": "87",
+      "feasibleReferenceCount": {
+        "min": 24,
+        "max": 23,
+        "exactMatch": 31
+      }
+    },
+    {
+      "metricId": "mpperlevel",
+      "difficultyId": "medium",
+      "subjects": 145,
+      "distinctValues": 31,
+      "minimumValue": "20",
+      "maximumValue": "87",
+      "feasibleReferenceCount": {
+        "min": 28,
+        "max": 28,
+        "exactMatch": 31
+      }
+    },
+    {
+      "metricId": "mpperlevel",
+      "difficultyId": "hard",
+      "subjects": 145,
+      "distinctValues": 31,
+      "minimumValue": "20",
+      "maximumValue": "87",
+      "feasibleReferenceCount": {
+        "min": 19,
+        "max": 18,
+        "min2nd": 0,
+        "max2nd": 0,
+        "exactMatch": 26
+      }
+    },
+    {
+      "metricId": "mpperlevel",
+      "difficultyId": "challenger",
+      "subjects": 145,
+      "distinctValues": 31,
+      "minimumValue": "20",
+      "maximumValue": "87",
+      "feasibleReferenceCount": {
+        "min": 26,
+        "max": 26,
+        "min2nd": 26,
+        "max2nd": 26,
+        "exactMatch": 31,
+        "lessThan": 334,
+        "moreThan": 334
+      }
+    },
+    {
+      "metricId": "armorperlevel",
+      "difficultyId": "easy",
+      "subjects": 173,
+      "distinctValues": 18,
+      "minimumValue": "0",
+      "maximumValue": "5.45",
+      "feasibleReferenceCount": {
+        "min": 2,
+        "max": 0,
+        "exactMatch": 3
+      }
+    },
+    {
+      "metricId": "armorperlevel",
+      "difficultyId": "medium",
+      "subjects": 173,
+      "distinctValues": 18,
+      "minimumValue": "0",
+      "maximumValue": "5.45",
+      "feasibleReferenceCount": {
+        "min": 11,
+        "max": 10,
+        "exactMatch": 17
+      }
+    },
+    {
+      "metricId": "armorperlevel",
+      "difficultyId": "hard",
+      "subjects": 173,
+      "distinctValues": 18,
+      "minimumValue": "0",
+      "maximumValue": "5.45",
+      "feasibleReferenceCount": {
+        "min": 15,
+        "max": 15,
+        "min2nd": 11,
+        "max2nd": 11,
+        "exactMatch": 17
+      }
+    },
+    {
+      "metricId": "armorperlevel",
+      "difficultyId": "challenger",
+      "subjects": 173,
+      "distinctValues": 18,
+      "minimumValue": "0",
+      "maximumValue": "5.45",
+      "feasibleReferenceCount": {
+        "min": 12,
+        "max": 13,
+        "min2nd": 13,
+        "max2nd": 13,
+        "exactMatch": 17,
+        "lessThan": 27,
+        "moreThan": 27
+      }
+    },
+    {
+      "metricId": "spellblockperlevel",
+      "difficultyId": "easy",
+      "subjects": 173,
+      "distinctValues": 9,
+      "minimumValue": "1.1",
+      "maximumValue": "2.55",
+      "feasibleReferenceCount": {
+        "min": 4,
+        "max": 5,
+        "exactMatch": 9
+      }
+    },
+    {
+      "metricId": "spellblockperlevel",
+      "difficultyId": "medium",
+      "subjects": 173,
+      "distinctValues": 9,
+      "minimumValue": "1.1",
+      "maximumValue": "2.55",
+      "feasibleReferenceCount": {
+        "min": 3,
+        "max": 8,
+        "exactMatch": 9
+      }
+    },
+    {
+      "metricId": "spellblockperlevel",
+      "difficultyId": "hard",
+      "subjects": 173,
+      "distinctValues": 9,
+      "minimumValue": "1.1",
+      "maximumValue": "2.55",
+      "feasibleReferenceCount": {
+        "min": 1,
+        "max": 1,
+        "min2nd": 0,
+        "max2nd": 0,
+        "exactMatch": 2
+      }
+    },
+    {
+      "metricId": "spellblockperlevel",
+      "difficultyId": "challenger",
+      "subjects": 173,
+      "distinctValues": 9,
+      "minimumValue": "1.1",
+      "maximumValue": "2.55",
+      "feasibleReferenceCount": {
+        "min": 4,
+        "max": 4,
+        "min2nd": 4,
+        "max2nd": 4,
+        "exactMatch": 9,
+        "lessThan": 7,
+        "moreThan": 7
+      }
+    },
+    {
+      "metricId": "skinsCount",
+      "difficultyId": "easy",
+      "subjects": 173,
+      "distinctValues": 23,
+      "minimumValue": "1",
+      "maximumValue": "23",
+      "feasibleReferenceCount": {
+        "min": 16,
+        "max": 21,
+        "exactMatch": 23
+      }
+    },
+    {
+      "metricId": "skinsCount",
+      "difficultyId": "medium",
+      "subjects": 173,
+      "distinctValues": 23,
+      "minimumValue": "1",
+      "maximumValue": "23",
+      "feasibleReferenceCount": {
+        "min": 17,
+        "max": 20,
+        "exactMatch": 20
+      }
+    },
+    {
+      "metricId": "skinsCount",
+      "difficultyId": "hard",
+      "subjects": 173,
+      "distinctValues": 23,
+      "minimumValue": "1",
+      "maximumValue": "23",
+      "feasibleReferenceCount": {
+        "min": 8,
+        "max": 11,
+        "min2nd": 0,
+        "max2nd": 0,
+        "exactMatch": 13
+      }
+    },
+    {
+      "metricId": "skinsCount",
+      "difficultyId": "challenger",
+      "subjects": 173,
+      "distinctValues": 23,
+      "minimumValue": "1",
+      "maximumValue": "23",
+      "feasibleReferenceCount": {
+        "min": 18,
+        "max": 18,
+        "min2nd": 18,
+        "max2nd": 18,
+        "exactMatch": 23,
+        "lessThan": 21,
+        "moreThan": 21
+      }
+    },
+    {
+      "metricId": "chromasCount",
+      "difficultyId": "easy",
+      "subjects": 168,
+      "distinctValues": 57,
+      "minimumValue": "5",
+      "maximumValue": "83",
+      "feasibleReferenceCount": {
+        "min": 42,
+        "max": 55,
+        "exactMatch": 57
+      }
+    },
+    {
+      "metricId": "chromasCount",
+      "difficultyId": "medium",
+      "subjects": 168,
+      "distinctValues": 57,
+      "minimumValue": "5",
+      "maximumValue": "83",
+      "feasibleReferenceCount": {
+        "min": 48,
+        "max": 50,
+        "exactMatch": 54
+      }
+    },
+    {
+      "metricId": "chromasCount",
+      "difficultyId": "hard",
+      "subjects": 168,
+      "distinctValues": 57,
+      "minimumValue": "5",
+      "maximumValue": "83",
+      "feasibleReferenceCount": {
+        "min": 42,
+        "max": 43,
+        "min2nd": 22,
+        "max2nd": 26,
+        "exactMatch": 48
+      }
+    },
+    {
+      "metricId": "chromasCount",
+      "difficultyId": "challenger",
+      "subjects": 168,
+      "distinctValues": 57,
+      "minimumValue": "5",
+      "maximumValue": "83",
+      "feasibleReferenceCount": {
+        "min": 52,
+        "max": 52,
+        "min2nd": 52,
+        "max2nd": 52,
+        "exactMatch": 57,
+        "lessThan": 77,
+        "moreThan": 77
+      }
+    },
+    {
+      "metricId": "chromasCountPerSkin",
+      "difficultyId": "easy",
+      "subjects": 2126,
+      "distinctValues": 13,
+      "minimumValue": "0",
+      "maximumValue": "25",
+      "feasibleReferenceCount": {
+        "min": 8,
+        "max": 12,
+        "exactMatch": 12
+      }
+    },
+    {
+      "metricId": "chromasCountPerSkin",
+      "difficultyId": "medium",
+      "subjects": 2126,
+      "distinctValues": 13,
+      "minimumValue": "0",
+      "maximumValue": "25",
+      "feasibleReferenceCount": {
+        "min": 7,
+        "max": 8,
+        "exactMatch": 8
+      }
+    },
+    {
+      "metricId": "chromasCountPerSkin",
+      "difficultyId": "hard",
+      "subjects": 2126,
+      "distinctValues": 13,
+      "minimumValue": "0",
+      "maximumValue": "25",
+      "feasibleReferenceCount": {
+        "min": 0,
+        "max": 2,
+        "min2nd": 0,
+        "max2nd": 0,
+        "exactMatch": 2
+      }
+    },
+    {
+      "metricId": "chromasCountPerSkin",
+      "difficultyId": "challenger",
+      "subjects": 2126,
+      "distinctValues": 13,
+      "minimumValue": "0",
+      "maximumValue": "25",
+      "feasibleReferenceCount": {
+        "min": 7,
+        "max": 8,
+        "min2nd": 8,
+        "max2nd": 8,
+        "exactMatch": 12,
+        "lessThan": 24,
+        "moreThan": 24
+      }
+    },
+    {
+      "metricId": "abilityCooldownLvl1",
+      "difficultyId": "easy",
+      "subjects": 672,
+      "distinctValues": 61,
+      "minimumValue": "0.25",
+      "maximumValue": "200",
+      "feasibleReferenceCount": {
+        "min": 55,
+        "max": 60,
+        "exactMatch": 61
+      }
+    },
+    {
+      "metricId": "abilityCooldownLvl1",
+      "difficultyId": "medium",
+      "subjects": 672,
+      "distinctValues": 61,
+      "minimumValue": "0.25",
+      "maximumValue": "200",
+      "feasibleReferenceCount": {
+        "min": 44,
+        "max": 52,
+        "exactMatch": 57
+      }
+    },
+    {
+      "metricId": "abilityCooldownLvl1",
+      "difficultyId": "hard",
+      "subjects": 672,
+      "distinctValues": 61,
+      "minimumValue": "0.25",
+      "maximumValue": "200",
+      "feasibleReferenceCount": {
+        "min": 25,
+        "max": 29,
+        "min2nd": 0,
+        "max2nd": 0,
+        "exactMatch": 33
+      }
+    },
+    {
+      "metricId": "abilityCooldownLvl1",
+      "difficultyId": "challenger",
+      "subjects": 672,
+      "distinctValues": 61,
+      "minimumValue": "0.25",
+      "maximumValue": "200",
+      "feasibleReferenceCount": {
+        "min": 56,
+        "max": 56,
+        "min2nd": 56,
+        "max2nd": 56,
+        "exactMatch": 61,
+        "lessThan": 199,
+        "moreThan": 199
+      }
+    }
+  ],
+  "categoryVariants": [
+    {
+      "familyId": "baseStatsLvl1",
+      "difficultyId": "easy",
+      "feasibleDistinctPrompts": 132,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "baseStatsLvl1",
+      "difficultyId": "medium",
+      "feasibleDistinctPrompts": 233,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "baseStatsLvl1",
+      "difficultyId": "hard",
+      "feasibleDistinctPrompts": 241,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "baseStatsLvl1",
+      "difficultyId": "challenger",
+      "feasibleDistinctPrompts": 476,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "baseStatsPerLevel",
+      "difficultyId": "easy",
+      "feasibleDistinctPrompts": 64,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "baseStatsPerLevel",
+      "difficultyId": "medium",
+      "feasibleDistinctPrompts": 101,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "baseStatsPerLevel",
+      "difficultyId": "hard",
+      "feasibleDistinctPrompts": 91,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "baseStatsPerLevel",
+      "difficultyId": "challenger",
+      "feasibleDistinctPrompts": 1413,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "skinNumber",
+      "difficultyId": "easy",
+      "feasibleDistinctPrompts": 25,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "skinNumber",
+      "difficultyId": "medium",
+      "feasibleDistinctPrompts": 22,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "skinNumber",
+      "difficultyId": "hard",
+      "feasibleDistinctPrompts": 15,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "skinNumber",
+      "difficultyId": "challenger",
+      "feasibleDistinctPrompts": 69,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "chromaNumber",
+      "difficultyId": "easy",
+      "feasibleDistinctPrompts": 59,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "chromaNumber",
+      "difficultyId": "medium",
+      "feasibleDistinctPrompts": 56,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "chromaNumber",
+      "difficultyId": "hard",
+      "feasibleDistinctPrompts": 52,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "chromaNumber",
+      "difficultyId": "challenger",
+      "feasibleDistinctPrompts": 215,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "chromaPerSkin",
+      "difficultyId": "easy",
+      "feasibleDistinctPrompts": 14,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "chromaPerSkin",
+      "difficultyId": "medium",
+      "feasibleDistinctPrompts": 10,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "chromaPerSkin",
+      "difficultyId": "hard",
+      "feasibleDistinctPrompts": 3,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": false
+    },
+    {
+      "familyId": "chromaPerSkin",
+      "difficultyId": "challenger",
+      "feasibleDistinctPrompts": 64,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "abilityCooldownLvl1",
+      "difficultyId": "easy",
+      "feasibleDistinctPrompts": 63,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "abilityCooldownLvl1",
+      "difficultyId": "medium",
+      "feasibleDistinctPrompts": 59,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "abilityCooldownLvl1",
+      "difficultyId": "hard",
+      "feasibleDistinctPrompts": 35,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "abilityCooldownLvl1",
+      "difficultyId": "challenger",
+      "feasibleDistinctPrompts": 463,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "abilityName",
+      "difficultyId": "easy",
+      "feasibleDistinctPrompts": 692,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "passiveName",
+      "difficultyId": "easy",
+      "feasibleDistinctPrompts": 173,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    },
+    {
+      "familyId": "title",
+      "difficultyId": "easy",
+      "feasibleDistinctPrompts": 173,
+      "requiredQuestions": 5,
+      "analyticalFeasibility": true
+    }
+  ],
+  "witnessAudit": {
+    "seeds": 207,
+    "packsPerSeed": 26,
+    "packsChecked": 5382,
+    "questionsChecked": 26910,
+    "repeatedContextSeeds": 7,
+    "maxOptionSetAttemptsObserved": 1,
+    "optionSetAttemptBudget": 128,
+    "seedCaseAndLeadingZerosChecked": true,
+    "canonicalKeyOrderHashChecked": true,
+    "sourceFactsHashChangeChecked": true,
+    "familyOrderAndRetryIndependenceChecked": true,
+    "reverseSourcePoolOrderChecked": true,
+    "elapsedSeconds": 16.908,
+    "scope": "analytical reference only, no production TypeScript generator or all-seed proof"
+  },
+  "eligibilityApproved": true
+}

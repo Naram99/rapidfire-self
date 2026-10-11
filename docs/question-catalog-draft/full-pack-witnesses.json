@@ -1,0 +1,4680 @@
+{
+  "seed": "Ab1",
+  "fixtureReleaseContentHash": "2af7bbc3eab1c278615244d42ec868d7c99275b732bc4810f176ce417f81ac40",
+  "productionRelease": false,
+  "policyScenario": "approved-mvp-eligibility-v1",
+  "scope": "analytical full-upload reference, not production generator output",
+  "packs": {
+    "baseStatsLvl1": {
+      "easy": [
+        {
+          "metricId": "attackdamage",
+          "operatorId": "exactMatch",
+          "visibleValue": "49",
+          "options": [
+            {
+              "subjectKey": "888",
+              "name": "Renata Glasc",
+              "sourceValue": "49",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "141",
+              "name": "Kayn",
+              "sourceValue": "68",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "57",
+              "name": "Maokai",
+              "sourceValue": "64",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "41",
+              "name": "Gangplank",
+              "sourceValue": "64",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "attackdamage",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "141",
+              "name": "Kayn",
+              "sourceValue": "68",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "40",
+              "name": "Janna",
+              "sourceValue": "47",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "61",
+              "name": "Orianna",
+              "sourceValue": "44",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "30",
+              "name": "Karthus",
+              "sourceValue": "46",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblock",
+          "operatorId": "exactMatch",
+          "visibleValue": "25",
+          "options": [
+            {
+              "subjectKey": "350",
+              "name": "Yuumi",
+              "sourceValue": "25",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "22",
+              "name": "Ashe",
+              "sourceValue": "33",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "235",
+              "name": "Senna",
+              "sourceValue": "33",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "81",
+              "name": "Ezreal",
+              "sourceValue": "33",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "attackdamage",
+          "operatorId": "exactMatch",
+          "visibleValue": "48",
+          "options": [
+            {
+              "subjectKey": "33",
+              "name": "Rammus",
+              "sourceValue": "65",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "141",
+              "name": "Kayn",
+              "sourceValue": "68",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "518",
+              "name": "Neeko",
+              "sourceValue": "48",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "106",
+              "name": "Volibear",
+              "sourceValue": "65",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblock",
+          "operatorId": "exactMatch",
+          "visibleValue": "22",
+          "options": [
+            {
+              "subjectKey": "82",
+              "name": "Mordekaiser",
+              "sourceValue": "32",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "222",
+              "name": "Jinx",
+              "sourceValue": "33",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "23",
+              "name": "Tryndamere",
+              "sourceValue": "32",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "10",
+              "name": "Kayle",
+              "sourceValue": "22",
+              "isCorrect": true
+            }
+          ]
+        }
+      ],
+      "medium": [
+        {
+          "metricId": "attackdamage",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "7",
+              "name": "LeBlanc",
+              "sourceValue": "55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "238",
+              "name": "Zed",
+              "sourceValue": "63",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "711",
+              "name": "Vex",
+              "sourceValue": "54",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "526",
+              "name": "Rell",
+              "sourceValue": "55",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "mp",
+          "operatorId": "exactMatch",
+          "visibleValue": "315",
+          "options": [
+            {
+              "subjectKey": "235",
+              "name": "Senna",
+              "sourceValue": "350",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "888",
+              "name": "Renata Glasc",
+              "sourceValue": "350",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "497",
+              "name": "Rakan",
+              "sourceValue": "315",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "sourceValue": "274",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "mp",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "267",
+              "name": "Nami",
+              "sourceValue": "365",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "164",
+              "name": "Camille",
+              "sourceValue": "375",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "526",
+              "name": "Rell",
+              "sourceValue": "320",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "112",
+              "name": "Viktor",
+              "sourceValue": "405",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "mp",
+          "operatorId": "exactMatch",
+          "visibleValue": "375",
+          "options": [
+            {
+              "subjectKey": "161",
+              "name": "Vel'Koz",
+              "sourceValue": "469",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "62",
+              "name": "Wukong",
+              "sourceValue": "330",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "35",
+              "name": "Shaco",
+              "sourceValue": "297",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "131",
+              "name": "Diana",
+              "sourceValue": "375",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "movespeed",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "77",
+              "name": "Udyr",
+              "sourceValue": "350",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "75",
+              "name": "Nasus",
+              "sourceValue": "350",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "526",
+              "name": "Rell",
+              "sourceValue": "315",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "102",
+              "name": "Shyvana",
+              "sourceValue": "350",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "hard": [
+        {
+          "metricId": "hp",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "136",
+              "name": "Aurelion Sol",
+              "sourceValue": "600",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "80",
+              "name": "Pantheon",
+              "sourceValue": "650",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "950",
+              "name": "Naafiri",
+              "sourceValue": "610",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "59",
+              "name": "Jarvan IV",
+              "sourceValue": "640",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "43",
+              "name": "Karma",
+              "sourceValue": "630",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "238",
+              "name": "Zed",
+              "sourceValue": "654",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "armor",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "157",
+              "name": "Yasuo",
+              "sourceValue": "32",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "55",
+              "name": "Katarina",
+              "sourceValue": "32",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "9",
+              "name": "Fiddlesticks",
+              "sourceValue": "34",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "72",
+              "name": "Skarner",
+              "sourceValue": "33",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "32",
+              "name": "Amumu",
+              "sourceValue": "33",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "245",
+              "name": "Ekko",
+              "sourceValue": "32",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "attackspeed",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "22",
+              "name": "Ashe",
+              "sourceValue": "0.658",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "63",
+              "name": "Brand",
+              "sourceValue": "0.681",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "110",
+              "name": "Varus",
+              "sourceValue": "0.658",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "39",
+              "name": "Irelia",
+              "sourceValue": "0.656",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "68",
+              "name": "Rumble",
+              "sourceValue": "0.644",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "59",
+              "name": "Jarvan IV",
+              "sourceValue": "0.658",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "attackrange",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "360",
+              "name": "Samira",
+              "sourceValue": "500",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "17",
+              "name": "Teemo",
+              "sourceValue": "500",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "166",
+              "name": "Akshan",
+              "sourceValue": "500",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "76",
+              "name": "Nidalee",
+              "sourceValue": "525",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "432",
+              "name": "Bard",
+              "sourceValue": "500",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "15",
+              "name": "Sivir",
+              "sourceValue": "500",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "attackrange",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "40",
+              "name": "Janna",
+              "sourceValue": "550",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "50",
+              "name": "Swain",
+              "sourceValue": "525",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "910",
+              "name": "Hwei",
+              "sourceValue": "550",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "236",
+              "name": "Lucian",
+              "sourceValue": "500",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "893",
+              "name": "Aurora",
+              "sourceValue": "550",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "7",
+              "name": "LeBlanc",
+              "sourceValue": "525",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "challenger": [
+        {
+          "metricId": "mp",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "63",
+              "name": "Brand",
+              "sourceValue": "469",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "910",
+              "name": "Hwei",
+              "sourceValue": "480",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "30",
+              "name": "Karthus",
+              "sourceValue": "467",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "127",
+              "name": "Lissandra",
+              "sourceValue": "475",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "136",
+              "name": "Aurelion Sol",
+              "sourceValue": "530",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "711",
+              "name": "Vex",
+              "sourceValue": "490",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblock",
+          "operatorId": "exactMatch",
+          "visibleValue": "33",
+          "options": [
+            {
+              "subjectKey": "91",
+              "name": "Talon",
+              "sourceValue": "36",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "61",
+              "name": "Orianna",
+              "sourceValue": "26",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "238",
+              "name": "Zed",
+              "sourceValue": "29",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "10",
+              "name": "Kayle",
+              "sourceValue": "22",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "360",
+              "name": "Samira",
+              "sourceValue": "33",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "39",
+              "name": "Irelia",
+              "sourceValue": "30",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "armor",
+          "operatorId": "moreThan",
+          "visibleValue": "40",
+          "options": [
+            {
+              "subjectKey": "89",
+              "name": "Leona",
+              "sourceValue": "43",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "246",
+              "name": "Qiyana",
+              "sourceValue": "31",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "268",
+              "name": "Azir",
+              "sourceValue": "25",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "98",
+              "name": "Shen",
+              "sourceValue": "34",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "51",
+              "name": "Caitlyn",
+              "sourceValue": "27",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "711",
+              "name": "Vex",
+              "sourceValue": "23",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "hp",
+          "operatorId": "max2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "55",
+              "name": "Katarina",
+              "sourceValue": "672",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "238",
+              "name": "Zed",
+              "sourceValue": "654",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "804",
+              "name": "Yunara",
+              "sourceValue": "590",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "150",
+              "name": "Gnar",
+              "sourceValue": "540",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "117",
+              "name": "Lulu",
+              "sourceValue": "565",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "28",
+              "name": "Evelynn",
+              "sourceValue": "642",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "mp",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "122",
+              "name": "Darius",
+              "sourceValue": "263",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "77",
+              "name": "Udyr",
+              "sourceValue": "271",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "56",
+              "name": "Nocturne",
+              "sourceValue": "275",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "40",
+              "name": "Janna",
+              "sourceValue": "360",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "145",
+              "name": "Kai'Sa",
+              "sourceValue": "345",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "133",
+              "name": "Quinn",
+              "sourceValue": "269",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    "baseStatsPerLevel": {
+      "easy": [
+        {
+          "metricId": "hpperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "48",
+              "name": "Trundle",
+              "sourceValue": "110",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "2",
+              "name": "Olaf",
+              "sourceValue": "119",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "12",
+              "name": "Alistar",
+              "sourceValue": "120",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "240",
+              "name": "Kled",
+              "sourceValue": "84",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "exactMatch",
+          "visibleValue": "4.1",
+          "options": [
+            {
+              "subjectKey": "120",
+              "name": "Hecarim",
+              "sourceValue": "5.45",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "sourceValue": "0",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "113",
+              "name": "Sejuani",
+              "sourceValue": "5.45",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "34",
+              "name": "Anivia",
+              "sourceValue": "4.1",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "45",
+              "name": "Veigar",
+              "sourceValue": "5.2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "134",
+              "name": "Syndra",
+              "sourceValue": "4",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "57",
+              "name": "Maokai",
+              "sourceValue": "5.2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "106",
+              "name": "Volibear",
+              "sourceValue": "5.2",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "17",
+              "name": "Teemo",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "166",
+              "name": "Akshan",
+              "sourceValue": "1.1",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "36",
+              "name": "Dr. Mundo",
+              "sourceValue": "2.3",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "888",
+              "name": "Renata Glasc",
+              "sourceValue": "1.3",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "hpperlevel",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "150",
+              "name": "Gnar",
+              "sourceValue": "79",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "13",
+              "name": "Ryze",
+              "sourceValue": "124",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "350",
+              "name": "Yuumi",
+              "sourceValue": "69",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "240",
+              "name": "Kled",
+              "sourceValue": "84",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "medium": [
+        {
+          "metricId": "hpperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "13",
+              "name": "Ryze",
+              "sourceValue": "124",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "3",
+              "name": "Galio",
+              "sourceValue": "126",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "799",
+              "name": "Ambessa",
+              "sourceValue": "110",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "517",
+              "name": "Sylas",
+              "sourceValue": "122",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "154",
+              "name": "Zac",
+              "sourceValue": "5.2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "429",
+              "name": "Kalista",
+              "sourceValue": "5.2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "517",
+              "name": "Sylas",
+              "sourceValue": "5.2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "104",
+              "name": "Graves",
+              "sourceValue": "4.6",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "mpperlevel",
+          "operatorId": "exactMatch",
+          "visibleValue": "37",
+          "options": [
+            {
+              "subjectKey": "711",
+              "name": "Vex",
+              "sourceValue": "32",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "33",
+              "name": "Rammus",
+              "sourceValue": "33",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "91",
+              "name": "Talon",
+              "sourceValue": "37",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "79",
+              "name": "Gragas",
+              "sourceValue": "47",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "exactMatch",
+          "visibleValue": "2.55",
+          "options": [
+            {
+              "subjectKey": "517",
+              "name": "Sylas",
+              "sourceValue": "2.55",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "54",
+              "name": "Malphite",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "950",
+              "name": "Naafiri",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "64",
+              "name": "Lee Sin",
+              "sourceValue": "2.05",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "exactMatch",
+          "visibleValue": "5.2",
+          "options": [
+            {
+              "subjectKey": "800",
+              "name": "Mel",
+              "sourceValue": "5.2",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "421",
+              "name": "Rek'Sai",
+              "sourceValue": "4.5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "157",
+              "name": "Yasuo",
+              "sourceValue": "4.6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "711",
+              "name": "Vex",
+              "sourceValue": "4.45",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "hard": [
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "min2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "157",
+              "name": "Yasuo",
+              "sourceValue": "4.6",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "201",
+              "name": "Braum",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "111",
+              "name": "Nautilus",
+              "sourceValue": "4.95",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "19",
+              "name": "Warwick",
+              "sourceValue": "4.4",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "89",
+              "name": "Leona",
+              "sourceValue": "4.8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "887",
+              "name": "Gwen",
+              "sourceValue": "4.9",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "hpperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "131",
+              "name": "Diana",
+              "sourceValue": "109",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "201",
+              "name": "Braum",
+              "sourceValue": "112",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "157",
+              "name": "Yasuo",
+              "sourceValue": "110",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "420",
+              "name": "Illaoi",
+              "sourceValue": "115",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "9",
+              "name": "Fiddlesticks",
+              "sourceValue": "106",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "126",
+              "name": "Jayce",
+              "sourceValue": "109",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "223",
+              "name": "Tahm Kench",
+              "sourceValue": "4.7",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "78",
+              "name": "Poppy",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "22",
+              "name": "Ashe",
+              "sourceValue": "4.6",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "238",
+              "name": "Zed",
+              "sourceValue": "4.7",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "427",
+              "name": "Ivern",
+              "sourceValue": "4.7",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "254",
+              "name": "Vi",
+              "sourceValue": "4.7",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "hpperlevel",
+          "operatorId": "exactMatch",
+          "visibleValue": "87",
+          "options": [
+            {
+              "subjectKey": "235",
+              "name": "Senna",
+              "sourceValue": "89",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "143",
+              "name": "Zyra",
+              "sourceValue": "93",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "14",
+              "name": "Sion",
+              "sourceValue": "87",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "102",
+              "name": "Shyvana",
+              "sourceValue": "95",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "77",
+              "name": "Udyr",
+              "sourceValue": "92",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "902",
+              "name": "Milio",
+              "sourceValue": "88",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "spellblockperlevel",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "76",
+              "name": "Nidalee",
+              "sourceValue": "1.45",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "86",
+              "name": "Garen",
+              "sourceValue": "1.55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "56",
+              "name": "Nocturne",
+              "sourceValue": "1.55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "sourceValue": "1.55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "68",
+              "name": "Rumble",
+              "sourceValue": "1.55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "876",
+              "name": "Lillia",
+              "sourceValue": "1.55",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "challenger": [
+        {
+          "metricId": "mpperlevel",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "74",
+              "name": "Heimerdinger",
+              "sourceValue": "20",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "91",
+              "name": "Talon",
+              "sourceValue": "37",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "221",
+              "name": "Zeri",
+              "sourceValue": "45",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "50",
+              "name": "Swain",
+              "sourceValue": "29",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "90",
+              "name": "Malzahar",
+              "sourceValue": "28",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "904",
+              "name": "Zaahen",
+              "sourceValue": "55",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "min2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "804",
+              "name": "Yunara",
+              "sourceValue": "4.4",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "240",
+              "name": "Kled",
+              "sourceValue": "5.2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "59",
+              "name": "Jarvan IV",
+              "sourceValue": "4.6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "42",
+              "name": "Corki",
+              "sourceValue": "4.5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "44",
+              "name": "Taric",
+              "sourceValue": "4.3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "80",
+              "name": "Pantheon",
+              "sourceValue": "4.95",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "lessThan",
+          "visibleValue": "2.2",
+          "options": [
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "sourceValue": "0",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "4",
+              "name": "Twisted Fate",
+              "sourceValue": "4.35",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "85",
+              "name": "Kennen",
+              "sourceValue": "4.95",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "90",
+              "name": "Malzahar",
+              "sourceValue": "4.7",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "7",
+              "name": "LeBlanc",
+              "sourceValue": "4.2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "113",
+              "name": "Sejuani",
+              "sourceValue": "5.45",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "lessThan",
+          "visibleValue": "3",
+          "options": [
+            {
+              "subjectKey": "83",
+              "name": "Yorick",
+              "sourceValue": "4.5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "1",
+              "name": "Annie",
+              "sourceValue": "4",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "sourceValue": "0",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "89",
+              "name": "Leona",
+              "sourceValue": "4.8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "117",
+              "name": "Lulu",
+              "sourceValue": "4.6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "113",
+              "name": "Sejuani",
+              "sourceValue": "5.45",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "armorperlevel",
+          "operatorId": "lessThan",
+          "visibleValue": "3.4",
+          "options": [
+            {
+              "subjectKey": "32",
+              "name": "Amumu",
+              "sourceValue": "4",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "78",
+              "name": "Poppy",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "897",
+              "name": "K'Sante",
+              "sourceValue": "5.2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "111",
+              "name": "Nautilus",
+              "sourceValue": "4.95",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "22",
+              "name": "Ashe",
+              "sourceValue": "4.6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "sourceValue": "0",
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    },
+    "skinNumber": {
+      "easy": [
+        {
+          "metricId": "skinsCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "21",
+          "options": [
+            {
+              "subjectKey": "84",
+              "name": "Akali",
+              "sourceValue": "21",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "83",
+              "name": "Yorick",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "154",
+              "name": "Zac",
+              "sourceValue": "7",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "74",
+              "name": "Heimerdinger",
+              "sourceValue": "9",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "23",
+          "options": [
+            {
+              "subjectKey": "122",
+              "name": "Darius",
+              "sourceValue": "15",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "21",
+              "name": "Miss Fortune",
+              "sourceValue": "23",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "5",
+              "name": "Xin Zhao",
+              "sourceValue": "12",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "72",
+              "name": "Skarner",
+              "sourceValue": "6",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "893",
+              "name": "Aurora",
+              "sourceValue": "3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "420",
+              "name": "Illaoi",
+              "sourceValue": "6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "254",
+              "name": "Vi",
+              "sourceValue": "13",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "127",
+              "name": "Lissandra",
+              "sourceValue": "9",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "35",
+              "name": "Shaco",
+              "sourceValue": "16",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "103",
+              "name": "Ahri",
+              "sourceValue": "21",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "99",
+              "name": "Lux",
+              "sourceValue": "22",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "84",
+              "name": "Akali",
+              "sourceValue": "21",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "19",
+          "options": [
+            {
+              "subjectKey": "1",
+              "name": "Annie",
+              "sourceValue": "19",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "904",
+              "name": "Zaahen",
+              "sourceValue": "1",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "85",
+              "name": "Kennen",
+              "sourceValue": "10",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "234",
+              "name": "Viego",
+              "sourceValue": "7",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "medium": [
+        {
+          "metricId": "skinsCount",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "15",
+              "name": "Sivir",
+              "sourceValue": "19",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "222",
+              "name": "Jinx",
+              "sourceValue": "15",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "18",
+              "name": "Tristana",
+              "sourceValue": "18",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "55",
+              "name": "Katarina",
+              "sourceValue": "19",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "235",
+              "name": "Senna",
+              "sourceValue": "11",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "121",
+              "name": "Kha'Zix",
+              "sourceValue": "8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "112",
+              "name": "Viktor",
+              "sourceValue": "8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "518",
+              "name": "Neeko",
+              "sourceValue": "9",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "16",
+          "options": [
+            {
+              "subjectKey": "245",
+              "name": "Ekko",
+              "sourceValue": "12",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "sourceValue": "16",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "55",
+              "name": "Katarina",
+              "sourceValue": "19",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "23",
+              "name": "Tryndamere",
+              "sourceValue": "13",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "11",
+          "options": [
+            {
+              "subjectKey": "83",
+              "name": "Yorick",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "62",
+              "name": "Wukong",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "57",
+              "name": "Maokai",
+              "sourceValue": "11",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "32",
+              "name": "Amumu",
+              "sourceValue": "14",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "13",
+          "options": [
+            {
+              "subjectKey": "114",
+              "name": "Fiora",
+              "sourceValue": "16",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "113",
+              "name": "Sejuani",
+              "sourceValue": "13",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "150",
+              "name": "Gnar",
+              "sourceValue": "10",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "37",
+              "name": "Sona",
+              "sourceValue": "16",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "hard": [
+        {
+          "metricId": "skinsCount",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "127",
+              "name": "Lissandra",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "62",
+              "name": "Wukong",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "74",
+              "name": "Heimerdinger",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "246",
+              "name": "Qiyana",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "85",
+              "name": "Kennen",
+              "sourceValue": "10",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "83",
+              "name": "Yorick",
+              "sourceValue": "9",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "14",
+              "name": "Sion",
+              "sourceValue": "11",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "875",
+              "name": "Sett",
+              "sourceValue": "11",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "3",
+              "name": "Galio",
+              "sourceValue": "11",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "106",
+              "name": "Volibear",
+              "sourceValue": "10",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "111",
+              "name": "Nautilus",
+              "sourceValue": "11",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "31",
+              "name": "Cho'Gath",
+              "sourceValue": "11",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "18",
+          "options": [
+            {
+              "subjectKey": "92",
+              "name": "Riven",
+              "sourceValue": "17",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "55",
+              "name": "Katarina",
+              "sourceValue": "19",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "64",
+              "name": "Lee Sin",
+              "sourceValue": "19",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "15",
+              "name": "Sivir",
+              "sourceValue": "19",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "1",
+              "name": "Annie",
+              "sourceValue": "19",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "16",
+              "name": "Soraka",
+              "sourceValue": "18",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "20",
+          "options": [
+            {
+              "subjectKey": "103",
+              "name": "Ahri",
+              "sourceValue": "21",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "22",
+              "name": "Ashe",
+              "sourceValue": "20",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "16",
+              "name": "Soraka",
+              "sourceValue": "18",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "89",
+              "name": "Leona",
+              "sourceValue": "18",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "84",
+              "name": "Akali",
+              "sourceValue": "21",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "67",
+              "name": "Vayne",
+              "sourceValue": "19",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "17",
+          "options": [
+            {
+              "subjectKey": "25",
+              "name": "Morgana",
+              "sourceValue": "17",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "114",
+              "name": "Fiora",
+              "sourceValue": "16",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "76",
+              "name": "Nidalee",
+              "sourceValue": "16",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "sourceValue": "16",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "35",
+              "name": "Shaco",
+              "sourceValue": "16",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "16",
+              "name": "Soraka",
+              "sourceValue": "18",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "challenger": [
+        {
+          "metricId": "skinsCount",
+          "operatorId": "moreThan",
+          "visibleValue": "22",
+          "options": [
+            {
+              "subjectKey": "223",
+              "name": "Tahm Kench",
+              "sourceValue": "7",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "67",
+              "name": "Vayne",
+              "sourceValue": "19",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "79",
+              "name": "Gragas",
+              "sourceValue": "14",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "875",
+              "name": "Sett",
+              "sourceValue": "11",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "221",
+              "name": "Zeri",
+              "sourceValue": "6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "21",
+              "name": "Miss Fortune",
+              "sourceValue": "23",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "421",
+              "name": "Rek'Sai",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "6",
+              "name": "Urgot",
+              "sourceValue": "8",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "526",
+              "name": "Rell",
+              "sourceValue": "4",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "233",
+              "name": "Briar",
+              "sourceValue": "3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "163",
+              "name": "Taliyah",
+              "sourceValue": "6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "904",
+              "name": "Zaahen",
+              "sourceValue": "1",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "max2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "267",
+              "name": "Nami",
+              "sourceValue": "14",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "136",
+              "name": "Aurelion Sol",
+              "sourceValue": "6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "164",
+              "name": "Camille",
+              "sourceValue": "8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "40",
+              "name": "Janna",
+              "sourceValue": "17",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "106",
+              "name": "Volibear",
+              "sourceValue": "10",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "517",
+              "name": "Sylas",
+              "sourceValue": "9",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "moreThan",
+          "visibleValue": "15",
+          "options": [
+            {
+              "subjectKey": "350",
+              "name": "Yuumi",
+              "sourceValue": "10",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "55",
+              "name": "Katarina",
+              "sourceValue": "19",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "84",
+              "name": "Akali",
+              "sourceValue": "21",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "238",
+              "name": "Zed",
+              "sourceValue": "14",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "166",
+              "name": "Akshan",
+              "sourceValue": "4",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "20",
+              "name": "Nunu & Willump",
+              "sourceValue": "12",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "skinsCount",
+          "operatorId": "moreThan",
+          "visibleValue": "8",
+          "options": [
+            {
+              "subjectKey": "64",
+              "name": "Lee Sin",
+              "sourceValue": "19",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "11",
+              "name": "Master Yi",
+              "sourceValue": "18",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "421",
+              "name": "Rek'Sai",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "81",
+              "name": "Ezreal",
+              "sourceValue": "22",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "85",
+              "name": "Kennen",
+              "sourceValue": "10",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "200",
+              "name": "Bel'Veth",
+              "sourceValue": "4",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    "chromaNumber": {
+      "easy": [
+        {
+          "metricId": "chromasCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "66",
+          "options": [
+            {
+              "subjectKey": "164",
+              "name": "Camille",
+              "sourceValue": "44",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "57",
+              "name": "Maokai",
+              "sourceValue": "24",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "711",
+              "name": "Vex",
+              "sourceValue": "33",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "875",
+              "name": "Sett",
+              "sourceValue": "66",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "887",
+              "name": "Gwen",
+              "sourceValue": "50",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "22",
+              "name": "Ashe",
+              "sourceValue": "73",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "161",
+              "name": "Vel'Koz",
+              "sourceValue": "28",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "246",
+              "name": "Qiyana",
+              "sourceValue": "41",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "22",
+          "options": [
+            {
+              "subjectKey": "497",
+              "name": "Rakan",
+              "sourceValue": "45",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "38",
+              "name": "Kassadin",
+              "sourceValue": "22",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "45",
+              "name": "Veigar",
+              "sourceValue": "52",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "120",
+              "name": "Hecarim",
+              "sourceValue": "37",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "15",
+              "name": "Sivir",
+              "sourceValue": "61",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "234",
+              "name": "Viego",
+              "sourceValue": "35",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "236",
+              "name": "Lucian",
+              "sourceValue": "58",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "21",
+              "name": "Miss Fortune",
+              "sourceValue": "52",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "41",
+          "options": [
+            {
+              "subjectKey": "6",
+              "name": "Urgot",
+              "sourceValue": "41",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "157",
+              "name": "Yasuo",
+              "sourceValue": "78",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "44",
+              "name": "Taric",
+              "sourceValue": "28",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "119",
+              "name": "Draven",
+              "sourceValue": "63",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "medium": [
+        {
+          "metricId": "chromasCount",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "81",
+              "name": "Ezreal",
+              "sourceValue": "63",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "145",
+              "name": "Kai'Sa",
+              "sourceValue": "63",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "222",
+              "name": "Jinx",
+              "sourceValue": "57",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "235",
+              "name": "Senna",
+              "sourceValue": "68",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "48",
+              "name": "Trundle",
+              "sourceValue": "21",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "36",
+              "name": "Dr. Mundo",
+              "sourceValue": "18",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "102",
+              "name": "Shyvana",
+              "sourceValue": "17",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "800",
+              "name": "Mel",
+              "sourceValue": "17",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "26",
+          "options": [
+            {
+              "subjectKey": "60",
+              "name": "Elise",
+              "sourceValue": "26",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "80",
+              "name": "Pantheon",
+              "sourceValue": "33",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "33",
+              "name": "Rammus",
+              "sourceValue": "23",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "421",
+              "name": "Rek'Sai",
+              "sourceValue": "30",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "22",
+          "options": [
+            {
+              "subjectKey": "102",
+              "name": "Shyvana",
+              "sourceValue": "17",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "897",
+              "name": "K'Sante",
+              "sourceValue": "22",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "36",
+              "name": "Dr. Mundo",
+              "sourceValue": "18",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "69",
+              "name": "Cassiopeia",
+              "sourceValue": "28",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "78",
+          "options": [
+            {
+              "subjectKey": "238",
+              "name": "Zed",
+              "sourceValue": "57",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "18",
+              "name": "Tristana",
+              "sourceValue": "62",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "157",
+              "name": "Yasuo",
+              "sourceValue": "78",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "875",
+              "name": "Sett",
+              "sourceValue": "66",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "hard": [
+        {
+          "metricId": "chromasCount",
+          "operatorId": "min2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "28",
+              "name": "Evelynn",
+              "sourceValue": "48",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "201",
+              "name": "Braum",
+              "sourceValue": "51",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "39",
+              "name": "Irelia",
+              "sourceValue": "56",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "498",
+              "name": "Xayah",
+              "sourceValue": "52",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "267",
+              "name": "Nami",
+              "sourceValue": "53",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "92",
+              "name": "Riven",
+              "sourceValue": "55",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "max2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "39",
+              "name": "Irelia",
+              "sourceValue": "56",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "67",
+              "name": "Vayne",
+              "sourceValue": "55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "122",
+              "name": "Darius",
+              "sourceValue": "57",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "267",
+              "name": "Nami",
+              "sourceValue": "53",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "55",
+              "name": "Katarina",
+              "sourceValue": "58",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "99",
+              "name": "Lux",
+              "sourceValue": "59",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "42",
+              "name": "Corki",
+              "sourceValue": "33",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "111",
+              "name": "Nautilus",
+              "sourceValue": "34",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "30",
+              "name": "Karthus",
+              "sourceValue": "33",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "200",
+              "name": "Bel'Veth",
+              "sourceValue": "33",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "427",
+              "name": "Ivern",
+              "sourceValue": "32",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "150",
+              "name": "Gnar",
+              "sourceValue": "33",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "17",
+              "name": "Teemo",
+              "sourceValue": "47",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "517",
+              "name": "Sylas",
+              "sourceValue": "44",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "90",
+              "name": "Malzahar",
+              "sourceValue": "44",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "5",
+              "name": "Xin Zhao",
+              "sourceValue": "46",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "14",
+              "name": "Sion",
+              "sourceValue": "47",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "113",
+              "name": "Sejuani",
+              "sourceValue": "43",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "exactMatch",
+          "visibleValue": "59",
+          "options": [
+            {
+              "subjectKey": "99",
+              "name": "Lux",
+              "sourceValue": "59",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "67",
+              "name": "Vayne",
+              "sourceValue": "55",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "15",
+              "name": "Sivir",
+              "sourceValue": "61",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "81",
+              "name": "Ezreal",
+              "sourceValue": "63",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "37",
+              "name": "Sona",
+              "sourceValue": "60",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "134",
+              "name": "Syndra",
+              "sourceValue": "60",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "challenger": [
+        {
+          "metricId": "chromasCount",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "201",
+              "name": "Braum",
+              "sourceValue": "51",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "72",
+              "name": "Skarner",
+              "sourceValue": "8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "136",
+              "name": "Aurelion Sol",
+              "sourceValue": "31",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "35",
+              "name": "Shaco",
+              "sourceValue": "56",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "48",
+              "name": "Trundle",
+              "sourceValue": "21",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "10",
+              "name": "Kayle",
+              "sourceValue": "70",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "lessThan",
+          "visibleValue": "34",
+          "options": [
+            {
+              "subjectKey": "48",
+              "name": "Trundle",
+              "sourceValue": "21",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "35",
+              "name": "Shaco",
+              "sourceValue": "56",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "114",
+              "name": "Fiora",
+              "sourceValue": "83",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "105",
+              "name": "Fizz",
+              "sourceValue": "30",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "27",
+              "name": "Singed",
+              "sourceValue": "16",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "777",
+              "name": "Yone",
+              "sourceValue": "72",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "max2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "497",
+              "name": "Rakan",
+              "sourceValue": "45",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "267",
+              "name": "Nami",
+              "sourceValue": "53",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "804",
+              "name": "Yunara",
+              "sourceValue": "14",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "62",
+              "name": "Wukong",
+              "sourceValue": "26",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "sourceValue": "51",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "136",
+              "name": "Aurelion Sol",
+              "sourceValue": "31",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "moreThan",
+          "visibleValue": "34",
+          "options": [
+            {
+              "subjectKey": "101",
+              "name": "Xerath",
+              "sourceValue": "23",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "28",
+              "name": "Evelynn",
+              "sourceValue": "48",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "143",
+              "name": "Zyra",
+              "sourceValue": "62",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "77",
+              "name": "Udyr",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "3",
+              "name": "Galio",
+              "sourceValue": "42",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "22",
+              "name": "Ashe",
+              "sourceValue": "73",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCount",
+          "operatorId": "min2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "235",
+              "name": "Senna",
+              "sourceValue": "68",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "238",
+              "name": "Zed",
+              "sourceValue": "57",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "420",
+              "name": "Illaoi",
+              "sourceValue": "39",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "136",
+              "name": "Aurelion Sol",
+              "sourceValue": "31",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "141",
+              "name": "Kayn",
+              "sourceValue": "27",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "236",
+              "name": "Lucian",
+              "sourceValue": "58",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    "chromaPerSkin": {
+      "easy": [
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "711:711000",
+              "name": "Vex — default",
+              "sourceValue": "0",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "126:126001",
+              "name": "Jayce — Full Metal Jayce",
+              "sourceValue": "0",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "92:92044",
+              "name": "Riven — Battle Bunny Prime Riven",
+              "sourceValue": "10",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "39:39018",
+              "name": "Irelia — High Noon Irelia",
+              "sourceValue": "7",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "103:103042",
+              "name": "Ahri — Coven Ahri",
+              "sourceValue": "11",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "164:164044",
+              "name": "Camille — Petals of Spring Camille",
+              "sourceValue": "8",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "121:121011",
+              "name": "Kha'Zix — Worlds 2018 Kha'Zix",
+              "sourceValue": "25",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "64:64003",
+              "name": "Lee Sin — Dragon Fist Lee Sin",
+              "sourceValue": "11",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "exactMatch",
+          "visibleValue": "10",
+          "options": [
+            {
+              "subjectKey": "163:163024",
+              "name": "Taliyah — Durand's Legacy Taliyah",
+              "sourceValue": "0",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "10:10002",
+              "name": "Kayle — Viridian Kayle",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "53:53004",
+              "name": "Blitzcrank — Piltover Customs Blitzcrank",
+              "sourceValue": "0",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "89:89052",
+              "name": "Leona — Battle Lion Leona",
+              "sourceValue": "10",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "exactMatch",
+          "visibleValue": "4",
+          "options": [
+            {
+              "subjectKey": "8:8039",
+              "name": "Vladimir — Broken Covenant Vladimir",
+              "sourceValue": "8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "34:34002",
+              "name": "Anivia — Bird of Prey Anivia",
+              "sourceValue": "0",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "233:233020",
+              "name": "Briar — Battle Academia Briar",
+              "sourceValue": "8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "44:44004",
+              "name": "Taric — Pool Party Taric",
+              "sourceValue": "4",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "exactMatch",
+          "visibleValue": "11",
+          "options": [
+            {
+              "subjectKey": "37:37007",
+              "name": "Sona — Sweetheart Sona",
+              "sourceValue": "0",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "64:64003",
+              "name": "Lee Sin — Dragon Fist Lee Sin",
+              "sourceValue": "11",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "245:245001",
+              "name": "Ekko — Sandstorm Ekko",
+              "sourceValue": "7",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "429:429002",
+              "name": "Kalista — Worlds 2015 Kalista",
+              "sourceValue": "1",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "medium": [
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "exactMatch",
+          "visibleValue": "9",
+          "options": [
+            {
+              "subjectKey": "15:15016",
+              "name": "Sivir — Blood Moon Sivir",
+              "sourceValue": "7",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "83:83030",
+              "name": "Yorick — Spirit Blossom Yorick",
+              "sourceValue": "9",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "25:25011",
+              "name": "Morgana — Bewitching Morgana",
+              "sourceValue": "8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "14:14050",
+              "name": "Sion — Pizza Chef Sion",
+              "sourceValue": "8",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "exactMatch",
+          "visibleValue": "7",
+          "options": [
+            {
+              "subjectKey": "61:61011",
+              "name": "Orianna — Pool Party Orianna",
+              "sourceValue": "7",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "64:64031",
+              "name": "Lee Sin — Storm Dragon Lee Sin",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "234:234021",
+              "name": "Viego — King Viego",
+              "sourceValue": "8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "89:89021",
+              "name": "Leona — Battle Academia Leona",
+              "sourceValue": "8",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "19:19016",
+              "name": "Warwick — PROJECT: Warwick",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "800:800001",
+              "name": "Mel — Arcane Councilor Mel",
+              "sourceValue": "8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "350:350028",
+              "name": "Yuumi — Bewitching Yuumi",
+              "sourceValue": "8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "64:64003",
+              "name": "Lee Sin — Dragon Fist Lee Sin",
+              "sourceValue": "11",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "236:236025",
+              "name": "Lucian — Victorious Lucian",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "22:22011",
+              "name": "Ashe — Cosmic Queen Ashe",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "59:59030",
+              "name": "Jarvan IV — Worlds 2021 Jarvan IV",
+              "sourceValue": "4",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "29:29012",
+              "name": "Twitch — Ice King Twitch",
+              "sourceValue": "5",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "exactMatch",
+          "visibleValue": "11",
+          "options": [
+            {
+              "subjectKey": "200:200001",
+              "name": "Bel'Veth — Battle Boss Bel'Veth",
+              "sourceValue": "8",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "39:39026",
+              "name": "Irelia — Sentinel Irelia",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "81:81044",
+              "name": "Ezreal — Heavenscale Ezreal",
+              "sourceValue": "11",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "233:233020",
+              "name": "Briar — Battle Academia Briar",
+              "sourceValue": "8",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "challenger": [
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "min2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "64:64003",
+              "name": "Lee Sin — Dragon Fist Lee Sin",
+              "sourceValue": "11",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "126:126034",
+              "name": "Jayce — T1 Jayce",
+              "sourceValue": "1",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "122:122033",
+              "name": "Darius — Crime City Nightmare Darius",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "57:57016",
+              "name": "Maokai — Worldbreaker Maokai",
+              "sourceValue": "7",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "266:266033",
+              "name": "Aatrox — Primordian Aatrox",
+              "sourceValue": "6",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "115:115024",
+              "name": "Ziggs — BZZZiggs",
+              "sourceValue": "8",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "moreThan",
+          "visibleValue": "14",
+          "options": [
+            {
+              "subjectKey": "103:103042",
+              "name": "Ahri — Coven Ahri",
+              "sourceValue": "11",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "69:69000",
+              "name": "Cassiopeia — default",
+              "sourceValue": "3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "121:121011",
+              "name": "Kha'Zix — Worlds 2018 Kha'Zix",
+              "sourceValue": "25",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "777:777035",
+              "name": "Yone — Inkshadow Yone",
+              "sourceValue": "10",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "222:222037",
+              "name": "Jinx — Arcane Enemy Jinx",
+              "sourceValue": "0",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "103:103001",
+              "name": "Ahri — Dynasty Ahri",
+              "sourceValue": "1",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "lessThan",
+          "visibleValue": "8",
+          "options": [
+            {
+              "subjectKey": "31:31005",
+              "name": "Cho'Gath — Battlecast Prime Cho'Gath",
+              "sourceValue": "6",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "92:92016",
+              "name": "Riven — Dawnbringer Riven",
+              "sourceValue": "2",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "517:517008",
+              "name": "Sylas — Freljord Sylas",
+              "sourceValue": "4",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "99:99008",
+              "name": "Lux — Lunar Empress Lux",
+              "sourceValue": "5",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "59:59008",
+              "name": "Jarvan IV — SSG Jarvan IV",
+              "sourceValue": "1",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "103:103042",
+              "name": "Ahri — Coven Ahri",
+              "sourceValue": "11",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "moreThan",
+          "visibleValue": "4",
+          "options": [
+            {
+              "subjectKey": "26:26014",
+              "name": "Zilean — Winterblessed Zilean",
+              "sourceValue": "9",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "103:103042",
+              "name": "Ahri — Coven Ahri",
+              "sourceValue": "11",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "6:6015",
+              "name": "Urgot — Pajama Guardian Cosplay Urgot",
+              "sourceValue": "7",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "7:7019",
+              "name": "LeBlanc — iG LeBlanc",
+              "sourceValue": "2",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "121:121011",
+              "name": "Kha'Zix — Worlds 2018 Kha'Zix",
+              "sourceValue": "25",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "236:236000",
+              "name": "Lucian — default",
+              "sourceValue": "3",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "chromasCountPerSkin",
+          "operatorId": "moreThan",
+          "visibleValue": "19",
+          "options": [
+            {
+              "subjectKey": "28:28024",
+              "name": "Evelynn — Coven Evelynn",
+              "sourceValue": "6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "7:7029",
+              "name": "LeBlanc — Worlds 2020 LeBlanc",
+              "sourceValue": "3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "50:50033",
+              "name": "Swain — Prestige Chosen of the Wolf Swain",
+              "sourceValue": "0",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "246:246040",
+              "name": "Qiyana — La Ilusión Qiyana",
+              "sourceValue": "9",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "121:121011",
+              "name": "Kha'Zix — Worlds 2018 Kha'Zix",
+              "sourceValue": "25",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "103:103042",
+              "name": "Ahri — Coven Ahri",
+              "sourceValue": "11",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    "abilityCooldownLvl1": {
+      "easy": [
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "exactMatch",
+          "visibleValue": "28",
+          "options": [
+            {
+              "subjectKey": "163:R:TaliyahR",
+              "name": "Taliyah — R: Weaver's Wall",
+              "sourceValue": "180",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "50:E:SwainE",
+              "name": "Swain — E: Nevermove",
+              "sourceValue": "12",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "888:W:RenataW",
+              "name": "Renata Glasc — W: Bailout",
+              "sourceValue": "28",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "98:W:ShenW",
+              "name": "Shen — W: Spirit's Refuge",
+              "sourceValue": "16",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "22:E:AsheSpiritOfTheHawk",
+              "name": "Ashe — E: Hawkshot",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "117:E:LuluE",
+              "name": "Lulu — E: Help, Pix!",
+              "sourceValue": "10",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "157:W:YasuoW",
+              "name": "Yasuo — W: Wind Wall",
+              "sourceValue": "25",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "360:Q:SamiraQ",
+              "name": "Samira — Q: Flair",
+              "sourceValue": "6",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "exactMatch",
+          "visibleValue": "19",
+          "options": [
+            {
+              "subjectKey": "412:Q:ThreshQ",
+              "name": "Thresh — Q: Death Sentence",
+              "sourceValue": "19",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "90:Q:MalzaharQ",
+              "name": "Malzahar — Q: Call of the Void",
+              "sourceValue": "6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "115:Q:ZiggsQ",
+              "name": "Ziggs — Q: Bouncing Bomb",
+              "sourceValue": "6",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "20:R:NunuR",
+              "name": "Nunu & Willump — R: Absolute Zero",
+              "sourceValue": "110",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "exactMatch",
+          "visibleValue": "30",
+          "options": [
+            {
+              "subjectKey": "421:W:RekSaiW",
+              "name": "Rek'Sai — W: Burrow / Un-burrow",
+              "sourceValue": "4",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "429:W:KalistaW",
+              "name": "Kalista — W: Sentinel",
+              "sourceValue": "30",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "27:W:MegaAdhesive",
+              "name": "Singed — W: Mega Adhesive",
+              "sourceValue": "17",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "777:W:YoneW",
+              "name": "Yone — W: Spirit Cleave",
+              "sourceValue": "14",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "48:W:trundledesecrate",
+              "name": "Trundle — W: Frozen Domain",
+              "sourceValue": "18",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "68:W:RumbleShield",
+              "name": "Rumble — W: Scrap Shield",
+              "sourceValue": "6",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "33:R:Tremors2",
+              "name": "Rammus — R: Soaring Slam",
+              "sourceValue": "120",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "75:W:NasusW",
+              "name": "Nasus — W: Wither",
+              "sourceValue": "15",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "medium": [
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "805:R:LockeR",
+              "name": "Locke — R: Purgatory",
+              "sourceValue": "120",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "246:R:QiyanaR",
+              "name": "Qiyana — R: Supreme Display of Talent",
+              "sourceValue": "120",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "103:R:AhriR",
+              "name": "Ahri — R: Spirit Rush",
+              "sourceValue": "140",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "202:R:JhinR",
+              "name": "Jhin — R: Curtain Call",
+              "sourceValue": "120",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "exactMatch",
+          "visibleValue": "12",
+          "options": [
+            {
+              "subjectKey": "517:W:SylasW",
+              "name": "Sylas — W: Kingslayer",
+              "sourceValue": "12",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "54:W:Obduracy",
+              "name": "Malphite — W: Thunderclap",
+              "sourceValue": "10",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "28:W:EvelynnW",
+              "name": "Evelynn — W: Allure",
+              "sourceValue": "15",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "134:E:SyndraE",
+              "name": "Syndra — E: Scatter the Weak",
+              "sourceValue": "15",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "360:R:SamiraR",
+              "name": "Samira — R: Inferno Trigger",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "41:Q:GangplankQWrapper",
+              "name": "Gangplank — Q: Parrrley",
+              "sourceValue": "4.5",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "22:E:AsheSpiritOfTheHawk",
+              "name": "Ashe — E: Hawkshot",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "79:W:GragasW",
+              "name": "Gragas — W: Drunken Rage",
+              "sourceValue": "5",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "exactMatch",
+          "visibleValue": "18",
+          "options": [
+            {
+              "subjectKey": "38:E:ForcePulse",
+              "name": "Kassadin — E: Force Pulse",
+              "sourceValue": "21",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "21:E:MissFortuneScattershot",
+              "name": "Miss Fortune — E: Make It Rain",
+              "sourceValue": "18",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "92:Q:RivenTriCleave",
+              "name": "Riven — Q: Broken Wings",
+              "sourceValue": "13",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "50:W:SwainW",
+              "name": "Swain — W: Vision of Empire",
+              "sourceValue": "20",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "exactMatch",
+          "visibleValue": "70",
+          "options": [
+            {
+              "subjectKey": "517:R:SylasR",
+              "name": "Sylas — R: Hijack",
+              "sourceValue": "80",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "221:R:ZeriR",
+              "name": "Zeri — R: Lightning Crash",
+              "sourceValue": "80",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "222:R:JinxR",
+              "name": "Jinx — R: Super Mega Death Rocket!",
+              "sourceValue": "85",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "157:R:YasuoR",
+              "name": "Yasuo — R: Last Breath",
+              "sourceValue": "70",
+              "isCorrect": true
+            }
+          ]
+        }
+      ],
+      "hard": [
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "exactMatch",
+          "visibleValue": "26",
+          "options": [
+            {
+              "subjectKey": "114:W:FioraW",
+              "name": "Fiora — W: Riposte",
+              "sourceValue": "24",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "25:E:MorganaE",
+              "name": "Morgana — E: Black Shield",
+              "sourceValue": "26",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "8:W:VladimirSanguinePool",
+              "name": "Vladimir — W: Sanguine Pool",
+              "sourceValue": "28",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "15:E:SivirE",
+              "name": "Sivir — E: Spell Shield",
+              "sourceValue": "24",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "127:E:LissandraE",
+              "name": "Lissandra — E: Glacial Path",
+              "sourceValue": "24",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "888:W:RenataW",
+              "name": "Renata Glasc — W: Bailout",
+              "sourceValue": "28",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "min",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "1:R:AnnieR",
+              "name": "Annie — R: Summon: Tibbers",
+              "sourceValue": "130",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "40:R:ReapTheWhirlwind",
+              "name": "Janna — R: Monsoon",
+              "sourceValue": "130",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "201:R:BraumRWrapper",
+              "name": "Braum — R: Glacial Fissure",
+              "sourceValue": "130",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "28:R:EvelynnR",
+              "name": "Evelynn — R: Last Caress",
+              "sourceValue": "120",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "497:R:RakanR",
+              "name": "Rakan — R: The Quickness",
+              "sourceValue": "130",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "799:R:AmbessaR",
+              "name": "Ambessa — R: Public Execution",
+              "sourceValue": "130",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "exactMatch",
+          "visibleValue": "17",
+          "options": [
+            {
+              "subjectKey": "58:E:RenektonSliceAndDice",
+              "name": "Renekton — E: Slice and Dice",
+              "sourceValue": "16",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "18:E:TristanaE",
+              "name": "Tristana — E: Explosive Charge",
+              "sourceValue": "16",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "888:Q:RenataQ",
+              "name": "Renata Glasc — Q: Handshake",
+              "sourceValue": "16",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "805:W:LockeW",
+              "name": "Locke — W: Soul Ignition",
+              "sourceValue": "18",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "27:W:MegaAdhesive",
+              "name": "Singed — W: Mega Adhesive",
+              "sourceValue": "17",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "875:E:SettE",
+              "name": "Sett — E: Facebreaker",
+              "sourceValue": "16",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "134:E:SyndraE",
+              "name": "Syndra — E: Scatter the Weak",
+              "sourceValue": "15",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "164:E:CamilleE",
+              "name": "Camille — E: Hookshot",
+              "sourceValue": "16",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "235:Q:SennaQ",
+              "name": "Senna — Q: Piercing Darkness",
+              "sourceValue": "15",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "7:W:LeblancW",
+              "name": "LeBlanc — W: Distortion",
+              "sourceValue": "15",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "55:W:KatarinaW",
+              "name": "Katarina — W: Preparation",
+              "sourceValue": "15",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "75:W:NasusW",
+              "name": "Nasus — W: Wither",
+              "sourceValue": "15",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "exactMatch",
+          "visibleValue": "11",
+          "options": [
+            {
+              "subjectKey": "14:E:SionE",
+              "name": "Sion — E: Roar of the Slayer",
+              "sourceValue": "12",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "29:E:TwitchExpunge",
+              "name": "Twitch — E: Contaminate",
+              "sourceValue": "12",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "432:Q:BardQ",
+              "name": "Bard — Q: Cosmic Binding",
+              "sourceValue": "11",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "201:W:BraumW",
+              "name": "Braum — W: Stand Behind Me",
+              "sourceValue": "12",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "79:Q:GragasQ",
+              "name": "Gragas — Q: Barrel Roll",
+              "sourceValue": "10",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "15:Q:SivirQ",
+              "name": "Sivir — Q: Boomerang Blade",
+              "sourceValue": "10",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "challenger": [
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "min2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "888:R:RenataR",
+              "name": "Renata Glasc — R: Hostile Takeover",
+              "sourceValue": "150",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "895:R:NilahR",
+              "name": "Nilah — R: Apotheosis",
+              "sourceValue": "110",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "133:W:QuinnW",
+              "name": "Quinn — W: Heightened Senses",
+              "sourceValue": "50",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "497:R:RakanR",
+              "name": "Rakan — R: The Quickness",
+              "sourceValue": "130",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "902:W:MilioW",
+              "name": "Milio — W: Cozy Campfire",
+              "sourceValue": "29",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "901:Q:SmolderQ",
+              "name": "Smolder — Q: Super Scorcher Breath",
+              "sourceValue": "5.5",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "max",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "107:W:RengarW",
+              "name": "Rengar — W: Battle Roar",
+              "sourceValue": "0.25",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "113:E:SejuaniE",
+              "name": "Sejuani — E: Permafrost",
+              "sourceValue": "1.5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "897:Q:KSanteQ",
+              "name": "K'Sante — Q: Ntofo Strikes",
+              "sourceValue": "3.5",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "223:E:TahmKenchE",
+              "name": "Tahm Kench — E: Thick Skin",
+              "sourceValue": "3",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "69:E:CassiopeiaE",
+              "name": "Cassiopeia — E: Twin Fang",
+              "sourceValue": "0.75",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "200:R:BelvethR",
+              "name": "Bel'Veth — R: Endless Banquet",
+              "sourceValue": "1",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "max2nd",
+          "visibleValue": null,
+          "options": [
+            {
+              "subjectKey": "412:Q:ThreshQ",
+              "name": "Thresh — Q: Death Sentence",
+              "sourceValue": "19",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "157:R:YasuoR",
+              "name": "Yasuo — R: Last Breath",
+              "sourceValue": "70",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "43:R:KarmaMantra",
+              "name": "Karma — R: Mantra",
+              "sourceValue": "40",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "238:E:ZedE",
+              "name": "Zed — E: Shadow Slash",
+              "sourceValue": "5",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "14:Q:SionQ",
+              "name": "Sion — Q: Decimating Smash",
+              "sourceValue": "10",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "42:R:MissileBarrage",
+              "name": "Corki — R: Missile Barrage",
+              "sourceValue": "2",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "lessThan",
+          "visibleValue": "179",
+          "options": [
+            {
+              "subjectKey": "25:E:MorganaE",
+              "name": "Morgana — E: Black Shield",
+              "sourceValue": "26",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "41:Q:GangplankQWrapper",
+              "name": "Gangplank — Q: Parrrley",
+              "sourceValue": "4.5",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "887:Q:GwenQ",
+              "name": "Gwen — Q: Snip Snip!",
+              "sourceValue": "6.5",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "30:R:KarthusFallenOne",
+              "name": "Karthus — R: Requiem",
+              "sourceValue": "200",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "429:W:KalistaW",
+              "name": "Kalista — W: Sentinel",
+              "sourceValue": "30",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "33:R:Tremors2",
+              "name": "Rammus — R: Soaring Slam",
+              "sourceValue": "120",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "metricId": "abilityCooldownLvl1",
+          "operatorId": "lessThan",
+          "visibleValue": "95",
+          "options": [
+            {
+              "subjectKey": "4:R:Destiny",
+              "name": "Twisted Fate — R: Destiny",
+              "sourceValue": "170",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "805:W:LockeW",
+              "name": "Locke — W: Soul Ignition",
+              "sourceValue": "18",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "63:R:BrandR",
+              "name": "Brand — R: Pyroclasm",
+              "sourceValue": "100",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "222:Q:JinxQ",
+              "name": "Jinx — Q: Switcheroo!",
+              "sourceValue": "0.9",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "157:R:YasuoR",
+              "name": "Yasuo — R: Last Breath",
+              "sourceValue": "70",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "13:E:RyzeE",
+              "name": "Ryze — E: Spell Flux",
+              "sourceValue": "3.5",
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    },
+    "abilityName": {
+      "easy": [
+        {
+          "clue": "Violent Tendencies",
+          "options": [
+            {
+              "subjectKey": "15",
+              "name": "Sivir",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "99",
+              "name": "Lux",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "240",
+              "name": "Kled",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "497",
+              "name": "Rakan",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "clue": "Hawkshot",
+          "options": [
+            {
+              "subjectKey": "22",
+              "name": "Ashe",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "44",
+              "name": "Taric",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "92",
+              "name": "Riven",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "clue": "Elemental Wrath / Edge of Ixtal",
+          "options": [
+            {
+              "subjectKey": "7",
+              "name": "LeBlanc",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "53",
+              "name": "Blitzcrank",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "85",
+              "name": "Kennen",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "246",
+              "name": "Qiyana",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "clue": "Avengerang",
+          "options": [
+            {
+              "subjectKey": "234",
+              "name": "Viego",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "166",
+              "name": "Akshan",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "82",
+              "name": "Mordekaiser",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "893",
+              "name": "Aurora",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "clue": "Crowstorm",
+          "options": [
+            {
+              "subjectKey": "112",
+              "name": "Viktor",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "80",
+              "name": "Pantheon",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "9",
+              "name": "Fiddlesticks",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "143",
+              "name": "Zyra",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    "passiveName": {
+      "easy": [
+        {
+          "clue": "Leverage",
+          "options": [
+            {
+              "subjectKey": "43",
+              "name": "Karma",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "154",
+              "name": "Zac",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "1",
+              "name": "Annie",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "888",
+              "name": "Renata Glasc",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "clue": "Cursed Touch",
+          "options": [
+            {
+              "subjectKey": "902",
+              "name": "Milio",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "32",
+              "name": "Amumu",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "26",
+              "name": "Zilean",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "99",
+              "name": "Lux",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "clue": "Sap Magic",
+          "options": [
+            {
+              "subjectKey": "14",
+              "name": "Sion",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "67",
+              "name": "Vayne",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "81",
+              "name": "Ezreal",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "57",
+              "name": "Maokai",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "clue": "Death Defied",
+          "options": [
+            {
+              "subjectKey": "30",
+              "name": "Karthus",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "432",
+              "name": "Bard",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "62",
+              "name": "Wukong",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "893",
+              "name": "Aurora",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "clue": "Berserker Rage",
+          "options": [
+            {
+              "subjectKey": "2",
+              "name": "Olaf",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "10",
+              "name": "Kayle",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "427",
+              "name": "Ivern",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "103",
+              "name": "Ahri",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    "title": {
+      "easy": [
+        {
+          "clue": "Demacia's Wings",
+          "options": [
+            {
+              "subjectKey": "60",
+              "name": "Elise",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "16",
+              "name": "Soraka",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "133",
+              "name": "Quinn",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "154",
+              "name": "Zac",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "clue": "the Shadow Reaper",
+          "options": [
+            {
+              "subjectKey": "164",
+              "name": "Camille",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "141",
+              "name": "Kayn",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "268",
+              "name": "Azir",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "12",
+              "name": "Alistar",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "clue": "the Chain Warden",
+          "options": [
+            {
+              "subjectKey": "887",
+              "name": "Gwen",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "154",
+              "name": "Zac",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "36",
+              "name": "Dr. Mundo",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "412",
+              "name": "Thresh",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "clue": "the Visionary",
+          "options": [
+            {
+              "subjectKey": "910",
+              "name": "Hwei",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "203",
+              "name": "Kindred",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "555",
+              "name": "Pyke",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "117",
+              "name": "Lulu",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "clue": "the Purifier",
+          "options": [
+            {
+              "subjectKey": "203",
+              "name": "Kindred",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "236",
+              "name": "Lucian",
+              "isCorrect": true
+            },
+            {
+              "subjectKey": "51",
+              "name": "Caitlyn",
+              "isCorrect": false
+            },
+            {
+              "subjectKey": "804",
+              "name": "Yunara",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "eligibilityApproved": true
+}

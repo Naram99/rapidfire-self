@@ -1,0 +1,1037 @@
+{
+  "flagMismatches": [
+    {
+      "championId": "Ahri",
+      "skinNum": 88,
+      "skinName": "Spirit Blossom Springs Ahri",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Ahri",
+      "skinNum": 89,
+      "skinName": "After Hours Spirit Blossom Springs Ahri",
+      "sourceHasChromas": true,
+      "childRecords": 0
+    },
+    {
+      "championId": "Akali",
+      "skinNum": 50,
+      "skinName": "Crime City Nightmare Akali",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Akali",
+      "skinNum": 61,
+      "skinName": "Star Guardian Akali",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Akali",
+      "skinNum": 68,
+      "skinName": "DRX Akali",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Akali",
+      "skinNum": 70,
+      "skinName": "Coven Akali",
+      "sourceHasChromas": false,
+      "childRecords": 10
+    },
+    {
+      "championId": "Akali",
+      "skinNum": 71,
+      "skinName": "Prestige Coven Akali",
+      "sourceHasChromas": true,
+      "childRecords": 0
+    },
+    {
+      "championId": "Akali",
+      "skinNum": 82,
+      "skinName": "Empyrean Akali",
+      "sourceHasChromas": false,
+      "childRecords": 10
+    },
+    {
+      "championId": "Akali",
+      "skinNum": 92,
+      "skinName": "Spirit Blossom Akali",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Alistar",
+      "skinNum": 40,
+      "skinName": "Elderwood Alistar",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Anivia",
+      "skinNum": 56,
+      "skinName": "Old God Anivia",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Annie",
+      "skinNum": 22,
+      "skinName": "Cafe Cuties Annie",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Annie",
+      "skinNum": 31,
+      "skinName": "Fright Night Annie",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Annie",
+      "skinNum": 40,
+      "skinName": "Winterblessed Annie",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Annie",
+      "skinNum": 50,
+      "skinName": "Battle Princess Annie",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Aphelios",
+      "skinNum": 18,
+      "skinName": "EDG Aphelios",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Aphelios",
+      "skinNum": 20,
+      "skinName": "Spirit Blossom Aphelios",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Aphelios",
+      "skinNum": 30,
+      "skinName": "HEARTSTEEL Aphelios",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Aphelios",
+      "skinNum": 41,
+      "skinName": "HEARTSTEEL Live My Life Aphelios",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "AurelionSol",
+      "skinNum": 11,
+      "skinName": "Storm Dragon Aurelion Sol",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "AurelionSol",
+      "skinNum": 21,
+      "skinName": "Inkshadow Aurelion Sol",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "AurelionSol",
+      "skinNum": 31,
+      "skinName": "Porcelain Protector Aurelion Sol",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Blitzcrank",
+      "skinNum": 66,
+      "skinName": "Bubble Bash Blitzcrank",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Darius",
+      "skinNum": 33,
+      "skinName": "Crime City Nightmare Darius",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Darius",
+      "skinNum": 43,
+      "skinName": "Spirit Blossom Darius",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Darius",
+      "skinNum": 54,
+      "skinName": "Porcelain Darius",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Darius",
+      "skinNum": 65,
+      "skinName": "Prestige Triumphant General Darius",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Darius",
+      "skinNum": 67,
+      "skinName": "Mecha Kingdoms Darius",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Diana",
+      "skinNum": 76,
+      "skinName": "Eternal Aspect Diana",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Diana",
+      "skinNum": 77,
+      "skinName": "Eclipse Eternal Aspect Diana",
+      "sourceHasChromas": true,
+      "childRecords": 0
+    },
+    {
+      "championId": "Ezreal",
+      "skinNum": 25,
+      "skinName": "Porcelain Protector Ezreal",
+      "sourceHasChromas": false,
+      "childRecords": 7
+    },
+    {
+      "championId": "Ezreal",
+      "skinNum": 33,
+      "skinName": "Faerie Court Ezreal",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Ezreal",
+      "skinNum": 43,
+      "skinName": "HEARTSTEEL Ezreal",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Ezreal",
+      "skinNum": 65,
+      "skinName": "Masque of the Black Rose Ezreal",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Ezreal",
+      "skinNum": 78,
+      "skinName": "HEARTSTEEL Live My Life Ezreal",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Fiora",
+      "skinNum": 41,
+      "skinName": "Pulsefire Fiora",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Fiora",
+      "skinNum": 50,
+      "skinName": "Lunar Beast Fiora",
+      "sourceHasChromas": false,
+      "childRecords": 7
+    },
+    {
+      "championId": "Fiora",
+      "skinNum": 60,
+      "skinName": "Bewitching Fiora",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Fiora",
+      "skinNum": 80,
+      "skinName": "Dragonmancer Fiora",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Garen",
+      "skinNum": 46,
+      "skinName": "Visions of the Fallen Garen",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Graves",
+      "skinNum": 45,
+      "skinName": "Porcelain Graves",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Heimerdinger",
+      "skinNum": 15,
+      "skinName": "Pool Party Heimerdinger",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Heimerdinger",
+      "skinNum": 24,
+      "skinName": "Heimerstinger",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Heimerdinger",
+      "skinNum": 33,
+      "skinName": "Arcane Professor Heimerdinger",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Ivern",
+      "skinNum": 31,
+      "skinName": "Rain Shepherd Ivern",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "JarvanIV",
+      "skinNum": 30,
+      "skinName": "Worlds 2021 Jarvan IV",
+      "sourceHasChromas": false,
+      "childRecords": 4
+    },
+    {
+      "championId": "JarvanIV",
+      "skinNum": 35,
+      "skinName": "Nightbringer Jarvan IV",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "JarvanIV",
+      "skinNum": 44,
+      "skinName": "Mythmaker Jarvan IV",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "JarvanIV",
+      "skinNum": 54,
+      "skinName": "Prestige Visions of the Fallen Jarvan IV",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Jhin",
+      "skinNum": 36,
+      "skinName": "Soul Fighter Jhin",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Jhin",
+      "skinNum": 37,
+      "skinName": "Dark Cosmic Erasure Jhin",
+      "sourceHasChromas": true,
+      "childRecords": 0
+    },
+    {
+      "championId": "Jhin",
+      "skinNum": 47,
+      "skinName": "Mythmaker Jhin",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Jhin",
+      "skinNum": 64,
+      "skinName": "Broken Covenant Jhin",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Jinx",
+      "skinNum": 62,
+      "skinName": "T1 Jinx",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Jinx",
+      "skinNum": 65,
+      "skinName": "Ocean Song Jinx",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Kaisa",
+      "skinNum": 16,
+      "skinName": "iG Kai'Sa",
+      "sourceHasChromas": false,
+      "childRecords": 2
+    },
+    {
+      "championId": "Kaisa",
+      "skinNum": 17,
+      "skinName": "Arcade Kai'Sa",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Kaisa",
+      "skinNum": 26,
+      "skinName": "K/DA ALL OUT Kai'Sa",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Kaisa",
+      "skinNum": 29,
+      "skinName": "Lagoon Dragon Kai'Sa",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Kaisa",
+      "skinNum": 40,
+      "skinName": "Star Guardian Kai'Sa",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Kaisa",
+      "skinNum": 48,
+      "skinName": "Inkshadow Kai'Sa",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Kaisa",
+      "skinNum": 59,
+      "skinName": "Heavenscale Kai'Sa",
+      "sourceHasChromas": false,
+      "childRecords": 10
+    },
+    {
+      "championId": "Kaisa",
+      "skinNum": 69,
+      "skinName": "Dark Star Kai'Sa",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Karma",
+      "skinNum": 19,
+      "skinName": "Dawnbringer Karma",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Karma",
+      "skinNum": 26,
+      "skinName": "Odyssey Karma",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Karma",
+      "skinNum": 44,
+      "skinName": "Tranquility Dragon Karma",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Karma",
+      "skinNum": 54,
+      "skinName": "Faerie Queen Karma",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Karma",
+      "skinNum": 61,
+      "skinName": "Infernal Karma",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Karma",
+      "skinNum": 70,
+      "skinName": "Spirit Blossom Karma",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Kassadin",
+      "skinNum": 15,
+      "skinName": "Shockblade Kassadin",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Kassadin",
+      "skinNum": 24,
+      "skinName": "Dragonmancer Kassadin",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Katarina",
+      "skinNum": 59,
+      "skinName": "Chosen of the Wolf Katarina",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Katarina",
+      "skinNum": 70,
+      "skinName": "Petals of Spring Katarina",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Kayn",
+      "skinNum": 32,
+      "skinName": "HEARTSTEEL Live My Life Kayn",
+      "sourceHasChromas": false,
+      "childRecords": 4
+    },
+    {
+      "championId": "Khazix",
+      "skinNum": 60,
+      "skinName": "Odyssey Kha'Zix",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Khazix",
+      "skinNum": 69,
+      "skinName": "Lunar Guardian Kha'Zix",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Khazix",
+      "skinNum": 79,
+      "skinName": "Crystalis Indomitus Kha'Zix",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "LeeSin",
+      "skinNum": 29,
+      "skinName": "FPX Lee Sin",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "LeeSin",
+      "skinNum": 31,
+      "skinName": "Storm Dragon Lee Sin",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "LeeSin",
+      "skinNum": 41,
+      "skinName": "Zenith Games Lee Sin",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "LeeSin",
+      "skinNum": 51,
+      "skinName": "Heavenscale Lee Sin",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "LeeSin",
+      "skinNum": 68,
+      "skinName": "T1 Lee Sin",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "LeeSin",
+      "skinNum": 72,
+      "skinName": "Inkshadow Lee Sin",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "MasterYi",
+      "skinNum": 24,
+      "skinName": "Blood Moon Master Yi",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "MasterYi",
+      "skinNum": 33,
+      "skinName": "PsyOps Master Yi",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "MasterYi",
+      "skinNum": 42,
+      "skinName": "Debonair Master Yi",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "MasterYi",
+      "skinNum": 52,
+      "skinName": "Spirit Blossom Master Yi",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "MasterYi",
+      "skinNum": 53,
+      "skinName": "Prestige Spirit Blossom Master Yi",
+      "sourceHasChromas": true,
+      "childRecords": 0
+    },
+    {
+      "championId": "MasterYi",
+      "skinNum": 89,
+      "skinName": "Inkshadow Master Yi",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "MasterYi",
+      "skinNum": 96,
+      "skinName": "Heavenscale Master Yi",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "MasterYi",
+      "skinNum": 106,
+      "skinName": "Victorious Master Yi",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "MasterYi",
+      "skinNum": 116,
+      "skinName": "PROJECT: Command Line Yi",
+      "sourceHasChromas": true,
+      "childRecords": 0
+    },
+    {
+      "championId": "Morgana",
+      "skinNum": 70,
+      "skinName": "Porcelain Morgana",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Morgana",
+      "skinNum": 81,
+      "skinName": "Prestige Veiled Lady Morgana",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Nautilus",
+      "skinNum": 9,
+      "skinName": "Shan Hai Scrolls Nautilus",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Nautilus",
+      "skinNum": 18,
+      "skinName": "Fright Night Nautilus",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Nautilus",
+      "skinNum": 27,
+      "skinName": "Cosmic Paladin Nautilus",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Nautilus",
+      "skinNum": 36,
+      "skinName": "Crystalis Indomitus Nautilus",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Nautilus",
+      "skinNum": 39,
+      "skinName": "Petricite Nautilus",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Nidalee",
+      "skinNum": 39,
+      "skinName": "Kittalee",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Nidalee",
+      "skinNum": 48,
+      "skinName": "La Ilusión Nidalee",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Nidalee",
+      "skinNum": 58,
+      "skinName": "Spirit Blossom Nidalee",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Samira",
+      "skinNum": 35,
+      "skinName": "Battle Professor Samira",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Senna",
+      "skinNum": 56,
+      "skinName": "Winterblessed Senna",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Senna",
+      "skinNum": 63,
+      "skinName": "Masked Justice Senna",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Senna",
+      "skinNum": 72,
+      "skinName": "Warhound Senna",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Shen",
+      "skinNum": 54,
+      "skinName": "Broken Covenant Shen",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "TahmKench",
+      "skinNum": 11,
+      "skinName": "Arcana Tahm Kench",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "TahmKench",
+      "skinNum": 20,
+      "skinName": "High Noon Tahm Kench",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "TahmKench",
+      "skinNum": 30,
+      "skinName": "Shan Hai Scrolls Tahm Kench",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "TahmKench",
+      "skinNum": 39,
+      "skinName": "Choncc Kench",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "TwistedFate",
+      "skinNum": 36,
+      "skinName": "Space Groove Twisted Fate",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "TwistedFate",
+      "skinNum": 45,
+      "skinName": "Victorious Twisted Fate",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Twitch",
+      "skinNum": 27,
+      "skinName": "Twitch Shadowfoot",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Twitch",
+      "skinNum": 36,
+      "skinName": "Dragonslayer Twitch",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Twitch",
+      "skinNum": 45,
+      "skinName": "High Noon Twitch",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Twitch",
+      "skinNum": 55,
+      "skinName": "Cheddar Chief Twitch",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Viego",
+      "skinNum": 10,
+      "skinName": "Dissonance of Pentakill Viego",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Viego",
+      "skinNum": 19,
+      "skinName": "EDG Viego",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Viego",
+      "skinNum": 21,
+      "skinName": "King Viego",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Viego",
+      "skinNum": 30,
+      "skinName": "Soul Fighter Viego",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Viego",
+      "skinNum": 37,
+      "skinName": "Worlds 2024 Viego",
+      "sourceHasChromas": false,
+      "childRecords": 5
+    },
+    {
+      "championId": "Volibear",
+      "skinNum": 19,
+      "skinName": "Inkshadow Volibear",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Volibear",
+      "skinNum": 29,
+      "skinName": "Spirit Blossom Springs Volibear",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Warwick",
+      "skinNum": 35,
+      "skinName": "Old God Warwick",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Warwick",
+      "skinNum": 45,
+      "skinName": "Winterblessed Warwick",
+      "sourceHasChromas": false,
+      "childRecords": 9
+    },
+    {
+      "championId": "Warwick",
+      "skinNum": 56,
+      "skinName": "Arcane Vander Warwick",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Warwick",
+      "skinNum": 58,
+      "skinName": "Warhound Warwick",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "XinZhao",
+      "skinNum": 47,
+      "skinName": "Trials of Twilight Xin Zhao",
+      "sourceHasChromas": false,
+      "childRecords": 5
+    },
+    {
+      "championId": "XinZhao",
+      "skinNum": 53,
+      "skinName": "T1 Xin Zhao",
+      "sourceHasChromas": false,
+      "childRecords": 6
+    },
+    {
+      "championId": "Yone",
+      "skinNum": 65,
+      "skinName": "Masked Justice Yone",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    },
+    {
+      "championId": "Yone",
+      "skinNum": 74,
+      "skinName": "T1 Yone",
+      "sourceHasChromas": false,
+      "childRecords": 1
+    },
+    {
+      "championId": "Yone",
+      "skinNum": 77,
+      "skinName": "HEARTSTEEL Live My Life Yone",
+      "sourceHasChromas": false,
+      "childRecords": 8
+    }
+  ],
+  "zeroCooldowns": [
+    {
+      "championId": "Aphelios",
+      "slot": "E",
+      "name": "Weapon Queue System"
+    },
+    {
+      "championId": "Ashe",
+      "slot": "Q",
+      "name": "Ranger's Focus"
+    },
+    {
+      "championId": "Bard",
+      "slot": "W",
+      "name": "Caretaker's Shrine"
+    },
+    {
+      "championId": "Gangplank",
+      "slot": "E",
+      "name": "Powder Keg"
+    },
+    {
+      "championId": "Kalista",
+      "slot": "E",
+      "name": "Rend"
+    },
+    {
+      "championId": "Karthus",
+      "slot": "Q",
+      "name": "Lay Waste"
+    },
+    {
+      "championId": "Rakan",
+      "slot": "E",
+      "name": "Battle Dance"
+    },
+    {
+      "championId": "Shyvana",
+      "slot": "R",
+      "name": "Dragon's Descent"
+    },
+    {
+      "championId": "Singed",
+      "slot": "Q",
+      "name": "Poison Trail"
+    },
+    {
+      "championId": "TahmKench",
+      "slot": "R",
+      "name": "Devour"
+    },
+    {
+      "championId": "Talon",
+      "slot": "E",
+      "name": "Assassin's Path"
+    },
+    {
+      "championId": "Teemo",
+      "slot": "E",
+      "name": "Toxic Shot"
+    },
+    {
+      "championId": "TwistedFate",
+      "slot": "E",
+      "name": "Stacked Deck"
+    },
+    {
+      "championId": "Vayne",
+      "slot": "W",
+      "name": "Silver Bolts"
+    },
+    {
+      "championId": "Veigar",
+      "slot": "W",
+      "name": "Dark Matter"
+    },
+    {
+      "championId": "Vi",
+      "slot": "W",
+      "name": "Denting Blows"
+    },
+    {
+      "championId": "Yunara",
+      "slot": "Q",
+      "name": "Cultivation of Spirit"
+    },
+    {
+      "championId": "Yuumi",
+      "slot": "W",
+      "name": "You and Me!"
+    },
+    {
+      "championId": "Zeri",
+      "slot": "Q",
+      "name": "Burst Fire"
+    },
+    {
+      "championId": "Zyra",
+      "slot": "W",
+      "name": "Rampant Growth"
+    }
+  ]
+}

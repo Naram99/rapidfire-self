@@ -38,7 +38,7 @@ Ez a dokumentum a beszélgetésben elfogadott termék-, adatmodell-, socket- és
 - Az elfogadott négy workspace-mappa belső könyvtárszerkezete, az npm workspace konfigurációja és a modulhatárok implementációs részletei.
 - Resend-fiók/domain tényleges bekötése, aktuális csomagfeltételek és deployment-részletek. A normál session 5 perces megújítási célüteme, a vendégsession aktív használat mellett megújítható 15 perces élettartama és a Better Auth cookieCache kikapcsolása elfogadott; a HTTP-kliensfolyamat az M4-ben megvalósult.
 - Better Auth fióktörlésének illesztése a közös törlési folyamathoz.
-- Kérdésforrás, kérdésgenerálás, seed és reprodukálhatósági szerződés.
+- Kérdésforrás és kérdésgenerálás részletei; az elfogadott seed-/kiadás-/ELO-szabályokat a [seedterv](question-seed-version.md) rögzíti.
 - Néhány szélső eset és fizikai adatbázis-validáció; ezeket a 12. fejezet sorolja fel.
 
 Az elfogadott terméktervek önmagukban nem jelentenek kipróbált működést. Az M0 technikai alap és környezeti ellenőrzések eredményeit a [környezeti dokumentum](development-environment.md), az M1 és M2 tényleges tesztjeit a [motor](game-engine.md) és [backendvezérlő](backend-controller.md), az M3 auth/tárolási és M4 böngészős eredményeit a [backend auth](backend-auth-storage.md) és [frontend](frontend.md) dokumentációja rögzíti. Az emailtesztport nem igazol valódi Resend-kézbesítést.
@@ -54,6 +54,7 @@ Az elfogadott terméktervek önmagukban nem jelentenek kipróbált működést. 
 - Szerver által automatikusan vezérelt meccsek.
 - Választható fordulószám; fordulónként egy kategória és pontosan öt kérdés.
 - A teljes meccshez átfogó téma választható a játékbeállításokban. Az MVP egyetlen opciója a League of Legends (`topicId: league-of-legends`); a fordulónként választott kategóriák ezen a témán belüliek.
+- Tervezett várószobai beállítás a DB-ben tárolt játszható kiadás (alapból a legfrissebb) és az automatikus vagy kézi seed. A kézi seed 1–10 ASCII betű/szám, kis-/nagybetűt megkülönböztetve; a meccs minden résztvevőjét kizárja a későbbi ELO-változásból. A kiadásonként változatlan adat/sablon/generátor és a kategóriaválasztás mellett értelmezett determinisztikusság a seedterv része.
 - Egyszeres és többszörös választás, kérdésenként 2, 4 vagy 6 opcióval.
 
 ### Technológiai kiindulás
@@ -405,6 +406,10 @@ Rendszeradatok, nem felhasználói konfiguráció. Nincs tárolt fordított feli
 | interruption_reason | Opcionális stabil kód, csak megszakításnál. |
 | round_count | Kötelező egész, 1–10. |
 | topic_id | Új meccsnél az átfogó téma stabil azonosítója; a korábbi általános mintameccsekben NULL. |
+| generation_release_id | Tervezett UUID FK a változatlan adat-/sablon-/generátorkiadásra; új generált meccsnél kötelező. |
+| generation_seed | Tervezett 1–10 karakteres ASCII alfanumerikus szöveg, kis-/nagybetű és vezető nulla megőrzésével. |
+| seed_origin | Tervezett automatic / custom; szerver által rögzített eredet. |
+| elo_exclusion_reason | Tervezett custom_seed kézi eredetnél; a későbbi ELO-rendszerben minden résztvevőre érvényes. |
 | questions_per_round | Kötelező egész, MVP-ben 5. |
 | answer_time_ms | Kötelező egész, 5000–60000. |
 | start_countdown_ms | Kötelező egész, jelenleg 5000. |
@@ -419,7 +424,7 @@ Rendszeradatok, nem felhasználói konfiguráció. Nincs tárolt fordított feli
 | created_at | Kötelező timestamptz. |
 | updated_at | Kötelező timestamptz. |
 
-A mode a közös táblában különbözteti meg a bejelentkezett szóló és többjátékos meccset. A vendégmeccset nem mentjük ide. Seed/generátor mezők még nincsenek meghatározva.
+A mode a közös táblában különbözteti meg a bejelentkezett szóló és többjátékos meccset. A vendégmeccset nem mentjük ide. A generálási mezők a [seedterv](question-seed-version.md) javaslatai, még nem implementált migrációk. Régi mintameccseknél NULL maradnak; új generált meccseknél a kiadás, seed és eredet együtt kötelező.
 
 ### 7.6. game_participant
 
@@ -884,7 +889,7 @@ A mérföldköveket, előfeltételeket és ellenőrzési feltételeket külön d
 ### Későbbi termékfejlesztésben
 
 - Google, Apple és más szolgáltatói belépés, fiók-összekapcsolási szabályokkal.
-- Seedalapú újrajátszhatóság, generátor és forrásverziók, kérdésgenerálás.
+- Felhasználói replay-képernyő. A seedalapú generálás és választható kiadások aktuális tervezését a [generálási terv](question-generation.md) és a [seedterv](question-seed-version.md) írja le.
 - Tiebreak, csapatjáték és kategóriaszavazás.
 - ELO számítása és ranglista.
 - Nickname-ellenőrzés/moderáció és profilképfeltöltés.

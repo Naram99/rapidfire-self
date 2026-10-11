@@ -30,6 +30,17 @@ a komponenst használja; a lobbyban csak a tulajdonos módosíthatja, a többi
 résztvevő a közös beállításban látja. Az előzmények az új meccsek témáját is
 megjelenítik. A későbbi bővítés helye a közös `gameTopicSchema`, a fordítási
 katalógus és a témához tartozó kérdésprovider; a fordulókategória külön fogalom.
+
+Tervezett következő bővítés, még nem működő felület: a közös játékbeállítás
+kap egy verzióválasztót az adatbázisban elérhető játszható kiadásokból,
+alapból a legfrissebbel, valamint egy opcionális 1–10 ASCII alfanumerikus
+seedmezőt. Üresen automatikus mód; kézi seednél közös `Custom seed — no ELO
+changes` jelzés. Kiadás- és seedváltáskor a szerver törli a ready állapotokat.
+A felirat patchszám, tartalmi javításnál például `16.20.1 · r2`; a régi kiadás
+választható marad. A részletes, még nem implementált szerződés a
+[seedtervben](question-seed-version.md) szerepel. A lobbyban a tulajdonos,
+szólónál az indító szerkeszti; más résztvevők a közös beállítást látják.
+
 A csökkentett mozgás beállítása kikapcsolja az átmeneteket. A ticking timer nem
 live region; a fázisváltás a fő tartalomra viszi a fókuszt.
 

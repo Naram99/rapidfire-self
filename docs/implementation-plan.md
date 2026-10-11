@@ -191,7 +191,9 @@ Az M4 áttekintése után az M5-höz szükséges csomag:
 3. Reprezentatív több szobás próba, mért kapacitás, naplózás és provider/DB hibák üzemeltetési ellenőrzése.
 4. Kiadási/CI ellenőrzések a végleges hostingon. Éles publikálás a felhasználó aktuális utasítása alapján történik.
 
-Nem szükséges a seed/generálás, tiebreak, ELO-algoritmus, social login vagy profilkép előrehozása az MVP-hez. Ezek továbbra is külön későbbi tervek.
+A tiebreak, ELO-számítás, social login és profilkép továbbra is későbbi tervek.
+A felhasználó aktuális iránya a valódi LoL-adatalap és seedelt kérdésgenerálás
+tervezése; ez nem engedélyezi automatikusan az implementációt vagy deploymentet.
 
 A felhasználó által most kiválasztott következő fejlesztési szelet a LoL-hősadatok
 PostgreSQL-tárolása és kizárólag kézi adminfrissítése, a [külön adatimportterv](lol-champion-data.md)
@@ -202,14 +204,71 @@ a sebzésfeldolgozás külön későbbi feladat. A kérdésgenerálás
 ezen az adatalapon tervezhető tovább; a seed-/generátorszerződés még nincs
 véglegesítve. Az adatimportterv dokumentáció, nem elkészült adminpanel vagy migráció.
 
+A [seed- és kiadásválasztási terv](question-seed-version.md) rögzíti a
+2026-10-10-i elfogadott szabályokat: 1–10 ASCII alfanumerikus karakter,
+alapból automatikus seed, várószobai kézi megadás; kézi módban minden
+résztvevő kizárása a későbbi ELO-változásból. Választható a DB-ben tárolt,
+játszható kiadás, alapból a numerikusan legfrissebb. A patch adatát,
+manifestjét és generátorát egy immutable kiadás köti össze; javítás külön
+revízió, a régi megmarad. Azonos seed/kiadás azonos kategóriacsomagokat ad,
+a teljes meccs kérdéssora azonos kategóriaválasztások mellett egyezik.
+A javasolt PRNG `xoshiro128**`, verziózott kezdőállapot- és streamképzéssel.
+Elfogadottak a kerek, metrikánkénti küszöblépések: HP 50, cooldown 1 s,
+darabszám 1, alap támadási sebesség 0,05, alap AD/armor/magic resist 1,
+alap mana 50, mozgási sebesség 5, támadási távolság 25, a négy aktív
+növekedési paraméter 0,2. A nem végleges egységű regeneráció és
+támadásisebesség-növekedés kimarad az MVP-katalógusból. A küszöbbel egyező jelölteket a `lessThan`/`moreThan`
+kihagyja. A kérdésszövegek javítása elfogadott: teljes sablonok, konkrét
+felismerési nyom, egyes/többes szám és cooldownnál `rank 1`.
+A két statcsalád 18 metrikájának offline sávlefedettségét ellenőriztük a
+csatolt listán; az eredmények metrikánkénti/nehézségenkénti hangolást indokolnak,
+vagy a nem teljesíthető párok kihagyását. Az `attackdamageperlevel` az
+elfogadott MVP-katalógusból kimarad; ebben a korábbi vizsgálatban az eredeti 18 statmetrikából 17 maradt.
+Nem szükséges minden metrikához vagy kategóriához minden nehézséget
+biztosítani: a mozgási sebesség például kimaradhat az easy statkérdésekből.
+Csak öt különböző, 4/6 opciós kérdést biztosító család/nehézség kerül kínálatba.
+A challengerben nincs minimum- vagy maximumeltérés, és minden numerikus
+kérdés hat különböző értékű opciót igényel. Az új szabállyal a korábbi 17
+statmetrikán ellenőriztük az öt numerikus referenciaalapú művelet
+hatopciós jelöltlistájának teljesíthetőségét; az ismert küszöblépésű metrikák
+küszöbös jelöltlistái is teljesíthetők.
+Ez nem teljes skin-/cooldown-készletre vagy működő generátorra adott garancia.
+A százalékos határok az easy/medium/hard nehézségen az adathalmaz
+alapján hangolhatók; a végleges effektív profilt a kiadás manifestje rögzíti,
+publikálás után a változás új revíziót jelent.
+
 A csatolt `questionTypes.json` és `topics.json` alapján elkészült a
 [kérdés- és kategóriagenerálási terv](question-generation.md). A nehézségenként
 önálló kategóriaváltozatok, a numerikus összehasonlítás és a szöveges felismerés
 leíró katalógusból állíthatók elő. A dokumentum rögzíti az elfogadott műveleti
 szabályokat: a skindarabszám alapkinézet és chromák nélkül értendő, a cooldown
 pedig a képesség első rangjának alapértéke tárgyak és rúnák nélkül.
-A nullaértékek, holtversenyek és opciószámok kezelésére adott
-javaslatok még nem véglegesek. A képes családok és a sebzésfeldolgozás továbbra is későbbi feladatok;
+A nulla referencia kihagyása, az inkluzív sávhatárok és a holtversenymentes
+megoldások elfogadottak. Az új generátor easy/medium esetén négy,
+hard/challenger esetén hat opcióval dolgozik. Azonos család és nehézség alatt nincs ismétlődő kérdés;
+más nehézségen eltérő opcióhalmazzal visszatérhet ugyanaz a prompt.
+A [jóváhagyott JSON-katalógus](question-catalog-draft/README.md)
+16 numerikus metrikát, kilenc szöveges családot és 45 teljes angol
+kérdéssablont tartalmaz. A négy további küszöblépés és a `Base stat growth` név
+elfogadott. Az öt bizonytalan egységű metrika elhalasztása után 12 hősstat
+marad. A `review.json` és a [publikálás előtti jelentés](question-catalog-draft/publication-checks.md)
+rögzíti az aktuális ellenőrzési állapotot: a teljes ZIP 16 metrikája 64
+metrika/nehézség sorban ellenőrizve; 207 seed, 5382 ötös referenciacsomag és
+26 910 kérdés sikeres. 176 PRNG-kimenet Pythonban és Node-ban egyezett.
+27 tervezett változatból 26 elérhető; a hard skinenkénti chromakategória
+három különböző prompttal kimarad. Ez leíró konfiguráció és elemzési
+referencia, nem alkalmazáskód vagy már publikált kiadás.
+A [mezőszintű forrásszerződés](lol-source-schema.md) feldolgozza a csatolt
+173 hősös listát és az Aatrox-részletet; rögzíti a `partype`, `cooldown[]`
+és `parentSkin`/`chromas` mezőket. A `parentSkin` jelenléte szerinti chromaazonosítás
+elfogadott; a `chromas` boolean külön forrásjelzés marad. Az Aatrox-minta
+a felhasználó szerint a 16.20.1-es, `en_US` Data Dragon-végpont közvetlen válasza.
+A teljes feltöltött [16.20.1.zip](question-generation-input/16.20.1.zip)
+173 külön részlete, összesítője és aggregátuma egyezik. Az elfogadott
+alanyszűrés hat skin-/öt hős-chromaszámot és húsz cooldown-kérdésalanyt zár ki,
+nyers és egyéb adataikat megtartva. A forrás- és referenciavizsgálat elkészült;
+a leendő importáló/runtime validátor, generátor és valódi kiadásintegráció még hiányzik.
+A képes családok és a sebzésfeldolgozás továbbra is későbbi feladatok;
 ez a szelet sem változtatja meg a futó mintakérdés-providert.
 
 A teljes implementáció mérföldkövenként készül. Az M0/M1/M2 helyi ellenőrzési eredményeit a kapcsolódó dokumentumok rögzítik; ezek nem igazolják előre az M3–M5 integrációit.
