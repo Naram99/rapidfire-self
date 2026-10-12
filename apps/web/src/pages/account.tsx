@@ -10,7 +10,8 @@ import { request } from '../lib/api';
 import { numbers, t } from '../lib/copy';
 import { navigate } from '../lib/router';
 import { DataForm } from '../components/data-form';
-import { Button, Dialog, Notice } from '../components/ui';
+import { Button, Dialog } from '../components/ui';
+import { useNotifications } from '../components/notifications';
 
 export function AccountPage({
   profile,
@@ -19,7 +20,7 @@ export function AccountPage({
   profile: Profile;
   client: GameClient;
 }) {
-  const [saved, setSaved] = useState(false);
+  const { notify } = useNotifications();
   const [deleting, setDeleting] = useState(false);
   return (
     <section className="page">
@@ -29,7 +30,6 @@ export function AccountPage({
         <section className="surface">
           <h2>{profile.nickname}</h2>
           <p className="email-address">{profile.email}</p>
-          {saved ? <Notice kind="success">{t('profileSaved')}</Notice> : null}
           <DataForm
             key={profile.nickname}
             fields={[
@@ -51,7 +51,7 @@ export function AccountPage({
               });
             }}
             onSuccess={() => {
-              setSaved(true);
+              notify(t('profileSaved'), { kind: 'success', key: 'profile' });
               void client.checkSession();
             }}
           />
@@ -100,7 +100,7 @@ export function AccountPage({
               }}
               onSuccess={() => {
                 void client.signedOut();
-                client.notify(t('passwordChanged'));
+                client.notify(t('passwordChanged'), 'success');
                 navigate('/sign-in');
               }}
             />
@@ -137,7 +137,7 @@ export function AccountPage({
             }}
             onSuccess={() => {
               void client.signedOut();
-              client.notify(t('accountDeleted'));
+              client.notify(t('accountDeleted'), 'success');
               navigate('/');
             }}
           />

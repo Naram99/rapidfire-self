@@ -153,6 +153,7 @@ export const en = {
     'Unable to reach the server. Check your connection and try again.',
   refresh: 'Refresh the page',
   dismiss: 'Dismiss message',
+  notifications: 'Notifications',
   lobby: 'Your room',
   lobbyIntro:
     'Share the code, get ready, and the game starts when everyone is ready.',

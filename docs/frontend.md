@@ -44,6 +44,21 @@ szólónál az indító szerkeszti; más résztvevők a közös beállítást l�
 A csökkentett mozgás beállítása kikapcsolja az átmeneteket. A ticking timer nem
 live region; a fázisváltás a fő tartalomra viszi a fókuszt.
 
+Az egyszeri visszajelzések a képernyő alján, az oldal elrendezésétől független
+toastokban jelennek meg. A mentés, névmódosítás, emailkérés, szobakódmásolás és
+a kliensüzenetek bezárhatók; siker/info esetén öt, hibánál nyolc másodperc után
+eltűnnek. Hover, billentyűzetes fókusz és rejtett lap szünetelteti az időzítőt.
+Legfeljebb három értesítés látszik egyszerre, safe-area margóval és a meglévő
+világos/sötét palettával. A felugrás nem viszi el a fókuszt; fókuszált toastból
+Escape-pel is vissza lehet térni az előző vezérlőre.
+
+A mentési siker/hiba meccsenként és állapotonként egyszer jelenik meg; a
+végeredményből a lobbyba vagy főoldalra visszatérés nem hozza vissza a bezárt
+üzenetet. A `pending/retrying` állapot olvasható marad, amíg a mentés folyamatban
+van. Kapcsolatvesztéskor a fejléc újracsatlakozási vezérlőt kínál. A mezőhibák
+és a szükséges teendőket leíró helyi állapotjelzések a megfelelő felületrészen
+maradnak.
+
 A főoldali cím a csatolt prototípus ötletét követi: `Think.`, `Answer.`, `Guess.`,
 `Learn.`, `Play.`, `Win.` váltakozik két másodpercenként a fix `Fast.` mellett.
 A grid a leghosszabb szónak is helyet tart, így a váltás nem mozgatja az űrlapot.
