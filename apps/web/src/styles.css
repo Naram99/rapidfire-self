@@ -431,6 +431,98 @@ details[open] {
 .notice .button {
   color: inherit;
 }
+.toast-region {
+  position: fixed;
+  z-index: 40;
+  inset-inline-end: max(var(--space-4), env(safe-area-inset-right));
+  inset-block-end: max(var(--space-4), env(safe-area-inset-bottom));
+  inline-size: min(
+    26rem,
+    calc(
+      100% - max(var(--space-4), env(safe-area-inset-left)) -
+        max(var(--space-4), env(safe-area-inset-right))
+    )
+  );
+  max-block-size: calc(100dvh - 8rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  filter: drop-shadow(
+    0 0.5rem 1rem color-mix(in srgb, var(--ash-900) 20%, transparent)
+  );
+  display: grid;
+  gap: var(--space-3);
+  pointer-events: none;
+}
+.toast {
+  --toast-accent: var(--brand-text);
+  --toast-icon-bg: var(--brand-surface);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--line) 50%, transparent);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+  color: var(--text);
+  pointer-events: auto;
+  animation: toast-enter 180ms var(--motion-ease) both;
+}
+.toast--success {
+  --toast-accent: var(--success-text);
+  --toast-icon-bg: var(--success-bg);
+}
+.toast--warning {
+  --toast-accent: var(--warning-text);
+  --toast-icon-bg: var(--warning-bg);
+}
+.toast--error {
+  --toast-accent: var(--error-text);
+  --toast-icon-bg: var(--error-bg);
+}
+.toast-icon {
+  display: grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--toast-icon-bg);
+  color: var(--toast-accent);
+}
+.toast p {
+  margin: 0;
+  padding-block: var(--space-2);
+  overflow-wrap: anywhere;
+}
+.toast-dismiss {
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+  padding: var(--space-2);
+  color: var(--muted);
+}
+.toast-dismiss:hover {
+  color: var(--text);
+  background: var(--surface-soft);
+}
+.persistence-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--muted);
+}
+.connection-control {
+  color: var(--warning-text);
+}
+@keyframes toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.375rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .error-summary {
   padding: var(--space-4);
   border-radius: var(--radius-sm);

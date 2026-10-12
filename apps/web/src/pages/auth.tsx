@@ -13,6 +13,7 @@ import { message, t } from '../lib/copy';
 import { Link, navigate } from '../lib/router';
 import { DataForm } from '../components/data-form';
 import { Button, Notice } from '../components/ui';
+import { useNotifications } from '../components/notifications';
 
 const emailField = {
   name: 'email',
@@ -48,7 +49,7 @@ export function AuthPage({
 }) {
   const [done, setDone] = useState(false);
   const [email, setEmail] = useState('');
-  const [note, setNote] = useState<string | null>(null);
+  const { notify } = useNotifications();
   const [resending, setResending] = useState(false);
   const [wait, setWait] = useState(0);
   useEffect(() => {
@@ -80,7 +81,6 @@ export function AuthPage({
               ? t('signUpIntro')
               : t('signInIntro')}
       </p>
-      {note ? <Notice>{note}</Notice> : null}
       {done ? (
         <div className="stack">
           <Button
@@ -95,10 +95,10 @@ export function AuthPage({
                     callbackURL: `${window.location.origin}/verify-email`,
                   },
                 });
-                setNote(EMAIL_VERIFICATION_REQUEST_MESSAGE);
+                notify(EMAIL_VERIFICATION_REQUEST_MESSAGE, { kind: 'success' });
                 setWait(60);
               } catch (error) {
-                setNote(message(error));
+                notify(message(error), { kind: 'error' });
               } finally {
                 setResending(false);
               }
@@ -124,7 +124,7 @@ export function AuthPage({
               },
               signal,
             });
-            setNote(PASSWORD_RESET_REQUEST_MESSAGE);
+            notify(PASSWORD_RESET_REQUEST_MESSAGE, { kind: 'success' });
           }}
         />
       ) : signUp ? (
@@ -197,7 +197,7 @@ export function AuthPage({
                   },
                   signal,
                 });
-                setNote(EMAIL_VERIFICATION_REQUEST_MESSAGE);
+                notify(EMAIL_VERIFICATION_REQUEST_MESSAGE, { kind: 'success' });
               }}
             />
           </details>

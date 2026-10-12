@@ -91,7 +91,7 @@ function LobbySettings({
               expectedSettingsVersion: room.settingsVersion,
               settings: parsed.data,
             });
-            client.notify(t('settingsSaved'));
+            client.notify(t('settingsSaved'), 'success');
             setError(null);
           } catch (error) {
             setError(message(error));
@@ -120,7 +120,6 @@ function LobbySettings({
 }
 export function LobbyPage({ client, state, snapshot }: GameProps) {
   const room = snapshot.room;
-  const [copyError, setCopyError] = useState<string | null>(null);
   if (!room) return null;
   const self = room.members.find(
     (member) => member.id === snapshot.self.memberId,
@@ -140,17 +139,15 @@ export function LobbyPage({ client, state, snapshot }: GameProps) {
             onClick={async () => {
               try {
                 await navigator.clipboard.writeText(room.code);
-                client.notify(t('copied'));
-                setCopyError(null);
+                client.notify(t('copied'), 'success');
               } catch {
-                setCopyError(t('copyFailed'));
+                client.notify(t('copyFailed'), 'warning');
               }
             }}
           >
             <Icon name="copy" />
             {t('copyCode')}
           </Button>
-          {copyError ? <Notice>{copyError}</Notice> : null}
           <LobbySettings
             key={room.settingsVersion}
             room={room}
@@ -546,26 +543,12 @@ export function PersistenceNotice({
 }: {
   status: NonNullable<Snapshot['match']>['persistence']['status'];
 }) {
-  const key =
-    status === 'saved'
-      ? 'resultHistory'
-      : status === 'pending'
-        ? 'persistencePending'
-        : status === 'retrying'
-          ? 'persistenceRetrying'
-          : status === 'failed'
-            ? 'persistenceFailed'
-            : status === 'not_saved_guest'
-              ? 'notSavedGuest'
-              : 'persistenceUnavailable';
+  if (status !== 'pending' && status !== 'retrying') return null;
   return (
-    <Notice
-      kind={
-        status === 'saved' ? 'success' : status === 'failed' ? 'error' : 'info'
-      }
-    >
-      {t(key)}
-    </Notice>
+    <p className="persistence-status" role="status">
+      <Icon name="clock" />
+      {t(status === 'pending' ? 'persistencePending' : 'persistenceRetrying')}
+    </p>
   );
 }
 function Finished({

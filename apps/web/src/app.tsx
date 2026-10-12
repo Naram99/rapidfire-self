@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
-import type { ClosureReason } from '@rapidfire/contracts';
+import type { ClosureReason, PersistenceStatus } from '@rapidfire/contracts';
 import { GameClient } from './lib/client';
 import { message, t } from './lib/copy';
 import type { CopyKey } from './lib/copy';
 import { Link, navigate, useRoute } from './lib/router';
-import { Button, Dialog, Icon, Notice } from './components/ui';
+import { Button, Dialog, Icon } from './components/ui';
+import { useNotifications } from './components/notifications';
 import { HomePage } from './pages/home';
 import { AuthPage, ResetPage, VerificationPage } from './pages/auth';
 import { AccountPage } from './pages/account';
@@ -21,6 +22,14 @@ const closure: Readonly<Record<ClosureReason, CopyKey | null>> = {
   authentication_timeout: 'closedAuth',
   access_revoked: 'closedRevoked',
 };
+const persistenceCopy: Readonly<Record<PersistenceStatus, CopyKey>> = {
+  saved: 'resultHistory',
+  failed: 'persistenceFailed',
+  pending: 'persistencePending',
+  retrying: 'persistenceRetrying',
+  not_saved_guest: 'notSavedGuest',
+  not_configured: 'persistenceUnavailable',
+};
 export function App() {
   const [client] = useState(() => new GameClient());
   const state = useSyncExternalStore(client.subscribe, client.getSnapshot);
@@ -29,6 +38,8 @@ export function App() {
   const [leavingScope, setLeavingScope] = useState<string | null>(null);
   const previousFlow = useRef<string | null>(null);
   const [leavingBusy, setLeavingBusy] = useState(false);
+  const { notify, clear } = useNotifications();
+  const notifiedResults = useRef(new Set<string>());
   const snapshot = state.snapshot;
   const flow = snapshot && snapshot.phase.type !== 'closed' ? snapshot : null;
   const lobby =
@@ -40,10 +51,61 @@ export function App() {
     route.pathname === '/sign-in' &&
     Boolean(flow?.permissions.requiresAuthentication);
   const showGame = Boolean(flow && !authLink && !reauth);
+  const disconnected = Boolean(flow && state.connection !== 'connected');
+  const result =
+    flow?.match &&
+    (flow.phase.type === 'finished' || flow.phase.type === 'interrupted')
+      ? { matchId: flow.match.id, persistence: flow.match.persistence }
+      : !flow?.match
+        ? snapshot?.recentResult
+        : null;
+  const resultMatchId = result?.matchId;
+  const resultStatus = result?.persistence.status;
   useEffect(() => {
     client.start();
     return () => client.stop();
   }, [client]);
+  useEffect(() => {
+    if (state.notice && client.getSnapshot().notice === state.notice) {
+      notify(state.notice, { key: 'client', kind: state.noticeKind });
+      client.dismiss();
+    }
+  }, [state.notice, state.noticeKind, client, notify]);
+  useEffect(() => {
+    if (!disconnected || state.connection === 'incompatible') {
+      clear('connection');
+      return;
+    }
+    notify(
+      t(
+        state.connection === 'unauthenticated'
+          ? 'authenticationRequired'
+          : 'reconnecting',
+      ),
+      { key: 'connection', kind: 'warning' },
+    );
+  }, [disconnected, state.connection, notify, clear]);
+  useEffect(() => {
+    if (
+      !resultMatchId ||
+      !resultStatus ||
+      resultStatus === 'pending' ||
+      resultStatus === 'retrying'
+    )
+      return;
+    const key = `${resultMatchId}:${resultStatus}`;
+    if (notifiedResults.current.has(key)) return;
+    notifiedResults.current.add(key);
+    notify(t(persistenceCopy[resultStatus]), {
+      key: `result:${resultMatchId}`,
+      kind:
+        resultStatus === 'saved'
+          ? 'success'
+          : resultStatus === 'failed'
+            ? 'error'
+            : 'info',
+    });
+  }, [resultMatchId, resultStatus, notify]);
   useEffect(() => {
     if (showGame && window.location.pathname !== '/game')
       navigate('/game', true);
@@ -52,7 +114,7 @@ export function App() {
       window.location.pathname === '/game'
     ) {
       const key = closure[snapshot.phase.reason];
-      if (key) client.notify(t(key));
+      if (key) client.notify(t(key), 'info');
       navigate('/', true);
     } else if (
       !snapshot &&
@@ -157,7 +219,6 @@ export function App() {
       </section>
     );
 
-  const disconnected = flow && state.connection !== 'connected';
   return (
     <>
       <a className="skip-link" href="#main-content">
@@ -176,6 +237,20 @@ export function App() {
               Rapidfire
             </Link>
           )}
+          {state.connection === 'incompatible' || disconnected ? (
+            <Button
+              variant="quiet"
+              className="connection-control"
+              onClick={
+                state.connection === 'incompatible'
+                  ? () => window.location.reload()
+                  : client.reconnect
+              }
+            >
+              <Icon name="reload" />
+              {t(state.connection === 'incompatible' ? 'refresh' : 'reconnect')}
+            </Button>
+          ) : null}
           {flow ? (
             <Button
               variant="quiet"
@@ -233,56 +308,8 @@ export function App() {
         </div>
       </header>
       <main id="main-content" ref={main} tabIndex={-1} className="app-main">
-        {state.notice ? (
-          <Notice
-            action={
-              <Button
-                variant="quiet"
-                onClick={client.dismiss}
-                aria-label={t('dismiss')}
-              >
-                <Icon name="cross" />
-              </Button>
-            }
-          >
-            {state.notice}
-          </Notice>
-        ) : null}
-        {state.connection === 'incompatible' ? (
-          <Notice
-            kind="error"
-            action={
-              <Button
-                variant="secondary"
-                onClick={() => window.location.reload()}
-              >
-                {t('refresh')}
-              </Button>
-            }
-          >
-            {t('invalidResponse')}
-          </Notice>
-        ) : disconnected ? (
-          <Notice
-            kind="warning"
-            action={
-              <Button variant="secondary" onClick={client.reconnect}>
-                <Icon name="reload" />
-                {t('reconnect')}
-              </Button>
-            }
-          >
-            {t(
-              state.connection === 'unauthenticated'
-                ? 'authenticationRequired'
-                : 'reconnecting',
-            )}
-          </Notice>
-        ) : null}
-        {state.snapshot?.recentResult && !flow ? (
-          <PersistenceNotice
-            status={state.snapshot.recentResult.persistence.status}
-          />
+        {resultStatus && !flow?.match ? (
+          <PersistenceNotice status={resultStatus} />
         ) : null}
         {page}
       </main>

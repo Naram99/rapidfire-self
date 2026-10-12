@@ -29,6 +29,7 @@ export type Identity =
   | Readonly<{ kind: 'none' }>
   | Readonly<{ kind: 'user'; profile: Profile; expiresAt: number }>
   | Readonly<{ kind: 'guest'; nickname: string; expiresAt: number }>;
+export type NoticeKind = 'info' | 'success' | 'warning' | 'error';
 export type ClientState = Readonly<{
   identity: Identity;
   session: 'loading' | 'ready' | 'unavailable';
@@ -43,6 +44,7 @@ export type ClientState = Readonly<{
   clock: ClockAnchor;
   pending: CommandName | null;
   notice: string | null;
+  noticeKind: NoticeKind;
   topics: readonly Readonly<{
     id: GameTopic;
     maxRounds: number;
@@ -60,6 +62,7 @@ export class GameClient {
     clock: { serverTime: Date.now(), monotonicTime: performance.now() },
     pending: null,
     notice: null,
+    noticeKind: 'info',
     topics: gameTopicSchema.options.map((id) => ({
       id,
       maxRounds: 0,
@@ -95,7 +98,8 @@ export class GameClient {
     for (const listener of this.listeners) listener();
   }
   dismiss = (): void => this.update({ notice: null });
-  notify = (notice: string): void => this.update({ notice });
+  notify = (notice: string, noticeKind: NoticeKind = 'error'): void =>
+    this.update({ notice, noticeKind });
   private activity = () => {
     this.activityAt = performance.now();
   };
@@ -140,6 +144,7 @@ export class GameClient {
       this.update({
         connection: 'incompatible',
         notice: message(new ApiError(code)),
+        noticeKind: 'error',
       });
     } else if (code === 'AUTH_REQUIRED') {
       this.update({ connection: 'unauthenticated' });
@@ -148,7 +153,11 @@ export class GameClient {
   private incoming = (candidate: unknown) => {
     const decoded = snapshotSchema.safeParse(candidate);
     if (!decoded.success) {
-      this.update({ connection: 'incompatible', notice: t('invalidResponse') });
+      this.update({
+        connection: 'incompatible',
+        notice: t('invalidResponse'),
+        noticeKind: 'error',
+      });
       this.socket.disconnect();
       return;
     }
@@ -225,7 +234,11 @@ export class GameClient {
       })
       .catch(() => {
         if (epoch === this.epoch)
-          this.update({ topics: [], notice: t('configurationUnavailable') });
+          this.update({
+            topics: [],
+            notice: t('configurationUnavailable'),
+            noticeKind: 'error',
+          });
       })
       .finally(() => {
         if (this.configuration === work) this.configuration = null;
@@ -458,7 +471,11 @@ export class GameClient {
         error instanceof ApiError &&
         ['ROOM_NOT_FOUND', 'STALE_STATE', 'FORBIDDEN'].includes(error.code)
       )
-        this.update({ snapshot: null, notice: t('noActiveGame') });
+        this.update({
+          snapshot: null,
+          notice: t('noActiveGame'),
+          noticeKind: 'info',
+        });
     });
   }
   private async syncTime(): Promise<void> {
