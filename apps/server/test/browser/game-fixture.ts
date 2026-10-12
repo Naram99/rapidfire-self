@@ -1,4 +1,5 @@
 import { createServer } from 'node:net';
+import type { Socket } from 'node:net';
 import { resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { expect, test as base } from '@playwright/test';
@@ -46,6 +47,11 @@ async function browserApplication(publishedQuestions: boolean) {
     lolSource: fixtureSource(
       publishedQuestions ? fullLolFixture() : smallLolFixture(),
     ),
+  });
+  const connections = new Set<Socket>();
+  app.httpServer.on('connection', (connection) => {
+    connections.add(connection);
+    connection.once('close', () => connections.delete(connection));
   });
   await new Promise<void>((done) =>
     app.httpServer.listen(Number(new URL(url).port), '127.0.0.1', done),
@@ -114,6 +120,25 @@ async function browserApplication(publishedQuestions: boolean) {
     await signIn(page, email);
     return email;
   }
+  let closing: Promise<void> | null = null;
+  const close = (): Promise<void> => {
+    closing ??= (async () => {
+      await base.step('Stop test game and import tasks', async () => {
+        app.email.close();
+        await app.lolImporter.close();
+        await app.service.shutdown();
+        await app.service.persistenceIdle();
+      });
+      await base.step('Close test HTTP and Socket.IO server', async () => {
+        const stopped = app.io.close();
+        // Include incomplete HTTP requests and upgraded connections owned by this test.
+        for (const connection of connections) connection.destroy();
+        await stopped;
+      });
+      await base.step('Drop isolated test database', () => database.close());
+    })();
+    return closing;
+  };
   return {
     ...app,
     database,
@@ -123,14 +148,7 @@ async function browserApplication(publishedQuestions: boolean) {
     emailLink,
     register,
     signIn,
-    close: async () => {
-      app.email.close();
-      await app.lolImporter.close();
-      await app.service.shutdown();
-      await app.service.persistenceIdle();
-      await new Promise<void>((done) => app.io.close(() => done()));
-      await database.close();
-    },
+    close,
   };
 }
 export const test = base.extend<{
