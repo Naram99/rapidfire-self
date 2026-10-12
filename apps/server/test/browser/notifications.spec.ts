@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Page, Request } from '@playwright/test';
 import { test, expect } from './game-fixture.js';
 
 test('notifications float without stealing focus, restart for new feedback, pause while reading and can be dismissed', async ({
@@ -143,7 +143,9 @@ test('errors stay readable for eight seconds, pause in the background and fit en
     name: 'Notifications',
     exact: true,
   });
-  const error = region.getByRole('alert');
+  const error = region.getByRole('alert').filter({
+    hasText: 'Unable to reach the server. Check your connection and try again.',
+  });
   await expect(error).toContainText('Unable to reach the server.');
   for (const colorScheme of ['light', 'dark'] as const) {
     await page.emulateMedia({ colorScheme, reducedMotion: 'reduce' });
@@ -171,21 +173,45 @@ test('errors stay readable for eight seconds, pause in the background and fit en
   }
   await page.clock.runFor(5100);
   await expect(error).toBeVisible();
+  const backgroundRequests: string[] = [];
+  const recordRequest = (request: Request) => {
+    const path = new URL(request.url()).pathname;
+    if (['/api/game-config', '/api/auth/get-session'].includes(path))
+      backgroundRequests.push(path);
+  };
+  page.on('request', recordRequest);
   await page.evaluate(() => {
-    Object.defineProperty(document, 'hidden', {
-      configurable: true,
-      value: true,
+    // Real background tabs change both properties. Leaving visibilityState
+    // visible would incorrectly trigger foreground HTTP checks during runFor.
+    Object.defineProperties(document, {
+      hidden: { configurable: true, value: true },
+      visibilityState: { configurable: true, value: 'hidden' },
     });
     document.dispatchEvent(new Event('visibilitychange'));
   });
   await page.clock.runFor(20000);
   await expect(error).toBeVisible();
+  page.off('request', recordRequest);
+  expect(backgroundRequests).toEqual([]);
+  // Foreground checks use real HTTP: finish them before advancing the clock
+  // again so simulated time cannot race their network timeout.
+  const restored = Promise.all([
+    page
+      .waitForResponse('**/api/game-config')
+      .then((response) => response.finished()),
+    page
+      .waitForResponse('**/api/auth/get-session')
+      .then((response) => response.finished()),
+  ]);
   await page.evaluate(() => {
     Reflect.deleteProperty(document, 'hidden');
+    Reflect.deleteProperty(document, 'visibilityState');
     document.dispatchEvent(new Event('visibilitychange'));
   });
+  await restored;
   await page.clock.runFor(3000);
   await expect(error).toHaveCount(0);
+  await expect(region.getByRole('alert')).toHaveCount(0);
 });
 
 async function pauseClock(page: Page) {
