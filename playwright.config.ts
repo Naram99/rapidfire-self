@@ -33,6 +33,10 @@ export default defineConfig({
     url: `${baseURL}/api/health`,
     reuseExistingServer: !process.env.CI && !production,
     timeout: 30000,
-    env: { BETTER_AUTH_URL: baseURL, GAME_ALLOWED_ORIGINS: baseURL },
+    env: {
+      WEB_HTTPS: 'false',
+      BETTER_AUTH_URL: baseURL,
+      GAME_ALLOWED_ORIGINS: baseURL,
+    },
   },
 });
