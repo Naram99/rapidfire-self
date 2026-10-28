@@ -36,6 +36,18 @@ npm run dev
 
 Vite serves the frontend on port 5173 and proxies `/api` and `/socket.io` (including WebSocket upgrades) to Express on port 3000. The browser uses one origin. `/api/health` reports process availability. Startup requires a reachable, migrated database. Guest solo play is available immediately; registration needs working verification email. Socket connections require protocol version 1 and a server-validated Better Auth, guest or match-return cookie. [The frontend guide](docs/frontend.md) describes the screens, theme variables and state/session flow. The current sample question set supports three rounds; the UI reads this limit from the server.
 
+Development uses HTTP by default. For HTTPS testing from other devices on your local network, set these values in the root `.env`, replacing the example IP with your computer's LAN address, then restart `npm run dev`:
+
+```dotenv
+WEB_HTTPS=true
+BETTER_AUTH_URL=https://192.168.10.42:5173
+GAME_ALLOWED_ORIGINS=https://192.168.10.42:5173
+```
+
+Open that same HTTPS address on each device and trust the generated development certificate on those test devices. `@vitejs/plugin-basic-ssl` is enabled only for Vite serving with `WEB_HTTPS=true`; production builds do not enable the plugin. Production HTTPS must be provided by the deployment platform or reverse proxy with a trusted certificate. To return to local HTTP development, set `WEB_HTTPS=false` and restore the auth URL and allowed origins to the HTTP address you use.
+
+Playwright starts its servers with `WEB_HTTPS=false` and matching HTTP auth origins, including when your local `.env` enables HTTPS. Stop an existing HTTPS development server before running the browser tests so its port is available to Playwright.
+
 For an existing shell, restart stopped services with `npm run db:up` and `npm run dev`; do not assume processes survive a restored cloud environment.
 
 Root `dev`, `test`, `test:watch` and `typecheck` build the shared engine/contracts packages before consuming their exported files. `npm run build:shared` refreshes just those packages. After changing shared-package source during a development/watch session, rebuild them and restart the session to use the new exports. Direct server workspace commands assume the shared packages have already been built.
