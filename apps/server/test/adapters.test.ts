@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import type { Checkpoint } from '../src/application/ports.js';
+import type {
+  CallbackErrorContext,
+  Checkpoint,
+} from '../src/application/ports.js';
 import { RequestCache } from '../src/application/request-cache.js';
 import { parseCommand } from '@rapidfire/contracts';
 import {
@@ -12,6 +15,65 @@ import {
 } from './game-helpers.js';
 
 describe('asynchronous adapters and intake ordering', () => {
+  it('reports the engine failure and phase when a countdown callback is rejected', async () => {
+    const reports: {
+      code: string;
+      context: CallbackErrorContext | undefined;
+    }[] = [];
+    const h = harness({
+      onError: (code, context) => reports.push({ code, context }),
+    });
+    const user = await h.client('u1');
+    success(
+      await user.send('solo:start', {
+        settings: {
+          topicId: 'league-of-legends',
+          releaseId: null,
+          seed: null,
+          rounds: 1,
+          answerTimeMs: 20000,
+        },
+      }),
+    );
+    await h.advance(5000);
+    await choose(user);
+    await h.settle();
+    for (let number = 1; number <= 4; number++) {
+      await h.advance(3000);
+      success(await submit(user, number === 2 ? ['a', 'b'] : ['a']));
+      await h.advance(5000);
+    }
+    const phase = user.latest().phase;
+    if (phase.type !== 'question_countdown')
+      throw new Error('No question countdown');
+    expect(phase.questionNumber).toBe(5);
+    const pending = [...h.timers.timers.entries()].find(
+      ([, timer]) => timer.deadline === phase.deadline,
+    );
+    if (!pending) throw new Error('No countdown timer');
+    h.timers.timers.delete(pending[0]);
+    h.timers.now = phase.deadline - 1;
+    // Inject a broken timer port to verify diagnostics at the controller boundary.
+    pending[1].callback();
+    await h.settle();
+
+    expect(reports).toEqual([
+      {
+        code: 'CONTROLLER_CALLBACK_FAILED',
+        context: {
+          scopeType: 'match',
+          phaseType: 'question_countdown',
+          phaseId: phase.id,
+          deadline: phase.deadline,
+          serverTime: phase.deadline - 1,
+          errorCode: 'SERVER_UNAVAILABLE',
+          engineCode: 'INVALID_TIME',
+        },
+      },
+    ]);
+    expect(JSON.stringify(reports)).not.toContain('Private question');
+    expect(JSON.stringify(reports)).not.toContain('Name u1');
+  });
   it('isolates adapter notification failures from match timers and guest cleanup', async () => {
     const h = harness({
       onMatchStarted: () => {

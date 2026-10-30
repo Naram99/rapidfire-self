@@ -15,6 +15,12 @@ export class NodeTimers implements TimerPort {
     this.cancel(key);
     const handle = setTimeout(
       () => {
+        if (this.handles.get(key) !== handle) return;
+        // Native timeouts can wake before the deadline on our monotonic clock.
+        if (this.clock.now() < deadline) {
+          this.schedule(key, deadline, callback);
+          return;
+        }
         this.handles.delete(key);
         callback();
       },
@@ -44,7 +50,10 @@ export function runtimeDependencies(): Dependencies {
     random: () =>
       Array.from({ length: 5 }, () => randomInt(0x1_0000_0000) / 0x1_0000_0000),
     persistence: null,
-    onError: (code) => console.warn(code),
+    onError: (code, context) => {
+      if (context) console.warn(code, JSON.stringify(context));
+      else console.warn(code);
+    },
     onMatchStarted: () => undefined,
     onGuestFinished: () => undefined,
   };

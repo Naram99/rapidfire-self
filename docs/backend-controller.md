@@ -55,6 +55,10 @@ A runtime óra egy induláskor rögzített Unix-időpontot kapcsol a Node monoto
 
 Az időzítő az eredeti meccs-, fázisazonosítót és határidőt küldi vissza a sorba. Az új fázis a tényleges feldolgozási időből indul; egy késő callback nem futtat végig gyorsítva több fázist. Régi időzítő vagy kérdés-előkészítési eredmény nem módosítja az új fázist. A provider `AbortSignal`-t kap; a motor a visszaadott `unknown` kérdéscsomagot önállóan validálja.
 
+A Node-időzítő ébredéskor újra ellenőrzi a monoton órát: ha a natív timeout a határidő előtt futott le, a hátralévő időre újraütemezi magát. Így az akár egy milliszekundummal korai ébredés nem jut el a motor szigorú határidő-ellenőrzéséhez, és nem veszik el a fázist továbbléptető callback. Az újraütemezett időzítő ugyanazzal a kulccsal lemondható vagy lecserélhető.
+
+A `CONTROLLER_CALLBACK_FAILED` naplósor JSON-kontextusa tartalmazza a scope típusát, az aktuális fázis típusát és azonosítóját, a határidőt, a szerveridőt és a publikus hibakódot; motorhiba esetén az eredeti `engineCode` is megmarad, például `INVALID_TIME`. A kontextus nem tartalmaz kérdésszöveget, személyes adatot, cookie-t vagy a nyers kivételüzenetet.
+
 Az indulási névsor és beállítások rögzülnek. A várószobai csatlakozás, unready, valódi beállításváltozás vagy kapcsolat/auth hiánya megszakítja az öt másodperces indulási visszaszámlálást. Az eldobott visszaszámlálásból nem keletkezik tartós meccsmentés. Tényleges beállításváltozás mindenkinek törli a ready értékét; azonos érték visszaküldése nem.
 
 ## Snapshot és több eszköz

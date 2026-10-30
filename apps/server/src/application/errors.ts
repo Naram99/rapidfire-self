@@ -5,6 +5,7 @@ export class CommandFailure extends Error {
   constructor(
     readonly code: ErrorCode,
     readonly resyncRequired = false,
+    readonly engineCode?: EngineError,
   ) {
     super(code);
   }
@@ -48,5 +49,6 @@ export function failEngine(code: EngineError): never {
   throw new CommandFailure(
     engineErrors[code],
     code === 'STALE_PHASE' || code === 'MATCH_ENDED',
+    code,
   );
 }
