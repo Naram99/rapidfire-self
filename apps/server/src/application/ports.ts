@@ -1,4 +1,5 @@
 import type {
+  ErrorCode,
   GameSettings,
   GenerationMetadata,
   GenerationRelease,
@@ -9,6 +10,7 @@ import type {
 } from '@rapidfire/contracts';
 import type {
   Category,
+  ErrorCode as EngineError,
   MatchState,
   Participant,
   QuestionResult,
@@ -98,6 +100,15 @@ export type Checkpoint = Readonly<{
 export type PersistencePort = Readonly<{
   save: (checkpoint: Checkpoint) => Promise<void>;
 }>;
+export type CallbackErrorContext = Readonly<{
+  scopeType: Scope['type'];
+  phaseType: MatchState['phase']['type'] | 'lobby';
+  phaseId: string | null;
+  deadline: number | null;
+  serverTime: number;
+  errorCode: ErrorCode;
+  engineCode?: EngineError;
+}>;
 export type Dependencies = Readonly<{
   clock: Clock;
   timers: TimerPort;
@@ -106,7 +117,7 @@ export type Dependencies = Readonly<{
   roomCode: () => string;
   random: () => readonly number[];
   persistence: PersistencePort | null;
-  onError: (code: string) => void;
+  onError: (code: string, context?: CallbackErrorContext) => void;
   onMatchStarted: (matchId: string, personIds: readonly string[]) => void;
   onGuestFinished: (personId: string) => void;
   onMatchFinished?: (matchId: string) => void;

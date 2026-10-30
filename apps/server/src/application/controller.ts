@@ -7,7 +7,7 @@ import type {
   Snapshot,
 } from '@rapidfire/contracts';
 import type { MatchEvent } from '@rapidfire/game-engine';
-import { requireCommand } from './errors.js';
+import { CommandFailure, requireCommand } from './errors.js';
 import { graceDeadline, sameSettings } from './lobby.js';
 import type { Member, RoomState } from './lobby.js';
 import { MatchRunner } from './match-runner.js';
@@ -614,8 +614,20 @@ export class FlowController {
     this.hooks.removed(this);
   }
   private post(task: () => void): void {
-    void this.run(task).catch(() =>
-      this.dependencies.onError('CONTROLLER_CALLBACK_FAILED'),
-    );
+    void this.run(task).catch((error: unknown) => {
+      const phase = this.runner?.state.phase;
+      this.dependencies.onError('CONTROLLER_CALLBACK_FAILED', {
+        scopeType: this.scope.type,
+        phaseType: phase?.type ?? 'lobby',
+        phaseId: phase?.id ?? null,
+        deadline: phase && 'deadline' in phase ? phase.deadline : null,
+        serverTime: this.dependencies.clock.now(),
+        errorCode:
+          error instanceof CommandFailure ? error.code : 'SERVER_UNAVAILABLE',
+        ...(error instanceof CommandFailure && error.engineCode
+          ? { engineCode: error.engineCode }
+          : {}),
+      });
+    });
   }
 }

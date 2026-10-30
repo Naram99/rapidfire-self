@@ -65,6 +65,7 @@ export function harness(
     categories?: QuestionProvider['categories'];
     onMatchStarted?: Dependencies['onMatchStarted'];
     onGuestFinished?: Dependencies['onGuestFinished'];
+    onError?: Dependencies['onError'];
   }> = {},
 ) {
   const timers = new ManualTimers();
@@ -96,7 +97,10 @@ export function harness(
     roomCode: () => `AAAAA${String.fromCharCode(65 + roomCode++)}`,
     random: () => [0, 0, 0, 0, 0],
     persistence: options.persistence ?? null,
-    onError: (code) => errors.push(code),
+    onError: (code, context) => {
+      errors.push(code);
+      options.onError?.(code, context);
+    },
     onMatchStarted: (id, people) => {
       started.push(id);
       options.onMatchStarted?.(id, people);
